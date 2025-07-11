@@ -60,7 +60,7 @@ export default function LandingPage() {
 							variant={"outline"}
 							className="cursor-pointer text-[.9em] p-5 text-gray-400"
 						>
-							<Link href={"/about"}>Learn more...</Link>
+							<Link href={"/about"}>Learn more..</Link>
 						</Button>
 						<InteractiveHoverButton>
 							<Link href="/classify-disease">Get Started</Link>
