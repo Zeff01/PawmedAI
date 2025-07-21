@@ -99,8 +99,7 @@ export const FeedbackModal = () => {
 						<div>
 							<h3 className="text-lg font-bold">We value your suggestions.</h3>
 							<p className="text-sm">
-								We appreciate you taking the time to share your thoughts.
-								What&apos;s your suggestion?
+								We value your feedback and appreciate you taking the time to share it with us. Let us know your thoughts or suggestions.
 							</p>
 						</div>
 					</div>
