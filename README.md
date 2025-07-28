@@ -2,6 +2,9 @@
 
 **PawMed AI** is an intelligent veterinary assistant powered by OpenAI’s Vision API. It helps pet owners and veterinarians classify and identify pet-related diseases through image analysis. The platform includes a modern frontend built with Next.js and a robust backend using NestJS.
 
+### 📌 GIT GUIDELINES:
+Refer to this Notion Link: https://www.notion.so/PawMed-AI-Team-Guidelines-2319f77caba0806fb99dfa7923cd381a?source=copy_link
+
 ## 🧠 Features
 
 - 🐶 Upload pet images to detect potential diseases
