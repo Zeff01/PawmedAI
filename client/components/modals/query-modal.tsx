@@ -95,8 +95,7 @@ export const QueryModal = () => {
 						<div>
 							<h3 className="text-lg font-bold">We value your suggestions.</h3>
 							<p className="text-sm">
-								We appreciate you taking the time to share your thoughts.
-								What&apos;s your suggestion?
+								We value your queries and insights. Share your questions or suggestions with us—we're here to listen and help.
 							</p>
 						</div>
 					</div>
