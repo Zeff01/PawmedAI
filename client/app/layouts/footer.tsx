@@ -32,7 +32,60 @@ const Socials: SocialProps[] = [
 
 export const FooterLayout = () => {
   return (
-    <div>
+    <section className=" bg-white flex justify-center text-left py-20">
+      <div className="max-w-7xl w-full flex flex-col gap-10 lg:gap-0 lg:flex-row px-4 lg:px-0">
+        <div className=" w-full flex flex-col gap-[15px]">
+          <div className="flex gap-1">
+            <img src="/paw_icon.svg" alt="" />
+            <p className="text-[#1F2937] font-bold">PawMed AI</p>
+          </div>
+          <p className='text-[#6B7280]'>
+            AI-powered pet health concern diagnostics for quick, reliable
+            insights.
+          </p>
+        </div>
+        <div className="w-full flex-col flex gap-[15px]">
+          <header className="text-[#1F2937] font-bold">Quick Links</header>
+          <nav>
+            <ul className="flex flex-col gap-[8px] text-[#6B7280]">
+              <li>How It Works</li>
+              <li>Features</li>
+              <li>Privacy Policy</li>
+              <li>Terms Of Service</li>
+              <li>Support</li>
+            </ul>
+          </nav>
+        </div>
+        <div className=" w-full flex flex-col gap-4">
+          <header className="text-[#1F2937] font-bold">Stay Updated</header>
+          <div>
+            <p className="text-[#6B7280] pb-4">
+              Get the latest pet health tips and updates.
+            </p>
+            <form action="#" className="flex flex-row">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="you@example.com"
+                className="px-4 py-2 w-full  border border-[#E5E7EB] rounded-l-md focus:outline-none focus:ring-0 placeholder:text-[#ADAEBC] text-[#222222]"
+              />
+              <button
+                type="submit"
+                className="bg-[#F97316] px-4 py-2 rounded-r-md text-white"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+{
+  /* <div>
       <div className="w-full bottom-0 md:py-20 py-10 lg:px-24 px-7 z-10 border border-t bg-gray-950 space-y-10">
         <div className="flex md:flex-row flex-col text-left justify-between text-gray-300">
           <div className="md:mb-0 mb-5">
@@ -89,6 +142,5 @@ export const FooterLayout = () => {
           </p>
         </div>
       </div>
-    </div>
-  );
-};
+    </div> */
+}
