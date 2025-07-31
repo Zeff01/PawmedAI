@@ -7,7 +7,7 @@ import { AtiplaHeading } from './layout';
 
 export default function LandingPage() {
   return (
-    <div className="relative gap-5 md:mt-12 mt-10">
+    <div className="relative gap-5 md:mt-12 mt-10 ">
       <div className="text-center">
         {/* Banner Section */}
         <HeroBanner />
