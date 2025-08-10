@@ -12,6 +12,8 @@
   "author": "AL RANDOLPH B. VILLEGAS",
   "license": "ISC",
   "dependencies": {
+    "@supabase/supabase-js": "^2.53.0",
+    "cookie": "^1.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0"
