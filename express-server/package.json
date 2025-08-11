@@ -13,12 +13,14 @@
   "license": "ISC",
   "dependencies": {
     "@supabase/supabase-js": "^2.53.0",
-    "cookie": "^1.0.2",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "zod": "^4.0.17"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.9",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "nodemon": "^3.1.10",

@@ -1,21 +1,10 @@
 import { Request, Response } from "express";
-import cookie from "cookie";
-import { isEmail } from "../utils/isEmail";
 import { supabase, supabaseAdmin } from "../db/db";
-
-interface LoginPayload {
-  identifier: string;
-  password: string;
-}
+import z from "zod";
 
 export const signup = async (req: Request, res: Response): Promise<void> => {
   try {
     const { email, password, username, firstname, lastname } = req.body;
-
-    if (!isEmail(email)) {
-      res.status(400).json({ error: "Invalid email format" });
-      return;
-    }
 
     // 1. Create Supabase user
     const { data: user, error: signupError } =
@@ -26,7 +15,8 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
       });
 
     if (signupError) {
-      res.status(400).json({ error: signupError.message });
+      console.log(signupError);
+      res.status(400).json({ message: "An error occurred during signup" });
       return;
     }
 
@@ -43,7 +33,10 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
     ]);
 
     if (insertError) {
-      res.status(500).json({ error: insertError.message });
+      console.log(insertError);
+      res
+        .status(500)
+        .json({ message: "An error occurred during saving additional info" });
       return;
     }
 
@@ -58,35 +51,23 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
 
 export const login = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { identifier, password } = req.body as LoginPayload;
-
-    if (!identifier) {
-      res.status(400).json({ message: "Missing username or email." });
-      return;
-    }
-
-    if (!password) {
-      res.status(400).json({ message: "Missing password." });
-      return;
-    }
+    const { identifier, password } = req.body;
 
     let emailToLogin = identifier;
 
+    // Detect if it's an email
+    const isEmail = z.email().safeParse(identifier).success;
+
     // If identifier is username, fetch corresponding email
-    if (!isEmail(identifier)) {
+    if (!isEmail) {
       const { data: profile, error: profileError } = await supabaseAdmin
         .from("users")
         .select("user_email")
         .eq("user_username", identifier)
         .single();
 
-      if (profileError || !profile) {
-        res.status(400).json({ error: "Username not found" });
-        return;
-      }
-
-      if (!profile.user_email) {
-        res.status(400).json({ error: "No email found for this username" });
+      if (profileError || !profile?.user_email) {
+        res.status(400).json({ error: "Username not found or has no email" });
         return;
       }
 
@@ -101,7 +82,10 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       });
 
     if (loginError) {
-      res.status(401).json({ error: loginError.message });
+      console.log(loginError);
+      res.status(401).json({
+        message: "Something went wrong during login. Please try again",
+      });
       return;
     }
 
@@ -111,20 +95,19 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    res.setHeader(
-      "Set-Cookie",
-      cookie.serialize("sb-refresh-token", refreshToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        path: "/",
-        maxAge: 60 * 60 * 24 * 7, // 7 days
-      })
-    );
+    // Set refresh token cookie
+    res.cookie("sb-refresh-token", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      path: "/",
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+    });
 
     res.status(200).json({
       message: "Login successful",
       user: { uid: authData.user?.id },
+      access_token: authData.session?.access_token,
     });
     return;
   } catch (error) {
