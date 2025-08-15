@@ -1,7 +1,7 @@
 import { CustomMarqueeCardHorizontal } from '@/components/shared/custom-marquee-horizontal';
 import { FooterLayout } from '@/app/layouts/footer';
 import { HeroBanner } from '@/components/landing-page/hero-banner';
-import { VideoWelcome } from '@/components/landing-page/video-welcome';
+/* import { VideoWelcome } from '@/components/landing-page/video-welcome'; */
 import { HowItWorks } from '@/components/landing-page/how-it-works';
 import { AtiplaHeading } from './layout';
 
@@ -12,7 +12,7 @@ export default function LandingPage() {
         {/* Banner Section */}
         <HeroBanner />
 
-        <VideoWelcome />
+        {/* <VideoWelcome /> */}
 
         <section className="space-y-5">
           <HowItWorks />
