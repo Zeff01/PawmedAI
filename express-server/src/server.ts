@@ -21,7 +21,7 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/', mainRoute);
+app.use('/classify', mainRoute);
 app.use('/auth', authRoute);
 
 app.listen(process.env.PORT || 3000, () => {
