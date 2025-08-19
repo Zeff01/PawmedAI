@@ -13,8 +13,8 @@ export const classifyDissease = async (req:Request, res:Response) => {
         const image_url:string = req.body["url"]
         
         const client = new OpenAI({
-            baseURL: "https://openrouter.ai/api/v1/",
-            apiKey: "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",
+            baseURL: process.env.BASEURL,
+            apiKey: process.env.APIKEY,
         });
 
         try{
