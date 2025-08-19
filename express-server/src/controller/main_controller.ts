@@ -11,10 +11,10 @@ export const classifyDissease = async (req:Request, res:Response) => {
     if("url" in req.body){
         
         const image_url:string = req.body["url"]
-
+        
         const client = new OpenAI({
-            baseURL: process.env.BASEURL,
-            apiKey: process.env.APIKEY,
+            baseURL: "https://openrouter.ai/api/v1/",
+            apiKey: "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",
         });
 
         try{
@@ -65,7 +65,7 @@ export const classifyDissease = async (req:Request, res:Response) => {
 
             console.log(error.message)
 
-            res.status(500).send(error.message)
+            res.status(401).send(error.message)
         }
 
     }else{

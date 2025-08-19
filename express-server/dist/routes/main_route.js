@@ -7,4 +7,4 @@ exports.mainRoute = void 0;
 const express_1 = __importDefault(require("express"));
 const main_controller_1 = require("../controller/main_controller");
 exports.mainRoute = express_1.default.Router();
-exports.mainRoute.get('/', main_controller_1.mainController);
+exports.mainRoute.post('/', main_controller_1.classifyDissease);
