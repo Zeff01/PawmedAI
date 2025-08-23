@@ -8,7 +8,7 @@ export const HeaderLayout = () => {
 			<div className="flex justify-between items-center">
 				<div>
 					{/* <h2 className="text-xl font-bold">Pawmed AI V2.0</h2> */}
-					<Image src={"/jpd_logo.png"} alt="Logo" width={60} height={60} />
+					<Image src={"/pawlogo.png"} alt="Logo" width={60} height={60} />
 				</div>
 
 				<div className="md:block hidden">
