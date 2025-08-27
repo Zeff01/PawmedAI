@@ -18,7 +18,7 @@ app.use((0, cors_1.default)({
 }));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
-app.use('/', main_route_1.mainRoute);
+app.use('/classify', main_route_1.mainRoute);
 app.use('/auth', auth_1.authRoute);
 app.listen(process.env.PORT || 3000, () => {
     console.log(`Server is running on port ${process.env.PORT || 3000}`);
