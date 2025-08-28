@@ -84,19 +84,19 @@ export const QueryModal = () => {
 		>
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmitQuery)} className="space-y-5">
-					<div className="flex justify-center items-center gap-3 bg-gray-100 dark:bg-gray-900 p-7 rounded-lg">
+						<div className="flex flex-col sm:flex-row justify-center items-center sm:items-center gap-4 sm:gap-3 bg-orange-50 p-5 sm:p-7 rounded-lg text-center sm:text-left">
 						<Image
 							src="/pawlogo.png"
 							alt="PawMed AI Logo"
 							width={60}
 							height={60}
+							className="w-12 h-12 sm:w-[60px] sm:h-[60px]"
 						/>
 
 						<div>
-							<h3 className="text-lg font-bold">We value your suggestions.</h3>
-							<p className="text-sm">
-								We appreciate you taking the time to share your thoughts.
-								What&apos;s your suggestion?
+							<h3 className="text-base sm:text-lg font-bold leading-snug">We value your suggestions.</h3>
+							<p className="text-xs sm:text-sm">
+								We value your queries and insights. Share your questions or suggestions with us—we&apos;re here to listen and help.
 							</p>
 						</div>
 					</div>
