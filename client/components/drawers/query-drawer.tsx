@@ -77,7 +77,7 @@ export const QueryDrawer = () => {
 
 	return (
 		<CustomDrawer
-			title="Feedback"
+			title="Query"
 			description="We welcome your comments and idea"
 			isOpen={queryDrawer.isOpen}
 			onClose={queryDrawer.onClose}
@@ -87,17 +87,18 @@ export const QueryDrawer = () => {
 					onSubmit={form.handleSubmit(onSubmitFeedback)}
 					className="space-y-5"
 				>
-					<div className="flex justify-center items-center gap-3 bg-gray-100 p-7 rounded-lg">
+						<div className="flex flex-col sm:flex-row justify-center items-center sm:items-center gap-4 sm:gap-3 bg-orange-50 p-5 sm:p-7 rounded-lg text-center sm:text-left">
 						<Image
 							src="/pawlogo.png"
 							alt="PawMed AI Logo"
 							width={60}
 							height={60}
+							className="w-12 h-12 sm:w-[60px] sm:h-[60px]"
 						/>
 
 						<div>
-							<h3 className="text-lg font-bold">We value your suggestions.</h3>
-							<p className="text-sm">
+							<h3 className="text-base sm:text-lg font-bold leading-snug">We value your suggestions.</h3>
+							<p className="text-xs sm:text-sm">
 								We appreciate you taking the time to share your thoughts.
 								What&apos;s your suggestion?
 							</p>
