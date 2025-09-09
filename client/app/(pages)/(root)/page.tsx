@@ -1,12 +1,14 @@
-import { InteractiveHoverButton } from '@/components/magicui/interactive-hover-button';
-import { CustomTextMotion } from '@/components/shared/custom-text-motion';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { AtiplaHeading } from './layout';
-import Image from 'next/image';
-import { CustomMarqueeCardHorizontal } from '@/components/shared/custom-marquee-horizontal';
-import { FooterLayout } from '@/app/layouts/footer';
-import VideoSection from '@/app/layouts/videoSection';
+import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
+import { CustomTextMotion } from "@/components/shared/custom-text-motion";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { AtiplaHeading } from "./layout";
+import Image from "next/image";
+import { CustomMarqueeCardHorizontal } from "@/components/shared/custom-marquee-horizontal";
+import { FooterLayout } from "@/app/layouts/footer";
+import VideoSection from "@/app/layouts/videoSection";
+import { TestimonialsSection } from "@/app/layouts/testimonial-section";
+import { PetHealthCTA } from "@/app/layouts/pet-health-cta";
 // import { CustomMarqueeCardHorizontal } from "@/components/shared/custom-marquee-horizontal";
 
 type PawMedStepsProps = {
@@ -17,24 +19,24 @@ type PawMedStepsProps = {
 
 const PawMedSteps: PawMedStepsProps[] = [
   {
-    title: 'Upload Photo',
-    instructions: 'Take a clear image of your pet&apos; condition.',
-    image: '/pawmed-steps/step1.png',
+    title: "Upload Photo",
+    instructions: "Take a clear image of your pet&apos; condition.",
+    image: "/pawmed-steps/step1.png",
   },
   {
-    title: 'Let AI Analyze',
-    instructions: 'Our system scans for symptoms and patterns.',
-    image: '/pawmed-steps/step2.png',
+    title: "Let AI Analyze",
+    instructions: "Our system scans for symptoms and patterns.",
+    image: "/pawmed-steps/step2.png",
   },
   {
-    title: 'Get Insights',
-    instructions: 'Receive feedback and suggested next steps.',
-    image: '/pawmed-steps/step3.png',
+    title: "Get Insights",
+    instructions: "Receive feedback and suggested next steps.",
+    image: "/pawmed-steps/step3.png",
   },
   {
-    title: 'Download PDF',
-    instructions: 'Preview and download a PDF file for reference.',
-    image: '/pawmed-steps/step4.png',
+    title: "Download PDF",
+    instructions: "Preview and download a PDF file for reference.",
+    image: "/pawmed-steps/step4.png",
   },
 ];
 
@@ -58,10 +60,10 @@ export default function LandingPage() {
 
           <section className="flex justify-center items-center gap-3">
             <Button
-              variant={'outline'}
+              variant={"outline"}
               className="cursor-pointer text-[.9em] p-5 text-gray-400"
             >
-              <Link href={'/about'}>Learn more..</Link>
+              <Link href={"/about"}>Learn more..</Link>
             </Button>
             <InteractiveHoverButton>
               <Link href="/classify-disease">Get Started</Link>
@@ -94,7 +96,7 @@ export default function LandingPage() {
                 <p className="text-white text-lg md:text-left text-center md:px-0 px-10">
                   <span className="font-bold text-[#FF7800]">
                     Welcome to PawMed AI
-                  </span>{' '}
+                  </span>{" "}
                   — the next evolution in intelligent pet care. Powered by
                   advanced machine learning and image classification, PawMed AI
                   lets you assess your pet&apos;s health in seconds with a
@@ -115,7 +117,7 @@ export default function LandingPage() {
                     <div
                       key={idx}
                       className={`group bg-gray-50 dark:bg-slate-900 flex flex-col md:flex-row ${
-                        idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                        idx % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
                       } w-full gap-10 md:gap-16 p-5 items-center rounded-lg hover:bg-gray-100 transition-all`}
                     >
                       {/* Image */}
@@ -132,7 +134,7 @@ export default function LandingPage() {
                       {/* Text */}
                       <div
                         className={`space-y-2 md:w-1/2 ${
-                          idx % 2 === 0 ? 'md:text-left' : 'md:text-right'
+                          idx % 2 === 0 ? "md:text-left" : "md:text-right"
                         } text-center md:text-inherit`}
                       >
                         <h2
@@ -145,7 +147,7 @@ export default function LandingPage() {
                         <p className="text-gray-700">{step.instructions}</p>
 
                         <Link
-                          href={'/classify-disease'}
+                          href={"/classify-disease"}
                           className="underline hover:text-gray-950 text-gray-400"
                         >
                           Get started
@@ -217,8 +219,14 @@ export default function LandingPage() {
                 diagnostics.
               </p>
             </div>
-            <section className='mx-auto'>
+            <section className="mx-auto">
               <VideoSection />
+            </section>
+            <section>
+              <TestimonialsSection />
+            </section>
+            <section>
+              <PetHealthCTA />
             </section>
             <section>
               <FooterLayout />
