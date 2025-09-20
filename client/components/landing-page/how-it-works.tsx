@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { AtiplaHeading } from "@/app/(pages)/(root)/layout";
 
 type PawMedStepsProps = {
   title: string;
@@ -51,19 +50,22 @@ const PawMedSteps: PawMedStepsProps[] = [
 export function HowItWorks() {
   return (
     <section className="w-full">
-      <div className="px-8 md:px-24 py-27 space-y-5">
-        <h1 className={`${AtiplaHeading.className} text-4xl font-bold mt-6`}>
-          How It Works
-        </h1>
-        <p>
+      <div className="px-8 md:px-24 space-y-5">
+        <div className="flex justify-center items-center">
+          <p className="bg-[#EE610A] py-1 px-4 text-sm text-orange-100 rounded-full">
+            Workflow
+          </p>
+        </div>
+        <h1 className="text-4xl font-bold">How Everything Comes Together</h1>
+        <p className="text-lg">
           Three simple steps to get insights about your pet&apos;s skin
           condition
         </p>
-        <div className=" flex flex-col gap-10 pt-10 ">
+        <div className=" flex flex-col gap-10 pt-10">
           {PawMedSteps.map((step, idx) => (
             <div
               key={idx}
-              className={`group rounded-lg dark:bg-slate-900 flex flex-col md:flex-row ${
+              className={`group rounded-3xl dark:bg-slate-900 flex flex-col md:flex-row ${
                 idx % 2 === 0
                   ? "md:flex-row-reverse bg-[#FFF8ED]"
                   : "md:flex-row bg-[#FFEFD4]"
