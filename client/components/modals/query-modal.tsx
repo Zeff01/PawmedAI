@@ -94,8 +94,13 @@ export const QueryModal = () => {
 						/>
 
 						<div>
+<<<<<<< HEAD
 							<h3 className="text-base sm:text-lg font-bold leading-snug">We value your suggestions.</h3>
 							<p className="text-xs sm:text-sm">
+=======
+							<h3 className="text-lg font-bold">We value your suggestions.</h3>
+							<p className="text-sm">
+>>>>>>> 6db9b4c0f45f0d1ff02b952410f442cfc78ea707
 								We value your queries and insights. Share your questions or suggestions with us—we&apos;re here to listen and help.
 							</p>
 						</div>

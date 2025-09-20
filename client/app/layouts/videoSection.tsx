@@ -2,7 +2,11 @@ import React from "react";
 
 export default function VideoSection() {
   return (
+<<<<<<< HEAD
     <div className="bg-white max-w-7xl mx-auto  flex flex-row shadow-2xl rounded-3xl my-20">
+=======
+    <div className="max-w-7xl mx-auto  flex flex-row shadow-2xl rounded-3xl my-20">
+>>>>>>> 6db9b4c0f45f0d1ff02b952410f442cfc78ea707
       <div className="p-10 flex-grow max-w-[50%] text-left flex flex-col gap-8">
         <div className="flex flex-col gap-4">
           <h2 className="font-extrabold text-4xl text-[#333333]">

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { CustomMarqueeCardHorizontal } from '@/components/shared/custom-marquee-horizontal';
 import { FooterLayout } from '@/app/layouts/footer';
 import { HeroBanner } from '@/components/landing-page/hero-banner';
@@ -8,6 +9,19 @@ import { AtiplaHeading } from './layout';
 export default function LandingPage() {
   return (
     <div className="relative gap-5 md:mt-12 mt-10 ">
+=======
+import { FooterLayout } from "@/app/layouts/footer";
+import { HeroBanner } from "@/components/landing-page/hero-banner";
+/* import { VideoWelcome } from '@/components/landing-page/video-welcome'; */
+import { HowItWorks } from "@/components/landing-page/how-it-works";
+import VideoSection from "@/app/layouts/videoSection";
+import { TestimonialsSection } from "@/app/layouts/testimonial-section";
+import { PetHealthCTA } from "@/app/layouts/pet-health-cta";
+
+export default function LandingPage() {
+  return (
+    <div className="bg-white relative gap-5 md:mt-12 mt-10 ">
+>>>>>>> 6db9b4c0f45f0d1ff02b952410f442cfc78ea707
       <div className="text-center">
         {/* Banner Section */}
         <HeroBanner />
@@ -17,6 +31,7 @@ export default function LandingPage() {
         <section className="space-y-5">
           <HowItWorks />
 
+<<<<<<< HEAD
           <div className="px-8 md:px-20 sm:px-8 py-8 -z-10">
             <section className="space-y-3">
               <div className="relative text-center max-w-xl mx-auto">
@@ -68,6 +83,18 @@ export default function LandingPage() {
                 All data and images are stored securely and used only for diagnostics.
               </p>
             </div>
+=======
+          <section className=" dark:bg-gray-900 text-center">
+            <section className="mx-auto">
+              <VideoSection />
+            </section>
+            <section>
+              <TestimonialsSection />
+            </section>
+            <section>
+              <PetHealthCTA />
+            </section>
+>>>>>>> 6db9b4c0f45f0d1ff02b952410f442cfc78ea707
             <section>
               <FooterLayout />
             </section>

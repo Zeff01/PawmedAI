@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 'use client';
 
 import { Upload, Lock } from 'lucide-react';
 import { useState } from 'react';
+=======
+"use client";
+
+import { Upload, Lock } from "lucide-react";
+import { useState } from "react";
+>>>>>>> 6db9b4c0f45f0d1ff02b952410f442cfc78ea707
 
 export function HeroBanner() {
   const [isDragOver, setIsDragOver] = useState(false);
@@ -29,10 +36,17 @@ export function HeroBanner() {
       <div
         className="absolute inset-0 z-0"
         style={{
+<<<<<<< HEAD
           backgroundImage: 'url(/banner/dog.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center center',
           backgroundRepeat: 'no-repeat',
+=======
+          backgroundImage: "url(/banner/dog.png)",
+          backgroundSize: "cover",
+          backgroundPosition: "center center",
+          backgroundRepeat: "no-repeat",
+>>>>>>> 6db9b4c0f45f0d1ff02b952410f442cfc78ea707
         }}
       >
         {/* Dark overlay for better text readability */}
@@ -53,6 +67,7 @@ export function HeroBanner() {
 
         {/* Subtitle */}
         <div className="mb-10 max-w-2xl space-y-1">
+<<<<<<< HEAD
           <p className="text-base md:text-lg leading-tight">A new standard in early pet wellness.</p>
           <p className="text-base md:text-lg leading-tight">Trusted by tech, grounded in care.</p>
         </div>
@@ -63,6 +78,22 @@ export function HeroBanner() {
           <div
             className={`relative w-full rounded-2xl bg-white/85 backdrop-blur-sm border border-white/30 p-6 transition-all duration-300 ${
               isDragOver ? 'bg-white/90 border-white/50' : ''
+=======
+          <p className="text-base md:text-lg leading-tight">
+            A new standard in early pet wellness.
+          </p>
+          <p className="text-base md:text-lg leading-tight">
+            Trusted by tech, grounded in care.
+          </p>
+        </div>
+
+        {/* Upload Widget */}
+        <div className="w-full max-w-lg rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 p-6 shadow-2xl mb-16">
+          {/* Inner Container - Small Box */}
+          <div
+            className={`relative w-full rounded-2xl bg-white/85 backdrop-blur-sm border border-white/30 p-6 transition-all duration-300 ${
+              isDragOver ? "bg-white/90 border-white/50" : ""
+>>>>>>> 6db9b4c0f45f0d1ff02b952410f442cfc78ea707
             }`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
@@ -76,7 +107,13 @@ export function HeroBanner() {
 
               {/* Upload Text */}
               <div className="text-center">
+<<<<<<< HEAD
                 <p className="text-gray-800 text-lg font-medium">Drop your images here or</p>
+=======
+                <p className="text-gray-800 text-lg font-medium">
+                  Drop your images here or
+                </p>
+>>>>>>> 6db9b4c0f45f0d1ff02b952410f442cfc78ea707
               </div>
 
               {/* Browse Files Button */}
@@ -88,7 +125,13 @@ export function HeroBanner() {
               </button>
 
               {/* Support Text */}
+<<<<<<< HEAD
               <p className="text-sm text-gray-600 font-normal">Supported formats: JPG, PNG</p>
+=======
+              <p className="text-sm text-gray-600 font-normal">
+                Supported formats: JPG, PNG
+              </p>
+>>>>>>> 6db9b4c0f45f0d1ff02b952410f442cfc78ea707
             </div>
           </div>
 

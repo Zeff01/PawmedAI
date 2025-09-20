@@ -123,7 +123,11 @@ export function TestimonialsSection() {
   }, [api]);
 
   return (
+<<<<<<< HEAD
     <div className="w-full mx-auto px-6 py-13 bg-gray-50">
+=======
+    <div className="w-full mx-auto px-6 py-13">
+>>>>>>> 6db9b4c0f45f0d1ff02b952410f442cfc78ea707
       <div className="text-center mb-16">
         <h2 className="text-4xl font-bold text-[#333333] mb-12">
           What Pet Parents Are Saying
