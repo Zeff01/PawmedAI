@@ -1,10 +1,12 @@
+import Image from "next/image";
+
 export const FooterLayout = () => {
   return (
     <section className=" flex justify-center text-left py-20">
       <div className="max-w-7xl w-full flex flex-col gap-10 lg:gap-10 lg:flex-row px-4 lg:px-0">
         <div className=" w-full flex flex-col gap-[15px]">
           <div className="flex gap-1">
-            <img src="/paw_icon.svg" alt="" />
+            <Image src="/paw_icon.svg" alt="" width={20} height={20} />
             <p className="text-[#1F2937] font-bold">PawMed AI</p>
           </div>
           <p className="text-[#6B7280]">

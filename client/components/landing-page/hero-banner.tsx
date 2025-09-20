@@ -36,36 +36,32 @@ export function HeroBanner() {
         }}
       >
         {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 bg-black/40" />
       </div>
 
       {/* Content Overlay */}
-      <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 pt-20 text-center text-white">
+      <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 py-14 text-center text-white">
         {/* Main Heading */}
-        <div className="mb-6 space-y-0">
-          <h1 className="text-6xl font-black leading-none md:text-8xl lg:text-9xl xl:text-[8rem] tracking-tight">
+        <div className="mb-5">
+          <h1 className="text-6xl font-black leading-none md:text-8xl lg:text-9xl xl:text-[6rem] tracking-tight">
             Real care
           </h1>
-          <h1 className="text-6xl font-black leading-none md:text-8xl lg:text-9xl xl:text-[8rem] tracking-tight">
+          <h1 className="text-6xl font-black leading-none md:text-8xl lg:text-9xl xl:text-[6rem] tracking-tight">
             starts here.
           </h1>
         </div>
 
         {/* Subtitle */}
-        <div className="mb-10 max-w-2xl space-y-1">
-          <p className="text-base md:text-lg leading-tight">
-            A new standard in early pet wellness.
-          </p>
-          <p className="text-base md:text-lg leading-tight">
-            Trusted by tech, grounded in care.
-          </p>
+        <div className="mb-10 max-w-2xl space-y-1 text-base md:text-2xl leading-tight">
+          <p>A new standard in early pet wellness.</p>
+          <p>Trusted by tech, grounded in care.</p>
         </div>
 
         {/* Upload Widget */}
-        <div className="w-full max-w-lg rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 p-6 shadow-2xl mb-16">
+        <div className="w-full max-w-lg rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 p-6 shadow-2xl">
           {/* Inner Container - Small Box */}
           <div
-            className={`relative w-full rounded-2xl bg-white/85 backdrop-blur-sm border border-white/30 p-6 transition-all duration-300 ${
+            className={`relative w-full rounded-2xl bg-white/12 backdrop-blur-md border border-white/30 p-6 transition-all duration-300 ${
               isDragOver ? "bg-white/90 border-white/50" : ""
             }`}
             onDragOver={handleDragOver}
@@ -80,7 +76,7 @@ export function HeroBanner() {
 
               {/* Upload Text */}
               <div className="text-center">
-                <p className="text-gray-800 text-lg font-medium">
+                <p className="text-gray-300 text-lg font-medium">
                   Drop your images here or
                 </p>
               </div>
@@ -94,7 +90,7 @@ export function HeroBanner() {
               </button>
 
               {/* Support Text */}
-              <p className="text-sm text-gray-600 font-normal">
+              <p className="text-sm text-gray-400 font-normal">
                 Supported formats: JPG, PNG
               </p>
             </div>

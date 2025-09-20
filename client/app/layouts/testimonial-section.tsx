@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import { Star } from "lucide-react";
 import Autoplay from "embla-carousel-autoplay";
+import Image from "next/image";
 
 const testimonialsData = [
   [
@@ -123,11 +124,20 @@ export function TestimonialsSection() {
   }, [api]);
 
   return (
-    <div className="w-full mx-auto px-6 py-13">
-      <div className="text-center mb-16">
-        <h2 className="text-4xl font-bold text-[#333333] mb-12">
-          What Pet Parents Are Saying
-        </h2>
+    <div className="w-full mx-auto px-6 py-12">
+      <div className="text-center space-y-7">
+        <div className="space-y-3">
+          <div className="flex justify-center items-center">
+            <p className="bg-[#EE610A] py-1 px-4 text-sm text-orange-100 rounded-full">
+              Testimonials
+            </p>
+          </div>
+          <h2 className="text-4xl font-bold text-[#333333]">
+            Stories From Our Community
+          </h2>
+
+          <p>Genuine feedback from people who experienced it firsthand.</p>
+        </div>
 
         <Carousel
           setApi={setApi}
@@ -149,14 +159,16 @@ export function TestimonialsSection() {
                   {testimonialSet.map((testimonial) => (
                     <Card
                       key={testimonial.id}
-                      className="border-t-0 border-gray-200 shadow-lg bg-white rounded-xl w-full max-w-[280px] sm:max-w-[300px] md:max-w-[320px] lg:max-w-[350px] h-[160px]"
+                      className="border-t-0 border-gray-200 shadow-lg bg-white rounded-xl w-full max-w-[280px] sm:max-w-[300px] md:max-w-[320px] lg:max-w-[350px]"
                     >
-                      <CardContent className="p-2 sm:p-3 text-left h-full flex flex-col">
+                      <CardContent className="text-left h-full flex flex-col">
                         <div className="flex items-center gap-2 mb-2">
-                          <img
+                          <Image
                             src={testimonial.image}
                             alt={testimonial.name}
                             className="w-8 h-8 rounded-full object-cover flex-shrink-0"
+                            width={32}
+                            height={32}
                           />
                           <div className="min-w-0 flex-1">
                             <h3 className="font-bold text-black text-xs truncate">

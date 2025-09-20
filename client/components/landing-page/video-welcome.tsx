@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from "next/image";
 
 export function VideoWelcome() {
   return (
@@ -17,12 +17,20 @@ export function VideoWelcome() {
       </div>
       <div className="bg-[linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)),url('/cover_paw_new.jpg')] bg-cover bg-center bg-no-repeat w-full py-10">
         <div className="flex md:flex-row flex-col gap-5 md:w-[50em] md:mx-auto items-center">
-          <Image src="/pawlogo-w.png" alt="PawMed AI Logo" width={150} height={150} />
+          <Image
+            src="/pawlogo-w.png"
+            alt="PawMed AI Logo"
+            width={150}
+            height={150}
+          />
           <p className="text-white text-lg md:text-left text-center md:px-0 px-10">
-            <span className="font-bold text-[#FF7800]">Welcome to PawMed AI</span> — the next evolution in
-            intelligent pet care. Powered by advanced machine learning and image classification, PawMed AI lets
-            you assess your pet's health in seconds with a simple photo upload. It's fast, accurate, and
-            built to give you peace of mind.
+            <span className="font-bold text-[#FF7800]">
+              Welcome to PawMed AI
+            </span>{" "}
+            — the next evolution in intelligent pet care. Powered by advanced
+            machine learning and image classification, PawMed AI lets you assess
+            your pet&apos;s health in seconds with a simple photo upload.
+            It&apos;s fast, accurate, and built to give you peace of mind.
           </p>
         </div>
       </div>

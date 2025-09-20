@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export function PetHealthCTA() {
   return (
-    <div className="w-full mx-auto px-6 py-12">
+    <div className="w-full mx-auto px-6">
       <div
         className="relative rounded-3xl px-12 py-16 text-center overflow-hidden lg:max-w-6xl mx-auto"
         style={{
@@ -11,18 +12,18 @@ export function PetHealthCTA() {
         }}
       >
         <div className="absolute top-7 left-5 md:top-35 md:left-12 opacity-60">
-          <img src="/bone.svg" alt="bone" />
+          <Image src="/bone.svg" alt="bone" width={50} height={50} />
         </div>
         <div className="absolute top-5 right-5 md:top-15 lg:right-16 opacity-40">
-          <img src="/heart.svg" alt="heart" />
+          <Image src="/heart.svg" alt="heart" width={50} height={50} />
         </div>
         <div className="absolute top-83 right-30 md:top-55 lg:top-50 lg:right-40 opacity-10">
-          <img src="/paw.svg" alt="paw" />
+          <Image src="/paw.svg" alt="paw" width={50} height={50} />
         </div>
 
         <div className="relative z-10 max-w-3xl mx-auto">
           <h2 className="text-3xl font-bold text-white mb-10 leading-tight">
-            Scan your pet's health — anytime, anywhere.
+            Scan your pet&apos;s health — anytime, anywhere.
           </h2>
 
           <Button
@@ -32,7 +33,9 @@ export function PetHealthCTA() {
             Upload a Photo
           </Button>
 
-          <p className="text-white text-sm font-light">Takes just 10 seconds</p>
+          <p className="text-white text-sm font-light">
+            Instant and Effortless
+          </p>
         </div>
       </div>
     </div>
