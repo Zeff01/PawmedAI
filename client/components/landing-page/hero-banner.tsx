@@ -62,7 +62,7 @@ export function HeroBanner() {
         </div>
 
         {/* Upload Widget */}
-        <div className="w-full max-w-lg rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 p-6 shadow-2xl">
+        <div className="w-full max-w-lg rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 p-6 shadow-2xl mb-16">
           {/* Inner Container - Small Box */}
           <div
             className={`relative w-full rounded-2xl bg-white/85 backdrop-blur-sm border border-white/30 p-6 transition-all duration-300 ${

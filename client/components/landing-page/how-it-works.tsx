@@ -51,7 +51,7 @@ const PawMedSteps: PawMedStepsProps[] = [
 export function HowItWorks() {
   return (
     <section className="w-full">
-      <div className="bg-gray-200 dark:bg-slate-950 px-8 md:px-24 py-27 space-y-5">
+      <div className="px-8 md:px-24 py-27 space-y-5">
         <h1 className={`${AtiplaHeading.className} text-4xl font-bold mt-6`}>
           How It Works
         </h1>
