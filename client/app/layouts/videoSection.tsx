@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export default function VideoSection() {
   return (
@@ -18,36 +18,36 @@ export default function VideoSection() {
             <div className="w-8 h-10 bg-orange-500/15 rounded-full flex flex-row justify-center items-center">
               <img className="h-fit w-fit" src="lightning.svg" alt="" />
             </div>
-            <p className="flex flex-col">
+            <div className="flex flex-col">
               <p className="text-md font-bold text-[#1F2937]">Quick & Easy</p>
               <p className="text-[#6B7280]">
                 Just upload a photo and get results in seconds
               </p>
-            </p>
+            </div>
           </li>
           <li className="flex flex-row items-center gap-4">
             <div className="w-8 h-10 bg-orange-500/15 rounded-full flex flex-row justify-center items-center">
               <img className="h-fit w-fit" src="question.svg" alt="" />
             </div>
-            <p className="flex flex-col">
+            <div className="flex flex-col">
               <p className="text-md font-bold text-[#1F2937]">
                 Vet-Backed Technology
               </p>
               <p className="text-[#6B7280]">
                 Our AI is trained on vet-verified cases
               </p>
-            </p>
+            </div>
           </li>
           <li className="flex flex-row items-center gap-4">
             <div className="w-8 h-10 bg-orange-500/15 rounded-full flex flex-row justify-center items-center">
               <img className="h-fit w-fit" src="lock.svg" alt="" />
             </div>
-            <p className="flex flex-col">
+            <div className="flex flex-col">
               <p className="text-md font-bold text-[#1F2937]">Privacy First</p>
               <p className="text-[#6B7280]">
                 Your pet's photos aren't stored or shared
               </p>
-            </p>
+            </div>
           </li>
         </ul>
       </div>
@@ -58,9 +58,7 @@ export default function VideoSection() {
           alt=""
         />
         <div className="pt-4 flex flex-row gap-2 justify-center items-center">
-          <p className=" text-[#ED6109]">
-            Try it now with your pet's photo
-          </p>
+          <p className=" text-[#ED6109]">Try it now with your pet's photo</p>
           <img src="/arrow.svg" alt="" />
         </div>
       </div>
