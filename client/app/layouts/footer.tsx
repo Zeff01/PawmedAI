@@ -1,45 +1,13 @@
-import Link from 'next/link';
-import {
-  SiFacebook,
-  SiGithub,
-  SiInstagram,
-} from '@icons-pack/react-simple-icons';
-import { Linkedin } from 'lucide-react';
-
-type SocialProps = {
-  Icon: React.ElementType;
-  link: string;
-};
-
-const Socials: SocialProps[] = [
-  {
-    Icon: SiFacebook,
-    link: 'https://www.facebook.com/Jan.dacallos',
-  },
-  {
-    Icon: SiInstagram,
-    link: 'https://www.instagram.com/',
-  },
-  {
-    Icon: Linkedin,
-    link: 'https://www.linkedin.com/in/jan-phillip-dacallos-2a486b1a9/',
-  },
-  {
-    Icon: SiGithub,
-    link: 'https://github.com/jpdevdotcom',
-  },
-];
-
 export const FooterLayout = () => {
   return (
-    <section className=" bg-white flex justify-center text-left py-20">
-      <div className="max-w-7xl w-full flex flex-col gap-10 lg:gap-0 lg:flex-row px-4 lg:px-0">
+    <section className=" flex justify-center text-left py-20">
+      <div className="max-w-7xl w-full flex flex-col gap-10 lg:gap-10 lg:flex-row px-4 lg:px-0">
         <div className=" w-full flex flex-col gap-[15px]">
           <div className="flex gap-1">
             <img src="/paw_icon.svg" alt="" />
             <p className="text-[#1F2937] font-bold">PawMed AI</p>
           </div>
-          <p className='text-[#6B7280]'>
+          <p className="text-[#6B7280]">
             AI-powered pet health concern diagnostics for quick, reliable
             insights.
           </p>

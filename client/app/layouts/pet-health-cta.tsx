@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 
 export function PetHealthCTA() {
   return (
-    <div className="w-full mx-auto px-6 py-12 bg-gray-50">
+    <div className="w-full mx-auto px-6 py-12">
       <div
         className="relative rounded-3xl px-12 py-16 text-center overflow-hidden lg:max-w-6xl mx-auto"
         style={{
