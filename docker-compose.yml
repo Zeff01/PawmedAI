@@ -1,0 +1,73 @@
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    container_name: pawmed-client
+    profiles: ["dev"]
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./client:/app
+      - /app/node_modules # ⬅️ Prevents host node_modules from overwriting container’s
+    env_file:
+      - ./client/.env
+    depends_on:
+      - server
+
+  client-prod:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: pawmed-client-prod
+    profiles: ["prod"]
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./client/.env
+    depends_on:
+      - server-prod
+
+  server:
+    build:
+      context: ./express-server
+      dockerfile: Dockerfile.dev
+    container_name: pawmed-server
+    profiles: ["dev"]
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./express-server:/app
+      - /app/node_modules # ⬅️ Same trick for server
+    env_file:
+      - ./express-server/.env
+    # depends_on:
+    #   - db
+
+  server-prod:
+    build:
+      context: ./express-server
+      dockerfile: Dockerfile
+    container_name: pawmed-server-prod
+    profiles: ["prod"]
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./express-server/.env
+    # depends_on:
+    #   - db
+
+  db:
+    image: postgres:15-alpine
+    container_name: postgres-db
+    restart: always
+    profiles: ["with-db"]
+    env_file:
+      - ./server/.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
