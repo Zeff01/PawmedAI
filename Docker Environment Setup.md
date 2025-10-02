@@ -21,3 +21,13 @@ docker-compose --profile dev up -d
 
 - `up` - creates and starts the containers.
 - `-d` - runs containers in detached mode (in the background), so logs don’t occupy your terminal.
+
+**Access the Site**
+```bash
+http://localhost:3001/
+```
+
+**Access the API (optional for Frontend Devs)**
+```bash
+http://localhost:5000/
+```
