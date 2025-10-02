@@ -5,6 +5,11 @@
 ### 📌 GIT GUIDELINES:
 Refer to this Notion Link: https://www.notion.so/PawMed-AI-Team-Guidelines-2319f77caba0806fb99dfa7923cd381a?source=copy_link
 
+# 📚 DOCUMENTATIONS
+
+- [Docker Environment Setup](docker-environment-setup.md)
+- [Branch Push Guidelines](branch-push-guidelines.md)
+
 ## 🧠 Features
 
 - 🐶 Upload pet images to detect potential diseases
@@ -66,10 +71,4 @@ NGROK_AUTHTOKEN=<ngroktokenhere>
 ```
 
 ***Note: Refer to Jan Phillip Dacallos for the private keys.***
-
-# 📚 Documentation
-
-- [Environment Setup](SETUP.md)
-- [Deployment Guide](DEPLOYMENT.md)
-- [Contributing Guidelines](CONTRIBUTING.md)
 
