@@ -7,8 +7,8 @@ Refer to this Notion Link: https://www.notion.so/PawMed-AI-Team-Guidelines-2319f
 
 # 📚 DOCUMENTATIONS
 
-- [Docker Environment Setup](docker-environment-setup.md)
-- [Branch Push Guidelines](branch-push-guidelines.md)
+- [Docker Environment Setup](docs/docker-environment-setup.md)
+- [Branch Push Guidelines](docs/branch-push-guidelines.md)
 
 ## 🧠 Features
 
