@@ -66,3 +66,10 @@ NGROK_AUTHTOKEN=<ngroktokenhere>
 ```
 
 ***Note: Refer to Jan Phillip Dacallos for the private keys.***
+
+# 📚 Documentation
+
+- [Environment Setup](SETUP.md)
+- [Deployment Guide](DEPLOYMENT.md)
+- [Contributing Guidelines](CONTRIBUTING.md)
+
