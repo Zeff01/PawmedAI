@@ -66,25 +66,3 @@ NGROK_AUTHTOKEN=<ngroktokenhere>
 ```
 
 ***Note: Refer to Jan Phillip Dacallos for the private keys.***
-
-### 3. Run Locally with Docker
-```bash
-cd server
-docker-compose up --build
-```
-
-### 4. Access the App
-```bash
-cd ../
-cd client
-npm run dev
-```
-
-URL:
-```bash
-http://localhost:3001
-```
-Ngrok Interface
-```bash
-http://127.0.0.1:4040/inspect/http
-```
