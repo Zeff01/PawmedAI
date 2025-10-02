@@ -24,7 +24,7 @@ Refer to this Notion Link: https://www.notion.so/PawMed-AI-Team-Guidelines-2319f
 - **TypeScript**
 
 ### Backend
-- **NestJS**
+- **Express TS**
 - **OpenAI Vision API**
 - **Docker**
 - **pnpm**
