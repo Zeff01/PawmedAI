@@ -5,7 +5,7 @@
 ### 📌 GIT GUIDELINES:
 Refer to this Notion Link: https://www.notion.so/PawMed-AI-Team-Guidelines-2319f77caba0806fb99dfa7923cd381a?source=copy_link
 
-# 📚 DOCUMENTATIONS
+## 📚 DOCUMENTATIONS
 
 - [Docker Environment Setup](docs/docker-environment-setup.md)
 - [Branch Push Guidelines](docs/branch-push-guidelines.md)
