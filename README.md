@@ -1,14 +1,14 @@
 # 🐾 PawMed AI
 
-**PawMed AI** is an intelligent veterinary assistant powered by OpenAI’s Vision API. It helps pet owners and veterinarians classify and identify pet-related diseases through image analysis. The platform includes a modern frontend built with Next.js and a robust backend using NestJS.
+**PawMed AI** is an intelligent veterinary assistant powered by OpenAI’s Vision API. It helps pet owners and veterinarians classify and identify pet-related diseases through image analysis. The platform includes a modern frontend built with Next.js and a robust backend using ExpressTS.
 
 ### 📌 GIT GUIDELINES:
 Refer to this Notion Link: https://www.notion.so/PawMed-AI-Team-Guidelines-2319f77caba0806fb99dfa7923cd381a?source=copy_link
 
-# 📚 DOCUMENTATIONS
+### 📚 DOCUMENTATIONS
 
-- [Docker Environment Setup](docker-environment-setup.md)
-- [Branch Push Guidelines](branch-push-guidelines.md)
+- [Docker Environment Setup](docs/docker-environment-setup.md)
+- [Branch Push Guidelines](docs/branch-push-guidelines.md)
 
 ## 🧠 Features
 
