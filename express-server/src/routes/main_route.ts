@@ -1,7 +1,8 @@
 import express from 'express';
-import { classifyDissease } from '../controller/main_controller';
+import { classifyDissease, classifyDisseaseBasedOnUserInput } from '../controller/main_controller';
 
 export const mainRoute = express.Router();
 
 mainRoute.post('/', classifyDissease);
+mainRoute.post("/text", classifyDisseaseBasedOnUserInput);
 
