@@ -9,7 +9,7 @@ services:
       - "3001:3001"
     volumes:
       - ./client:/app
-      - /app/node_modules # ⬅️ Prevents host node_modules from overwriting container’s
+      - /app/node_modules
     env_file:
       - ./client/.env
     depends_on:
@@ -35,10 +35,10 @@ services:
     container_name: pawmed-server
     profiles: ["dev"]
     ports:
-      - "5000:5000"
+      - "5012:5000"
     volumes:
       - ./express-server:/app
-      - /app/node_modules # ⬅️ Same trick for server
+      - /app/node_modules
     env_file:
       - ./express-server/.env
     # depends_on:
@@ -51,7 +51,7 @@ services:
     container_name: pawmed-server-prod
     profiles: ["prod"]
     ports:
-      - "5000:5000"
+      - "5012:5000"
     env_file:
       - ./express-server/.env
     # depends_on:

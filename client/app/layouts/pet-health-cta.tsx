@@ -23,7 +23,7 @@ export function PetHealthCTA() {
 
         <div className="relative z-10 max-w-3xl mx-auto">
           <h2 className="text-3xl font-bold text-white mb-10 leading-tight">
-            Scan your pet&apos;s health — anytime, anywhere.
+            Diagnose smarter — anytime, anywhere.
           </h2>
 
           <Button
