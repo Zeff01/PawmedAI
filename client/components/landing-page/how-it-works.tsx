@@ -11,37 +11,39 @@ type PawMedStepsProps = {
 const PawMedSteps: PawMedStepsProps[] = [
   {
     title: "Upload a Photo",
-    instructions: "Take or upload a photo of your pet",
+    instructions:
+      "Take or upload a clinical photo of the animal’s skin or coat lesion.",
     paragraph:
-      "Capture a clear image of the affected area. No sign-up required, just a simple upload.",
+      "Capture a clear, well-lit image of the affected area — perfect for diagnostic learning or case documentation.",
     bullets: [
-      "Works with any recent photo from your gallery",
-      "Use your camera for real-time diagnosis",
-      "Privacy-first approach—we don't store your photos",
+      "Supports both clinical photos and case study uploads",
+      "Works seamlessly with your phone or desktop",
+      "Secure and private — images aren't stored or shared",
     ],
     image: "/assets/how_it_works_1.png",
   },
   {
-    title: "Instant AI Scan",
-    instructions: "Our AI scans for early signs of issues",
+    title: "AI-Powered Skin Analysis",
+    instructions:
+      "Our model identifies key dermatological patterns within seconds.",
     paragraph:
-      "PawMed AI analyzes your pet's skin for irritation, rashes, or abnormalities in seconds.",
+      "PawMed AI analyzes animal's skin for irritation, rashes, or abnormalities in seconds.",
     bullets: [
       "Trained on thousands of vet-verified cases",
-      "Detects potential health conditions with high accuracy",
-      "Results in under 10 seconds",
+      "Rapid assessment for academic or professional use",
+      "Insightful classification results in under 10 seconds",
     ],
     image: "/assets/how_it_works_2.png",
   },
   {
-    title: "Get your Report",
-    instructions: "Receive a simple, actionable report.",
+    title: "Generate a Clinical Report",
+    instructions: "Get a concise, data-informed diagnostic summary.",
     paragraph:
-      "You'll get an easy-to-understand report with insights from real vet data and next steps.",
+      "Receive an evidence-based report highlighting AI findings, possible differentials, and recommended next steps.",
     bullets: [
-      "Clear explanation of findings",
-      "Recommendations for home care",
-      "Guidance on when to see a vet",
+      "Simplified visual breakdown of results",
+      "Educational notes for students and interns",
+      "Reference guidance for further clinical evaluation",
     ],
     image: "/assets/how_it_works_3.png",
   },
@@ -58,8 +60,8 @@ export function HowItWorks() {
         </div>
         <h1 className="text-4xl font-bold">How Everything Comes Together</h1>
         <p className="text-lg">
-          Three simple steps to get insights about your pet&apos;s skin
-          condition
+          Three simple steps to analyze and interpret dermatological cases —
+          built for veterinary professionals and students
         </p>
         <div className=" flex flex-col gap-10 pt-10">
           {PawMedSteps.map((step, idx) => (
