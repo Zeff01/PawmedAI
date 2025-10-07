@@ -53,8 +53,8 @@ export function HeroBanner() {
 
         {/* Subtitle */}
         <div className="mb-10 max-w-2xl space-y-1 text-base md:text-2xl leading-tight">
-          <p>A new standard in early pet wellness.</p>
-          <p>Trusted by tech, grounded in care.</p>
+          <p>A new standard in veterinary diagnostics.</p>
+          <p>Trusted by experts, grounded in science.</p>
         </div>
 
         {/* Upload Widget */}
