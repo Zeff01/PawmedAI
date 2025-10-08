@@ -10,8 +10,8 @@ export default function VideoSection() {
             PawMed AI in Action
           </h2>
           <p className="max-w-[50%]">
-            Watch how easy it is to detect a pet&apos;s health condition with
-            PawMed AI
+            Watch how easily you can analyze veterinary skin cases with PawMed
+            AI
           </p>
         </div>
         <ul className="flex flex-col gap-4">
@@ -26,9 +26,11 @@ export default function VideoSection() {
               />
             </div>
             <div className="flex flex-col">
-              <p className="text-md font-bold text-[#1F2937]">Quick & Easy</p>
+              <p className="text-md font-bold text-[#1F2937]">
+                Quick & Accurate
+              </p>
               <p className="text-[#6B7280]">
-                Just upload a photo and get results in seconds
+                Upload a clinical image and get diagnostic insights in seconds
               </p>
             </div>
           </li>
@@ -64,7 +66,7 @@ export default function VideoSection() {
             <div className="flex flex-col">
               <p className="text-md font-bold text-[#1F2937]">Privacy First</p>
               <p className="text-[#6B7280]">
-                Your pet&apos;s photos aren&apos;t stored or shared
+                Clinical images are processed securely — never stored or shared
               </p>
             </div>
           </li>
