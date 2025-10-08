@@ -1,5 +1,5 @@
 1. Classify Image Endpoint
-    -This endpoint allows users to submit an 
+    -This endpoint allows user to submit an 
     image URL of an animal to receive a diagnosis.
 
     Endpoint URL:	http://localhost:3000/classify/image
