@@ -1,0 +1,20 @@
+1. Classify Image Endpoint
+    -This endpoint allows users to submit an 
+    image URL of an animal to receive a diagnosis.
+
+    Endpoint URL:	http://localhost:3000/classify/image
+    Method:	        POST
+    Content Type:	application/json
+    Sample Request: { "url": "image_url" }
+
+2. Classify Text Endpoint
+    -This endpoint allows users to submit a 
+    text description about an animal symptoms to receive
+    a diagnosis.
+
+
+    Endpoint URL:	http://localhost:3000/classify/text
+    Method:     	POST
+    Content Type:	application/json
+    Sample Request: { "text": "user_input" }
+

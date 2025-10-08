@@ -3,6 +3,6 @@ import { classifyDissease, classifyDisseaseBasedOnUserInput } from '../controlle
 
 export const mainRoute = express.Router();
 
-mainRoute.post('/', classifyDissease);
-mainRoute.post("/text", classifyDisseaseBasedOnUserInput);
+mainRoute.post('/image', classifyDissease);
+mainRoute.post('/text', classifyDisseaseBasedOnUserInput);
 

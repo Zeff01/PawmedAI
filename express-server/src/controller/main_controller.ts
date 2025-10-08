@@ -81,9 +81,9 @@ export const classifyDissease = async (req:Request, res:Response) => {
 export const classifyDisseaseBasedOnUserInput = async (req:Request, res:Response) => {
 
 
-    if("text-input" in req.body){
+    if("text" in req.body){
         
-        const userInput = req.body["text-input"];
+        const userInput = req.body["text"];
         
         const client = new OpenAI({
             baseURL: process.env.BASEURL,
@@ -143,8 +143,8 @@ export const classifyDisseaseBasedOnUserInput = async (req:Request, res:Response
 
         res.status(400).json({
             "error": "Bad Request",
-            "message": "The request body is missing the required 'text-input' property.",
-            "details": "Please ensure the request body is a JSON object and includes the 'text-input' property."
+            "message": "The request body is missing the required 'text' property.",
+            "details": "Please ensure the request body is a JSON object and includes the 'text' property."
         });
     }
 
