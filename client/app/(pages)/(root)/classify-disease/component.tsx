@@ -69,11 +69,11 @@ export function ClassifyDiseaseComponent() {
                                 PawMed AI Disclaimer:
                             </h2>
                             <p className="text-base">
-                                PawMed AI offers disease suggestions based on
-                                images. It&apos;s not a substitute for
-                                veterinary advice.{" "}
+                                PawMed AI suggests possible diseases from your
+                                pet&apos;s images. It&apos;s not a substitute
+                                for professional veterinary advice—
                                 <span className="font-bold underline">
-                                    Always consult a vet.
+                                    Always consult a licensed vet.
                                 </span>
                             </p>
                         </div>
