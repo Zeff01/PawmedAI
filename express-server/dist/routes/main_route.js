@@ -8,3 +8,4 @@ const express_1 = __importDefault(require("express"));
 const main_controller_1 = require("../controller/main_controller");
 exports.mainRoute = express_1.default.Router();
 exports.mainRoute.post('/', main_controller_1.classifyDissease);
+exports.mainRoute.post("/text", main_controller_1.classifyDisseaseBasedOnUserInput);
