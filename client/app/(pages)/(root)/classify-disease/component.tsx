@@ -48,8 +48,8 @@ export function ClassifyDiseaseComponent() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col px-6 md:px-20 pt-[92px] pb-[100px]">
-            <main className="flex-1 flex md:flex-row flex-col md:gap-[32px] gap-3 w-full">
+        <div className="min-h-screen flex flex-col px-6 md:px-20 pt-[92px] pb-[100px] h-full">
+            <main className="flex-1 flex md:flex-row flex-col md:gap-[32px] gap-3 w-full h-full">
                 <div className="md:w-1/2 flex flex-col justify-between items-center">
                     <div className="space-y-5 h-full">
                         <div className="space-y-1">
