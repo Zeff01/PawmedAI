@@ -4,8 +4,8 @@ dotenv.config();
 
 import express from "express";
 import cors from "cors";
-import { mainRoute } from "./routes/main_route";
-import { authRoute } from "./routes/auth";
+import { classify_disease_routes } from "./routes/classify_disease_routes";
+import { auth_routes } from "./routes/auth_routes";
 
 const app = express();
 
@@ -22,8 +22,8 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/classify", mainRoute);
-app.use("/auth", authRoute);
+app.use("/classify", classify_disease_routes);
+app.use("/auth", auth_routes);
 
 const PORT = Number(process.env.PORT) || 5000;
 

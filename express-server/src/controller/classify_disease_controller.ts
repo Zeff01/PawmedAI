@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config()
 
 
-export const classifyDissease = async (req:Request, res:Response) => {
+export const classify_dissease_based_on_image_url = async (req:Request, res:Response) => {
 
     if("url" in req.body){
         
@@ -44,6 +44,7 @@ export const classifyDissease = async (req:Request, res:Response) => {
             });
 
             try {
+        
                 const content:any = completion.choices[0].message.content;
 
                 const reparedJsonString = jsonrepair(content);
@@ -78,8 +79,7 @@ export const classifyDissease = async (req:Request, res:Response) => {
     }
 }
 
-export const classifyDisseaseBasedOnUserInput = async (req:Request, res:Response) => {
-
+export const classify_dissease_based_on_user_input = async (req:Request, res:Response) => {
 
     if("text" in req.body){
         
@@ -93,7 +93,7 @@ export const classifyDisseaseBasedOnUserInput = async (req:Request, res:Response
         try{
 
             const completion = await client.chat.completions.create({
-            model: "mistralai/mistral-small-3.2-24b-instruct:free",
+            model: "nvidia/nemotron-nano-12b-v2-vl:free",
             messages: [
                     {
                         role: "user",
@@ -115,6 +115,9 @@ export const classifyDisseaseBasedOnUserInput = async (req:Request, res:Response
             });
 
             try {
+
+                console.log((req as any).user)
+
                 const content:any = completion.choices[0].message.content;
 
                 const reparedJsonString = jsonrepair(content);
@@ -132,11 +135,17 @@ export const classifyDisseaseBasedOnUserInput = async (req:Request, res:Response
                 res.status(500).send(error.message)
             }
 
-        }catch(error:any){
+        }catch (error: any) {
+            console.log(error.message);
 
-            console.log(error.message)
+            if (error.status === 429) {
+                res.status(429).json({
+                    error: error.message
+                });
+                return;
+            }   
 
-            res.status(401).send(error.message)
+            res.status(500).send(error.message);
         }
 
     }else{
