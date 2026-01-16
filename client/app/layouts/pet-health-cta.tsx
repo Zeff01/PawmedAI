@@ -21,7 +21,7 @@ export function PetHealthCTA() {
           <Image src="/paw.svg" alt="paw" width={50} height={50} />
         </div>
 
-        <div className="relative z-10 max-w-3xl mx-auto">
+        <div className="relative max-w-3xl mx-auto">
           <h2 className="text-3xl font-bold text-white mb-10 leading-tight">
             Diagnose smarter — anytime, anywhere.
           </h2>
