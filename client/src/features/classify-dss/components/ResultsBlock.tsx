@@ -1,4 +1,4 @@
-import { CheckIcon } from '@heroicons/react/24/solid'
+import { CheckCircleIcon } from '@heroicons/react/24/solid'
 import { cleanText, splitIntoItems } from '../utils/text'
 
 function TreatmentBlock({ value }: { value: string }) {
@@ -11,8 +11,8 @@ function TreatmentBlock({ value }: { value: string }) {
             key={item}
             className="flex items-start gap-2.5 text-sm text-slate-600"
           >
-            <span className="mt-0.5 flex h-4.25 w-4.25 shrink-0 items-center justify-center rounded-md bg-blue-100 text-blue-600">
-              <CheckIcon />
+            <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-md bg-blue-100 text-blue-600">
+              <CheckCircleIcon className="h-2.5 w-2.5" />
             </span>
             {item}
           </li>
@@ -39,8 +39,8 @@ function BulletList({ items }: { items: string[] }) {
           key={item}
           className="flex items-start gap-2.5 text-sm text-slate-600"
         >
-          <span className="mt-0.5 flex h-4.25 w-4.25 shrink-0 items-center justify-center rounded-md bg-blue-100 text-blue-600">
-            <CheckIcon />
+          <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-md bg-blue-100 text-blue-600">
+            <CheckCircleIcon className="h-2.5 w-2.5" />
           </span>
           {item}
         </li>
