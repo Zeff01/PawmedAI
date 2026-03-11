@@ -164,43 +164,6 @@ Team members will:
 
 ---
 
-# Step 6 — Merge the Pull Request
-
-Use **Squash and Merge** when merging the PR.
-
-This keeps the commit history clean.
-
-Example result:
-
-```
-feat: add HomeView component and route
-fix: correct login validation logic
-```
-
----
-
-# Step 7 — Delete the Branch
-
-After the PR is merged, delete the branch.
-
-This keeps the repository clean.
-
-GitHub will show a **Delete branch** button after merging.
-
-You may also delete locally:
-
-```bash
-git branch -d feature/home-view
-```
-
-Or for fixes:
-
-```bash
-git branch -d fix/login-validation
-```
-
----
-
 # Important Rules
 
 1. Never commit directly to `main`, `staging`, or `sandbox`.
