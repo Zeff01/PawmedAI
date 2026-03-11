@@ -22,21 +22,6 @@ Client: `/Users/philip/Desktop/PawmedAI/client/.env.development`
 VITE_UC_PUB_KEY=...
 ```
 
-Optional for production:
-
-`/Users/philip/Desktop/PawmedAI/server/.env.production`
-
-```
-GOOGLE_API_KEY=...
-GEMINI_MODEL=gemini-2.5-flash
-```
-
-`/Users/philip/Desktop/PawmedAI/client/.env.production`
-
-```
-VITE_UC_PUB_KEY=...
-```
-
 ## Run (Development)
 
 From the repo root:
@@ -48,17 +33,6 @@ docker compose --profile dev up -d --build
 Services:
 
 - API: `http://localhost:8000`
-- Client: `http://localhost:3000`
-
-## Run (Production)
-
-```bash
-docker compose --profile prod up -d --build
-```
-
-Services:
-
-- API via Nginx: `http://localhost:8000`
 - Client: `http://localhost:3000`
 
 ## Test the API (Postman)
