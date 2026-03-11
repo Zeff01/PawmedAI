@@ -8,7 +8,7 @@ const navLinks = [{ to: '/', label: 'Classify' }]
 export function Header() {
   return (
     <header className="sticky top-0 z-40 bg-white/50 backdrop-blur-lg">
-      <div className="border-b px-14 border-slate-100 shadow-[0_1px_12px_rgba(15,28,63,0.06)]">
+      <div className="border-b px-0 md:px-14 border-slate-100 shadow-[0_1px_12px_rgba(15,28,63,0.06)]">
         <div className="page-wrap flex h-15.5 items-center justify-between px-5">
           <Link
             to="/"
@@ -52,7 +52,8 @@ export function Header() {
 
           <div className="flex items-center gap-2.5">
             <Button className="rounded-lg bg-blue-600 px-4 py-2 text-[12px] font-semibold text-white transition-all duration-150 hover:bg-blue-700 ">
-              <BeakerIcon /> Get Started
+              <BeakerIcon />{' '}
+              <span className="hidden md:block">Get Started</span>
             </Button>
           </div>
         </div>
