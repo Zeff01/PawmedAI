@@ -1,74 +1,84 @@
-# 🐾 PawMed AI
+# Pawmed AI
 
-**PawMed AI** is an intelligent veterinary assistant powered by OpenAI’s Vision API. It helps pet owners and veterinarians classify and identify pet-related diseases through image analysis. The platform includes a modern frontend built with Next.js and a robust backend using ExpressTS.
+Animal disease image classification with a Django REST API (Gemini via LangChain) and a React UI.
 
-### 📌 GIT GUIDELINES:
-Refer to this Notion Link: https://www.notion.so/PawMed-AI-Team-Guidelines-2319f77caba0806fb99dfa7923cd381a?source=copy_link
+## Prerequisites
 
-### 📚 DOCUMENTATIONS
+- Docker Desktop
+- Docker Compose v2
 
-- [Docker Environment Setup](docs/docker-environment-setup.md)
-- [Branch Push Guidelines](docs/branch-push-guidelines.md)
+## Environment Setup
 
-## 🧠 Features
+Server: `/Users/philip/Desktop/PawmedAI/server/.env.development`
 
-- 🐶 Upload pet images to detect potential diseases
-- 📷 Image classification using OpenAI Vision API
-- 🔐 Authentication and secure API integration
-- 🧾 PDF preview of diagnostic reports (mobile & desktop optimized)
-- ⚙️ Fully containerized with Docker
-- 📊 Scalable and modular architecture
-
-## 🛠 Tech Stack
-
-### Frontend
-- **Next.js**
-- **Tailwind CSS**
-- **ShadCN UI**
-- **React-PDF** for PDF rendering
-- **TypeScript**
-
-### Backend
-- **Express TS**
-- **OpenAI Vision API**
-- **Docker**
-- **pnpm**
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js v18+
-- pnpm
-- Docker
-- OpenAI API Key
-
-### 1. Clone the Repository
-
-```bash
-https://github.com/Zeff01/PawmedAI.git
-cd PawmedAI
-code .
+```
+GOOGLE_API_KEY=...
+GEMINI_MODEL=gemini-2.5-flash
 ```
 
-### 2. Setup Environment
+Client: `/Users/philip/Desktop/PawmedAI/client/.env.development`
 
-Create .env files in both client and server directories:
-
-**/client/.env**
-```bash
-NEXT_PUBLIC_UC_PUB_KEY=<yourkeyhere>
-NEXT_PUBLIC_UC_AUTH_SECRET_KEY=<yourkeyhere>
-RESEND_API_KEY=<yourkeyhere>
+```
+VITE_UC_PUB_KEY=...
 ```
 
-**/server/.env**
-```bash
-BASE_URL=<baseurlhere>
-API_KEY=<apikeyhere>
-LLM=<llmhere>
-NGROK_AUTHTOKEN=<ngroktokenhere>
+Optional for production:
+
+`/Users/philip/Desktop/PawmedAI/server/.env.production`
+
+```
+GOOGLE_API_KEY=...
+GEMINI_MODEL=gemini-2.5-flash
 ```
 
-***Note: Refer to Jan Phillip Dacallos for the private keys.***
+`/Users/philip/Desktop/PawmedAI/client/.env.production`
 
+```
+VITE_UC_PUB_KEY=...
+```
+
+## Run (Development)
+
+From the repo root:
+
+```bash
+docker compose --profile dev up -d --build
+```
+
+Services:
+
+- API: `http://localhost:8000`
+- Client: `http://localhost:3000`
+
+## Run (Production)
+
+```bash
+docker compose --profile prod up -d --build
+```
+
+Services:
+
+- API via Nginx: `http://localhost:8000`
+- Client: `http://localhost:3000`
+
+## Test the API (Postman)
+
+Endpoint:
+
+```
+POST http://localhost:8000/api/disease-classify/
+```
+
+Body (form-data):
+
+- Key: `image` (type: File)
+- Value: `<your-image-file>`
+
+## Notes
+
+- The client uses Uploadcare’s widget for file selection, but preserves the custom UI.
+- If dependencies change in the client, rebuild with:
+
+```bash
+docker compose --profile dev up -d --build client-dev
+```
