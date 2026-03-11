@@ -198,7 +198,7 @@ export function ClassifyDiseaseView() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 lg:grid-cols-1">
+            <div className="grid gap-2 grid-cols-1">
               {[
                 [
                   'What this means',
