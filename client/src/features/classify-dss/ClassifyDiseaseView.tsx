@@ -92,7 +92,7 @@ export function ClassifyDiseaseView() {
             <div className="flex items-center justify-between border-b border-slate-100 bg-blue-50/60 px-6 py-4">
               <div>
                 <p className="text-[14px] font-bold text-slate-800">
-                  Upload Patient Image Right Here
+                  Upload Patient Image
                 </p>
                 <p className="text-[12px] text-slate-400">
                   Drag & drop or click to browse
@@ -120,10 +120,18 @@ export function ClassifyDiseaseView() {
                 />
               )}
 
-              {errorMessage && (
+              {errorMessage ? (
                 <div className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-[12.5px] text-red-700">
                   <ExclamationCircleIcon className="h-4 w-4" />
                   <span>{errorMessage}</span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-1 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-[12.5px] text-amber-800">
+                  <ExclamationTriangleIcon className="h-4 w-4" />
+                  <span>
+                    You only have 3 tries per day. You can try again after 24
+                    hours.
+                  </span>
                 </div>
               )}
 

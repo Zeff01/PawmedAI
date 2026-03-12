@@ -11,11 +11,13 @@ from classify_dss.serializers import (
     DiseaseClassificationResponseSerializer,
 )
 from classify_dss.services.disease_classifier import DiseaseClassifier
+from classify_dss.throttles import DiseaseClassificationIPThrottle
 
 logger = logging.getLogger(__name__)
 
 class DiseaseClassificationAPIView(APIView):
     parser_classes = [MultiPartParser, FormParser]
+    throttle_classes = [DiseaseClassificationIPThrottle]
 
     def post(self, request):
         request_serializer = DiseaseClassificationRequestSerializer(

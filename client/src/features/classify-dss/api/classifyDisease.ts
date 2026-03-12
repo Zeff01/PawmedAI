@@ -18,9 +18,11 @@ export async function classifyDiseaseImage(
   if (!response.ok) {
     const errorPayload = await response.json().catch(() => null)
     const message =
-      typeof errorPayload?.detail === "string"
-        ? errorPayload.detail
-        : "Classification failed. Please try again."
+      response.status === 429
+        ? "You have reached the 3 classifications limit for today (Philippine time). Please try again after 24 hours."
+        : typeof errorPayload?.detail === "string"
+          ? errorPayload.detail
+          : "Classification failed. Please try again."
     throw new Error(message)
   }
 
