@@ -128,6 +128,17 @@ body {
   }
 }
 
+@keyframes rise-fade {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .animate-aurora {
   animation: aurora 60s linear infinite;
 }
@@ -135,6 +146,34 @@ body {
 .animate-scroll {
   animation: scroll var(--animation-duration, 40s)
     var(--animation-direction, forwards) linear infinite;
+}
+
+.animate-rise {
+  animation: rise-fade 0.9s ease both;
+}
+
+.animate-rise-delay-1 {
+  animation: rise-fade 0.9s ease both;
+  animation-delay: 0.1s;
+}
+
+.animate-rise-delay-2 {
+  animation: rise-fade 0.9s ease both;
+  animation-delay: 0.2s;
+}
+
+.animate-rise-delay-3 {
+  animation: rise-fade 0.9s ease both;
+  animation-delay: 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise,
+  .animate-rise-delay-1,
+  .animate-rise-delay-2,
+  .animate-rise-delay-3 {
+    animation: none;
+  }
 }
 
 .dark {
