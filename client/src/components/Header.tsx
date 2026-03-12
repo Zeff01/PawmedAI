@@ -3,7 +3,10 @@ import { Button } from './ui/button'
 import { BeakerIcon } from '@heroicons/react/24/solid'
 import { PawIcon } from './custom/custom-icons'
 
-const navLinks = [{ to: '/', label: 'Classify' }]
+const navLinks = [
+  { to: '/', label: 'Home' },
+  { to: '/classify', label: 'Classify' },
+]
 
 export function Header() {
   return (
@@ -51,9 +54,14 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-2.5">
-            <Button className="rounded-lg bg-blue-600 px-4 py-2 text-[12px] font-semibold text-white transition-all duration-150 hover:bg-blue-700 ">
-              <BeakerIcon />{' '}
-              <span className="hidden md:block">Get Started</span>
+            <Button
+              asChild
+              className="rounded-lg bg-blue-600 px-4 py-2 text-[12px] font-semibold text-white transition-all duration-150 hover:bg-blue-700 "
+            >
+              <Link to="/classify">
+                <BeakerIcon />
+                <span className="hidden md:block">Get Started</span>
+              </Link>
             </Button>
           </div>
         </div>

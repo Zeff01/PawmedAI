@@ -8,15 +8,13 @@ export const Route = createFileRoute('/home/')({
 
 function RouteComponent() {
   return (
-    <section className="px-5 py-8" aria-labelledby="home-title">
+    <section>
       <Seo
-        title="Home | Pawmed AI"
-        description="Explore Pawmed AI features for veterinary diagnostics."
-        canonicalPath="/home"
+        title="Pawmed AI | Veterinary Diagnostics"
+        description="AI-assisted veterinary diagnostics for faster, clearer clinical decisions."
+        canonicalPath="/"
+        noIndex
       />
-      <h1 id="home-title" className="text-2xl font-semibold text-slate-900">
-        Welcome to Pawmed AI
-      </h1>
       <HomeView />
     </section>
   )
