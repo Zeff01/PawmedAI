@@ -92,7 +92,7 @@ export function ClassifyDiseaseView() {
             <div className="flex items-center justify-between border-b border-slate-100 bg-blue-50/60 px-6 py-4">
               <div>
                 <p className="text-[14px] font-bold text-slate-800">
-                  Upload Patient Image
+                  Upload Patient Image Right Here
                 </p>
                 <p className="text-[12px] text-slate-400">
                   Drag & drop or click to browse
