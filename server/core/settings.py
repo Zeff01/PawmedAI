@@ -128,3 +128,17 @@ STATIC_URL = 'static/'
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
 ]
+
+# Caching (used for throttling)
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'disease-classify-throttle',
+    }
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_THROTTLE_RATES': {
+        'disease_classify': '3/day',
+    }
+}
