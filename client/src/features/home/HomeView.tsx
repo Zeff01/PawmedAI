@@ -525,7 +525,9 @@ function HomeView() {
             }}
           />
 
-          <Pill light>Get started today</Pill>
+          <div className="flex items-center justify-center">
+            <Pill light>Get started today</Pill>
+          </div>
 
           <h2 className="mt-4 text-3xl font-bold text-white md:text-4xl">
             Ready to elevate your diagnostics?
