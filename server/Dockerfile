@@ -24,4 +24,4 @@ EXPOSE 8000
 
 RUN chmod +x /app/entrypoint.sh
 ENTRYPOINT ["/app/entrypoint.sh"]
-CMD ["sh", "-c", "gunicorn core.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers 3"]
+CMD ["gunicorn", "core.wsgi:application", "-c", "gunicorn.conf.py"]

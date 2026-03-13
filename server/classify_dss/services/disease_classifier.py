@@ -6,17 +6,22 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 
 from config.pysecrets import GAPI_KEY, GEMINI_MODEL
 
+if not GAPI_KEY:
+    raise ValueError("Gemini API key not found.")
+
+_llm = ChatGoogleGenerativeAI(
+    model=GEMINI_MODEL, temperature=0.2, api_key=GAPI_KEY
+)
+
 
 class DiseaseClassifier:
     def __init__(self, model_name=None):
-        if not GAPI_KEY:
-            raise ValueError(
-                "Gemini API key not found in config/pysecrets.py."
+        if model_name:
+            self.model = ChatGoogleGenerativeAI(
+                model=model_name, temperature=0.2, api_key=GAPI_KEY
             )
-        resolved_model = model_name or GEMINI_MODEL
-        self.model = ChatGoogleGenerativeAI(
-            model=resolved_model, temperature=0.2, api_key=GAPI_KEY
-        )
+        else:
+            self.model = _llm 
 
     def classify(self, image_file):
         image_bytes = image_file.read()
