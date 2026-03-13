@@ -1,8 +1,11 @@
 import os
 
-from django.core.cache import cache
+from django.conf import settings
+from django.core.cache import cache, caches
 from django.http import JsonResponse
 from django.utils import timezone
+
+from classify_dss.throttles import DiseaseClassificationIPThrottle
 
 
 def health_check(request):
@@ -15,7 +18,11 @@ def health_check(request):
 
 
 def cache_health_check(request):
-    backend = f"{cache.__class__.__module__}.{cache.__class__.__name__}"
+    default_cache = caches["default"]
+    backend = (
+        f"{default_cache.__class__.__module__}."
+        f"{default_cache.__class__.__name__}"
+    )
     key = "health:cache_check"
     cache_ok = True
     cache_error = None
@@ -34,5 +41,24 @@ def cache_health_check(request):
             "cache_ok": cache_ok,
             "cache_error": cache_error,
             "redis_url_set": bool(os.getenv("REDIS_URL")),
+        }
+    )
+
+
+def throttle_health_check(request):
+    if not settings.DEBUG and not os.getenv("DJANGO_HEALTH_DEBUG"):
+        return JsonResponse({"detail": "Not found."}, status=404)
+
+    throttle = DiseaseClassificationIPThrottle()
+    cache_key = throttle.get_cache_key(request, None)
+    throttle_count = cache.get(cache_key) if cache_key else None
+
+    return JsonResponse(
+        {
+            "status": "ok",
+            "time": timezone.now().isoformat(),
+            "client_ident": throttle.get_ident(request),
+            "cache_key": cache_key,
+            "throttle_count": throttle_count,
         }
     )

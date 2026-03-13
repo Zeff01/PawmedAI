@@ -16,11 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from core.health import cache_health_check, health_check
+from core.health import cache_health_check, health_check, throttle_health_check
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/", include("classify_dss.urls")),
     path("health/", health_check, name="health_check"),
     path("health/cache/", cache_health_check, name="cache_health_check"),
+    path("health/throttle/", throttle_health_check, name="throttle_health_check"),
 ]
