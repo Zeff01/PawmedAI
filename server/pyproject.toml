@@ -7,6 +7,7 @@ requires-python = ">=3.13"
 dependencies = [
     "django>=6.0.3",
     "django-cors-headers>=4.7.0",
+    "dj-database-url>=2.2.0",
     "djangorestframework>=3.16.0",
     "gunicorn>=23.0.0",
     "google-genai>=1.66.0",
@@ -14,4 +15,5 @@ dependencies = [
     "langsmith>=0.7.16",
     "pillow>=12.1.1",
     "python-dotenv>=1.1.1",
+    "whitenoise>=6.6.0",
 ]
