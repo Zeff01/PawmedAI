@@ -51,7 +51,12 @@ def throttle_health_check(request):
 
     throttle = DiseaseClassificationIPThrottle()
     cache_key = throttle.get_cache_key(request, None)
-    throttle_count = cache.get(cache_key) if cache_key else None
+    throttle_count = None
+    cache_error = None
+    try:
+        throttle_count = cache.get(cache_key) if cache_key else None
+    except Exception as exc:
+        cache_error = exc.__class__.__name__
 
     return JsonResponse(
         {
@@ -60,5 +65,6 @@ def throttle_health_check(request):
             "client_ident": throttle.get_ident(request),
             "cache_key": cache_key,
             "throttle_count": throttle_count,
+            "cache_error": cache_error,
         }
     )

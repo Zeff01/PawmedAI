@@ -3,6 +3,7 @@ Django settings for core project.
 """
 
 import os
+import ssl
 from pathlib import Path
 
 import dj_database_url
@@ -122,21 +123,27 @@ CSRF_COOKIE_SECURE = DJANGO_CSRF_COOKIE_SECURE if not DEBUG else False
 
 # Cache & Throttling
 REDIS_URL = os.getenv('REDIS_URL')
+REDIS_USE_SSL = get_env_bool('DJANGO_REDIS_USE_SSL', not DEBUG)
+if REDIS_URL and REDIS_USE_SSL and REDIS_URL.startswith('redis://'):
+    REDIS_URL = f"rediss://{REDIS_URL[len('redis://'):]}"
+
+REDIS_SSL_CERT_REQS = os.getenv('DJANGO_REDIS_SSL_CERT_REQS', 'required').lower()
+REDIS_SSL_CERT_REQS_MAP = {
+    'required': ssl.CERT_REQUIRED,
+    'optional': ssl.CERT_OPTIONAL,
+    'none': ssl.CERT_NONE,
+}
+
 if REDIS_URL:
-    # Redis Cloud requires SSL — force rediss:// scheme
-    secure_url = (
-        REDIS_URL.replace('redis://', 'rediss://', 1)
-        if REDIS_URL.startswith('redis://')
-        else REDIS_URL
-    )
     CACHES = {
         'default': {
-            'BACKEND': 'django_redis.cache.RedisCache',
-            'LOCATION': secure_url,
-            'OPTIONS': {
-                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-                'CONNECTION_POOL_KWARGS': {'ssl_cert_reqs': None},
-            },
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': REDIS_URL,
+            'OPTIONS': (
+                {'ssl_cert_reqs': REDIS_SSL_CERT_REQS_MAP.get(REDIS_SSL_CERT_REQS)}
+                if REDIS_URL.startswith('rediss://')
+                else {}
+            ),
         }
     }
 else:
@@ -152,7 +159,15 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'disease_classify': '3/day',
     }
+    ,
+    # Trust one proxy (Render) so we use X-Forwarded-For for client IPs.
+    'NUM_PROXIES': 1,
 }
+
+# Throttling
+THROTTLE_TRUST_X_FORWARDED_FOR = get_env_bool(
+    "DJANGO_TRUST_X_FORWARDED_FOR", not DEBUG
+)
 
 # Logging — helps debug Redis connection issues in Render logs
 LOGGING = {
