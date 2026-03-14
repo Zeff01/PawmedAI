@@ -4,6 +4,10 @@ from django.conf import settings
 from django.utils import timezone
 from rest_framework.throttling import SimpleRateThrottle
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class DiseaseClassificationIPThrottle(SimpleRateThrottle):
     scope = "disease_classify"
@@ -26,3 +30,11 @@ class DiseaseClassificationIPThrottle(SimpleRateThrottle):
             "scope": self.scope,
             "ident": f"{ident}:{date_key}",
         }
+
+    def allow_request(self, request, view):
+        try:
+            return super().allow_request(request, view)
+        except Exception:
+            # If cache is down (e.g., Redis connection error), fail open.
+            logger.exception("Throttle cache unavailable; allowing request.")
+            return True
