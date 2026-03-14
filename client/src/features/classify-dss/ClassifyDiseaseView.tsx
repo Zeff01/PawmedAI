@@ -129,7 +129,7 @@ export function ClassifyDiseaseView() {
                 <div className="flex items-center gap-1 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-[12.5px] text-amber-800">
                   <ExclamationTriangleIcon className="h-4 w-4" />
                   <span>
-                    You only have 3 tries per day. You can try again after 24
+                    You only have 3 tries per day. You can try again after 10
                     hours.
                   </span>
                 </div>
