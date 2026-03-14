@@ -9,15 +9,11 @@ services:
       dockerfile: Dockerfile.dev
     env_file:
       - ./server/.env.development
-    environment:
-      - REDIS_URL=redis://redis:6379/0
     ports:
       - "8000:8000"
     volumes:
       - ./server:/app
     command: ["/opt/venv/bin/python", "manage.py", "runserver", "0.0.0.0:8000"]
-    depends_on:
-      - redis
 
   server-prod:
     profiles:
@@ -27,12 +23,8 @@ services:
       dockerfile: Dockerfile
     env_file:
       - ./server/.env.production
-    environment:
-      - REDIS_URL=redis://redis:6379/0
     expose:
       - "8000"
-    depends_on:
-      - redis
 
   nginx-prod:
     profiles:
@@ -70,14 +62,6 @@ services:
       - ./client/.env.production
     ports:
       - "3000:80"
-
-  redis:
-    image: redis:7-alpine
-    profiles:
-      - dev
-      - prod
-    ports:
-      - "6379:6379"
 
 volumes:
   client_node_modules:
