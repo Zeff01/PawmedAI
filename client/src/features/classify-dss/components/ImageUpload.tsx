@@ -170,7 +170,6 @@ export function ImageUpload({
 
   return (
     <>
-      {/* CameraModal is abstracted into its own component */}
       {cameraOpen && (
         <CameraModal
           onCapture={validateAndEmit}
@@ -237,7 +236,7 @@ export function ImageUpload({
               </p>
             </div>
 
-            <div className="mt-1 flex items-center gap-2">
+            <div className="mt-1 flex flex-col md:flex-row items-center gap-2">
               <button
                 type="button"
                 onClick={handleOpenBrowse}
