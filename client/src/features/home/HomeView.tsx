@@ -12,9 +12,11 @@ import {
   StarIcon,
 } from '@heroicons/react/24/solid'
 import type { ReactNode } from 'react'
-import { Button } from '#/components/ui/button'
+import { Button } from '@/components/ui/button'
+import { FadeStagger } from '@/components/motion/FadeStagger'
+import { FadeChild } from '@/components/motion/FadeChild'
+import { FadeIn } from '@/components/motion/FadeIn'
 
-// ─── Images ──────────────────────────────────────────────────────────────────
 const IMG: Record<string, string> = {
   hero: 'https://images.unsplash.com/photo-1581888227599-779811939961?w=900&q=80',
   brief:
@@ -32,7 +34,6 @@ const IMG: Record<string, string> = {
     'https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=600&q=80',
 }
 
-// ─── Pill — always self-sizing, never stretches ───────────────────────────────
 interface PillProps {
   children: ReactNode
   light?: boolean
@@ -54,7 +55,6 @@ function Pill({ children, light = false }: PillProps) {
   )
 }
 
-// ─── Section heading ──────────────────────────────────────────────────────────
 interface SectionHeadProps {
   pill: string
   heading: string
@@ -64,19 +64,25 @@ interface SectionHeadProps {
 
 function SectionHead({ pill, heading, sub, center = false }: SectionHeadProps) {
   return (
-    <div
+    <FadeStagger
       className={`flex flex-col gap-3 ${center ? 'items-center text-center' : ''}`}
     >
-      <Pill>{pill}</Pill>
-      <h2 className="text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
-        {heading}
-      </h2>
+      <FadeChild>
+        <Pill>{pill}</Pill>
+      </FadeChild>
+      <FadeChild>
+        <h2 className="text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
+          {heading}
+        </h2>
+      </FadeChild>
       {sub && (
-        <p className="max-w-2xl text-sm leading-relaxed text-slate-500 md:text-base">
-          {sub}
-        </p>
+        <FadeChild>
+          <p className="max-w-2xl text-sm leading-relaxed text-slate-500 md:text-base">
+            {sub}
+          </p>
+        </FadeChild>
       )}
-    </div>
+    </FadeStagger>
   )
 }
 
@@ -194,7 +200,6 @@ function StepCard({
 interface TrustItemProps {
   label: string
 }
-
 function TrustItem({ label }: TrustItemProps) {
   return (
     <span className="flex items-center gap-1">
@@ -205,14 +210,11 @@ function TrustItem({ label }: TrustItemProps) {
 }
 
 function HomeView() {
-  const trustItems: string[] = [
-    'HIPAA-aligned',
-    'No credit card',
-    'Clinic-ready UX',
-  ]
+  const trustItems = ['HIPAA-aligned', 'No credit card', 'Clinic-ready UX']
 
   return (
     <div className="bg-white text-slate-900 antialiased">
+      {/* ── HERO ── */}
       <section className="relative overflow-hidden px-6 pb-24 pt-16">
         <div
           aria-hidden="true"
@@ -224,67 +226,86 @@ function HomeView() {
         />
 
         <div className="mx-auto grid w-full max-w-6xl items-center gap-12 md:grid-cols-[1.1fr_0.9fr]">
-          <div className="flex flex-col items-center gap-6 text-center md:items-start md:text-left">
-            <Pill>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width="14"
-                height="14"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M11 2v2M5 2v2m0-1H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1" />
-                <path d="M8 15a6 6 0 0 0 12 0v-3" />
-                <circle cx="20" cy="10" r="2" />
-              </svg>
-              Veterinary intelligence
-            </Pill>
+          {/* Left — staggered mount */}
+          <FadeStagger
+            trigger="mount"
+            className="flex flex-col items-center gap-6 text-center md:items-start md:text-left"
+          >
+            <FadeChild>
+              <Pill>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="14"
+                  height="14"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M11 2v2M5 2v2m0-1H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1" />
+                  <path d="M8 15a6 6 0 0 0 12 0v-3" />
+                  <circle cx="20" cy="10" r="2" />
+                </svg>
+                Veterinary intelligence
+              </Pill>
+            </FadeChild>
 
-            <h1 className="text-4xl font-bold leading-[1.1] tracking-tight md:text-[3.5rem]">
-              <span className="text-blue-600">Diagnose faster</span>
-              <br />
-              with AI-crafted clinical briefs for pets.
-            </h1>
+            <FadeChild>
+              <h1 className="text-4xl font-bold leading-[1.1] tracking-tight md:text-[3.5rem]">
+                <span className="text-blue-600">Diagnose faster</span>
+                <br />
+                with AI-crafted clinical briefs for pets.
+              </h1>
+            </FadeChild>
 
-            <p className="max-w-lg text-base leading-relaxed text-slate-500 md:text-lg">
-              Pawmed AI transforms clinical photos into structured diagnostic
-              guidance so you can focus on care, not paperwork.
-            </p>
+            <FadeChild>
+              <p className="max-w-lg text-base leading-relaxed text-slate-500 md:text-lg">
+                Pawmed AI transforms clinical photos into structured diagnostic
+                guidance so you can focus on care, not paperwork.
+              </p>
+            </FadeChild>
 
-            <div className="flex flex-col items-center gap-3 sm:flex-row md:items-start">
-              <Button
-                asChild
-                size="lg"
-                className="gap-2 rounded-xl bg-blue-600 hover:bg-blue-700"
-              >
-                <Link to="/classify">
-                  Start a classification
-                  <ArrowRightIcon className="h-4 w-4" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="rounded-xl border-slate-200 text-slate-700 hover:bg-slate-50"
-              >
-                <a href="#features">See product tour</a>
-              </Button>
-            </div>
+            <FadeChild>
+              <div className="flex flex-col items-center gap-3 sm:flex-row md:items-start">
+                <Button
+                  asChild
+                  size="lg"
+                  className="gap-2 rounded-xl bg-blue-600 hover:bg-blue-700"
+                >
+                  <Link to="/classify">
+                    Start a classification
+                    <ArrowRightIcon className="h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="rounded-xl border-slate-200 text-slate-700 hover:bg-slate-50"
+                >
+                  <a href="#features">See product tour</a>
+                </Button>
+              </div>
+            </FadeChild>
 
-            <div className="mt-2 flex items-center gap-4 text-xs text-slate-400">
-              {trustItems.map((label) => (
-                <TrustItem key={label} label={label} />
-              ))}
-            </div>
-          </div>
+            <FadeChild>
+              <div className="mt-2 flex items-center gap-4 text-xs text-slate-400">
+                {trustItems.map((label) => (
+                  <TrustItem key={label} label={label} />
+                ))}
+              </div>
+            </FadeChild>
+          </FadeStagger>
 
-          {/* right — hero image */}
-          <div className="relative mx-auto w-full max-w-md md:max-w-none">
+          {/* Right — hero image */}
+          <FadeIn
+            trigger="mount"
+            direction="left"
+            delay={0.2}
+            className="relative mx-auto w-full max-w-md md:max-w-none"
+          >
             <div className="absolute -inset-6 rounded-[40px] bg-gradient-to-br from-blue-100 to-blue-50 opacity-70 blur-3xl" />
             <div className="relative overflow-hidden rounded-[28px] border border-blue-100 shadow-xl shadow-blue-100/40">
               <img
@@ -294,36 +315,47 @@ function HomeView() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
             </div>
-            <div className="absolute -bottom-5 right-5 flex items-center gap-2.5 rounded-2xl border border-blue-100 bg-white/95 px-4 py-2.5 shadow-lg shadow-blue-100/30 backdrop-blur-sm">
+            <FadeIn
+              trigger="mount"
+              direction="up"
+              delay={0.5}
+              className="absolute -bottom-5 right-5 flex items-center gap-2.5 rounded-2xl border border-blue-100 bg-white/95 px-4 py-2.5 shadow-lg shadow-blue-100/30 backdrop-blur-sm"
+            >
               <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-green-400" />
               <span className="text-xs font-semibold text-slate-700">
                 AI analysis ready
               </span>
-            </div>
-          </div>
+            </FadeIn>
+          </FadeIn>
         </div>
 
-        {/* metric strip */}
-        <div className="mx-auto mt-16 grid w-full max-w-6xl grid-cols-1 gap-4 sm:grid-cols-3">
-          <MetricCard
-            icon={<BoltIcon className="h-4 w-4" />}
-            label="Minutes to brief"
-            value="< 5"
-            detail="Case-ready summaries"
-          />
-          <MetricCard
-            icon={<ClipboardDocumentCheckIcon className="h-4 w-4" />}
-            label="Documentation"
-            value="Structured"
-            detail="Unified clinical notes"
-          />
-          <MetricCard
-            icon={<ShieldCheckIcon className="h-4 w-4" />}
-            label="Confidence cues"
-            value="Transparent"
-            detail="Explainable insights"
-          />
-        </div>
+        {/* Metric strip — scroll triggered */}
+        <FadeStagger className="mx-auto mt-16 grid w-full max-w-6xl grid-cols-1 gap-4 sm:grid-cols-3">
+          <FadeChild>
+            <MetricCard
+              icon={<BoltIcon className="h-4 w-4" />}
+              label="Minutes to brief"
+              value="< 5"
+              detail="Case-ready summaries"
+            />
+          </FadeChild>
+          <FadeChild>
+            <MetricCard
+              icon={<ClipboardDocumentCheckIcon className="h-4 w-4" />}
+              label="Documentation"
+              value="Structured"
+              detail="Unified clinical notes"
+            />
+          </FadeChild>
+          <FadeChild>
+            <MetricCard
+              icon={<ShieldCheckIcon className="h-4 w-4" />}
+              label="Confidence cues"
+              value="Transparent"
+              detail="Explainable insights"
+            />
+          </FadeChild>
+        </FadeStagger>
       </section>
 
       {/* ── FEATURES ── */}
@@ -334,33 +366,41 @@ function HomeView() {
             heading="Everything you need for diagnostic clarity."
             sub="Capture, analyze, and communicate veterinary findings in a single flow. Pawmed AI keeps every case consistent and audit-ready."
           />
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-            <FeatureCard
-              title="Rapid diagnostic briefs"
-              description="Turn a clinical photo into a structured, shareable brief in minutes."
-              icon={<BoltIcon className="h-4 w-4" />}
-              image={IMG.brief}
-              wide
-            />
-            <FeatureCard
-              title="Evidence-guided notes"
-              description="Surface the key differentials, observations, and next steps."
-              icon={<ClipboardDocumentCheckIcon className="h-4 w-4" />}
-              image={IMG.notes}
-            />
-            <FeatureCard
-              title="Veterinary-grade security"
-              description="Keep case data protected with secure, encrypted workflows."
-              icon={<ShieldCheckIcon className="h-4 w-4" />}
-              image={IMG.security}
-            />
-            <FeatureCard
-              title="Actionable analytics"
-              description="Track confidence, case trends, and operational lift over time."
-              icon={<ChartBarIcon className="h-4 w-4" />}
-              image={IMG.analytics}
-            />
-          </div>
+          <FadeStagger className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+            <FadeChild>
+              <FeatureCard
+                title="Rapid diagnostic briefs"
+                description="Turn a clinical photo into a structured, shareable brief in minutes."
+                icon={<BoltIcon className="h-4 w-4" />}
+                image={IMG.brief}
+                wide
+              />
+            </FadeChild>
+            <FadeChild>
+              <FeatureCard
+                title="Evidence-guided notes"
+                description="Surface the key differentials, observations, and next steps."
+                icon={<ClipboardDocumentCheckIcon className="h-4 w-4" />}
+                image={IMG.notes}
+              />
+            </FadeChild>
+            <FadeChild>
+              <FeatureCard
+                title="Veterinary-grade security"
+                description="Keep case data protected with secure, encrypted workflows."
+                icon={<ShieldCheckIcon className="h-4 w-4" />}
+                image={IMG.security}
+              />
+            </FadeChild>
+            <FadeChild>
+              <FeatureCard
+                title="Actionable analytics"
+                description="Track confidence, case trends, and operational lift over time."
+                icon={<ChartBarIcon className="h-4 w-4" />}
+                image={IMG.analytics}
+              />
+            </FadeChild>
+          </FadeStagger>
         </div>
       </section>
 
@@ -372,142 +412,160 @@ function HomeView() {
             heading="Designed for busy veterinary teams."
             center
           />
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-            <StepCard
-              step={1}
-              title="Capture"
-              description="Upload a clinical photo and add case context in seconds."
-              image={IMG.capture}
-              alt="Veterinarian capturing a clinical photo"
-              icon={<CameraIcon className="h-4 w-4" />}
-            />
-            <StepCard
-              step={2}
-              title="Analyze"
-              description="Review AI-guided findings, differentials, and suggestions."
-              image={IMG.analyze}
-              alt="Veterinarian analyzing clinical data"
-              icon={<MagnifyingGlassIcon className="h-4 w-4" />}
-            />
-            <StepCard
-              step={3}
-              title="Deliver"
-              description="Share structured briefs with your team and clients instantly."
-              image={IMG.deliver}
-              alt="Veterinarian sharing a clinical brief"
-              icon={<DocumentTextIcon className="h-4 w-4" />}
-            />
-          </div>
+          <FadeStagger className="grid grid-cols-1 gap-5 md:grid-cols-3">
+            <FadeChild>
+              <StepCard
+                step={1}
+                title="Capture"
+                description="Upload a clinical photo and add case context in seconds."
+                image={IMG.capture}
+                alt="Veterinarian capturing a clinical photo"
+                icon={<CameraIcon className="h-4 w-4" />}
+              />
+            </FadeChild>
+            <FadeChild>
+              <StepCard
+                step={2}
+                title="Analyze"
+                description="Review AI-guided findings, differentials, and suggestions."
+                image={IMG.analyze}
+                alt="Veterinarian analyzing clinical data"
+                icon={<MagnifyingGlassIcon className="h-4 w-4" />}
+              />
+            </FadeChild>
+            <FadeChild>
+              <StepCard
+                step={3}
+                title="Deliver"
+                description="Share structured briefs with your team and clients instantly."
+                image={IMG.deliver}
+                alt="Veterinarian sharing a clinical brief"
+                icon={<DocumentTextIcon className="h-4 w-4" />}
+              />
+            </FadeChild>
+          </FadeStagger>
         </div>
       </section>
 
       {/* ── FOR YOU ── */}
       <section className="px-6 py-24">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-12">
-          {/* heading */}
-          <div className="flex flex-col gap-3 items-center text-center">
-            <Pill>
-              <StarIcon className="h-3.5 w-3.5" />
-              <p>Built for you</p>
-            </Pill>
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
-              Your clinical edge, powered by AI.
-            </h2>
-            <p className="max-w-2xl text-sm leading-relaxed text-slate-500 md:text-base">
-              Whether you're still in school or running a full practice, Pawmed
-              AI meets you where you are — sharpening your instincts and
-              accelerating every case.
-            </p>
-          </div>
+          {/* Heading */}
+          <FadeStagger className="flex flex-col items-center gap-3 text-center">
+            <FadeChild>
+              <Pill>
+                <StarIcon className="h-3.5 w-3.5" />
+                <p>Built for you</p>
+              </Pill>
+            </FadeChild>
+            <FadeChild>
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
+                Your clinical edge, powered by AI.
+              </h2>
+            </FadeChild>
+            <FadeChild>
+              <p className="max-w-2xl text-sm leading-relaxed text-slate-500 md:text-base">
+                Whether you're still in school or running a full practice,
+                Pawmed AI meets you where you are — sharpening your instincts
+                and accelerating every case.
+              </p>
+            </FadeChild>
+          </FadeStagger>
 
-          {/* two audience cards */}
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          {/* Audience cards */}
+          <FadeStagger className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {/* Students */}
-            <div className="relative overflow-hidden rounded-3xl border border-blue-100 bg-gradient-to-br from-blue-50 to-white p-8 shadow-sm">
-              <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-md">
-                <BeakerIcon className="h-6 w-6" />
+            <FadeChild direction="left">
+              <div className="relative overflow-hidden rounded-3xl border border-blue-100 bg-gradient-to-br from-blue-50 to-white p-8 shadow-sm">
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-md">
+                  <BeakerIcon className="h-6 w-6" />
+                </div>
+                <p className="text-xs font-bold uppercase tracking-[0.3em] text-blue-500">
+                  Veterinary students
+                </p>
+                <h3 className="mt-2 text-2xl font-bold text-slate-900">
+                  Learn faster, retain more.
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-slate-500">
+                  Bridge the gap between textbook knowledge and real-world
+                  cases. Upload a clinical photo, see structured differentials,
+                  and build diagnostic confidence with every submission — long
+                  before you step into a clinic on your own.
+                </p>
+                <ul className="mt-5 flex flex-col gap-2">
+                  {[
+                    'Instant feedback on your differential thinking',
+                    'Evidence-backed breakdowns for self-study',
+                    'Build a personal case library as you go',
+                  ].map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-2 text-sm text-slate-600"
+                    >
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-400" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <p className="text-xs font-bold uppercase tracking-[0.3em] text-blue-500">
-                Veterinary students
-              </p>
-              <h3 className="mt-2 text-2xl font-bold text-slate-900">
-                Learn faster, retain more.
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-slate-500">
-                Bridge the gap between textbook knowledge and real-world cases.
-                Upload a clinical photo, see structured differentials, and build
-                diagnostic confidence with every submission — long before you
-                step into a clinic on your own.
-              </p>
-              <ul className="mt-5 flex flex-col gap-2">
-                {[
-                  'Instant feedback on your differential thinking',
-                  'Evidence-backed breakdowns for self-study',
-                  'Build a personal case library as you go',
-                ].map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-sm text-slate-600"
-                  >
-                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-400" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            </FadeChild>
 
             {/* Professionals */}
-            <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-900 to-slate-800 p-8 shadow-sm">
-              <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white shadow-md">
-                <ClipboardDocumentCheckIcon className="h-6 w-6" />
+            <FadeChild direction="right">
+              <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-900 to-slate-800 p-8 shadow-sm">
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white shadow-md">
+                  <ClipboardDocumentCheckIcon className="h-6 w-6" />
+                </div>
+                <p className="text-xs font-bold uppercase tracking-[0.3em] text-blue-300">
+                  Veterinary professionals
+                </p>
+                <h3 className="mt-2 text-2xl font-bold text-white">
+                  Move faster without compromising care.
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-slate-400">
+                  Cut documentation time, reduce cognitive load during busy
+                  shifts, and deliver structured briefs your whole care team can
+                  act on. Spend less time on paperwork and more time on what
+                  matters — the patient in front of you.
+                </p>
+                <ul className="mt-5 flex flex-col gap-2">
+                  {[
+                    'Structured briefs ready in under 5 minutes',
+                    'Consistent notes across your entire team',
+                    'Audit-ready records with zero extra effort',
+                  ].map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-2 text-sm text-slate-300"
+                    >
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-400" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <p className="text-xs font-bold uppercase tracking-[0.3em] text-blue-300">
-                Veterinary professionals
-              </p>
-              <h3 className="mt-2 text-2xl font-bold text-white">
-                Move faster without compromising care.
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-slate-400">
-                Cut documentation time, reduce cognitive load during busy
-                shifts, and deliver structured briefs your whole care team can
-                act on. Spend less time on paperwork and more time on what
-                matters — the patient in front of you.
-              </p>
-              <ul className="mt-5 flex flex-col gap-2">
-                {[
-                  'Structured briefs ready in under 5 minutes',
-                  'Consistent notes across your entire team',
-                  'Audit-ready records with zero extra effort',
-                ].map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-sm text-slate-300"
-                  >
-                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-400" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+            </FadeChild>
+          </FadeStagger>
 
-          {/* coming soon banner */}
-          <div className="flex items-center gap-4 rounded-2xl border border-blue-100 bg-blue-50 px-6 py-4">
-            <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-blue-300" />
-            <p className="text-sm text-slate-600">
-              <span className="font-semibold text-blue-700">
-                Coming soon for fur parents —
-              </span>{' '}
-              we're working on a version designed specifically for pet owners to
-              better understand their companion's health. Stay tuned.
-            </p>
-          </div>
+          {/* Coming soon banner */}
+          <FadeIn>
+            <div className="flex items-center gap-4 rounded-2xl border border-blue-100 bg-blue-50 px-6 py-4">
+              <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-blue-300" />
+              <p className="text-sm text-slate-600">
+                <span className="font-semibold text-blue-700">
+                  Coming soon for fur parents —{' '}
+                </span>
+                we're working on a version designed specifically for pet owners
+                to better understand their companion's health. Stay tuned.
+              </p>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
       {/* ── CTA ── */}
       <section className="px-6 pb-24 pt-0">
-        <div className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl border border-blue-100 bg-gradient-to-br from-blue-600 to-blue-500 p-12 text-center shadow-xl shadow-blue-200/40">
+        <FadeIn className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl border border-blue-100 bg-gradient-to-br from-blue-600 to-blue-500 p-12 text-center shadow-xl shadow-blue-200/40">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 opacity-[0.04]"
@@ -517,31 +575,37 @@ function HomeView() {
               backgroundSize: '32px 32px',
             }}
           />
-
-          <div className="flex items-center justify-center">
-            <Pill light>Get started today</Pill>
-          </div>
-
-          <h2 className="mt-4 text-3xl font-bold text-white md:text-4xl">
-            Ready to elevate your diagnostics?
-          </h2>
-          <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-blue-100 md:text-base">
-            Give your care team the clarity they deserve with a streamlined,
-            AI-supported workflow that saves hours every week.
-          </p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button
-              asChild
-              size="lg"
-              className="gap-2 rounded-xl bg-white text-blue-600 shadow-md hover:bg-blue-50"
-            >
-              <Link to="/classify">
-                Launch classification
-                <ArrowRightIcon className="h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </div>
+          <FadeStagger className="flex flex-col items-center gap-4">
+            <FadeChild>
+              <Pill light>Get started today</Pill>
+            </FadeChild>
+            <FadeChild>
+              <h2 className="text-3xl font-bold text-white md:text-4xl">
+                Ready to elevate your diagnostics?
+              </h2>
+            </FadeChild>
+            <FadeChild>
+              <p className="mx-auto max-w-xl text-sm leading-relaxed text-blue-100 md:text-base">
+                Give your care team the clarity they deserve with a streamlined,
+                AI-supported workflow that saves hours every week.
+              </p>
+            </FadeChild>
+            <FadeChild>
+              <div className="mt-4 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <Button
+                  asChild
+                  size="lg"
+                  className="gap-2 rounded-xl bg-white text-blue-600 shadow-md hover:bg-blue-50"
+                >
+                  <Link to="/classify">
+                    Launch classification
+                    <ArrowRightIcon className="h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
+            </FadeChild>
+          </FadeStagger>
+        </FadeIn>
       </section>
     </div>
   )
