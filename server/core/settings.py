@@ -151,12 +151,22 @@ if REDIS_URL:
                 else {}
             ),
         }
+        ,
+        'throttle_fallback': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'throttle-fallback',
+        }
     }
 else:
     CACHES = {
         'default': {
             'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
             'LOCATION': 'disease-classify-throttle',
+        }
+        ,
+        'throttle_fallback': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'throttle-fallback',
         }
     }
 

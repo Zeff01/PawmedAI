@@ -1,4 +1,5 @@
 import os
+from urllib.parse import urlparse
 
 from django.conf import settings
 from django.core.cache import cache, caches
@@ -23,15 +24,19 @@ def cache_health_check(request):
         f"{default_cache.__class__.__module__}."
         f"{default_cache.__class__.__name__}"
     )
+    redis_url = os.getenv("REDIS_URL") or ""
+    parsed = urlparse(redis_url) if redis_url else None
     key = "health:cache_check"
     cache_ok = True
     cache_error = None
+    cache_error_detail = None
     try:
         cache.set(key, "ok", timeout=30)
         cache_ok = cache.get(key) == "ok"
     except Exception as exc:
         cache_ok = False
         cache_error = exc.__class__.__name__
+        cache_error_detail = str(exc) or repr(exc)
 
     return JsonResponse(
         {
@@ -40,7 +45,11 @@ def cache_health_check(request):
             "cache_backend": backend,
             "cache_ok": cache_ok,
             "cache_error": cache_error,
+            "cache_error_detail": cache_error_detail,
             "redis_url_set": bool(os.getenv("REDIS_URL")),
+            "redis_tls": parsed.scheme == "rediss" if parsed else None,
+            "redis_host": parsed.hostname if parsed else None,
+            "redis_port": parsed.port if parsed else None,
         }
     )
 
