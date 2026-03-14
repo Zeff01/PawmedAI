@@ -14,6 +14,7 @@ import {
 } from '@heroicons/react/24/solid'
 import { Button } from '#/components/ui/button'
 import { formatBytes } from '#/utils/format-bytes'
+import ResultSkeletonLoader from './components/ResultSkeletonLoader'
 
 export function ClassifyDiseaseView() {
   const [imageFile, setImageFile] = React.useState<File | null>(null)
@@ -242,7 +243,7 @@ export function ClassifyDiseaseView() {
 
         <div className="py-5">
           {classifyMutation.isPending ? (
-            <ResultSkeleton />
+            <ResultSkeletonLoader />
           ) : classifyMutation.data ? (
             <ResultsSection
               result={classifyMutation.data}
@@ -257,31 +258,5 @@ export function ClassifyDiseaseView() {
         </div>
       </div>
     </main>
-  )
-}
-
-function ResultSkeleton() {
-  return (
-    <div className="overflow-hidden rounded-2xl border border-slate-200/70 bg-white shadow-[0_4px_20px_rgba(15,28,63,0.06)]">
-      <div className="h-28 bg-linear-to-br from-blue-200 to-blue-300" />
-      <div className="space-y-3 px-7 py-7">
-        {[100, 80, 60, 90, 70].map((w, i) => (
-          <div
-            key={i}
-            className="animate-shimmer h-3 rounded-full"
-            style={{ width: `${w}%`, marginBottom: i === 2 ? 20 : undefined }}
-          />
-        ))}
-        <div className="grid grid-cols-2 gap-4 pt-2">
-          {[75, 65, 80, 70].map((w, i) => (
-            <div
-              key={i}
-              className="animate-shimmer h-3 rounded-full"
-              style={{ width: `${w}%` }}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
   )
 }

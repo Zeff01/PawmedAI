@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   server-dev:
     profiles:
@@ -49,7 +47,7 @@ services:
       - "3000:3000"
     volumes:
       - ./client:/app
-      - client_node_modules:/app/node_modules
+      - /app/node_modules
     command: ["pnpm", "dev", "--host", "0.0.0.0", "--port", "3000"]
 
   client-prod:
@@ -62,6 +60,3 @@ services:
       - ./client/.env.production
     ports:
       - "3000:80"
-
-volumes:
-  client_node_modules:
