@@ -3,7 +3,6 @@ Django settings for core project.
 """
 
 import os
-import ssl
 from pathlib import Path
 
 import dj_database_url
@@ -17,6 +16,7 @@ from config.pysecrets import (
     DJANGO_SECRET_KEY,
     DJANGO_SECURE_SSL_REDIRECT,
     DJANGO_SESSION_COOKIE_SECURE,
+    DATABASE_URL,
     GAPI_KEY,
     GEMINI_MODEL,
     HUGGING_FACE_ENDPOINT_URL,
@@ -95,9 +95,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 # Database
+if not DATABASE_URL:
+    raise RuntimeError("DATABASE_URL is required (set via Supabase SB_* or DATABASE_URL).")
+
 DATABASES = {
     'default': dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        default=DATABASE_URL,
         conn_max_age=600,
     )
 }
@@ -127,48 +130,15 @@ SECURE_SSL_REDIRECT = DJANGO_SECURE_SSL_REDIRECT
 SESSION_COOKIE_SECURE = DJANGO_SESSION_COOKIE_SECURE if not DEBUG else False
 CSRF_COOKIE_SECURE = DJANGO_CSRF_COOKIE_SECURE if not DEBUG else False
 
-# Cache & Throttling
-REDIS_URL = os.getenv('REDIS_URL')
-REDIS_USE_SSL = get_env_bool('DJANGO_REDIS_USE_SSL', not DEBUG)
-if REDIS_URL and REDIS_USE_SSL and REDIS_URL.startswith('redis://'):
-    REDIS_URL = f"rediss://{REDIS_URL[len('redis://'):]}"
-
-REDIS_SSL_CERT_REQS = os.getenv('DJANGO_REDIS_SSL_CERT_REQS', 'required').lower()
-REDIS_SSL_CERT_REQS_MAP = {
-    'required': ssl.CERT_REQUIRED,
-    'optional': ssl.CERT_OPTIONAL,
-    'none': ssl.CERT_NONE,
+# Cache & Throttling (DB-backed)
+CACHE_TABLE = os.getenv('DJANGO_CACHE_TABLE', 'cache_table')
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': CACHE_TABLE,
+        'TIMEOUT': 86400,
+    }
 }
-
-if REDIS_URL:
-    CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-            'LOCATION': REDIS_URL,
-            'OPTIONS': (
-                {'ssl_cert_reqs': REDIS_SSL_CERT_REQS_MAP.get(REDIS_SSL_CERT_REQS)}
-                if REDIS_URL.startswith('rediss://')
-                else {}
-            ),
-        }
-        ,
-        'throttle_fallback': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'throttle-fallback',
-        }
-    }
-else:
-    CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'disease-classify-throttle',
-        }
-        ,
-        'throttle_fallback': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'throttle-fallback',
-        }
-    }
 
 # DRF
 REST_FRAMEWORK = {

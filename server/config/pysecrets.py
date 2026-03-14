@@ -1,4 +1,5 @@
 import os
+from urllib.parse import urlencode, urlparse, urlunparse, parse_qsl
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -24,6 +25,28 @@ HUGGING_FACE_MODEL = os.getenv(
     "HUGGING_FACE_MODEL", "Salesforce/blip-image-captioning-base"
 )
 HUGGING_FACE_ENDPOINT_URL = os.getenv("HUGGING_FACE_ENDPOINT_URL")
+
+# Supabase / Postgres
+SB_HOST = os.getenv("SB_HOST")
+SB_PORT = os.getenv("SB_PORT")
+SB_DB = os.getenv("SB_DB")
+SB_USER = os.getenv("SB_USER")
+SB_PWD = os.getenv("SB_PWD")
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL and all([SB_HOST, SB_PORT, SB_DB, SB_USER, SB_PWD]):
+    DATABASE_URL = (
+        f"postgresql://{SB_USER}:{SB_PWD}@{SB_HOST}:{SB_PORT}/{SB_DB}"
+    )
+
+# Ensure SSL is required for Supabase (pgbouncer typically needs it).
+if DATABASE_URL and DATABASE_URL.startswith("postgresql://"):
+    parsed = urlparse(DATABASE_URL)
+    query = dict(parse_qsl(parsed.query))
+    query.setdefault("sslmode", "require")
+    DATABASE_URL = urlunparse(
+        parsed._replace(query=urlencode(query))
+    )
 
 DJANGO_SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 DJANGO_DEBUG = os.getenv("DJANGO_DEBUG", "false").lower() == "true"

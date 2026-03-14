@@ -1,14 +1,8 @@
 from zoneinfo import ZoneInfo
 
-import logging
-
 from django.conf import settings
-from django.core.cache import caches
 from django.utils import timezone
-from rest_framework.exceptions import Throttled
 from rest_framework.throttling import SimpleRateThrottle
-
-logger = logging.getLogger(__name__)
 
 
 class DiseaseClassificationIPThrottle(SimpleRateThrottle):
@@ -25,25 +19,15 @@ class DiseaseClassificationIPThrottle(SimpleRateThrottle):
         ident = self.get_ident(request)
         if not ident:
             return None
-        # Reset at midnight Asia/Manila (Philippine time)
+        
+        # Reset every 10 hours in Asia/Manila (Philippine time)
         now = timezone.now().astimezone(ZoneInfo("Asia/Manila"))
         date_key = now.strftime("%Y%m%d")
+        bucket = now.hour // 10
         return self.cache_format % {
             "scope": self.scope,
-            "ident": f"{ident}:{date_key}",
+            "ident": f"{ident}:{date_key}:b{bucket}",
         }
 
     def allow_request(self, request, view):
-        try:
-            return super().allow_request(request, view)
-        except Exception:
-            # If Redis is down, fall back to local memory cache to keep limits.
-            logger.exception("Throttle cache unavailable; using fallback cache.")
-            try:
-                self.cache = caches["throttle_fallback"]
-                return super().allow_request(request, view)
-            except Exception:
-                logger.exception("Throttle fallback cache failed; rejecting request.")
-                raise Throttled(
-                    detail="Rate limiter unavailable. Please try again later."
-                )
+        return super().allow_request(request, view)
