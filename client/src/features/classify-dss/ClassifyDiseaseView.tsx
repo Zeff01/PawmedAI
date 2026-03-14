@@ -139,7 +139,7 @@ export function ClassifyDiseaseView() {
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <p className="flex items-center gap-1.5 text-[11px] text-slate-400">
                   <ShieldCheckIcon className="h-4 w-4 shrink-0" /> Your image is
-                  analyzed securely and never stored.
+                  analyzed securely and never stored. This is test code.
                 </p>
 
                 {/* Buttons: full-width stacked on mobile, auto-width side-by-side on sm+ */}
