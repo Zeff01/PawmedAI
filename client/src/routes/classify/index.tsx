@@ -33,7 +33,7 @@ function ClassifyDiseasePage() {
         </p>
       </header>
 
-      <div className="p-5 md:py-10 md:px-30 space-y-5">
+      <div className="p-5 md:py-10 xl:px-30 space-y-5">
         <ClassifyDiseaseView />
       </div>
     </section>

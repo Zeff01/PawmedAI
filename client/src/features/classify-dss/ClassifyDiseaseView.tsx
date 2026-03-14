@@ -51,7 +51,7 @@ export function ClassifyDiseaseView() {
     setImageFile(file)
     classifyMutation.reset()
 
-    setUploadProgress(0) // Simulate upload progress
+    setUploadProgress(0)
     setUploadStatus('uploading')
     let current = 0
     if (timerRef.current) clearInterval(timerRef.current)
@@ -123,12 +123,12 @@ export function ClassifyDiseaseView() {
 
               {errorMessage ? (
                 <div className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-[12.5px] text-red-700">
-                  <ExclamationCircleIcon className="h-4 w-4" />
+                  <ExclamationCircleIcon className="h-4 w-4 shrink-0 mt-0.5" />
                   <span>{errorMessage}</span>
                 </div>
               ) : (
-                <div className="flex items-center gap-1 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-[12.5px] text-amber-800">
-                  <ExclamationTriangleIcon className="h-4 w-4" />
+                <div className="flex items-start gap-2 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-[12.5px] text-amber-800">
+                  <ExclamationTriangleIcon className="h-4 w-4 shrink-0 mt-0.5" />
                   <span>
                     You only have 3 tries per day. You can try again after 10
                     hours.
@@ -136,19 +136,20 @@ export function ClassifyDiseaseView() {
                 </div>
               )}
 
-              <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <p className="flex items-center gap-1.5 text-[11px] text-slate-400">
-                  <ShieldCheckIcon className="h-4 w-4" /> Your image is analyzed
-                  securely and never stored.
+                  <ShieldCheckIcon className="h-4 w-4 shrink-0" /> Your image is
+                  analyzed securely and never stored.
                 </p>
 
-                <div className="flex flex-wrap items-center gap-2">
+                {/* Buttons: full-width stacked on mobile, auto-width side-by-side on sm+ */}
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                   <Button
                     type="button"
                     variant="outline"
                     onClick={() => openFileDialog?.()}
                     disabled={!imageFile}
-                    className="inline-flex items-center gap-2 rounded-md border-blue-200 px-4 py-5 text-xs font-semibold text-blue-600 transition hover:bg-blue-50 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-md border-blue-200 px-4 py-5 text-xs font-semibold text-blue-600 transition hover:bg-blue-50 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     <ArrowUpTrayIcon className="h-4 w-4" />
                     Reupload Photo
@@ -159,7 +160,7 @@ export function ClassifyDiseaseView() {
                     disabled={
                       uploadStatus !== 'done' || classifyMutation.isPending
                     }
-                    className="inline-flex items-center gap-2 rounded-md hover:bg-linear-to-b from-blue-500 to-blue-700 px-5 py-5 text-xs font-bold text-white transition-all duration-150 hover:-translate-y-px active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
+                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-md hover:bg-linear-to-b from-blue-500 to-blue-700 px-5 py-5 text-xs font-bold text-white transition-all duration-150 hover:-translate-y-px active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
                   >
                     {classifyMutation.isPending ? (
                       <>
@@ -221,7 +222,7 @@ export function ClassifyDiseaseView() {
               ].map(([label, value]) => (
                 <div
                   key={label}
-                  className={`${label.includes('What this means') ? 'bg-yellow-100 border-yellow-200' : 'bg-white border-slate-200/70'} rounded-lg border  px-4 py-3 shadow-[0_1px_6px_rgba(15,28,63,0.05)]`}
+                  className={`${label.includes('What this means') ? 'bg-yellow-100 border-yellow-200' : 'bg-white border-slate-200/70'} rounded-lg border px-4 py-3 shadow-[0_1px_6px_rgba(15,28,63,0.05)]`}
                 >
                   <p
                     className={`${label.includes('What this means') ? 'text-yellow-600 flex items-center gap-1' : 'text-blue-500'} text-[10px] font-bold uppercase tracking-wider`}

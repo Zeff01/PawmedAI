@@ -80,7 +80,6 @@ function SectionHead({ pill, heading, sub, center = false }: SectionHeadProps) {
   )
 }
 
-// ─── Metric card ─────────────────────────────────────────────────────────────
 interface MetricCardProps {
   icon: ReactNode
   label: string
@@ -90,7 +89,7 @@ interface MetricCardProps {
 
 function MetricCard({ icon, label, value, detail }: MetricCardProps) {
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-blue-100 bg-white p-5 shadow-sm">
+    <div className="flex flex-col rounded-2xl border border-blue-100 bg-white p-5 shadow-sm">
       <div className="flex items-center justify-between">
         <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-blue-400">
           {label}
@@ -107,7 +106,6 @@ function MetricCard({ icon, label, value, detail }: MetricCardProps) {
   )
 }
 
-// ─── Feature card ─────────────────────────────────────────────────────────────
 interface FeatureCardProps {
   title: string
   description: string
@@ -149,7 +147,6 @@ function FeatureCard({
   )
 }
 
-// ─── Step card ────────────────────────────────────────────────────────────────
 interface StepCardProps {
   step: number
   title: string
@@ -194,7 +191,6 @@ function StepCard({
   )
 }
 
-// ─── Trust item ───────────────────────────────────────────────────────────────
 interface TrustItemProps {
   label: string
 }
@@ -208,7 +204,6 @@ function TrustItem({ label }: TrustItemProps) {
   )
 }
 
-// ─── Main view ────────────────────────────────────────────────────────────────
 function HomeView() {
   const trustItems: string[] = [
     'HIPAA-aligned',
@@ -218,7 +213,6 @@ function HomeView() {
 
   return (
     <div className="bg-white text-slate-900 antialiased">
-      {/* ── HERO ── */}
       <section className="relative overflow-hidden px-6 pb-24 pt-16">
         <div
           aria-hidden="true"
@@ -230,7 +224,6 @@ function HomeView() {
         />
 
         <div className="mx-auto grid w-full max-w-6xl items-center gap-12 md:grid-cols-[1.1fr_0.9fr]">
-          {/* left */}
           <div className="flex flex-col items-center gap-6 text-center md:items-start md:text-left">
             <Pill>
               <svg
