@@ -10,7 +10,7 @@ if not GAPI_KEY:
     raise ValueError("Gemini API key not found.")
 
 _llm = ChatGoogleGenerativeAI(
-    model=GEMINI_MODEL, temperature=0.2, api_key=GAPI_KEY
+    model=GEMINI_MODEL, temperature=1, api_key=GAPI_KEY, thinking_budget=8000
 )
 
 
@@ -53,7 +53,7 @@ class DiseaseClassifier:
         message = HumanMessage(
             content=[
                 {"type": "text", "text": prompt},
-                {"type": "image_url", "image_url": {"url": image_data_url}},
+                {"type": "image_url", "image_url": {"url": image_data_url, "detail": "high"}},
             ]
         )
 
