@@ -28,6 +28,7 @@
     "clsx": "^2.1.1",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.2",
+    "lottie-react": "^2.4.1",
     "lucide-react": "^0.545.0",
     "radix-ui": "^1.4.3",
     "react": "^19.2.0",
