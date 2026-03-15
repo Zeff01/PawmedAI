@@ -95,7 +95,7 @@ export function CameraModal({ onCapture, onClose }: CameraModalProps) {
     const ia = new Uint8Array(ab)
     for (let i = 0; i < byteString.length; i++) ia[i] = byteString.charCodeAt(i)
     const blob = new Blob([ab], { type: 'image/jpeg' })
-    const file = new File([blob], `pawmed-capture-${Date.now()}.jpg`, {
+    const file = new File([blob], `pawmed-capture.jpg`, {
       type: 'image/jpeg',
     })
     onCapture(file)
