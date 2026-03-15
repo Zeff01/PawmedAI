@@ -29,9 +29,10 @@ class DiseaseClassificationAPIView(APIView):
             )
 
         uploaded_image = request_serializer.validated_data["image"]
+        mode = request_serializer.validated_data.get("mode", "professional")
         try:
             classifier = DiseaseClassifier()
-            result = classifier.classify(image_file=uploaded_image)
+            result = classifier.classify(image_file=uploaded_image, mode=mode)
         except ValueError as exc:
             return Response(
                 {"detail": str(exc)}, status=status.HTTP_422_UNPROCESSABLE_ENTITY

@@ -23,7 +23,7 @@ class DiseaseClassifier:
         else:
             self.model = _llm 
 
-    def classify(self, image_file):
+    def classify(self, image_file, mode="professional"):
         image_bytes = image_file.read()
         if not image_bytes:
             raise ValueError("Uploaded image is empty.")
@@ -32,23 +32,10 @@ class DiseaseClassifier:
         encoded_image = base64.b64encode(image_bytes).decode("utf-8")
         image_data_url = f"data:{content_type};base64,{encoded_image}"
 
-        prompt = (
-            "You are a veterinary assistant. Analyze the animal image and identify "
-            "the most likely disease. Respond ONLY with valid JSON using this schema:\n"
-            "{\n"
-            "  \"disease_name\": string,\n"
-            "  \"short_description\": string,\n"
-            "  \"clinical_diagnosis\": string,\n"
-            "  \"possible_causes\": [string],\n"
-            "  \"symptoms\": [string],\n"
-            "  \"recommended_treatment\": string,\n"
-            "  \"confidence\": integer (0-100),\n"
-            "  \"additional_notes\": string (optional)\n"
-            "}\n"
-            "If the disease cannot be determined, provide the best possible guess "
-            "and include uncertainties in \"additional_notes\". Provide a "
-            "confidence score as an integer from 0 to 100."
-        )
+        normalized_mode = (mode or "professional").strip().lower()
+        if normalized_mode not in {"student", "professional"}:
+            normalized_mode = "professional"
+        prompt = build_prompt(mode=normalized_mode)
 
         message = HumanMessage(
             content=[
@@ -72,3 +59,71 @@ class DiseaseClassifier:
                 return json.loads(cleaned)
             except json.JSONDecodeError as exc:
                 raise ValueError("AI returned invalid JSON.") from exc
+
+
+def build_prompt(mode: str = "professional") -> str:
+    base_schema = """
+{
+  "disease_name": string,
+  "short_description": string,
+  "clinical_diagnosis": string,
+  "possible_causes": [string],
+  "symptoms": [string],
+  "recommended_treatment": string,
+  "confidence": integer (0-100),
+  "additional_notes": string (optional)
+}"""
+
+    student_extra = """
+  "differential_diagnoses": [
+    {
+      "name": string,
+      "reason_excluded": string
+    }
+  ],
+  "pathophysiology": string,
+  "visual_cues": [string],
+  "study_topics": [string]"""
+
+    professional_extra = """
+  "treatment_protocol": {
+    "medications": [string],
+    "dosage_notes": string,
+    "duration": string
+  },
+  "escalation_criteria": [string],
+  "differential_diagnoses": [string]"""
+
+    if mode == "student":
+        schema = base_schema.replace(
+            '"additional_notes": string (optional)\n}',
+            '"additional_notes": string (optional),'
+            + student_extra + '\n}'
+        )
+        persona = (
+            "You are a veterinary education assistant helping a veterinary student "
+            "learn through real clinical cases. Analyze the animal image and identify "
+            "the most likely disease. Explain your reasoning clearly, include what "
+            "visual cues support the diagnosis, list differential diagnoses with reasons "
+            "they were excluded, and suggest study topics to help the student learn more."
+        )
+    else:
+        schema = base_schema.replace(
+            '"additional_notes": string (optional)\n}',
+            '"additional_notes": string (optional),'
+            + professional_extra + '\n}'
+        )
+        persona = (
+            "You are a veterinary clinical assistant helping an experienced veterinary "
+            "professional. Analyze the animal image and identify the most likely disease. "
+            "Be concise and clinically precise. Include specific treatment protocols "
+            "with medications and dosages, and flag any escalation criteria."
+        )
+
+    return (
+        f"{persona}\n\n"
+        f"Respond ONLY with valid JSON using this schema:\n{schema}\n\n"
+        "If the disease cannot be determined, provide the best possible guess "
+        "and include uncertainties in \"additional_notes\". "
+        "Provide a confidence score as an integer from 0 to 100."
+    )
