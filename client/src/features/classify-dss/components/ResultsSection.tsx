@@ -1,13 +1,14 @@
-import type { DiseaseClassificationResult } from '#/features/classify-dss/types'
+import type { DiseaseClassificationResult } from '@/features/classify-dss/types'
 import {
   ArrowDownTrayIcon,
   CheckCircleIcon,
   ExclamationCircleIcon,
 } from '@heroicons/react/24/solid'
-import { Button } from '#/components/ui/button'
+import { Button } from '@/components/ui/button'
 import { useDownloadPdf } from '../hooks/useDownloadPdf'
 import { BulletList, SectionLabel, TreatmentBlock } from './ResultsBlock'
 import { isNonAnimalResult } from '../utils/is-non-animal-result'
+import { useUserTypeStore } from '@/stores/userTypeStore'
 
 function Divider() {
   return (
@@ -23,6 +24,8 @@ export function ResultsSection({
   previewUrl: string | null
 }) {
   const handleDownloadPdf = useDownloadPdf(result, previewUrl)
+  const userType = useUserTypeStore((state) => state.userType)
+  const isProfessional = userType === 'professional'
 
   if (isNonAnimalResult(result)) {
     return (
@@ -54,6 +57,28 @@ export function ResultsSection({
     )
   }
 
+  if (isProfessional) {
+    return (
+      <ProfessionalResults result={result} onDownload={handleDownloadPdf} />
+    )
+  }
+
+  return <StudentResults result={result} onDownload={handleDownloadPdf} />
+}
+
+function StudentResults({
+  result,
+  onDownload,
+}: {
+  result: DiseaseClassificationResult
+  onDownload: () => void
+}) {
+  const differential =
+    Array.isArray(result.differential_diagnoses) &&
+    result.differential_diagnoses.length > 0
+      ? result.differential_diagnoses
+      : null
+
   return (
     <div className="animate-rise-in overflow-hidden rounded-2xl border border-slate-200/70 bg-white shadow-[0_4px_30px_rgba(15,28,63,0.09)]">
       <div className="relative flex flex-col md:flex-row space-y-5 md:space-y-0 justify-between overflow-hidden bg-linear-to-br from-blue-800 via-blue-700 to-blue-600 px-7 py-8">
@@ -75,7 +100,7 @@ export function ResultsSection({
           <Button
             type="button"
             variant="outline"
-            onClick={handleDownloadPdf}
+            onClick={onDownload}
             className="inline-flex items-center gap-2 rounded-md border-white/40 bg-white px-4 py-2 text-xs font-semibold text-blue-500 transition hover:bg-blue-500/20 hover:text-white"
           >
             <ArrowDownTrayIcon className="h-4 w-4" />
@@ -85,13 +110,6 @@ export function ResultsSection({
       </div>
 
       <div className="space-y-6 px-7 py-7 text-sm font-medium">
-        <div>
-          <SectionLabel>Clinical Diagnosis</SectionLabel>
-          <p className="leading-relaxed text-slate-600">
-            {result.clinical_diagnosis}
-          </p>
-        </div>
-        <Divider />
         <div className="grid gap-6 sm:grid-cols-2">
           <div>
             <SectionLabel>Possible Causes</SectionLabel>
@@ -107,6 +125,67 @@ export function ResultsSection({
           <SectionLabel>Recommended Treatment</SectionLabel>
           <TreatmentBlock value={result.recommended_treatment} />
         </div>
+        {result.pathophysiology && (
+          <>
+            <Divider />
+            <div>
+              <SectionLabel>Pathophysiology</SectionLabel>
+              <p className="leading-relaxed text-slate-600">
+                {result.pathophysiology}
+              </p>
+            </div>
+          </>
+        )}
+        {result.visual_cues && result.visual_cues.length > 0 && (
+          <>
+            <Divider />
+            <div>
+              <SectionLabel>Visual Cues</SectionLabel>
+              <BulletList items={result.visual_cues} />
+            </div>
+          </>
+        )}
+        {differential && (
+          <>
+            <Divider />
+            <div>
+              <SectionLabel>Differential Diagnoses</SectionLabel>
+              <ul className="flex flex-col gap-2">
+                {differential.map((item) => {
+                  if (typeof item === 'string') {
+                    return (
+                      <li key={item} className="text-sm text-slate-600">
+                        {item}
+                      </li>
+                    )
+                  }
+                  return (
+                    <li
+                      key={item.name}
+                      className="rounded-lg border border-blue-100 bg-blue-50/60 px-4 py-3 text-sm text-slate-600"
+                    >
+                      <p className="font-semibold text-slate-800">
+                        {item.name}
+                      </p>
+                      <p className="mt-1 text-xs text-slate-600">
+                        {item.reason_excluded}
+                      </p>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          </>
+        )}
+        {result.study_topics && result.study_topics.length > 0 && (
+          <>
+            <Divider />
+            <div>
+              <SectionLabel>Study Topics</SectionLabel>
+              <BulletList items={result.study_topics} />
+            </div>
+          </>
+        )}
         {result.additional_notes && (
           <>
             <Divider />
@@ -123,4 +202,151 @@ export function ResultsSection({
       </div>
     </div>
   )
+}
+
+function ProfessionalResults({
+  result,
+  onDownload,
+}: {
+  result: DiseaseClassificationResult
+  onDownload: () => void
+}) {
+  const differential =
+    Array.isArray(result.differential_diagnoses) &&
+    result.differential_diagnoses.length > 0
+      ? result.differential_diagnoses
+      : null
+
+  return (
+    <div className="animate-rise-in overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-[0_6px_28px_rgba(15,23,42,0.08)]">
+      <div className="flex flex-col gap-3 border-b border-slate-100 bg-slate-900 px-6 py-4 text-white sm:flex-row sm:items-start sm:justify-between">
+        <div className="space-y-1">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-300">
+            Clinical Summary
+          </p>
+          <h2 className="text-3xl font-semibold">{result.disease_name}</h2>
+          <p className="max-w-3xl text-sm text-slate-200">
+            {result.short_description}
+          </p>
+        </div>
+        <div className="flex flex-col gap-2 text-left sm:text-right">
+          <div className="flex items-center gap-2 text-[.6em] border border-gray-600 bg-gray-700 py-1 px-3 rounded-full">
+            <p className="uppercase tracking-[0.2em] text-slate-300">
+              Confidence:
+            </p>
+            <p className="font-semibold">
+              {typeof result.confidence === 'number'
+                ? `${result.confidence}%`
+                : 'N/A'}
+            </p>
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onDownload}
+            className="inline-flex items-center gap-2 rounded-md border-white/30 bg-white px-3 py-1.5 text-[11px] font-semibold text-slate-900 transition hover:bg-white/90"
+          >
+            <ArrowDownTrayIcon className="h-3.5 w-3.5" />
+            Export PDF
+          </Button>
+        </div>
+      </div>
+
+      <div className="text-[12px] text-slate-700">
+        <KeyValueRow label="Possible causes">
+          <InlineList items={result.possible_causes} />
+        </KeyValueRow>
+        <KeyValueRow label="Symptoms">
+          <InlineList items={result.symptoms} />
+        </KeyValueRow>
+        <KeyValueRow label="Recommended treatment">
+          <span className="text-slate-700">{result.recommended_treatment}</span>
+        </KeyValueRow>
+        {result.treatment_protocol && (
+          <>
+            <KeyValueRow label="Medications">
+              <InlineList items={result.treatment_protocol.medications} />
+            </KeyValueRow>
+            <KeyValueRow label="Dosage notes">
+              <StructuredText value={result.treatment_protocol.dosage_notes} />
+            </KeyValueRow>
+            <KeyValueRow label="Duration">
+              {result.treatment_protocol.duration}
+            </KeyValueRow>
+          </>
+        )}
+        {differential && (
+          <KeyValueRow label="Differential diagnoses">
+            <InlineList
+              items={differential.map((item) =>
+                typeof item === 'string' ? item : item.name,
+              )}
+            />
+          </KeyValueRow>
+        )}
+        {result.escalation_criteria &&
+          result.escalation_criteria.length > 0 && (
+            <KeyValueRow label="Escalation criteria">
+              <InlineList items={result.escalation_criteria} />
+            </KeyValueRow>
+          )}
+        {result.additional_notes && (
+          <KeyValueRow label="Additional notes">
+            {result.additional_notes}
+          </KeyValueRow>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function KeyValueRow({
+  label,
+  children,
+}: {
+  label: string
+  children: React.ReactNode
+}) {
+  return (
+    <div className="grid gap-2 p-5 border-b border-slate-100 sm:grid-cols-[180px_1fr] sm:items-start">
+      <p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-500">
+        {label}
+      </p>
+      <div className="text-sm font-medium leading-5 text-slate-700">
+        {children}
+      </div>
+    </div>
+  )
+}
+
+function InlineList({ items }: { items: string[] }) {
+  return (
+    <div className="flex flex-wrap gap-x-2 gap-y-1">
+      {items.map((item) => (
+        <span
+          key={item}
+          className="rounded-md font-medium border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs text-slate-700"
+        >
+          {item}
+        </span>
+      ))}
+    </div>
+  )
+}
+
+function StructuredText({ value }: { value: string }) {
+  const cleaned = value.replace(/\*\*/g, '').trim()
+  const numberedSplit = cleaned.split(/\s*\d+\.\s+/).filter(Boolean)
+  if (numberedSplit.length > 1) {
+    return (
+      <ul className="flex flex-col gap-2">
+        {numberedSplit.map((item) => (
+          <li key={item} className="text-[12px] text-slate-700">
+            {item.trim()}
+          </li>
+        ))}
+      </ul>
+    )
+  }
+  return <span className="text-[12px] text-slate-700">{cleaned}</span>
 }
