@@ -18,6 +18,8 @@ import ResultSkeletonLoader from './components/ResultSkeletonLoader'
 import { FadeStagger } from '@/components/motion/FadeStagger'
 import { FadeChild } from '@/components/motion/FadeChild'
 import { FadeIn } from '@/components/motion/FadeIn'
+import { UserTypeDialog } from './components/UserTypeDialog'
+import { useUserTypeStore, type UserType } from '@/stores/userTypeStore'
 
 export function ClassifyDiseaseView() {
   const [imageFile, setImageFile] = React.useState<File | null>(null)
@@ -32,7 +34,23 @@ export function ClassifyDiseaseView() {
     (() => void) | null
   >(null)
 
+  const userType = useUserTypeStore((state) => state.userType)
+  const openDialog = useUserTypeStore((state) => state.openDialog)
+  const prevUserTypeRef = React.useRef<UserType | null>(null)
+
   const classifyMutation = useClassifyDisease()
+
+  React.useEffect(() => {
+    openDialog()
+  }, [openDialog])
+
+  React.useEffect(() => {
+    if (prevUserTypeRef.current && userType !== prevUserTypeRef.current) {
+      classifyMutation.reset()
+      setLocalError(null)
+    }
+    prevUserTypeRef.current = userType
+  }, [userType, classifyMutation])
 
   React.useEffect(() => {
     if (!imageFile) {
@@ -79,6 +97,10 @@ export function ClassifyDiseaseView() {
   }
 
   const handleSubmit = () => {
+    if (!userType) {
+      openDialog()
+      return
+    }
     if (!imageFile || uploadStatus !== 'done') return
     classifyMutation.mutate(imageFile)
   }
@@ -87,6 +109,7 @@ export function ClassifyDiseaseView() {
 
   return (
     <main className="relative z-10 min-h-screen pb-24">
+      <UserTypeDialog />
       <div className="page-wrap flex flex-col gap-6">
         <FadeStagger
           trigger="mount"
@@ -95,7 +118,7 @@ export function ClassifyDiseaseView() {
           {/* ── Upload card ── */}
           <FadeChild direction="up">
             <div className="overflow-hidden rounded-xl border border-slate-200/70 bg-white shadow-[0_2px_20px_rgba(15,28,63,0.07)]">
-              <div className="flex items-center justify-between border-b border-slate-100 bg-blue-50/60 px-6 py-4">
+              <div className="flex flex-col gap-3 border-b border-slate-100 bg-blue-50/60 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <p className="text-[14px] font-bold text-slate-800">
                     Upload Patient Image
@@ -103,6 +126,23 @@ export function ClassifyDiseaseView() {
                   <p className="text-[12px] text-slate-400">
                     Drag & drop or click to browse
                   </p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="rounded-full border border-blue-200 bg-white px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-blue-600">
+                    {userType
+                      ? userType === 'professional'
+                        ? 'Veterinary professional'
+                        : 'Veterinary student'
+                      : 'Select profile'}
+                  </span>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={openDialog}
+                    className="h-8 rounded-full border-blue-200 px-3 text-[11px] font-semibold text-blue-600 hover:bg-blue-50"
+                  >
+                    Switch
+                  </Button>
                 </div>
               </div>
 

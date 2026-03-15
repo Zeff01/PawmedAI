@@ -7,4 +7,19 @@ export type DiseaseClassificationResult = {
   recommended_treatment: string
   confidence?: number
   additional_notes?: string
+  differential_diagnoses?:
+    | string[]
+    | {
+        name: string
+        reason_excluded: string
+      }[]
+  pathophysiology?: string
+  visual_cues?: string[]
+  study_topics?: string[]
+  treatment_protocol?: {
+    medications: string[]
+    dosage_notes: string
+    duration: string
+  }
+  escalation_criteria?: string[]
 }
