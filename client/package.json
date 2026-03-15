@@ -24,6 +24,7 @@
     "@tanstack/react-router-devtools": "latest",
     "@tanstack/router-plugin": "^1.132.0",
     "@uploadcare/react-uploader": "^1.13.0",
+    "@radix-ui/react-dialog": "latest",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "html2canvas": "^1.4.1",
