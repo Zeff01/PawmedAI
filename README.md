@@ -27,7 +27,7 @@ VITE_UC_PUB_KEY=...
 From the repo root:
 
 ```bash
-docker compose --profile dev up -d --build
+docker-compose --profile dev up -d --build
 ```
 
 Services:
