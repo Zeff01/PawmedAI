@@ -214,6 +214,8 @@ function HomeView() {
 
   return (
     <div className="bg-white text-slate-900 antialiased">
+      <div>test</div>
+
       {/* ── HERO ── */}
       <section className="relative overflow-hidden px-6 pb-24 pt-16">
         <div
