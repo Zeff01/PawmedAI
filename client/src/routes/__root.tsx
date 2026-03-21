@@ -35,15 +35,17 @@ function RootComponent() {
       <footer className="border-t border-slate-100 bg-white/60 px-5 py-6 text-center text-xs text-slate-400">
         <p>Pawmed AI • Veterinary diagnostics</p>
       </footer>
-      <TanStackDevtools
-        config={{ position: 'bottom-right' }}
-        plugins={[
-          {
-            name: 'TanStack Router',
-            render: <TanStackRouterDevtoolsPanel />,
-          },
-        ]}
-      />
+      {import.meta.env.DEV && (
+        <TanStackDevtools
+          config={{ position: 'bottom-right' }}
+          plugins={[
+            {
+              name: 'TanStack Router',
+              render: <TanStackRouterDevtoolsPanel />,
+            },
+          ]}
+        />
+      )}
     </>
   )
 }
