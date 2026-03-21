@@ -22,6 +22,9 @@ from config.pysecrets import (
     HUGGING_FACE_ENDPOINT_URL,
     HUGGING_FACE_KEY,
     HUGGING_FACE_MODEL,
+    VAPID_PRIVATE_KEY,
+    VAPID_PUBLIC_KEY,
+    VAPID_SUBJECT,
 )
 
 def get_env_bool(name: str, default: bool = False) -> bool:
@@ -52,6 +55,7 @@ CSRF_TRUSTED_ORIGINS = [
 INSTALLED_APPS = [
     'rest_framework',
     'classify_dss',
+    'notifications',
     'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -140,6 +144,10 @@ REST_FRAMEWORK = {
     ,
     'NUM_PROXIES': 1,
 }
+
+VAPID_PUBLIC_KEY = VAPID_PUBLIC_KEY
+VAPID_PRIVATE_KEY = VAPID_PRIVATE_KEY
+VAPID_SUBJECT = VAPID_SUBJECT
 
 # Throttling
 THROTTLE_TRUST_X_FORWARDED_FOR = get_env_bool(
