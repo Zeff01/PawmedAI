@@ -30,10 +30,8 @@ def get_env_bool(name: str, default: bool = False) -> bool:
         return default
     return value.strip().lower() in {"1", "true", "yes", "on"}
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
 DEBUG = DJANGO_DEBUG
 SECRET_KEY = DJANGO_SECRET_KEY
 if not SECRET_KEY:
@@ -94,7 +92,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-# Database
 if not DATABASE_URL:
     raise RuntimeError("DATABASE_URL is required (set via Supabase SB_* or DATABASE_URL).")
 
@@ -105,7 +102,6 @@ DATABASES = {
     )
 }
 
-# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -119,18 +115,15 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Static files
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Security
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = DJANGO_SECURE_SSL_REDIRECT
 SESSION_COOKIE_SECURE = DJANGO_SESSION_COOKIE_SECURE if not DEBUG else False
 CSRF_COOKIE_SECURE = DJANGO_CSRF_COOKIE_SECURE if not DEBUG else False
 
-# Cache & Throttling (DB-backed)
 CACHE_TABLE = os.getenv('DJANGO_CACHE_TABLE', 'cache_table')
 CACHES = {
     'default': {
@@ -140,13 +133,11 @@ CACHES = {
     }
 }
 
-# DRF
 REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'disease_classify': '3/day',
     }
     ,
-    # Trust one proxy (Render) so we use X-Forwarded-For for client IPs.
     'NUM_PROXIES': 1,
 }
 
@@ -155,7 +146,6 @@ THROTTLE_TRUST_X_FORWARDED_FOR = get_env_bool(
     "DJANGO_TRUST_X_FORWARDED_FOR", not DEBUG
 )
 
-# Logging — helps debug Redis connection issues in Render logs
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

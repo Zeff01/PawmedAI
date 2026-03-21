@@ -4,7 +4,6 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-# Prefer explicit env file or .env.development when present, fallback to .env
 env_file = os.getenv("ENV_FILE")
 if env_file:
     load_dotenv(env_file)
@@ -26,7 +25,6 @@ HUGGING_FACE_MODEL = os.getenv(
 )
 HUGGING_FACE_ENDPOINT_URL = os.getenv("HUGGING_FACE_ENDPOINT_URL")
 
-# Supabase / Postgres
 SB_HOST = os.getenv("SB_HOST")
 SB_PORT = os.getenv("SB_PORT")
 SB_DB = os.getenv("SB_DB")
@@ -39,7 +37,6 @@ if not DATABASE_URL and all([SB_HOST, SB_PORT, SB_DB, SB_USER, SB_PWD]):
         f"postgresql://{SB_USER}:{SB_PWD}@{SB_HOST}:{SB_PORT}/{SB_DB}"
     )
 
-# Ensure SSL is required for Supabase (pgbouncer typically needs it).
 if DATABASE_URL and DATABASE_URL.startswith("postgresql://"):
     parsed = urlparse(DATABASE_URL)
     query = dict(parse_qsl(parsed.query))
