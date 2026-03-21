@@ -64,8 +64,8 @@ export async function showLocalNotification({
   const registration = await navigator.serviceWorker.ready
   await registration.showNotification(title, {
     body,
-    icon: '/icons/paw.png',
-    badge: '/favicon/favicon.ico',
+    icon: '/favicon/web-app-manifest-512x512.png',
+    badge: '/favicon/favicon-96x96.png',
     data: { url: url ?? '/' },
   })
 }

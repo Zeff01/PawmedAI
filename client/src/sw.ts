@@ -45,8 +45,8 @@ self.addEventListener('push', (event) => {
 
       const options: NotificationOptions = {
         body,
-        icon: '/icons/paw.png',
-        badge: '/favicon/favicon.ico',
+        icon: '/favicon/web-app-manifest-512x512.png',
+        badge: '/favicon/favicon-96x96.png',
         data: { url },
       }
 
