@@ -5,6 +5,7 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 import '../styles.css'
 import { Header } from '#/components/Header'
 import { SiteStructuredData } from '#/components/SiteStructuredData'
+import { PushNotificationsToggle } from '#/components/PushNotificationsToggle'
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -27,6 +28,9 @@ function RootComponent() {
       </main>
 
       <footer className="border-t border-slate-100 bg-white/60 px-5 py-6 text-center text-xs text-slate-400">
+        <div className="mb-3 flex justify-center">
+          <PushNotificationsToggle />
+        </div>
         <p>Pawmed AI • Veterinary diagnostics</p>
       </footer>
       <TanStackDevtools

@@ -15,6 +15,7 @@ dependencies = [
     "langsmith>=0.7.16",
     "pillow>=12.1.1",
     "python-dotenv>=1.1.1",
+    "pywebpush>=2.0.3",
     "psycopg[binary]>=3.2.0",
     "whitenoise>=6.6.0",
 ]
