@@ -65,7 +65,7 @@ export async function showLocalNotification({
   await registration.showNotification(title, {
     body,
     icon: '/favicon/web-app-manifest-512x512.png',
-    badge: '/favicon/favicon-96x96.png',
+    badge: '/icons/paw-badge-96.png',
     data: { url: url ?? '/' },
   })
 }
