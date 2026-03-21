@@ -108,7 +108,7 @@ export function Header() {
       )}
 
       {/* Mobile Drawer Panel */}
-      <div
+      <aside
         className={`fixed right-0 top-0 z-50 flex h-full w-72 flex-col bg-white shadow-2xl transition-transform duration-300 ease-in-out md:hidden ${
           mobileOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
@@ -181,7 +181,7 @@ export function Header() {
             AI-powered veterinary diagnostics
           </p>
         </div>
-      </div>
+      </aside>
     </>
   )
 }

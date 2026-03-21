@@ -108,7 +108,7 @@ export function ClassifyDiseaseView() {
   const errorMessage = localError ?? classifyMutation.error?.message ?? null
 
   return (
-    <main className="relative z-10 min-h-screen pb-24">
+    <section className="relative z-10 min-h-screen pb-24">
       <UserTypeDialog />
       <div className="page-wrap flex flex-col gap-6">
         <FadeStagger
@@ -117,12 +117,15 @@ export function ClassifyDiseaseView() {
         >
           {/* ── Upload card ── */}
           <FadeChild direction="up">
-            <div className="overflow-hidden rounded-xl border border-slate-200/70 bg-white shadow-[0_2px_20px_rgba(15,28,63,0.07)]">
-              <div className="flex flex-col gap-3 border-b border-slate-100 bg-blue-50/60 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+            <section
+              className="overflow-hidden rounded-xl border border-slate-200/70 bg-white shadow-[0_2px_20px_rgba(15,28,63,0.07)]"
+              aria-labelledby="upload-card-title"
+            >
+              <header className="flex flex-col gap-3 border-b border-slate-100 bg-blue-50/60 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <p className="text-[14px] font-bold text-slate-800">
+                  <h2 id="upload-card-title" className="text-[14px] font-bold text-slate-800">
                     Upload Patient Image
-                  </p>
+                  </h2>
                   <p className="text-[12px] text-slate-400">
                     Drag & drop or click to browse
                   </p>
@@ -144,7 +147,7 @@ export function ClassifyDiseaseView() {
                     Switch
                   </Button>
                 </div>
-              </div>
+              </header>
 
               <div className="p-6 space-y-8">
                 <ImageUpload
@@ -219,42 +222,45 @@ export function ClassifyDiseaseView() {
                   </div>
                 </div>
               </div>
-            </div>
+            </section>
           </FadeChild>
 
           {/* ── Right panel ── */}
           <FadeChild direction="up" duration={0.6}>
-            <div className="flex flex-col gap-5">
-              <div className="rounded-xl border border-blue-200/70 bg-blue-50 p-5 shadow-[0_2px_20px_rgba(15,28,63,0.06)]">
-                <div className="mb-1 flex items-center gap-1.5">
+            <aside className="flex flex-col gap-5">
+              <section
+                className="rounded-xl border border-blue-200/70 bg-blue-50 p-5 shadow-[0_2px_20px_rgba(15,28,63,0.06)]"
+                aria-labelledby="benefits-title"
+              >
+                <header className="mb-1 flex items-center gap-1.5">
                   <QuestionMarkCircleIcon className="h-4 w-4 text-blue-500" />
                   <p className="text-[10.5px] font-bold uppercase tracking-wider text-blue-600">
                     What you will get
                   </p>
-                </div>
-                <h2 className="mt-1 text-[15px] font-bold text-slate-900">
+                </header>
+                <h3 id="benefits-title" className="mt-1 text-[15px] font-bold text-slate-900">
                   A structured clinical brief
-                </h2>
-                <div className="mt-4 space-y-2.5">
+                </h3>
+                <ul className="mt-4 space-y-2.5 list-none p-0 m-0">
                   {[
                     'Disease name and short summary',
                     'Clinical diagnosis narrative',
                     'Possible causes and symptoms',
                     'Treatment guidance and notes',
                   ].map((item) => (
-                    <div key={item} className="flex items-start gap-2.5">
+                    <li key={item} className="flex items-start gap-2.5">
                       <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-md bg-blue-100 text-blue-600">
                         <CheckCircleIcon className="h-2.5 w-2.5" />
                       </span>
                       <span className="text-[12.5px] text-slate-600">
                         {item}
                       </span>
-                    </div>
+                    </li>
                   ))}
-                </div>
-              </div>
+                </ul>
+              </section>
 
-              <div className="grid gap-2 grid-cols-1">
+              <dl className="grid gap-2 grid-cols-1">
                 {[
                   [
                     'What this means',
@@ -270,7 +276,7 @@ export function ClassifyDiseaseView() {
                     key={label}
                     className={`${label.includes('What this means') ? 'bg-yellow-100 border-yellow-200' : 'bg-white border-slate-200/70'} rounded-lg border px-4 py-3 shadow-[0_1px_6px_rgba(15,28,63,0.05)]`}
                   >
-                    <p
+                    <dt
                       className={`${label.includes('What this means') ? 'text-yellow-600 flex items-center gap-1' : 'text-blue-500'} text-[10px] font-bold uppercase tracking-wider`}
                     >
                       {label.includes('What this means') ? (
@@ -281,12 +287,12 @@ export function ClassifyDiseaseView() {
                       ) : (
                         label
                       )}
-                    </p>
-                    <p className="mt-1 text-[12.5px] text-slate-700">{value}</p>
+                    </dt>
+                    <dd className="mt-1 text-[12.5px] text-slate-700">{value}</dd>
                   </div>
                 ))}
-              </div>
-            </div>
+              </dl>
+            </aside>
           </FadeChild>
         </FadeStagger>
 
@@ -307,6 +313,6 @@ export function ClassifyDiseaseView() {
           )}
         </FadeIn>
       </div>
-    </main>
+    </section>
   )
 }

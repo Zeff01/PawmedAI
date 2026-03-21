@@ -1,7 +1,7 @@
 import { motion } from 'motion/react'
-import type { ReactNode } from 'react'
+import type { ReactNode, HTMLAttributes } from 'react'
 
-interface FadeStaggerProps {
+interface FadeStaggerProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode
   staggerDelay?: number
   once?: boolean
@@ -17,6 +17,7 @@ export function FadeStagger({
   amount = 0.1,
   className,
   trigger = 'scroll',
+  ...rest
 }: FadeStaggerProps) {
   const variants = {
     hidden: {},
@@ -30,6 +31,7 @@ export function FadeStagger({
         initial="hidden"
         animate="show"
         className={className}
+        {...rest}
       >
         {children}
       </motion.div>
@@ -43,6 +45,7 @@ export function FadeStagger({
       whileInView="show"
       viewport={{ once, amount }}
       className={className}
+      {...rest}
     >
       {children}
     </motion.div>

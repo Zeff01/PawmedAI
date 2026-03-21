@@ -95,20 +95,20 @@ interface MetricCardProps {
 
 function MetricCard({ icon, label, value, detail }: MetricCardProps) {
   return (
-    <div className="flex flex-col rounded-2xl border border-blue-100 bg-white p-5 shadow-sm">
-      <div className="flex items-center justify-between">
+    <article className="flex flex-col rounded-2xl border border-blue-100 bg-white p-5 shadow-sm" role="listitem">
+      <header className="flex items-center justify-between">
         <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-blue-400">
           {label}
         </p>
         <span className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600">
           {icon}
         </span>
-      </div>
+      </header>
       <div>
         <p className="text-2xl font-bold text-slate-900">{value}</p>
         <p className="mt-0.5 text-xs text-slate-400">{detail}</p>
       </div>
-    </div>
+    </article>
   )
 }
 
@@ -128,10 +128,11 @@ function FeatureCard({
   wide = false,
 }: FeatureCardProps) {
   return (
-    <div
+    <article
       className={`group relative flex flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition-shadow hover:shadow-md ${wide ? 'md:col-span-2' : ''}`}
+      role="listitem"
     >
-      <div className="relative h-44 overflow-hidden">
+      <figure className="relative h-44 overflow-hidden">
         <img
           src={image}
           alt={title}
@@ -139,17 +140,17 @@ function FeatureCard({
           loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/30" />
-      </div>
+      </figure>
       <div className="flex flex-1 flex-col gap-2 p-5">
-        <div className="flex items-center gap-2">
+        <header className="flex items-center gap-2">
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600">
             {icon}
           </span>
           <h3 className="font-semibold text-slate-900">{title}</h3>
-        </div>
+        </header>
         <p className="text-sm leading-relaxed text-slate-500">{description}</p>
       </div>
-    </div>
+    </article>
   )
 }
 
@@ -171,8 +172,8 @@ function StepCard({
   icon,
 }: StepCardProps) {
   return (
-    <div className="group flex flex-col gap-4 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
-      <div className="relative h-36 overflow-hidden rounded-xl">
+    <article className="group flex flex-col gap-4 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-md" role="listitem">
+      <figure className="relative h-36 overflow-hidden rounded-xl">
         <img
           src={image}
           alt={alt}
@@ -183,7 +184,7 @@ function StepCard({
         <span className="absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-blue-600 shadow-sm">
           {icon}
         </span>
-      </div>
+      </figure>
       <div>
         <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-blue-400">
           Step {step}
@@ -193,7 +194,7 @@ function StepCard({
           {description}
         </p>
       </div>
-    </div>
+    </article>
   )
 }
 
@@ -202,10 +203,10 @@ interface TrustItemProps {
 }
 function TrustItem({ label }: TrustItemProps) {
   return (
-    <span className="flex items-center gap-1">
+    <li className="flex items-center gap-1">
       <span className="h-1.5 w-1.5 rounded-full bg-blue-400" />
       {label}
-    </span>
+    </li>
   )
 }
 
@@ -291,11 +292,11 @@ function HomeView() {
             </FadeChild>
 
             <FadeChild>
-              <div className="mt-2 flex items-center gap-4 text-xs text-slate-400">
+              <ul className="mt-2 flex items-center gap-4 text-xs text-slate-400 list-none p-0 m-0">
                 {trustItems.map((label) => (
                   <TrustItem key={label} label={label} />
                 ))}
-              </div>
+              </ul>
             </FadeChild>
           </FadeStagger>
 
@@ -330,7 +331,10 @@ function HomeView() {
         </div>
 
         {/* Metric strip — scroll triggered */}
-        <FadeStagger className="mx-auto mt-16 grid w-full max-w-6xl grid-cols-1 gap-4 sm:grid-cols-3">
+        <FadeStagger
+          className="mx-auto mt-16 grid w-full max-w-6xl grid-cols-1 gap-4 sm:grid-cols-3"
+          role="list"
+        >
           <FadeChild>
             <MetricCard
               icon={<BoltIcon className="h-4 w-4" />}
@@ -366,7 +370,7 @@ function HomeView() {
             heading="Everything you need for diagnostic clarity."
             sub="Capture, analyze, and communicate veterinary findings in a single flow. Pawmed AI keeps every case consistent and audit-ready."
           />
-          <FadeStagger className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+          <FadeStagger className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3" role="list">
             <FadeChild>
               <FeatureCard
                 title="Rapid diagnostic briefs"
@@ -412,7 +416,7 @@ function HomeView() {
             heading="Designed for busy veterinary teams."
             center
           />
-          <FadeStagger className="grid grid-cols-1 gap-5 md:grid-cols-3">
+          <FadeStagger className="grid grid-cols-1 gap-5 md:grid-cols-3" role="list">
             <FadeChild>
               <StepCard
                 step={1}
@@ -455,7 +459,7 @@ function HomeView() {
             <FadeChild>
               <Pill>
                 <StarIcon className="h-3.5 w-3.5" />
-                <p>Built for you</p>
+                <span>Built for you</span>
               </Pill>
             </FadeChild>
             <FadeChild>
@@ -473,10 +477,10 @@ function HomeView() {
           </FadeStagger>
 
           {/* Audience cards */}
-          <FadeStagger className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <FadeStagger className="grid grid-cols-1 gap-6 md:grid-cols-2" role="list">
             {/* Students */}
             <FadeChild direction="left">
-              <div className="relative overflow-hidden rounded-3xl border border-blue-100 bg-gradient-to-br from-blue-50 to-white p-8 shadow-sm">
+              <article className="relative overflow-hidden rounded-3xl border border-blue-100 bg-gradient-to-br from-blue-50 to-white p-8 shadow-sm" role="listitem">
                 <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-md">
                   <BeakerIcon className="h-6 w-6" />
                 </div>
@@ -507,12 +511,12 @@ function HomeView() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </article>
             </FadeChild>
 
             {/* Professionals */}
             <FadeChild direction="right">
-              <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-900 to-slate-800 p-8 shadow-sm">
+              <article className="relative overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-900 to-slate-800 p-8 shadow-sm" role="listitem">
                 <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white shadow-md">
                   <ClipboardDocumentCheckIcon className="h-6 w-6" />
                 </div>
@@ -543,7 +547,7 @@ function HomeView() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </article>
             </FadeChild>
           </FadeStagger>
 
