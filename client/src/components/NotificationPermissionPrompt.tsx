@@ -25,6 +25,8 @@ export function NotificationPermissionPrompt() {
 
   const handleEnable = async () => {
     setLoading(true)
+    setVisible(false)
+    localStorage.setItem(DISMISS_KEY, '1')
     try {
       await subscribeToPush()
     } catch {
@@ -32,8 +34,6 @@ export function NotificationPermissionPrompt() {
         await Notification.requestPermission()
       }
     } finally {
-      localStorage.setItem(DISMISS_KEY, '1')
-      setVisible(false)
       setLoading(false)
     }
   }
