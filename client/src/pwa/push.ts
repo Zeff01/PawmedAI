@@ -1,6 +1,4 @@
 const DEFAULT_BASE_URL = 'http://localhost:8000'
-const PERMISSION_FLAG_KEY = 'pawmed-notification-permission-requested'
-
 function getApiBaseUrl() {
   return import.meta.env.VITE_API_BASE_URL?.toString() ?? DEFAULT_BASE_URL
 }
@@ -32,21 +30,6 @@ export async function fetchVapidPublicKey() {
   }
   const payload = (await response.json()) as { publicKey: string }
   return payload.publicKey
-}
-
-export async function requestNotificationPermissionOnce() {
-  try {
-    if (typeof window === 'undefined') return
-    if (!('Notification' in window)) return
-    if (typeof localStorage === 'undefined') return
-    if (localStorage.getItem(PERMISSION_FLAG_KEY)) return
-    localStorage.setItem(PERMISSION_FLAG_KEY, '1')
-    if (Notification.permission === 'default') {
-      await Notification.requestPermission()
-    }
-  } catch {
-    // Ignore permission prompt errors (browser may block without user gesture)
-  }
 }
 
 export async function showLocalNotification({

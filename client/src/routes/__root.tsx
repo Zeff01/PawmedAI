@@ -1,22 +1,17 @@
 import { Outlet, createRootRoute } from '@tanstack/react-router'
-import { useEffect } from 'react'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
 import '../styles.css'
 import { Header } from '@/components/Header'
+import { NotificationPermissionPrompt } from '@/components/NotificationPermissionPrompt'
 import { SiteStructuredData } from '@/components/SiteStructuredData'
-import { requestNotificationPermissionOnce } from '@/pwa/push'
 
 export const Route = createRootRoute({
   component: RootComponent,
 })
 
 function RootComponent() {
-  useEffect(() => {
-    requestNotificationPermissionOnce()
-  }, [])
-
   return (
     <>
       <SiteStructuredData />
@@ -35,6 +30,7 @@ function RootComponent() {
       <footer className="border-t border-slate-100 bg-white/60 px-5 py-6 text-center text-xs text-slate-400">
         <p>Pawmed AI • Veterinary diagnostics</p>
       </footer>
+      <NotificationPermissionPrompt />
       {import.meta.env.DEV && (
         <TanStackDevtools
           config={{ position: 'bottom-right' }}

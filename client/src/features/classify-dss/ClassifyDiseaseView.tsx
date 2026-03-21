@@ -20,10 +20,7 @@ import { FadeChild } from '@/components/motion/FadeChild'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { UserTypeDialog } from './components/UserTypeDialog'
 import { useUserTypeStore, type UserType } from '@/stores/userTypeStore'
-import {
-  requestNotificationPermissionOnce,
-  showLocalNotification,
-} from '@/pwa/push'
+import { showLocalNotification } from '@/pwa/push'
 
 export function ClassifyDiseaseView() {
   const [imageFile, setImageFile] = React.useState<File | null>(null)
@@ -48,10 +45,6 @@ export function ClassifyDiseaseView() {
   React.useEffect(() => {
     openDialog()
   }, [openDialog])
-
-  React.useEffect(() => {
-    requestNotificationPermissionOnce()
-  }, [])
 
   React.useEffect(() => {
     if (prevUserTypeRef.current && userType !== prevUserTypeRef.current) {
@@ -117,7 +110,6 @@ export function ClassifyDiseaseView() {
   }
 
   const handleSubmit = () => {
-    requestNotificationPermissionOnce()
     if (!userType) {
       openDialog()
       return
