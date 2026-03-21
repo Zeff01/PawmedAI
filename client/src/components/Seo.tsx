@@ -6,7 +6,7 @@ type SeoProps = {
   canonicalPath?: string
   ogImage?: string
   noIndex?: boolean
-  structuredData?: Record<string, unknown>
+  structuredData?: Record<string, unknown> | Array<Record<string, unknown>>
 }
 
 const DEFAULT_TITLE = 'Pawmed AI | Veterinary Diagnostics'
@@ -14,6 +14,7 @@ const DEFAULT_DESCRIPTION =
   'AI-assisted veterinary diagnostics for faster, clearer clinical decisions.'
 const DEFAULT_SITE_NAME = 'Pawmed AI'
 const DEFAULT_OG_IMAGE = '/icons/paw.png'
+const DEFAULT_SITE_URL = import.meta.env.VITE_SITE_URL
 
 function upsertMeta(
   selector: string,
@@ -43,7 +44,7 @@ function upsertLink(rel: string, href?: string) {
   element.setAttribute('href', href)
 }
 
-function upsertJsonLd(data?: Record<string, unknown>) {
+function upsertJsonLd(data?: Record<string, unknown> | Array<Record<string, unknown>>) {
   if (!data) return
   const id = 'seo-jsonld'
   let element = document.head.querySelector(`script#${id}`)
@@ -67,9 +68,13 @@ export function Seo({
   useEffect(() => {
     const resolvedTitle = title ?? DEFAULT_TITLE
     const resolvedDescription = description ?? DEFAULT_DESCRIPTION
+    const resolvedSiteUrl = DEFAULT_SITE_URL || window.location.origin
     const resolvedImage = ogImage ?? DEFAULT_OG_IMAGE
+    const resolvedImageUrl = resolvedImage.startsWith('http')
+      ? resolvedImage
+      : new URL(resolvedImage, resolvedSiteUrl).toString()
     const resolvedUrl = canonicalPath
-      ? new URL(canonicalPath, window.location.origin).toString()
+      ? new URL(canonicalPath, resolvedSiteUrl).toString()
       : window.location.href
 
     document.title = resolvedTitle
@@ -81,11 +86,11 @@ export function Seo({
     upsertMeta('meta[property="og:type"]', { property: 'og:type' }, 'website')
     upsertMeta('meta[property="og:site_name"]', { property: 'og:site_name' }, DEFAULT_SITE_NAME)
     upsertMeta('meta[property="og:url"]', { property: 'og:url' }, resolvedUrl)
-    upsertMeta('meta[property="og:image"]', { property: 'og:image' }, resolvedImage)
+    upsertMeta('meta[property="og:image"]', { property: 'og:image' }, resolvedImageUrl)
     upsertMeta('meta[name="twitter:card"]', { name: 'twitter:card' }, 'summary_large_image')
     upsertMeta('meta[name="twitter:title"]', { name: 'twitter:title' }, resolvedTitle)
     upsertMeta('meta[name="twitter:description"]', { name: 'twitter:description' }, resolvedDescription)
-    upsertMeta('meta[name="twitter:image"]', { name: 'twitter:image' }, resolvedImage)
+    upsertMeta('meta[name="twitter:image"]', { name: 'twitter:image' }, resolvedImageUrl)
 
     upsertLink('canonical', resolvedUrl)
     upsertJsonLd(structuredData)

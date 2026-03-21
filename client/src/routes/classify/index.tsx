@@ -2,27 +2,26 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { ClassifyDiseaseView } from '#/features/classify-dss/ClassifyDiseaseView'
 import { Seo } from '#/components/Seo'
+import { buildSoftwareApplicationSchema } from '#/utils/seo-schema'
 
 export const Route = createFileRoute('/classify/')({
   component: ClassifyDiseasePage,
 })
 
 function ClassifyDiseasePage() {
+  const description =
+    'Upload a clinical photo to generate a structured diagnostic brief for veterinary care.'
+
   return (
     <section className="bg-[#ffffff]" aria-labelledby="classify-title">
       <Seo
         title="Classify Disease | Pawmed AI"
-        description="Upload a clinical photo to generate a structured diagnostic brief for veterinary care."
+        description={description}
         canonicalPath="/classify"
-        structuredData={{
-          '@context': 'https://schema.org',
-          '@type': 'SoftwareApplication',
-          name: 'Pawmed AI',
-          applicationCategory: 'MedicalApplication',
-          operatingSystem: 'Web',
-          description:
-            'AI-assisted veterinary diagnostics for faster, clearer clinical decisions.',
-        }}
+        structuredData={buildSoftwareApplicationSchema({
+          pageUrl: '/classify',
+          description,
+        })}
       />
       <header className="bg-blue-600 px-5 py-3 md:px-30 text-white">
         <h1 id="classify-title" className="text-xl font-bold">
