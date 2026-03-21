@@ -20,6 +20,10 @@ import { FadeChild } from '@/components/motion/FadeChild'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { UserTypeDialog } from './components/UserTypeDialog'
 import { useUserTypeStore, type UserType } from '@/stores/userTypeStore'
+import {
+  requestNotificationPermissionOnce,
+  showLocalNotification,
+} from '@/pwa/push'
 
 export function ClassifyDiseaseView() {
   const [imageFile, setImageFile] = React.useState<File | null>(null)
@@ -33,6 +37,7 @@ export function ClassifyDiseaseView() {
   const [openFileDialog, setOpenFileDialog] = React.useState<
     (() => void) | null
   >(null)
+  const lastResultRef = React.useRef<unknown>(null)
 
   const userType = useUserTypeStore((state) => state.userType)
   const openDialog = useUserTypeStore((state) => state.openDialog)
@@ -43,6 +48,10 @@ export function ClassifyDiseaseView() {
   React.useEffect(() => {
     openDialog()
   }, [openDialog])
+
+  React.useEffect(() => {
+    requestNotificationPermissionOnce()
+  }, [])
 
   React.useEffect(() => {
     if (prevUserTypeRef.current && userType !== prevUserTypeRef.current) {
@@ -61,6 +70,17 @@ export function ClassifyDiseaseView() {
     setPreviewUrl(url)
     return () => URL.revokeObjectURL(url)
   }, [imageFile])
+
+  React.useEffect(() => {
+    if (!classifyMutation.data) return
+    if (lastResultRef.current === classifyMutation.data) return
+    lastResultRef.current = classifyMutation.data
+    showLocalNotification({
+      title: 'Pawmed AI',
+      body: 'Your diagnostic brief is ready.',
+      url: '/classify',
+    })
+  }, [classifyMutation.data])
 
   const handleFile = React.useCallback((file: File) => {
     if (!file.type.startsWith('image/')) {
@@ -97,6 +117,7 @@ export function ClassifyDiseaseView() {
   }
 
   const handleSubmit = () => {
+    requestNotificationPermissionOnce()
     if (!userType) {
       openDialog()
       return
