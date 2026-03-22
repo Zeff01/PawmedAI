@@ -18,7 +18,7 @@ import { FadeChild } from '@/components/motion/FadeChild'
 import { FadeIn } from '@/components/motion/FadeIn'
 
 const IMG: Record<string, string> = {
-  hero: 'https://images.unsplash.com/photo-1581888227599-779811939961?w=900&q=80',
+  hero: '/images/hero_image.png',
   brief:
     'https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=600&q=80',
   notes: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&q=80',

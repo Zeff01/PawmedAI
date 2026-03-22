@@ -3,6 +3,7 @@ import { Button } from './ui/button'
 import { BeakerIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid'
 import { PawIcon } from './custom/custom-icons'
 import { useState, useEffect } from 'react'
+import LifeCycle from './LifeCycle'
 
 const navLinks = [
   { to: '/', label: 'Home' },
@@ -13,12 +14,10 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
 
-  // Close drawer on route change
   useEffect(() => {
     setMobileOpen(false)
   }, [location.pathname])
 
-  // Prevent body scroll when drawer is open
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : ''
     return () => {
@@ -28,10 +27,13 @@ export function Header() {
 
   return (
     <>
+      <header>
+        <LifeCycle />
+      </header>
+
       <header className="sticky top-0 z-40 bg-white/70 backdrop-blur-lg">
         <div className="border-b border-slate-100 px-0 shadow-[0_1px_12px_rgba(15,28,63,0.06)] md:px-14">
           <div className="page-wrap flex h-15.5 items-center justify-between px-5">
-            {/* Logo */}
             <Link
               to="/"
               className="flex items-center gap-3"
