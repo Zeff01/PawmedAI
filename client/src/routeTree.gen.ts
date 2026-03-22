@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LifecycleIndexRouteImport } from './routes/lifecycle/index'
 import { Route as HomeIndexRouteImport } from './routes/home/index'
 import { Route as ClassifyIndexRouteImport } from './routes/classify/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LifecycleIndexRoute = LifecycleIndexRouteImport.update({
+  id: '/lifecycle/',
+  path: '/lifecycle/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HomeIndexRoute = HomeIndexRouteImport.update({
@@ -33,30 +39,34 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/classify/': typeof ClassifyIndexRoute
   '/home/': typeof HomeIndexRoute
+  '/lifecycle/': typeof LifecycleIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/classify': typeof ClassifyIndexRoute
   '/home': typeof HomeIndexRoute
+  '/lifecycle': typeof LifecycleIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/classify/': typeof ClassifyIndexRoute
   '/home/': typeof HomeIndexRoute
+  '/lifecycle/': typeof LifecycleIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/classify/' | '/home/'
+  fullPaths: '/' | '/classify/' | '/home/' | '/lifecycle/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/classify' | '/home'
-  id: '__root__' | '/' | '/classify/' | '/home/'
+  to: '/' | '/classify' | '/home' | '/lifecycle'
+  id: '__root__' | '/' | '/classify/' | '/home/' | '/lifecycle/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ClassifyIndexRoute: typeof ClassifyIndexRoute
   HomeIndexRoute: typeof HomeIndexRoute
+  LifecycleIndexRoute: typeof LifecycleIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lifecycle/': {
+      id: '/lifecycle/'
+      path: '/lifecycle'
+      fullPath: '/lifecycle/'
+      preLoaderRoute: typeof LifecycleIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/home/': {
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ClassifyIndexRoute: ClassifyIndexRoute,
   HomeIndexRoute: HomeIndexRoute,
+  LifecycleIndexRoute: LifecycleIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

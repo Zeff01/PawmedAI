@@ -86,7 +86,7 @@ export function UserTypeDialog({
                 className={cn(
                   'flex w-full flex-col gap-2 rounded-xl border px-4 py-3 text-left transition',
                   selected
-                    ? 'border-blue-500 bg-blue-50 shadow-[0_12px_30px_rgba(37,99,235,0.18)]'
+                    ? 'border-blue-500 bg-blue-50'
                     : 'border-slate-200 bg-white hover:border-blue-200 hover:bg-blue-50/40',
                 )}
               >
