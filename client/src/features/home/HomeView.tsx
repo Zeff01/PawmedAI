@@ -18,7 +18,7 @@ import { FadeChild } from '@/components/motion/FadeChild'
 import { FadeIn } from '@/components/motion/FadeIn'
 
 const IMG: Record<string, string> = {
-  hero: '/images/hero_image.png',
+  hero: '/images/hero_image.jpg',
   brief:
     'https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=600&q=80',
   notes: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&q=80',
@@ -95,7 +95,10 @@ interface MetricCardProps {
 
 function MetricCard({ icon, label, value, detail }: MetricCardProps) {
   return (
-    <article className="flex flex-col rounded-2xl border border-blue-100 bg-white p-5 shadow-sm" role="listitem">
+    <article
+      className="flex flex-col rounded-2xl border border-blue-100 bg-white p-5 shadow-sm"
+      role="listitem"
+    >
       <header className="flex items-center justify-between">
         <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-blue-400">
           {label}
@@ -172,7 +175,10 @@ function StepCard({
   icon,
 }: StepCardProps) {
   return (
-    <article className="group flex flex-col gap-4 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-md" role="listitem">
+    <article
+      className="group flex flex-col gap-4 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
+      role="listitem"
+    >
       <figure className="relative h-36 overflow-hidden rounded-xl">
         <img
           src={image}
@@ -370,7 +376,10 @@ function HomeView() {
             heading="Everything you need for diagnostic clarity."
             sub="Capture, analyze, and communicate veterinary findings in a single flow. Pawmed AI keeps every case consistent and audit-ready."
           />
-          <FadeStagger className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3" role="list">
+          <FadeStagger
+            className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3"
+            role="list"
+          >
             <FadeChild>
               <FeatureCard
                 title="Rapid diagnostic briefs"
@@ -416,7 +425,10 @@ function HomeView() {
             heading="Designed for busy veterinary teams."
             center
           />
-          <FadeStagger className="grid grid-cols-1 gap-5 md:grid-cols-3" role="list">
+          <FadeStagger
+            className="grid grid-cols-1 gap-5 md:grid-cols-3"
+            role="list"
+          >
             <FadeChild>
               <StepCard
                 step={1}
@@ -477,10 +489,16 @@ function HomeView() {
           </FadeStagger>
 
           {/* Audience cards */}
-          <FadeStagger className="grid grid-cols-1 gap-6 md:grid-cols-2" role="list">
+          <FadeStagger
+            className="grid grid-cols-1 gap-6 md:grid-cols-2"
+            role="list"
+          >
             {/* Students */}
             <FadeChild direction="left">
-              <article className="relative overflow-hidden rounded-3xl border border-blue-100 bg-gradient-to-br from-blue-50 to-white p-8 shadow-sm" role="listitem">
+              <article
+                className="relative overflow-hidden rounded-3xl border border-blue-100 bg-gradient-to-br from-blue-50 to-white p-8 shadow-sm"
+                role="listitem"
+              >
                 <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-md">
                   <BeakerIcon className="h-6 w-6" />
                 </div>
@@ -516,7 +534,10 @@ function HomeView() {
 
             {/* Professionals */}
             <FadeChild direction="right">
-              <article className="relative overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-900 to-slate-800 p-8 shadow-sm" role="listitem">
+              <article
+                className="relative overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-900 to-slate-800 p-8 shadow-sm"
+                role="listitem"
+              >
                 <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white shadow-md">
                   <ClipboardDocumentCheckIcon className="h-6 w-6" />
                 </div>
