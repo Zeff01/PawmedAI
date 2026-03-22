@@ -15,7 +15,11 @@ export function AnalyticsTracker() {
     const gtag = (window as { gtag?: (...args: unknown[]) => void }).gtag
     if (!gtag) return
 
-    const pagePath = `${location.pathname}${location.search ?? ''}`
+    const search =
+      typeof location.search === 'string'
+        ? location.search
+        : location.searchStr ?? ''
+    const pagePath = `${location.pathname}${search}`
     gtag('event', 'page_view', {
       page_location: window.location.href,
       page_path: pagePath,
