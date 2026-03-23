@@ -26,6 +26,7 @@ export function ClassifyDiseaseView() {
   const [imageFile, setImageFile] = React.useState<File | null>(null)
   const [previewUrl, setPreviewUrl] = React.useState<string | null>(null)
   const [localError, setLocalError] = React.useState<string | null>(null)
+  const [textInput, setTextInput] = React.useState('')
   const [uploadProgress, setUploadProgress] = React.useState(0)
   const [uploadStatus, setUploadStatus] = React.useState<
     'idle' | 'uploading' | 'done' | 'error'
@@ -69,7 +70,7 @@ export function ClassifyDiseaseView() {
     if (lastResultRef.current === classifyMutation.data) return
     lastResultRef.current = classifyMutation.data
     showLocalNotification({
-      title: 'Pawmed AI',
+      title: 'PawMed AI',
       body: 'Your diagnostic brief is ready.',
       url: '/classify',
     })
@@ -114,11 +115,27 @@ export function ClassifyDiseaseView() {
       openDialog()
       return
     }
-    if (!imageFile || uploadStatus !== 'done') return
-    classifyMutation.mutate(imageFile)
+    const trimmedText = textInput.trim()
+    if (!imageFile && !trimmedText) {
+      setLocalError('Please upload an image or add notes to classify.')
+      return
+    }
+    if (imageFile && uploadStatus !== 'done') {
+      setLocalError('Please wait for the image to finish uploading.')
+      return
+    }
+    setLocalError(null)
+    classifyMutation.mutate({
+      imageFile,
+      textInput: trimmedText,
+    })
   }
 
   const errorMessage = localError ?? classifyMutation.error?.message ?? null
+  const trimmedText = textInput.trim()
+  const canSubmit =
+    !classifyMutation.isPending &&
+    ((imageFile && uploadStatus === 'done') || trimmedText.length > 0)
 
   return (
     <section className="relative z-10 min-h-screen pb-24">
@@ -181,6 +198,29 @@ export function ClassifyDiseaseView() {
                   />
                 )}
 
+                <div className="flex flex-col gap-2">
+                  <label
+                    htmlFor="clinical-notes"
+                    className="text-[12px] font-semibold text-slate-700"
+                  >
+                    Add clinical notes (optional)
+                  </label>
+                  <textarea
+                    id="clinical-notes"
+                    name="clinical-notes"
+                    rows={4}
+                    maxLength={2000}
+                    value={textInput}
+                    onChange={(event) => setTextInput(event.target.value)}
+                    placeholder="Example: itchy, hair loss around ears, red patches on belly, 3 days duration…"
+                    className="w-full resize-none rounded-lg border border-slate-200 bg-white px-3 py-2 text-[12.5px] text-slate-700 outline-none transition focus:border-blue-300 focus:ring-2 focus:ring-blue-100"
+                  />
+                  <div className="flex items-center justify-between text-[10.5px] text-slate-400">
+                    <span>Include symptoms or history to improve accuracy.</span>
+                    <span>{textInput.length}/2000</span>
+                  </div>
+                </div>
+
                 {errorMessage ? (
                   <div className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-[12.5px] text-red-700">
                     <ExclamationCircleIcon className="h-4 w-4 shrink-0 mt-0.5" />
@@ -216,7 +256,9 @@ export function ClassifyDiseaseView() {
                       onClick={handleSubmit}
                       variant="default"
                       disabled={
-                        uploadStatus !== 'done' || classifyMutation.isPending
+                        !canSubmit ||
+                        (imageFile && uploadStatus !== 'done') ||
+                        classifyMutation.isPending
                       }
                       className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-md hover:bg-linear-to-b from-blue-500 to-blue-700 px-5 py-5 text-xs font-bold text-white transition-all duration-150 hover:-translate-y-px active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
                     >
@@ -228,7 +270,6 @@ export function ClassifyDiseaseView() {
                       ) : (
                         <>
                           <MagnifyingGlassIcon className="h-4 w-4" /> Classify
-                          Image
                         </>
                       )}
                     </Button>
@@ -320,8 +361,8 @@ export function ClassifyDiseaseView() {
             />
           ) : (
             <div className="rounded-lg w-full border border-dashed border-blue-200 bg-blue-50 px-5 py-16 text-center text-[12.5px] text-slate-500">
-              Upload an image and run a classification to view the structured
-              diagnosis here.
+              Upload an image or add notes and run a classification to view the
+              structured diagnosis here.
             </div>
           )}
         </FadeIn>

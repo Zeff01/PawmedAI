@@ -28,11 +28,14 @@ class DiseaseClassificationAPIView(APIView):
                 request_serializer.errors, status=status.HTTP_400_BAD_REQUEST
             )
 
-        uploaded_image = request_serializer.validated_data["image"]
+        uploaded_image = request_serializer.validated_data.get("image")
+        notes = request_serializer.validated_data.get("text", "")
         mode = request_serializer.validated_data.get("mode", "professional")
         try:
             classifier = DiseaseClassifier()
-            result = classifier.classify(image_file=uploaded_image, mode=mode)
+            result = classifier.classify(
+                image_file=uploaded_image, text_input=notes, mode=mode
+            )
         except ValueError as exc:
             return Response(
                 {"detail": str(exc)}, status=status.HTTP_422_UNPROCESSABLE_ENTITY
