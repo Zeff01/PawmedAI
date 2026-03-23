@@ -23,26 +23,35 @@ class DiseaseClassifier:
         else:
             self.model = _llm 
 
-    def classify(self, image_file, mode="professional"):
-        image_bytes = image_file.read()
-        if not image_bytes:
-            raise ValueError("Uploaded image is empty.")
-
-        content_type = getattr(image_file, "content_type", "image/jpeg")
-        encoded_image = base64.b64encode(image_bytes).decode("utf-8")
-        image_data_url = f"data:{content_type};base64,{encoded_image}"
-
+    def classify(self, image_file=None, text_input=None, mode="professional"):
         normalized_mode = (mode or "professional").strip().lower()
         if normalized_mode not in {"student", "professional"}:
             normalized_mode = "professional"
-        prompt = build_prompt(mode=normalized_mode)
 
-        message = HumanMessage(
-            content=[
-                {"type": "text", "text": prompt},
-                {"type": "image_url", "image_url": {"url": image_data_url, "detail": "high"}},
-            ]
-        )
+        cleaned_text = (text_input or "").strip()
+        has_image = image_file is not None
+        if not has_image and not cleaned_text:
+            raise ValueError("Provide an image or text notes to classify.")
+
+        prompt = build_prompt(mode=normalized_mode, text_input=cleaned_text)
+
+        content = [{"type": "text", "text": prompt}]
+        if has_image:
+            image_bytes = image_file.read()
+            if not image_bytes:
+                raise ValueError("Uploaded image is empty.")
+
+            content_type = getattr(image_file, "content_type", "image/jpeg")
+            encoded_image = base64.b64encode(image_bytes).decode("utf-8")
+            image_data_url = f"data:{content_type};base64,{encoded_image}"
+            content.append(
+                {
+                    "type": "image_url",
+                    "image_url": {"url": image_data_url, "detail": "high"},
+                }
+            )
+
+        message = HumanMessage(content=content)
 
         response = self.model.invoke([message])
         return self._safe_json_loads(response.content)
@@ -61,7 +70,7 @@ class DiseaseClassifier:
                 raise ValueError("AI returned invalid JSON.") from exc
 
 
-def build_prompt(mode: str = "professional") -> str:
+def build_prompt(mode: str = "professional", text_input: str = "") -> str:
     base_schema = """
 {
   "disease_name": string,
@@ -120,10 +129,15 @@ def build_prompt(mode: str = "professional") -> str:
             "with medications and dosages, and flag any escalation criteria."
         )
 
+    extra_context = ""
+    if text_input:
+        extra_context = f"\n\nClinical notes provided by the user:\n{text_input}\n"
+
     return (
         f"{persona}\n\n"
         f"Respond ONLY with valid JSON using this schema:\n{schema}\n\n"
         "If the disease cannot be determined, provide the best possible guess "
         "and include uncertainties in \"additional_notes\". "
         "Provide a confidence score as an integer from 0 to 100."
+        f"{extra_context}"
     )

@@ -3,14 +3,29 @@ import type { UserType } from '@/stores/userTypeStore'
 
 const DEFAULT_BASE_URL = 'http://localhost:8000'
 
-export async function classifyDiseaseImage(
-  imageFile: File,
-  mode: UserType,
+export type DiseaseClassifyPayload = {
+  imageFile?: File | null
+  textInput?: string
+  mode: UserType
+}
+
+export async function classifyDisease(
+  payloadData: DiseaseClassifyPayload,
 ): Promise<DiseaseClassificationResult> {
+  const { imageFile, textInput, mode } = payloadData
+  const trimmedText = textInput?.trim() ?? ''
+  if (!imageFile && !trimmedText) {
+    throw new Error('Please upload an image or add notes to classify.')
+  }
   const baseUrl =
     import.meta.env.VITE_API_BASE_URL?.toString() ?? DEFAULT_BASE_URL
   const formData = new FormData()
-  formData.append('image', imageFile)
+  if (imageFile) {
+    formData.append('image', imageFile)
+  }
+  if (trimmedText) {
+    formData.append('text', trimmedText)
+  }
   formData.append('mode', mode)
 
   const response = await fetch(`${baseUrl}/api/disease-classify/`, {
