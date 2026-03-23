@@ -2,12 +2,15 @@ from rest_framework import serializers
 
 
 class DiseaseClassificationRequestSerializer(serializers.Serializer):
-    image = serializers.ImageField()
+    image = serializers.ImageField(required=False, allow_null=True)
+    text = serializers.CharField(required=False, allow_blank=True, max_length=2000)
     mode = serializers.ChoiceField(
         choices=("student", "professional"), required=False, default="professional"
     )
 
     def validate_image(self, value):
+        if value in (None, ""):
+            return value
         max_size_mb = 5
         if value.size > max_size_mb * 1024 * 1024:
             raise serializers.ValidationError(
@@ -26,6 +29,15 @@ class DiseaseClassificationRequestSerializer(serializers.Serializer):
             )
 
         return value
+
+    def validate(self, attrs):
+        image = attrs.get("image")
+        text = (attrs.get("text") or "").strip()
+        if not image and not text:
+            raise serializers.ValidationError(
+                "Provide an image or text notes to classify."
+            )
+        return attrs
 
 
 class DiseaseClassificationResponseSerializer(serializers.Serializer):
