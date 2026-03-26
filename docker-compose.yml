@@ -7,6 +7,9 @@ services:
       dockerfile: Dockerfile.dev
     env_file:
       - ./server/.env.development
+    environment:
+      - WATCHFILES_FORCE_POLLING=1
+      - WATCHFILES_POLL_DELAY=200
     ports:
       - "8000:8000"
     volumes:
@@ -43,6 +46,9 @@ services:
       dockerfile: Dockerfile.dev
     env_file:
       - ./client/.env.development
+    environment:
+      - CHOKIDAR_USEPOLLING=1
+      - CHOKIDAR_INTERVAL=200
     ports:
       - "3000:3000"
     volumes:
