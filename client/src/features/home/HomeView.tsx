@@ -9,6 +9,7 @@ import {
   MagnifyingGlassIcon,
   DocumentTextIcon,
   BeakerIcon,
+  HeartIcon,
   StarIcon,
 } from '@heroicons/react/24/solid'
 import type { ReactNode } from 'react'
@@ -490,7 +491,7 @@ function HomeView() {
 
           {/* Audience cards */}
           <FadeStagger
-            className="grid grid-cols-1 gap-6 md:grid-cols-2"
+            className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
             role="list"
           >
             {/* Students */}
@@ -570,21 +571,45 @@ function HomeView() {
                 </ul>
               </article>
             </FadeChild>
+
+            {/* Fur Parents */}
+            <FadeChild>
+              <article
+                className="relative overflow-hidden rounded-3xl border border-emerald-100 bg-gradient-to-br from-emerald-50 to-white p-8 shadow-sm"
+                role="listitem"
+              >
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-md">
+                  <HeartIcon className="h-6 w-6" />
+                </div>
+                <p className="text-xs font-bold uppercase tracking-[0.3em] text-emerald-500">
+                  Fur parents
+                </p>
+                <h3 className="mt-2 text-2xl font-bold text-slate-900">
+                  Know what to ask, sooner.
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-slate-500">
+                  Get a clear, friendly summary of what might be happening so
+                  you can walk into the vet visit informed, calm, and prepared.
+                </p>
+                <ul className="mt-5 flex flex-col gap-2">
+                  {[
+                    'Plain-language explanations of likely causes',
+                    'Photo-guided observations you can share with your vet',
+                    'A simple checklist to track symptoms over time',
+                  ].map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-2 text-sm text-slate-600"
+                    >
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            </FadeChild>
           </FadeStagger>
 
-          {/* Coming soon banner */}
-          <FadeIn>
-            <div className="flex items-center gap-4 rounded-2xl border border-blue-100 bg-blue-50 px-6 py-4">
-              <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-blue-300" />
-              <p className="text-sm text-slate-600">
-                <span className="font-semibold text-blue-700">
-                  Coming soon for fur parents —{' '}
-                </span>
-                we're working on a version designed specifically for pet owners
-                to better understand their companion's health. Stay tuned.
-              </p>
-            </div>
-          </FadeIn>
         </div>
       </section>
 
