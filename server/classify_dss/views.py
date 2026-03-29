@@ -112,19 +112,20 @@ class DiseaseClassificationAPIView(APIView):
                     return Response(response_serializer.data, status=status.HTTP_200_OK)
 
             reference_diagnosis = None
-            if mode == "fur_parent":
+            professional_result = None
+            if mode in {"fur_parent", "student"}:
                 try:
                     if uploaded_image:
                         uploaded_image.seek(0)
-                    clinical_result = classifier.classify(
+                    professional_result = classifier.classify(
                         image_file=uploaded_image,
                         text_input=notes,
                         mode="professional",
                     )
-                    reference_diagnosis = clinical_result.get("disease_name")
+                    reference_diagnosis = professional_result.get("disease_name")
                 except Exception:
                     logger.exception(
-                        "Failed to fetch professional diagnosis for fur parent mode."
+                        "Failed to fetch professional diagnosis for derived mode."
                     )
 
             if uploaded_image:
@@ -136,6 +137,25 @@ class DiseaseClassificationAPIView(APIView):
                 mode=mode,
                 reference_diagnosis=reference_diagnosis,
             )
+
+            if mode == "fur_parent" and reference_diagnosis:
+                result["possible_condition_name"] = reference_diagnosis
+            if mode == "student" and professional_result:
+                # Merge student educational extras with professional core fields.
+                merged = dict(result)
+                for key in (
+                    "disease_name",
+                    "short_description",
+                    "clinical_diagnosis",
+                    "possible_causes",
+                    "symptoms",
+                    "recommended_treatment",
+                    "confidence",
+                    "additional_notes",
+                ):
+                    if key in professional_result:
+                        merged[key] = professional_result.get(key)
+                result = merged
         except ValueError as exc:
             return Response(
                 {"detail": str(exc)}, status=status.HTTP_422_UNPROCESSABLE_ENTITY

@@ -49,6 +49,7 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=1
       - CHOKIDAR_INTERVAL=200
+      - CI=true
     ports:
       - "3000:3000"
     volumes:

@@ -236,6 +236,11 @@ def build_prompt(
     extra_context = ""
     if text_input:
         extra_context = f"\n\nClinical notes provided by the user:\n{text_input}\n"
+    if reference_diagnosis:
+        extra_context += (
+            "\n\nMost likely medical diagnosis (use this exact phrase for "
+            f"the primary disease name): {reference_diagnosis}\n"
+        )
 
     return (
         f"{persona}\n\n"
