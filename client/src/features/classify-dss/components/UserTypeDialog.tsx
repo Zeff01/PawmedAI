@@ -37,6 +37,13 @@ const DEFAULT_OPTIONS: UserTypeOption[] = [
       'Concise, protocol-driven output designed for clinical scanning.',
     badge: 'Clinical mode',
   },
+  {
+    value: 'fur_parent',
+    title: 'Fur Parent',
+    description:
+      'Simple, reassuring guidance for pet owners, focusing on observation and safe actions.',
+    badge: 'Pet Owner mode',
+  },
 ]
 
 export function UserTypeDialog({

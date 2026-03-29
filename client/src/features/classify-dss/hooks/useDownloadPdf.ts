@@ -1,6 +1,7 @@
 import * as React from 'react'
-import type { DiseaseClassificationResult } from '#/features/classify-dss/types'
-import { splitIntoItems, cleanText } from '#/features/classify-dss/utils/text'
+import type { DiseaseClassificationResult } from '@/features/classify-dss/types'
+import { isFurParentResult } from '@/features/classify-dss/types'
+import { splitIntoItems, cleanText } from '@/features/classify-dss/utils/text'
 
 export function useDownloadPdf(
   result: DiseaseClassificationResult,
@@ -42,13 +43,19 @@ export function useDownloadPdf(
     pdf.setTextColor(220, 235, 255)
     pdf.text('Veterinary diagnostics summary', margin, 74)
 
-    const confidence =
-      typeof result.confidence === 'number'
-        ? `${result.confidence}% confidence`
-        : 'Confidence unavailable'
-    pdf.setFontSize(10)
-    pdf.setTextColor(255, 255, 255)
-    pdf.text(confidence, pageWidth - margin - pdf.getTextWidth(confidence), 74)
+    if (!isFurParentResult(result)) {
+      const confidence =
+        typeof result.confidence === 'number'
+          ? `${result.confidence}% confidence`
+          : 'Confidence unavailable'
+      pdf.setFontSize(10)
+      pdf.setTextColor(255, 255, 255)
+      pdf.text(
+        confidence,
+        pageWidth - margin - pdf.getTextWidth(confidence),
+        74,
+      )
+    }
 
     /* ── Body ── */
     let cursorY = 150
@@ -123,29 +130,55 @@ export function useDownloadPdf(
       cursorY += 6
     }
 
-    addHeading('Condition')
-    addParagraph(`${result.disease_name} — ${result.short_description}`)
+    if (isFurParentResult(result)) {
+      addHeading('What We Noticed')
+      addParagraph(result.what_we_noticed)
 
-    addHeading('Clinical Diagnosis')
-    addParagraph(result.clinical_diagnosis)
+      addHeading('What This Might Mean')
+      addParagraph(result.what_this_might_mean)
 
-    addHeading('Possible Causes')
-    addList(result.possible_causes)
+      addHeading('Signs To Watch For')
+      addList(result.signs_to_watch_for)
 
-    addHeading('Symptoms')
-    addList(result.symptoms)
+      addHeading('How Serious Does It Look')
+      addParagraph(result.how_serious_does_it_look)
 
-    addHeading('Recommended Treatment')
-    const treatmentItems = splitIntoItems(result.recommended_treatment)
-    if (treatmentItems.length > 1) {
-      addList(treatmentItems)
+      addHeading('What You Can Do Right Now')
+      addList(result.what_you_can_do_right_now)
+
+      addHeading('See A Vet Because')
+      addParagraph(result.see_a_vet_because)
+
+      addHeading('Urgency')
+      addParagraph(result.urgency)
+
+      addHeading('Reassurance Note')
+      addParagraph(result.reassurance_note)
     } else {
-      addParagraph(cleanText(result.recommended_treatment))
-    }
+      addHeading('Condition')
+      addParagraph(`${result.disease_name} — ${result.short_description}`)
 
-    if (result.additional_notes) {
-      addHeading('Additional Notes')
-      addParagraph(result.additional_notes)
+      addHeading('Clinical Diagnosis')
+      addParagraph(result.clinical_diagnosis)
+
+      addHeading('Possible Causes')
+      addList(result.possible_causes)
+
+      addHeading('Symptoms')
+      addList(result.symptoms)
+
+      addHeading('Recommended Treatment')
+      const treatmentItems = splitIntoItems(result.recommended_treatment)
+      if (treatmentItems.length > 1) {
+        addList(treatmentItems)
+      } else {
+        addParagraph(cleanText(result.recommended_treatment))
+      }
+
+      if (result.additional_notes) {
+        addHeading('Additional Notes')
+        addParagraph(result.additional_notes)
+      }
     }
 
     const blobUrl = pdf.output('bloburl')

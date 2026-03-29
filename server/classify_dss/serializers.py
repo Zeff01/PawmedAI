@@ -5,7 +5,7 @@ class DiseaseClassificationRequestSerializer(serializers.Serializer):
     image = serializers.ImageField(required=False, allow_null=True)
     text = serializers.CharField(required=False, allow_blank=True, max_length=2000)
     mode = serializers.ChoiceField(
-        choices=("student", "professional"), required=False, default="professional"
+        choices=("student", "professional", "fur_parent"), required=False, default="professional"
     )
 
     def validate_image(self, value):
@@ -105,3 +105,26 @@ class DiseaseClassificationResponseSerializer(serializers.Serializer):
         if not isinstance(duration, str):
             raise serializers.ValidationError("duration must be a string.")
         return value
+
+
+class FurParentClassificationResponseSerializer(serializers.Serializer):
+    possible_condition_name = serializers.CharField()
+    what_we_noticed = serializers.CharField()
+    what_this_might_mean = serializers.CharField()
+    signs_to_watch_for = serializers.ListField(
+        child=serializers.CharField(), allow_empty=True
+    )
+    how_serious_does_it_look = serializers.CharField()
+    what_you_can_do_right_now = serializers.ListField(
+        child=serializers.CharField(), allow_empty=True
+    )
+    see_a_vet_because = serializers.CharField()
+    urgency = serializers.ChoiceField(
+        choices=(
+            "routine checkup",
+            "schedule soon (within a few days)",
+            "go today",
+            "emergency — go now",
+        )
+    )
+    reassurance_note = serializers.CharField()

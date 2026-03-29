@@ -1,8 +1,19 @@
-import type { DiseaseClassificationResult } from '@/features/classify-dss/types'
+import type {
+  ClinicalClassificationResult,
+  DiseaseClassificationResult,
+} from '@/features/classify-dss/types'
+import { isFurParentResult } from '@/features/classify-dss/types'
 import {
   ArrowDownTrayIcon,
   CheckCircleIcon,
   ExclamationCircleIcon,
+  HeartIcon,
+  ClockIcon,
+  EyeIcon,
+  HandRaisedIcon,
+  ExclamationTriangleIcon,
+  SparklesIcon,
+  MagnifyingGlassIcon,
 } from '@heroicons/react/24/solid'
 import { Button } from '@/components/ui/button'
 import { useDownloadPdf } from '../hooks/useDownloadPdf'
@@ -26,6 +37,8 @@ export function ResultsSection({
   const handleDownloadPdf = useDownloadPdf(result, previewUrl)
   const userType = useUserTypeStore((state) => state.userType)
   const isProfessional = userType === 'professional'
+  const isFurParentProfile = userType === 'fur_parent'
+  const furParentResult = isFurParentResult(result)
 
   if (isNonAnimalResult(result)) {
     return (
@@ -57,6 +70,18 @@ export function ResultsSection({
     )
   }
 
+  if (isFurParentProfile || furParentResult) {
+    if (furParentResult) {
+      return <FurParentResults result={result} onDownload={handleDownloadPdf} />
+    }
+    return (
+      <div className="rounded-2xl border border-amber-200/70 bg-amber-50/60 px-6 py-5 text-sm text-amber-900">
+        We expected a pet owner response, but received a clinical format. Please
+        try classifying again.
+      </div>
+    )
+  }
+
   if (isProfessional) {
     return (
       <ProfessionalResults result={result} onDownload={handleDownloadPdf} />
@@ -70,7 +95,7 @@ function StudentResults({
   result,
   onDownload,
 }: {
-  result: DiseaseClassificationResult
+  result: ClinicalClassificationResult
   onDownload: () => void
 }) {
   const differential =
@@ -204,11 +229,263 @@ function StudentResults({
   )
 }
 
+// ─── Fur Parent urgency config ────────────────────────────────────────────────
+
+type UrgencyLevel =
+  | 'routine checkup'
+  | 'schedule soon (within a few days)'
+  | 'go today'
+  | 'emergency — go now'
+
+const URGENCY_CONFIG: Record<
+  UrgencyLevel,
+  {
+    bg: string
+    border: string
+    iconBg: string
+    iconColor: string
+    label: string
+    sublabel: string
+    pill: string
+    pillText: string
+    Icon: React.ComponentType<{ className?: string }>
+  }
+> = {
+  'routine checkup': {
+    bg: 'bg-emerald-50',
+    border: 'border-emerald-200',
+    iconBg: 'bg-emerald-100',
+    iconColor: 'text-emerald-600',
+    label: 'Routine check-up',
+    sublabel: 'No immediate concern — schedule when convenient.',
+    pill: 'bg-emerald-100 text-emerald-800 border-emerald-200',
+    pillText: 'Low urgency',
+    Icon: CheckCircleIcon,
+  },
+  'schedule soon (within a few days)': {
+    bg: 'bg-amber-50',
+    border: 'border-amber-200',
+    iconBg: 'bg-amber-100',
+    iconColor: 'text-amber-600',
+    label: 'See a vet soon',
+    sublabel: 'Within the next few days is best.',
+    pill: 'bg-amber-100 text-amber-800 border-amber-200',
+    pillText: 'Moderate urgency',
+    Icon: ClockIcon,
+  },
+  'go today': {
+    bg: 'bg-orange-50',
+    border: 'border-orange-200',
+    iconBg: 'bg-orange-100',
+    iconColor: 'text-orange-600',
+    label: 'Go today',
+    sublabel: 'Your pet needs to see a vet today.',
+    pill: 'bg-orange-100 text-orange-800 border-orange-200',
+    pillText: 'See vet today',
+    Icon: ExclamationTriangleIcon,
+  },
+  'emergency — go now': {
+    bg: 'bg-red-50',
+    border: 'border-red-200',
+    iconBg: 'bg-red-100',
+    iconColor: 'text-red-600',
+    label: 'Emergency — go now',
+    sublabel: 'Please head to an emergency vet immediately.',
+    pill: 'bg-red-100 text-red-800 border-red-200',
+    pillText: 'Emergency',
+    Icon: ExclamationTriangleIcon,
+  },
+}
+
+const DEFAULT_URGENCY = URGENCY_CONFIG['routine checkup']
+
+function getUrgencyConfig(urgency: string) {
+  return URGENCY_CONFIG[urgency as UrgencyLevel] ?? DEFAULT_URGENCY
+}
+
+// ─── Fur Parent sub-components ────────────────────────────────────────────────
+
+function FurParentSectionHeading({
+  icon: Icon,
+  iconBg,
+  iconColor,
+  children,
+}: {
+  icon: React.ComponentType<{ className?: string }>
+  iconBg: string
+  iconColor: string
+  children: React.ReactNode
+}) {
+  return (
+    <div className="mb-3 flex items-center gap-3">
+      <div
+        className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${iconBg}`}
+      >
+        <Icon className={`h-4 w-4 ${iconColor}`} />
+      </div>
+      <h3 className="text-[15px] font-semibold text-slate-700">{children}</h3>
+    </div>
+  )
+}
+
+// ─── Fur Parent Results ───────────────────────────────────────────────────────
+
+function FurParentResults({
+  result,
+  onDownload,
+}: {
+  result: Extract<DiseaseClassificationResult, { what_we_noticed: string }>
+  onDownload: () => void
+}) {
+  const urgencyCfg = getUrgencyConfig(result.urgency)
+  const UrgencyIcon = urgencyCfg.Icon
+  const shortTitle =
+    result.possible_condition_name?.trim() || 'Possible skin condition'
+  const observations = result.what_we_noticed
+    .split(/\.(\s+|$)/)
+    .map((item) => item.trim())
+    .filter((item) => item.length > 3)
+    .slice(0, 4)
+
+  return (
+    <div className="animate-rise-in space-y-10 border border-gray-200 p-16 rounded-2xl">
+      {/* ── Urgency banner ─────────────────────────────────────────────── */}
+      <div
+        className={`rounded-xl border px-6 py-5 ${urgencyCfg.bg} ${urgencyCfg.border}`}
+      >
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-3">
+            <UrgencyIcon className={`h-5 w-5 ${urgencyCfg.iconColor}`} />
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+                Urgency status
+              </p>
+              <p className={`text-[20px] font-bold ${urgencyCfg.iconColor}`}>
+                {urgencyCfg.label}
+              </p>
+            </div>
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onDownload}
+            className="inline-flex items-center gap-2 rounded-full border-red-200 bg-white px-5 py-2 text-xs font-semibold text-red-600 hover:bg-red-50"
+          >
+            <ArrowDownTrayIcon className="h-3.5 w-3.5" />
+            Save PDF
+          </Button>
+        </div>
+      </div>
+
+      {/* ── Title block ───────────────────────────────────────────────── */}
+      <div className="space-y-3">
+        <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-600">
+          <ExclamationTriangleIcon className="h-3.5 w-3.5 text-slate-500" />
+          Critical diagnosis
+        </div>
+        <h2 className="text-[36px] font-bold leading-tight text-slate-900 sm:text-[44px]">
+          {shortTitle}
+        </h2>
+        <p className="max-w-3xl text-[16px] leading-relaxed text-slate-700">
+          {result.what_this_might_mean}
+        </p>
+      </div>
+
+      {/* ── Clinical observations ─────────────────────────────────────── */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-2 text-blue-700">
+          <MagnifyingGlassIcon className="h-5 w-5 text-blue-600" />
+          <p className="text-[16px] font-semibold">Clinical observations</p>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {(observations.length > 0
+            ? observations
+            : [result.what_we_noticed]
+          ).map((item) => (
+            <div
+              key={item}
+              className="rounded-lg border border-slate-200 bg-white px-4 py-3 text-[15px] text-slate-700"
+            >
+              {item}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <hr className="border-slate-200" />
+
+      {/* ── Watch for + Immediate steps ───────────────────────────────── */}
+      <div className="grid gap-8 sm:grid-cols-2">
+        <div className="space-y-4">
+          <div className="flex items-center gap-2 text-slate-900">
+            <HandRaisedIcon className="h-5 w-5 text-blue-600" />
+            <p className="text-[16px] font-semibold">Immediate steps</p>
+          </div>
+          <div className="space-y-4">
+            {result.what_you_can_do_right_now.map((action: string, index) => (
+              <div key={action} className="flex gap-4">
+                <span className="text-sm font-semibold text-blue-700">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <p className="text-sm text-slate-700">{action}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <div className="flex items-center gap-2 text-slate-900">
+            <EyeIcon className="h-5 w-5 text-blue-600" />
+            <p className="text-[16px] font-semibold">Watch for</p>
+          </div>
+          <ul className="space-y-3">
+            {result.signs_to_watch_for.map((sign: string) => (
+              <li key={sign} className="flex items-start gap-2">
+                <CheckCircleIcon className="text-blue-500 h-5 w-5" />
+                <span className="text-sm">{sign}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* ── Care needed CTA ───────────────────────────────────────────── */}
+      <div>
+        <div className="rounded-t-2xl bg-blue-700 px-6 py-6 sm:px-8  text-white ">
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="max-w-2xl space-y-2">
+              <p className="text-[20px] font-semibold">
+                Professional care needed
+              </p>
+              <p className="text-[14px] leading-relaxed text-blue-100">
+                {result.how_serious_does_it_look}
+              </p>
+            </div>
+            <Button
+              type="button"
+              variant="outline"
+              className="inline-flex items-center justify-center rounded-2xl border-white/60 bg-white px-5 py-3 text-xs font-semibold text-blue-700 hover:bg-blue-50"
+            >
+              Consult a vet now
+            </Button>
+          </div>
+        </div>
+
+        <div className="rounded-b-2xl bg-white border border-gray-200 px-6 py-6 sm:px-8">
+          <p className="text-[16px] leading-relaxed text-slate-700 font-medium">
+            {result.reassurance_note}
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function ProfessionalResults({
   result,
   onDownload,
 }: {
-  result: DiseaseClassificationResult
+  result: ClinicalClassificationResult
   onDownload: () => void
 }) {
   const differential =
