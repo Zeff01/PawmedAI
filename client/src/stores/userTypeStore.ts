@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-export type UserType = 'student' | 'professional'
+export type UserType = 'student' | 'professional' | 'fur_parent'
 
 type UserTypeState = {
   userType: UserType | null

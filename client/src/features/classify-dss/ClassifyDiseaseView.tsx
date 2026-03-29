@@ -124,6 +124,7 @@ export function ClassifyDiseaseView() {
       setLocalError('Please wait for the image to finish uploading.')
       return
     }
+    console.log(userType)
     setLocalError(null)
     classifyMutation.mutate({
       imageFile,
@@ -153,7 +154,10 @@ export function ClassifyDiseaseView() {
             >
               <header className="flex flex-col gap-3 border-b border-slate-100 bg-blue-50/60 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <h2 id="upload-card-title" className="text-[14px] font-bold text-slate-800">
+                  <h2
+                    id="upload-card-title"
+                    className="text-[14px] font-bold text-slate-800"
+                  >
                     Upload Patient Image
                   </h2>
                   <p className="text-[12px] text-slate-400">
@@ -165,7 +169,9 @@ export function ClassifyDiseaseView() {
                     {userType
                       ? userType === 'professional'
                         ? 'Veterinary professional'
-                        : 'Veterinary student'
+                        : userType === 'student'
+                          ? 'Veterinary student'
+                          : 'Fur Parent'
                       : 'Select profile'}
                   </span>
                   <Button
@@ -216,7 +222,9 @@ export function ClassifyDiseaseView() {
                     className="w-full resize-none rounded-lg border border-slate-200 bg-white px-3 py-2 text-[12.5px] text-slate-700 outline-none transition focus:border-blue-300 focus:ring-2 focus:ring-blue-100"
                   />
                   <div className="flex items-center justify-between text-[10.5px] text-slate-400">
-                    <span>Include symptoms or history to improve accuracy.</span>
+                    <span>
+                      Include symptoms or history to improve accuracy.
+                    </span>
                     <span>{textInput.length}/2000</span>
                   </div>
                 </div>
@@ -292,7 +300,10 @@ export function ClassifyDiseaseView() {
                     What you will get
                   </p>
                 </header>
-                <h3 id="benefits-title" className="mt-1 text-[15px] font-bold text-slate-900">
+                <h3
+                  id="benefits-title"
+                  className="mt-1 text-[15px] font-bold text-slate-900"
+                >
                   A structured clinical brief
                 </h3>
                 <ul className="mt-4 space-y-2.5 list-none p-0 m-0">
@@ -342,7 +353,9 @@ export function ClassifyDiseaseView() {
                         label
                       )}
                     </dt>
-                    <dd className="mt-1 text-[12.5px] text-slate-700">{value}</dd>
+                    <dd className="mt-1 text-[12.5px] text-slate-700">
+                      {value}
+                    </dd>
                   </div>
                 ))}
               </dl>
