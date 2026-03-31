@@ -1,13 +1,15 @@
 import { defineConfig } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
-
 import { tanstackRouter } from '@tanstack/router-plugin/vite'
-
 import viteReact from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 const config = defineConfig({
+  server: {
+    host: '0.0.0.0',
+    port: 3000,
+  },
   plugins: [
     tsconfigPaths({ projects: ['./tsconfig.json'] }),
     tailwindcss(),
@@ -55,7 +57,7 @@ const config = defineConfig({
         ],
       },
       devOptions: {
-        enabled: true,
+        enabled: false,
         type: 'module',
       },
     }),
