@@ -1,7 +1,7 @@
-import { motion } from 'motion/react'
-import type { ReactNode, HTMLAttributes } from 'react'
+import { motion, type MotionProps } from 'motion/react'
+import type { ReactNode } from 'react'
 
-interface FadeStaggerProps extends HTMLAttributes<HTMLDivElement> {
+interface FadeStaggerProps extends MotionProps {
   children: ReactNode
   staggerDelay?: number
   once?: boolean
