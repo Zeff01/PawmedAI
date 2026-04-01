@@ -21,6 +21,41 @@ export function Header() {
   const [authOpen, setAuthOpen] = useState(false)
   const isClassify = location.pathname.startsWith('/classify')
 
+  const isActivePath = (to: string) => {
+    if (to === '/') return location.pathname === '/'
+    return location.pathname.startsWith(to)
+  }
+
+  const renderNavItem = (
+    item: { to: string; label: string },
+    className: string,
+    activeClassName: string,
+  ) => {
+    const active = isActivePath(item.to)
+
+    const mergedClassName = active ? activeClassName : className
+
+    if (item.to === '/classify' && !me && !isClassify) {
+      return (
+        <AuthModal
+          showGuestOption
+          onGuestContinue={() => navigate({ to: '/classify' })}
+          trigger={
+            <button type="button" className={mergedClassName}>
+              {item.label}
+            </button>
+          }
+        />
+      )
+    }
+
+    return (
+      <Link to={item.to} className={mergedClassName}>
+        {item.label}
+      </Link>
+    )
+  }
+
   useEffect(() => {
     setMobileOpen(false)
   }, [location.pathname])
@@ -63,19 +98,14 @@ export function Header() {
 
             {/* Desktop Nav */}
             <nav className="hidden items-center md:flex" aria-label="Primary">
-              <ul className="flex items-center gap-1 rounded-xl border border-slate-100 bg-slate-50/80 p-1">
+              <ul className="flex items-center gap-6">
                 {navLinks.map((item) => (
                   <li key={item.to}>
-                    <Link
-                      to={item.to}
-                      className="rounded-lg px-4 py-1.5 text-[13px] font-medium text-slate-500 transition-all duration-150 hover:text-slate-800"
-                      activeProps={{
-                        className:
-                          'rounded-lg px-4 py-1.5 text-[13px] font-semibold text-blue-600 bg-white shadow-sm border border-blue-100/60',
-                      }}
-                    >
-                      {item.label}
-                    </Link>
+                    {renderNavItem(
+                      item,
+                      'text-[14px] font-medium text-slate-500 transition-colors hover:text-slate-900',
+                      'text-[14px] font-semibold text-blue-600 transition-colors',
+                    )}
                   </li>
                 ))}
               </ul>
@@ -206,16 +236,11 @@ export function Header() {
           <ul className="flex flex-col gap-1">
             {navLinks.map((item) => (
               <li key={item.to}>
-                <Link
-                  to={item.to}
-                  className="flex items-center rounded-xl px-4 py-3 text-[14px] font-medium text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900"
-                  activeProps={{
-                    className:
-                      'flex items-center rounded-xl px-4 py-3 text-[14px] font-semibold text-blue-600 bg-blue-50 border border-blue-100',
-                  }}
-                >
-                  {item.label}
-                </Link>
+                {renderNavItem(
+                  item,
+                  'flex w-full items-center rounded-xl px-4 py-3 text-[14px] font-medium text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900',
+                  'flex w-full items-center rounded-xl px-4 py-3 text-[14px] font-semibold text-blue-600 bg-blue-50 border border-blue-100',
+                )}
               </li>
             ))}
           </ul>
@@ -223,18 +248,31 @@ export function Header() {
 
         {/* Drawer Footer CTA */}
         <div className="border-t border-slate-100 px-4 py-5">
-          <Button
-            asChild
-            className="w-full rounded-xl bg-blue-600 py-2.5 text-[13px] font-semibold text-white hover:bg-blue-700"
-          >
-            <Link
-              to="/classify"
-              className="flex items-center justify-center gap-2"
+          {me ? (
+            <Button
+              asChild
+              className="w-full rounded-xl bg-blue-600 py-2.5 text-[13px] font-semibold text-white hover:bg-blue-700"
             >
-              <BeakerIcon className="h-4 w-4" />
-              Get Started
-            </Link>
-          </Button>
+              <Link
+                to="/classify"
+                className="flex items-center justify-center gap-2"
+              >
+                <BeakerIcon className="h-4 w-4" />
+                Get Started
+              </Link>
+            </Button>
+          ) : (
+            <AuthModal
+              showGuestOption
+              onGuestContinue={() => navigate({ to: '/classify' })}
+              trigger={
+                <Button className="w-full rounded-xl bg-blue-600 py-2.5 text-[13px] font-semibold text-white hover:bg-blue-700">
+                  <BeakerIcon className="h-4 w-4" />
+                  Get Started
+                </Button>
+              }
+            />
+          )}
           <p className="mt-3 text-center text-[11px] text-slate-400">
             AI-powered veterinary diagnostics
           </p>

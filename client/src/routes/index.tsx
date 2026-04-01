@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import HomeView from '#/features/home/HomeView'
-import { Seo } from '#/components/Seo'
-import { buildSoftwareApplicationSchema } from '#/utils/seo-schema'
+import HomeView from '@/features/home/HomeView'
+import { Seo } from '@/components/Seo'
+import { buildSoftwareApplicationSchema } from '@/utils/seo-schema'
 
 export const Route = createFileRoute('/')({ component: LandingPage })
 
