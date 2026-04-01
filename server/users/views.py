@@ -27,9 +27,9 @@ class OAuthCallbackView(APIView):
 
         try:
             payload = auth._decode_token(token)
-        except AuthenticationFailed:
+        except AuthenticationFailed as exc:
             return Response(
-                {"detail": "Invalid or expired access token."},
+                {"detail": str(exc.detail)},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
 

@@ -31,6 +31,12 @@ SB_DB = os.getenv("SB_DB")
 SB_USER = os.getenv("SB_USER")
 SB_PWD = os.getenv("SB_PWD")
 SB_JWT_SECRET = os.getenv("SB_JWT_SECRET")
+SB_ANON = os.getenv("SB_ANON") or os.getenv("VITE_SUPABASE_ANON_KEY")
+SUPABASE_URL = (
+    os.getenv("SUPABASE_URL")
+    or os.getenv("SB_PROJECT_URL")
+    or os.getenv("VITE_SUPABASE_URL")
+)
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 if not DATABASE_URL and all([SB_HOST, SB_PORT, SB_DB, SB_USER, SB_PWD]):

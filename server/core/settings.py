@@ -3,6 +3,7 @@ Django settings for core project.
 """
 
 import os
+from urllib.parse import urlencode
 from pathlib import Path
 
 import dj_database_url
@@ -17,7 +18,9 @@ from config.pysecrets import (
     DJANGO_SECURE_SSL_REDIRECT,
     DJANGO_SESSION_COOKIE_SECURE,
     DATABASE_URL,
+    SB_ANON,
     SB_JWT_SECRET,
+    SUPABASE_URL,
     VAPID_PRIVATE_KEY,
     VAPID_PUBLIC_KEY,
     VAPID_SUBJECT,
@@ -135,6 +138,13 @@ CACHES = {
 }
 
 SUPABASE_JWT_SECRET = SB_JWT_SECRET
+SUPABASE_URL = SUPABASE_URL
+SUPABASE_ANON_KEY = SB_ANON
+SUPABASE_JWKS_URL = os.getenv("SUPABASE_JWKS_URL")
+if not SUPABASE_JWKS_URL and SUPABASE_URL:
+    SUPABASE_JWKS_URL = (
+        f"{SUPABASE_URL.rstrip('/')}/auth/v1/.well-known/jwks.json"
+    )
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
