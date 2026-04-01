@@ -15,6 +15,9 @@ const DEFAULT_DESCRIPTION =
 const DEFAULT_SITE_NAME = 'Pawmed AI'
 const DEFAULT_OG_IMAGE = '/icons/paw.png'
 const DEFAULT_SITE_URL = import.meta.env.VITE_SITE_URL
+const ALLOW_NOINDEX =
+  import.meta.env.MODE !== 'production' ||
+  import.meta.env.VITE_ALLOW_NOINDEX === 'true'
 
 function upsertMeta(
   selector: string,
@@ -80,7 +83,12 @@ export function Seo({
     document.title = resolvedTitle
 
     upsertMeta('meta[name="description"]', { name: 'description' }, resolvedDescription)
-    upsertMeta('meta[name="robots"]', { name: 'robots' }, noIndex ? 'noindex, nofollow' : 'index, follow')
+    const resolvedNoIndex = Boolean(noIndex && ALLOW_NOINDEX)
+    upsertMeta(
+      'meta[name="robots"]',
+      { name: 'robots' },
+      resolvedNoIndex ? 'noindex, nofollow' : 'index, follow'
+    )
     upsertMeta('meta[property="og:title"]', { property: 'og:title' }, resolvedTitle)
     upsertMeta('meta[property="og:description"]', { property: 'og:description' }, resolvedDescription)
     upsertMeta('meta[property="og:type"]', { property: 'og:type' }, 'website')

@@ -42,7 +42,6 @@ function LifeCycleNotesPage() {
         title="Pawmed AI | Lifecycle Notes"
         description={description}
         canonicalPath="/lifecycle"
-        noIndex
       />
 
       <div className="mx-auto w-full max-w-3xl space-y-5">
