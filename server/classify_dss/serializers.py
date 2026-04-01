@@ -41,6 +41,10 @@ class DiseaseClassificationRequestSerializer(serializers.Serializer):
 
 
 class DiseaseClassificationResponseSerializer(serializers.Serializer):
+    # Identifies the species in the uploaded image (e.g. "dog", "cat", "horse").
+    # Empty string when no animal is detected.
+    animal_type = serializers.CharField(required=False, allow_blank=True)
+
     disease_name = serializers.CharField()
     short_description = serializers.CharField()
     clinical_diagnosis = serializers.CharField()
@@ -108,6 +112,10 @@ class DiseaseClassificationResponseSerializer(serializers.Serializer):
 
 
 class FurParentClassificationResponseSerializer(serializers.Serializer):
+    # Identifies the species in the uploaded image (e.g. "dog", "cat", "horse").
+    # Empty string when no animal is detected.
+    animal_type = serializers.CharField(required=False, allow_blank=True)
+
     possible_condition_name = serializers.CharField()
     what_we_noticed = serializers.CharField()
     what_this_might_mean = serializers.CharField()

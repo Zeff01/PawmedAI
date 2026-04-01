@@ -69,25 +69,48 @@ class DiseaseClassifier:
         return self._safe_json_loads(response.content)
 
     def is_diagnostic_image(self, image_file=None):
+        """
+        Triage the uploaded image.
+
+        Returns a tuple of (status, animal_type, reason) where:
+          - status: "diagnostic"  — real animal with a visible condition
+                    "healthy"     — real animal that appears healthy / no visible issue
+                    "not_animal"  — not an animal image
+          - animal_type: e.g. "dog", "cat", "horse", or "" when not an animal
+          - reason: human-readable explanation string
+        """
         if image_file is None:
-            return True, ""
+            return "diagnostic", "", ""
+
         image_bytes = image_file.read()
         if not image_bytes:
-            return False, "Uploaded image is empty."
+            return "not_animal", "", "Uploaded image is empty."
 
         content_type = getattr(image_file, "content_type", "image/jpeg")
         encoded_image = base64.b64encode(image_bytes).decode("utf-8")
         image_data_url = f"data:{content_type};base64,{encoded_image}"
 
         prompt = (
-            "You are a strict image triage checker for a veterinary skin/ear classifier. "
-            "Return JSON only: {\"is_diagnostic\": true|false, \"reason\": string}.\n\n"
-            "Return true only if a real animal patient is clearly visible AND the image is a "
-            "usable close-up for diagnosis (skin, ear, wound, or affected body area in focus).\n"
-            "Return false for posters, illustrations, cartoons, text-only images, ads, "
-            "stock photos with no visible issue, multiple animals without a clear patient, "
-            "or images where the affected area is not visible.\n"
-            "If unsure, return false."
+            "You are a strict image triage checker for a veterinary skin/ear classifier.\n\n"
+            "Analyse the image and return ONLY valid JSON with this exact schema:\n"
+            "{\n"
+            '  "status": "diagnostic" | "healthy" | "not_animal",\n'
+            '  "animal_type": string,\n'
+            '  "reason": string\n'
+            "}\n\n"
+            "Rules for each status value:\n"
+            '- "diagnostic": A real animal is clearly visible AND there is a visible skin, ear, '
+            "wound, or other affected area that can be meaningfully assessed for disease.\n"
+            '- "healthy": A real animal is clearly visible but the animal appears healthy with '
+            "no visible condition, lesion, wound, or affected area — a routine or portrait photo.\n"
+            '- "not_animal": The image does not show a real animal (e.g. poster, illustration, '
+            "cartoon, text-only, ad, stock graphic, multiple unidentifiable animals, or no animal "
+            "at all).\n\n"
+            'For "animal_type": provide the common name of the animal species (e.g. "dog", "cat", '
+            '"horse", "rabbit"). Leave as an empty string when status is "not_animal".\n'
+            'For "reason": write one short sentence explaining the decision.\n\n'
+            "If unsure between diagnostic and healthy, choose healthy.\n"
+            'If unsure whether it is an animal at all, choose "not_animal".'
         )
 
         content = [
@@ -97,7 +120,15 @@ class DiseaseClassifier:
         message = HumanMessage(content=content)
         response = self.model.invoke([message])
         parsed = self._safe_json_loads(response.content)
-        return bool(parsed.get("is_diagnostic")), str(parsed.get("reason") or "")
+
+        status = str(parsed.get("status") or "not_animal").strip().lower()
+        if status not in {"diagnostic", "healthy", "not_animal"}:
+            status = "not_animal"
+
+        animal_type = str(parsed.get("animal_type") or "").strip().lower()
+        reason = str(parsed.get("reason") or "").strip()
+
+        return status, animal_type, reason
 
     @staticmethod
     def _safe_json_loads(raw_text):
@@ -118,8 +149,15 @@ def build_prompt(
     text_input: str = "",
     reference_diagnosis: str | None = None,
 ) -> str:
+    # ------------------------------------------------------------------
+    # animal_type is included in every schema so the field is always
+    # present regardless of mode.  The model is instructed to populate
+    # it with the common species name (dog, cat, horse …).
+    # ------------------------------------------------------------------
+
     base_schema = """
 {
+  "animal_type": string,
   "disease_name": string,
   "short_description": string,
   "clinical_diagnosis": string,
@@ -153,6 +191,7 @@ def build_prompt(
     # Fur parent mode uses a completely separate, simpler schema
     fur_parent_schema = """
 {
+  "animal_type": string,
   "possible_condition_name": string,
   "what_we_noticed": string,
   "what_this_might_mean": string,
@@ -163,6 +202,35 @@ def build_prompt(
   "urgency": "routine checkup" | "schedule soon (within a few days)" | "go today" | "emergency — go now",
   "reassurance_note": string
 }"""
+
+    animal_type_instruction = (
+        'For "animal_type": always populate this with the common name of the animal species '
+        'visible in the image (e.g. "dog", "cat", "horse", "rabbit", "bird"). '
+        'If no animal is visible, set it to an empty string "".\n\n'
+    )
+
+    healthy_instruction = (
+        "IMPORTANT — HEALTHY ANIMAL RULE:\n"
+        "If the animal appears healthy with no visible skin condition, wound, lesion, "
+        "or any other abnormality, you MUST:\n"
+        '- Set disease_name to "Healthy Animal"\n'
+        '- Set clinical_diagnosis to "No visible condition detected"\n'
+        "- Set confidence to 0\n"
+        "- Set possible_causes and symptoms to empty lists []\n"
+        '- Set recommended_treatment to "No treatment required. Schedule a routine '
+        'veterinary check-up to maintain good health."\n'
+        "- Use short_description to reassure that the animal looks healthy based on what "
+        "is visible.\n\n"
+    )
+
+    fur_parent_healthy_instruction = (
+        "IMPORTANT — HEALTHY ANIMAL RULE:\n"
+        "If the animal appears healthy with no visible issue, you MUST:\n"
+        '- Set possible_condition_name to "Healthy Animal"\n'
+        '- Set urgency to "routine checkup"\n'
+        "- Use what_we_noticed and what_this_might_mean to reassure the owner that "
+        "the animal looks healthy based on what is visible.\n\n"
+    )
 
     if mode == "fur_parent":
         persona = (
@@ -196,6 +264,8 @@ def build_prompt(
         return (
             f"{persona}\n\n"
             f"Respond ONLY with valid JSON using this schema:\n{fur_parent_schema}\n\n"
+            f"{animal_type_instruction}"
+            f"{fur_parent_healthy_instruction}"
             "Write everything in simple, friendly, reassuring language. "
             "For 'possible_condition_name', use the medical name of the most likely condition. "
             "If the image does NOT show a real animal or there is no visible affected area, "
@@ -245,6 +315,8 @@ def build_prompt(
     return (
         f"{persona}\n\n"
         f"Respond ONLY with valid JSON using this schema:\n{schema}\n\n"
+        f"{animal_type_instruction}"
+        f"{healthy_instruction}"
         "If the image does NOT show a real animal or there is no visible affected area, "
         "set disease_name to 'Not an animal' and explain the issue in short_description. "
         "If the disease cannot be determined, provide the best possible guess "
