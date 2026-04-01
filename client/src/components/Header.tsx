@@ -1,4 +1,4 @@
-import { Link, useLocation } from '@tanstack/react-router'
+import { Link, useLocation, useNavigate } from '@tanstack/react-router'
 import { Button } from './ui/button'
 import { BeakerIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid'
 import { PawIcon } from './custom/custom-icons'
@@ -15,8 +15,11 @@ const navLinks = [
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
+  const navigate = useNavigate()
   const { data: me } = useMe()
   const { mutate: logout, isPending: logoutPending } = useLogout()
+  const [authOpen, setAuthOpen] = useState(false)
+  const isClassify = location.pathname.startsWith('/classify')
 
   useEffect(() => {
     setMobileOpen(false)
@@ -80,45 +83,65 @@ export function Header() {
 
             {/* Right side */}
             <div className="flex items-center gap-2.5">
-              {me ? (
-                <>
-                  <span className="hidden text-[12px] font-medium text-slate-600 md:block">
-                    Hi, {me.first_name || me.username}
-                  </span>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="rounded-lg px-3 py-2 text-[12px] font-semibold"
-                    onClick={() => logout()}
-                    disabled={logoutPending}
-                  >
-                    Sign out
-                  </Button>
-                </>
-              ) : (
-                <AuthModal
-                  trigger={
+              {isClassify ? (
+                me ? (
+                  <>
+                    <span className="hidden text-[12px] font-medium text-slate-600 md:block">
+                      Hi, {me.first_name || me.username}
+                    </span>
                     <Button
                       type="button"
                       variant="outline"
                       className="rounded-lg px-3 py-2 text-[12px] font-semibold"
+                      onClick={() => logout()}
+                      disabled={logoutPending}
                     >
-                      Sign in
+                      Sign out
+                    </Button>
+                  </>
+                ) : (
+                  <AuthModal
+                    trigger={
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="rounded-lg px-3 py-2 text-[12px] font-semibold"
+                      >
+                        Sign in
+                      </Button>
+                    }
+                  />
+                )
+              ) : me ? (
+                <Button
+                  asChild
+                  className="rounded-lg bg-blue-600 px-4 py-2 text-[12px] font-semibold text-white transition-all duration-150 hover:bg-blue-700"
+                >
+                  <Link to="/classify">
+                    <BeakerIcon className="h-4 w-4" />
+                    <span className="hidden md:block">Get Started</span>
+                  </Link>
+                </Button>
+              ) : (
+                <AuthModal
+                  open={authOpen}
+                  onOpenChange={setAuthOpen}
+                  showGuestOption
+                  onGuestContinue={() => {
+                    setAuthOpen(false)
+                    navigate({ to: '/classify' })
+                  }}
+                  trigger={
+                    <Button
+                      type="button"
+                      className="rounded-lg bg-blue-600 px-4 py-2 text-[12px] font-semibold text-white transition-all duration-150 hover:bg-blue-700"
+                    >
+                      <BeakerIcon className="h-4 w-4" />
+                      <span className="hidden md:block">Get Started</span>
                     </Button>
                   }
                 />
               )}
-
-              {/* CTA — always visible */}
-              <Button
-                asChild
-                className="rounded-lg bg-blue-600 px-4 py-2 text-[12px] font-semibold text-white transition-all duration-150 hover:bg-blue-700"
-              >
-                <Link to="/classify">
-                  <BeakerIcon className="h-4 w-4" />
-                  <span className="hidden md:block">Get Started</span>
-                </Link>
-              </Button>
 
               {/* Hamburger — mobile only */}
               <button

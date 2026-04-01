@@ -15,9 +15,17 @@ type AuthModalProps = {
   trigger?: React.ReactNode
   open?: boolean
   onOpenChange?: (open: boolean) => void
+  showGuestOption?: boolean
+  onGuestContinue?: () => void
 }
 
-export function AuthModal({ trigger, open, onOpenChange }: AuthModalProps) {
+export function AuthModal({
+  trigger,
+  open,
+  onOpenChange,
+  showGuestOption = false,
+  onGuestContinue,
+}: AuthModalProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       {trigger ? <DialogTrigger asChild>{trigger}</DialogTrigger> : null}
@@ -33,6 +41,16 @@ export function AuthModal({ trigger, open, onOpenChange }: AuthModalProps) {
         <div className="mt-4">
           <LoginView variant="modal" showTitle={false} />
         </div>
+        {showGuestOption && (
+          <Button
+            type="button"
+            variant="outline"
+            className="mt-3 w-full"
+            onClick={onGuestContinue}
+          >
+            Continue as guest
+          </Button>
+        )}
         <p className="mt-3 text-center text-[12px] text-slate-500">
           By logging in, you can classify disease up to 5 times every 5 hours.
         </p>
