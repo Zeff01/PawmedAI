@@ -17,11 +17,7 @@ from config.pysecrets import (
     DJANGO_SECURE_SSL_REDIRECT,
     DJANGO_SESSION_COOKIE_SECURE,
     DATABASE_URL,
-    GAPI_KEY,
-    GEMINI_MODEL,
-    HUGGING_FACE_ENDPOINT_URL,
-    HUGGING_FACE_KEY,
-    HUGGING_FACE_MODEL,
+    SB_JWT_SECRET,
     VAPID_PRIVATE_KEY,
     VAPID_PUBLIC_KEY,
     VAPID_SUBJECT,
@@ -54,6 +50,7 @@ CSRF_TRUSTED_ORIGINS = [
 # Application definition
 INSTALLED_APPS = [
     'rest_framework',
+    'users',
     'classify_dss',
     'notifications',
     'corsheaders',
@@ -137,7 +134,15 @@ CACHES = {
     }
 }
 
+SUPABASE_JWT_SECRET = SB_JWT_SECRET
+
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'users.authentication.SupabaseJWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
     'DEFAULT_THROTTLE_RATES': {
         'disease_classify': '3/day',
     }

@@ -30,6 +30,7 @@ SB_PORT = os.getenv("SB_PORT")
 SB_DB = os.getenv("SB_DB")
 SB_USER = os.getenv("SB_USER")
 SB_PWD = os.getenv("SB_PWD")
+SB_JWT_SECRET = os.getenv("SB_JWT_SECRET")
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 if not DATABASE_URL and all([SB_HOST, SB_PORT, SB_DB, SB_USER, SB_PWD]):

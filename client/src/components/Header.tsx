@@ -4,6 +4,8 @@ import { BeakerIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid'
 import { PawIcon } from './custom/custom-icons'
 import { useState, useEffect } from 'react'
 import LifeCycle from './LifeCycle'
+import { AuthModal } from './AuthModal'
+import { useMe, useLogout } from '@/hooks/useAuth'
 
 const navLinks = [
   { to: '/', label: 'Home' },
@@ -13,6 +15,8 @@ const navLinks = [
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
+  const { data: me } = useMe()
+  const { mutate: logout, isPending: logoutPending } = useLogout()
 
   useEffect(() => {
     setMobileOpen(false)
@@ -76,6 +80,35 @@ export function Header() {
 
             {/* Right side */}
             <div className="flex items-center gap-2.5">
+              {me ? (
+                <>
+                  <span className="hidden text-[12px] font-medium text-slate-600 md:block">
+                    Hi, {me.first_name || me.username}
+                  </span>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="rounded-lg px-3 py-2 text-[12px] font-semibold"
+                    onClick={() => logout()}
+                    disabled={logoutPending}
+                  >
+                    Sign out
+                  </Button>
+                </>
+              ) : (
+                <AuthModal
+                  trigger={
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="rounded-lg px-3 py-2 text-[12px] font-semibold"
+                    >
+                      Sign in
+                    </Button>
+                  }
+                />
+              )}
+
               {/* CTA — always visible */}
               <Button
                 asChild
