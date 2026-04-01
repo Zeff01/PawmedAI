@@ -21,8 +21,6 @@ import { FadeIn } from '@/components/motion/FadeIn'
 import { UserTypeDialog } from './components/UserTypeDialog'
 import { useUserTypeStore, type UserType } from '@/stores/userTypeStore'
 import { showLocalNotification } from '@/pwa/push'
-import { useMe } from '@/hooks/useAuth'
-import { AuthModal } from '@/components/AuthModal'
 
 export function ClassifyDiseaseView() {
   const [imageFile, setImageFile] = React.useState<File | null>(null)
@@ -42,7 +40,6 @@ export function ClassifyDiseaseView() {
   const userType = useUserTypeStore((state) => state.userType)
   const openDialog = useUserTypeStore((state) => state.openDialog)
   const prevUserTypeRef = React.useRef<UserType | null>(null)
-  const { data: me } = useMe()
 
   const classifyMutation = useClassifyDisease()
 
@@ -145,37 +142,6 @@ export function ClassifyDiseaseView() {
     <section className="relative z-10 min-h-screen pb-24">
       <UserTypeDialog />
       <div className="page-wrap flex flex-col gap-6">
-        <section className="rounded-xl border border-slate-200 bg-white px-5 py-4 shadow-[0_2px_16px_rgba(15,28,63,0.06)]">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <p className="text-[12px] font-semibold uppercase tracking-wide text-blue-500">
-                Account
-              </p>
-              {me ? (
-                <p className="text-sm font-medium text-slate-700">
-                  Welcome, {me.first_name || me.username}!
-                </p>
-              ) : (
-                <p className="text-sm text-slate-500">
-                  You are not signed in.
-                </p>
-              )}
-            </div>
-            {!me && (
-              <AuthModal
-                trigger={
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="rounded-lg px-4 py-2 text-[12px] font-semibold"
-                  >
-                    Sign in
-                  </Button>
-                }
-              />
-            )}
-          </div>
-        </section>
         <FadeStagger
           trigger="mount"
           className="grid gap-6 lg:grid-cols-[1.3fr_0.7fr]"
