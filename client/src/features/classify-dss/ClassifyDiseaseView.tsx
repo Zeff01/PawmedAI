@@ -239,7 +239,7 @@ export function ClassifyDiseaseView() {
                     <ExclamationTriangleIcon className="h-4 w-4 shrink-0 mt-0.5" />
                     <span>
                       You only have 3 tries per day. You can try again after 10
-                      hours.
+                      hours!
                     </span>
                   </div>
                 )}
