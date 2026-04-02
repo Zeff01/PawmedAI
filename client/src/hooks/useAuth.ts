@@ -76,6 +76,7 @@ export function useLogout() {
       if (error) throw new Error(error.message)
     },
     onSuccess: () => {
+      queryClient.setQueryData(authKeys.me, undefined)
       queryClient.removeQueries({ queryKey: authKeys.me })
     },
   })

@@ -154,7 +154,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'disease_classify': '3/day',
+        'disease_classify_user': '5/5h',
+        'disease_classify_anon': '2/10h',
     }
     ,
     'NUM_PROXIES': 1,

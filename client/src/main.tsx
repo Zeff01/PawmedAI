@@ -23,9 +23,16 @@ declare module '@tanstack/react-router' {
 
 function AuthSync() {
   useEffect(() => {
-    const { data: subscription } = supabase.auth.onAuthStateChange(() => {
-      queryClient.invalidateQueries({ queryKey: authKeys.me })
-    })
+    const { data: subscription } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        if (!session) {
+          queryClient.setQueryData(authKeys.me, null)
+          queryClient.removeQueries({ queryKey: authKeys.me })
+          return
+        }
+        queryClient.invalidateQueries({ queryKey: authKeys.me })
+      },
+    )
 
     return () => {
       subscription.subscription.unsubscribe()

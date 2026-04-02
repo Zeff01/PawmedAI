@@ -358,10 +358,7 @@ function HomeView() {
         </div>
 
         {/* Metric strip — scroll triggered */}
-        <FadeStagger
-          className="mx-auto mt-16 grid w-full max-w-6xl grid-cols-1 gap-4 sm:grid-cols-3"
-          role="list"
-        >
+        <FadeStagger className="mx-auto mt-16 grid w-full max-w-6xl grid-cols-1 gap-4 sm:grid-cols-3">
           <FadeChild>
             <MetricCard
               icon={<BoltIcon className="h-4 w-4" />}
@@ -397,10 +394,7 @@ function HomeView() {
             heading="Everything you need for diagnostic clarity."
             sub="Capture, analyze, and communicate veterinary findings in a single flow. Pawmed AI keeps every case consistent and audit-ready."
           />
-          <FadeStagger
-            className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3"
-            role="list"
-          >
+          <FadeStagger className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
             <FadeChild>
               <FeatureCard
                 title="Rapid diagnostic briefs"
@@ -446,10 +440,7 @@ function HomeView() {
             heading="Designed for busy veterinary teams."
             center
           />
-          <FadeStagger
-            className="grid grid-cols-1 gap-5 md:grid-cols-3"
-            role="list"
-          >
+          <FadeStagger className="grid grid-cols-1 gap-5 md:grid-cols-3">
             <FadeChild>
               <StepCard
                 step={1}
@@ -510,10 +501,7 @@ function HomeView() {
           </FadeStagger>
 
           {/* Audience cards */}
-          <FadeStagger
-            className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
-            role="list"
-          >
+          <FadeStagger className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {/* Students */}
             <FadeChild direction="left">
               <article
@@ -629,7 +617,6 @@ function HomeView() {
               </article>
             </FadeChild>
           </FadeStagger>
-
         </div>
       </section>
 

@@ -20,6 +20,7 @@ export function Header() {
   const { mutate: logout, isPending: logoutPending } = useLogout()
   const [authOpen, setAuthOpen] = useState(false)
   const isClassify = location.pathname.startsWith('/classify')
+  const [signingOut, setSigningOut] = useState(false)
 
   const isActivePath = (to: string) => {
     if (to === '/') return location.pathname === '/'
@@ -123,7 +124,13 @@ export function Header() {
                       type="button"
                       variant="outline"
                       className="rounded-lg px-3 py-2 text-[12px] font-semibold"
-                      onClick={() => logout()}
+                      onClick={() => {
+                        setSigningOut(true)
+                        logout(undefined, {
+                          onSuccess: () => window.location.reload(),
+                          onError: () => setSigningOut(false),
+                        })
+                      }}
                       disabled={logoutPending}
                     >
                       Sign out
@@ -185,6 +192,23 @@ export function Header() {
           </div>
         </div>
       </header>
+
+      {signingOut && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-slate-900/30 backdrop-blur-sm" />
+          <div className="relative flex w-full max-w-xs flex-col items-center gap-3 rounded-2xl border border-white/60 bg-white/90 px-6 py-6 text-center shadow-[0_20px_60px_rgba(15,23,42,0.2)]">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-50">
+              <div className="h-6 w-6 animate-spin rounded-full border-2 border-blue-600 border-t-transparent" />
+            </div>
+            <p className="text-sm font-semibold text-slate-800">
+              Signing you out…
+            </p>
+            <p className="text-xs text-slate-500">
+              Please keep this window open.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Mobile Drawer Overlay */}
       {mobileOpen && (
