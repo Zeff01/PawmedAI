@@ -1,6 +1,11 @@
 import { Link, useLocation, useNavigate } from '@tanstack/react-router'
 import { Button } from './ui/button'
-import { BeakerIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid'
+import {
+  BeakerIcon,
+  Bars3Icon,
+  XMarkIcon,
+  ArrowLongRightIcon,
+} from '@heroicons/react/24/solid'
 import { PawIcon } from './custom/custom-icons'
 import { useState, useEffect } from 'react'
 import LifeCycle from './LifeCycle'
@@ -142,9 +147,10 @@ export function Header() {
                       <Button
                         type="button"
                         variant="outline"
-                        className="rounded-lg px-3 py-2 text-[12px] font-semibold"
+                        className="rounded-lg px-3 py-2 text-[12px] font-semibold hover:bg-blue-500 hover:text-white hover:border-blue-500"
                       >
-                        Sign in
+                        <span>Sign in</span>
+                        <ArrowLongRightIcon className="h-4 w-4 shrink-0" />
                       </Button>
                     }
                   />
