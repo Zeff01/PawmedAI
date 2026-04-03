@@ -21,6 +21,8 @@ import { FadeIn } from '@/components/motion/FadeIn'
 import { UserTypeDialog } from './components/UserTypeDialog'
 import { useUserTypeStore, type UserType } from '@/stores/userTypeStore'
 import { showLocalNotification } from '@/pwa/push'
+import { useMe } from '@/hooks/useAuth'
+import { AuthModal } from '@/components/AuthModal'
 
 export function ClassifyDiseaseView() {
   const [imageFile, setImageFile] = React.useState<File | null>(null)
@@ -40,6 +42,7 @@ export function ClassifyDiseaseView() {
   const userType = useUserTypeStore((state) => state.userType)
   const openDialog = useUserTypeStore((state) => state.openDialog)
   const prevUserTypeRef = React.useRef<UserType | null>(null)
+  const { data: me } = useMe()
 
   const classifyMutation = useClassifyDisease()
 
@@ -230,16 +233,41 @@ export function ClassifyDiseaseView() {
                 </div>
 
                 {errorMessage ? (
-                  <div className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-[12.5px] text-red-700">
-                    <ExclamationCircleIcon className="h-4 w-4 shrink-0 mt-0.5" />
-                    <span>{errorMessage}</span>
+                  <div className="flex flex-col gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-[12.5px] text-red-700">
+                    <div className="flex items-start gap-2">
+                      <ExclamationCircleIcon className="h-4 w-4 shrink-0 mt-0.5" />
+                      <span>{errorMessage}</span>
+                    </div>
+                    {(() => {
+                      const err = classifyMutation.error as Error & {
+                        code?: string
+                        isAuthed?: boolean
+                      }
+                      if (err?.code === 'THROTTLE' && !err?.isAuthed) {
+                        return (
+                          <AuthModal
+                            trigger={
+                              <Button
+                                type="button"
+                                size="sm"
+                                className="w-fit rounded-md bg-blue-600 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-blue-700"
+                              >
+                                Sign in for 5 free classifications
+                              </Button>
+                            }
+                          />
+                        )
+                      }
+                      return null
+                    })()}
                   </div>
                 ) : (
                   <div className="flex items-start gap-2 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-[12.5px] text-amber-800">
                     <ExclamationTriangleIcon className="h-4 w-4 shrink-0 mt-0.5" />
                     <span>
-                      You only have 3 tries per day. You can try again after 10
-                      hours!
+                      {me
+                        ? 'Yey! You have 5 tries every 10 hours. You can try again after 5 hours.'
+                        : 'You only have 3 tries every 10 hours. Sign in to get 5 free classifications every 5 hours!'}
                     </span>
                   </div>
                 )}

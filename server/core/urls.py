@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/", include("classify_dss.urls")),
     path("api/push/", include("notifications.urls")),
+    path("api/user/", include("users.urls")),
     path("health/", health_check, name="health_check"),
     path("health/cache/", cache_health_check, name="cache_health_check"),
     path("health/throttle/", throttle_health_check, name="throttle_health_check"),

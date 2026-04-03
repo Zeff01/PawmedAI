@@ -1,9 +1,16 @@
-import { Link, useLocation } from '@tanstack/react-router'
+import { Link, useLocation, useNavigate } from '@tanstack/react-router'
 import { Button } from './ui/button'
-import { BeakerIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid'
+import {
+  BeakerIcon,
+  Bars3Icon,
+  XMarkIcon,
+  ArrowLongRightIcon,
+} from '@heroicons/react/24/solid'
 import { PawIcon } from './custom/custom-icons'
 import { useState, useEffect } from 'react'
 import LifeCycle from './LifeCycle'
+import { AuthModal } from './AuthModal'
+import { useMe, useLogout } from '@/hooks/useAuth'
 
 const navLinks = [
   { to: '/', label: 'Home' },
@@ -13,6 +20,47 @@ const navLinks = [
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
+  const navigate = useNavigate()
+  const { data: me } = useMe()
+  const { mutate: logout, isPending: logoutPending } = useLogout()
+  const [authOpen, setAuthOpen] = useState(false)
+  const isClassify = location.pathname.startsWith('/classify')
+  const [signingOut, setSigningOut] = useState(false)
+
+  const isActivePath = (to: string) => {
+    if (to === '/') return location.pathname === '/'
+    return location.pathname.startsWith(to)
+  }
+
+  const renderNavItem = (
+    item: { to: string; label: string },
+    className: string,
+    activeClassName: string,
+  ) => {
+    const active = isActivePath(item.to)
+
+    const mergedClassName = active ? activeClassName : className
+
+    if (item.to === '/classify' && !me && !isClassify) {
+      return (
+        <AuthModal
+          showGuestOption
+          onGuestContinue={() => navigate({ to: '/classify' })}
+          trigger={
+            <button type="button" className={mergedClassName}>
+              {item.label}
+            </button>
+          }
+        />
+      )
+    }
+
+    return (
+      <Link to={item.to} className={mergedClassName}>
+        {item.label}
+      </Link>
+    )
+  }
 
   useEffect(() => {
     setMobileOpen(false)
@@ -56,19 +104,14 @@ export function Header() {
 
             {/* Desktop Nav */}
             <nav className="hidden items-center md:flex" aria-label="Primary">
-              <ul className="flex items-center gap-1 rounded-xl border border-slate-100 bg-slate-50/80 p-1">
+              <ul className="flex items-center gap-6">
                 {navLinks.map((item) => (
                   <li key={item.to}>
-                    <Link
-                      to={item.to}
-                      className="rounded-lg px-4 py-1.5 text-[13px] font-medium text-slate-500 transition-all duration-150 hover:text-slate-800"
-                      activeProps={{
-                        className:
-                          'rounded-lg px-4 py-1.5 text-[13px] font-semibold text-blue-600 bg-white shadow-sm border border-blue-100/60',
-                      }}
-                    >
-                      {item.label}
-                    </Link>
+                    {renderNavItem(
+                      item,
+                      'text-[14px] font-medium text-slate-500 transition-colors hover:text-slate-900',
+                      'text-[14px] font-semibold text-blue-600 transition-colors',
+                    )}
                   </li>
                 ))}
               </ul>
@@ -76,16 +119,72 @@ export function Header() {
 
             {/* Right side */}
             <div className="flex items-center gap-2.5">
-              {/* CTA — always visible */}
-              <Button
-                asChild
-                className="rounded-lg bg-blue-600 px-4 py-2 text-[12px] font-semibold text-white transition-all duration-150 hover:bg-blue-700"
-              >
-                <Link to="/classify">
-                  <BeakerIcon className="h-4 w-4" />
-                  <span className="hidden md:block">Get Started</span>
-                </Link>
-              </Button>
+              {isClassify ? (
+                me ? (
+                  <>
+                    <span className="hidden text-[12px] font-medium text-slate-600 md:block">
+                      Hi, {me.first_name || me.username}
+                    </span>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="rounded-lg px-3 py-2 text-[12px] font-semibold"
+                      onClick={() => {
+                        setSigningOut(true)
+                        logout(undefined, {
+                          onSuccess: () => window.location.reload(),
+                          onError: () => setSigningOut(false),
+                        })
+                      }}
+                      disabled={logoutPending}
+                    >
+                      Sign out
+                    </Button>
+                  </>
+                ) : (
+                  <AuthModal
+                    trigger={
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="rounded-lg px-3 py-2 text-[12px] font-semibold hover:bg-blue-500 hover:text-white hover:border-blue-500"
+                      >
+                        <span>Sign in</span>
+                        <ArrowLongRightIcon className="h-4 w-4 shrink-0" />
+                      </Button>
+                    }
+                  />
+                )
+              ) : me ? (
+                <Button
+                  asChild
+                  className="rounded-lg bg-blue-600 px-4 py-2 text-[12px] font-semibold text-white transition-all duration-150 hover:bg-blue-700"
+                >
+                  <Link to="/classify">
+                    <BeakerIcon className="h-4 w-4" />
+                    <span className="hidden md:block">Get Started</span>
+                  </Link>
+                </Button>
+              ) : (
+                <AuthModal
+                  open={authOpen}
+                  onOpenChange={setAuthOpen}
+                  showGuestOption
+                  onGuestContinue={() => {
+                    setAuthOpen(false)
+                    navigate({ to: '/classify' })
+                  }}
+                  trigger={
+                    <Button
+                      type="button"
+                      className="rounded-lg bg-blue-600 px-4 py-2 text-[12px] font-semibold text-white transition-all duration-150 hover:bg-blue-700"
+                    >
+                      <BeakerIcon className="h-4 w-4" />
+                      <span className="hidden md:block">Get Started</span>
+                    </Button>
+                  }
+                />
+              )}
 
               {/* Hamburger — mobile only */}
               <button
@@ -99,6 +198,23 @@ export function Header() {
           </div>
         </div>
       </header>
+
+      {signingOut && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-slate-900/30 backdrop-blur-sm" />
+          <div className="relative flex w-full max-w-xs flex-col items-center gap-3 rounded-2xl border border-white/60 bg-white/90 px-6 py-6 text-center shadow-[0_20px_60px_rgba(15,23,42,0.2)]">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-50">
+              <div className="h-6 w-6 animate-spin rounded-full border-2 border-blue-600 border-t-transparent" />
+            </div>
+            <p className="text-sm font-semibold text-slate-800">
+              Signing you out…
+            </p>
+            <p className="text-xs text-slate-500">
+              Please keep this window open.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Mobile Drawer Overlay */}
       {mobileOpen && (
@@ -150,16 +266,11 @@ export function Header() {
           <ul className="flex flex-col gap-1">
             {navLinks.map((item) => (
               <li key={item.to}>
-                <Link
-                  to={item.to}
-                  className="flex items-center rounded-xl px-4 py-3 text-[14px] font-medium text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900"
-                  activeProps={{
-                    className:
-                      'flex items-center rounded-xl px-4 py-3 text-[14px] font-semibold text-blue-600 bg-blue-50 border border-blue-100',
-                  }}
-                >
-                  {item.label}
-                </Link>
+                {renderNavItem(
+                  item,
+                  'flex w-full items-center rounded-xl px-4 py-3 text-[14px] font-medium text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900',
+                  'flex w-full items-center rounded-xl px-4 py-3 text-[14px] font-semibold text-blue-600 bg-blue-50 border border-blue-100',
+                )}
               </li>
             ))}
           </ul>
@@ -167,18 +278,31 @@ export function Header() {
 
         {/* Drawer Footer CTA */}
         <div className="border-t border-slate-100 px-4 py-5">
-          <Button
-            asChild
-            className="w-full rounded-xl bg-blue-600 py-2.5 text-[13px] font-semibold text-white hover:bg-blue-700"
-          >
-            <Link
-              to="/classify"
-              className="flex items-center justify-center gap-2"
+          {me ? (
+            <Button
+              asChild
+              className="w-full rounded-xl bg-blue-600 py-2.5 text-[13px] font-semibold text-white hover:bg-blue-700"
             >
-              <BeakerIcon className="h-4 w-4" />
-              Get Started
-            </Link>
-          </Button>
+              <Link
+                to="/classify"
+                className="flex items-center justify-center gap-2"
+              >
+                <BeakerIcon className="h-4 w-4" />
+                Get Started
+              </Link>
+            </Button>
+          ) : (
+            <AuthModal
+              showGuestOption
+              onGuestContinue={() => navigate({ to: '/classify' })}
+              trigger={
+                <Button className="w-full rounded-xl bg-blue-600 py-2.5 text-[13px] font-semibold text-white hover:bg-blue-700">
+                  <BeakerIcon className="h-4 w-4" />
+                  Get Started
+                </Button>
+              }
+            />
+          )}
           <p className="mt-3 text-center text-[11px] text-slate-400">
             AI-powered veterinary diagnostics
           </p>

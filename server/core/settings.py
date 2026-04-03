@@ -3,6 +3,7 @@ Django settings for core project.
 """
 
 import os
+from urllib.parse import urlencode
 from pathlib import Path
 
 import dj_database_url
@@ -17,11 +18,9 @@ from config.pysecrets import (
     DJANGO_SECURE_SSL_REDIRECT,
     DJANGO_SESSION_COOKIE_SECURE,
     DATABASE_URL,
-    GAPI_KEY,
-    GEMINI_MODEL,
-    HUGGING_FACE_ENDPOINT_URL,
-    HUGGING_FACE_KEY,
-    HUGGING_FACE_MODEL,
+    SB_ANON,
+    SB_JWT_SECRET,
+    SUPABASE_URL,
     VAPID_PRIVATE_KEY,
     VAPID_PUBLIC_KEY,
     VAPID_SUBJECT,
@@ -54,6 +53,7 @@ CSRF_TRUSTED_ORIGINS = [
 # Application definition
 INSTALLED_APPS = [
     'rest_framework',
+    'users',
     'classify_dss',
     'notifications',
     'corsheaders',
@@ -137,9 +137,25 @@ CACHES = {
     }
 }
 
+SUPABASE_JWT_SECRET = SB_JWT_SECRET
+SUPABASE_URL = SUPABASE_URL
+SUPABASE_ANON_KEY = SB_ANON
+SUPABASE_JWKS_URL = os.getenv("SUPABASE_JWKS_URL")
+if not SUPABASE_JWKS_URL and SUPABASE_URL:
+    SUPABASE_JWKS_URL = (
+        f"{SUPABASE_URL.rstrip('/')}/auth/v1/.well-known/jwks.json"
+    )
+
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'users.authentication.SupabaseJWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
     'DEFAULT_THROTTLE_RATES': {
-        'disease_classify': '3/day',
+        'disease_classify_user': '5/5h',
+        'disease_classify_anon': '2/10h',
     }
     ,
     'NUM_PROXIES': 1,

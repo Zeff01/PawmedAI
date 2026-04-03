@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
 import {
   BoltIcon,
   ChartBarIcon,
@@ -14,6 +14,8 @@ import {
 } from '@heroicons/react/24/solid'
 import type { ReactNode } from 'react'
 import { Button } from '@/components/ui/button'
+import { AuthModal } from '@/components/AuthModal'
+import { useMe } from '@/hooks/useAuth'
 import { FadeStagger } from '@/components/motion/FadeStagger'
 import { FadeChild } from '@/components/motion/FadeChild'
 import { FadeIn } from '@/components/motion/FadeIn'
@@ -218,6 +220,8 @@ function TrustItem({ label }: TrustItemProps) {
 }
 
 function HomeView() {
+  const { data: me } = useMe()
+  const navigate = useNavigate()
   const trustItems = ['HIPAA-aligned', 'No credit card', 'Clinic-ready UX']
 
   return (
@@ -277,16 +281,32 @@ function HomeView() {
 
             <FadeChild>
               <div className="flex flex-col items-center gap-3 sm:flex-row md:items-start">
-                <Button
-                  asChild
-                  size="lg"
-                  className="gap-2 rounded-xl bg-blue-600 hover:bg-blue-700"
-                >
-                  <Link to="/classify">
-                    Start a classification
-                    <ArrowRightIcon className="h-4 w-4" />
-                  </Link>
-                </Button>
+                {me ? (
+                  <Button
+                    asChild
+                    size="lg"
+                    className="gap-2 rounded-xl bg-blue-600 hover:bg-blue-700"
+                  >
+                    <Link to="/classify">
+                      Start a classification
+                      <ArrowRightIcon className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                ) : (
+                  <AuthModal
+                    showGuestOption
+                    onGuestContinue={() => navigate({ to: '/classify' })}
+                    trigger={
+                      <Button
+                        size="lg"
+                        className="gap-2 rounded-xl bg-blue-600 hover:bg-blue-700"
+                      >
+                        Start a classification
+                        <ArrowRightIcon className="h-4 w-4" />
+                      </Button>
+                    }
+                  />
+                )}
                 <Button
                   asChild
                   size="lg"
@@ -338,10 +358,7 @@ function HomeView() {
         </div>
 
         {/* Metric strip — scroll triggered */}
-        <FadeStagger
-          className="mx-auto mt-16 grid w-full max-w-6xl grid-cols-1 gap-4 sm:grid-cols-3"
-          role="list"
-        >
+        <FadeStagger className="mx-auto mt-16 grid w-full max-w-6xl grid-cols-1 gap-4 sm:grid-cols-3">
           <FadeChild>
             <MetricCard
               icon={<BoltIcon className="h-4 w-4" />}
@@ -377,10 +394,7 @@ function HomeView() {
             heading="Everything you need for diagnostic clarity."
             sub="Capture, analyze, and communicate veterinary findings in a single flow. Pawmed AI keeps every case consistent and audit-ready."
           />
-          <FadeStagger
-            className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3"
-            role="list"
-          >
+          <FadeStagger className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
             <FadeChild>
               <FeatureCard
                 title="Rapid diagnostic briefs"
@@ -426,10 +440,7 @@ function HomeView() {
             heading="Designed for busy veterinary teams."
             center
           />
-          <FadeStagger
-            className="grid grid-cols-1 gap-5 md:grid-cols-3"
-            role="list"
-          >
+          <FadeStagger className="grid grid-cols-1 gap-5 md:grid-cols-3">
             <FadeChild>
               <StepCard
                 step={1}
@@ -490,10 +501,7 @@ function HomeView() {
           </FadeStagger>
 
           {/* Audience cards */}
-          <FadeStagger
-            className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
-            role="list"
-          >
+          <FadeStagger className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {/* Students */}
             <FadeChild direction="left">
               <article
@@ -609,7 +617,6 @@ function HomeView() {
               </article>
             </FadeChild>
           </FadeStagger>
-
         </div>
       </section>
 
@@ -642,16 +649,32 @@ function HomeView() {
             </FadeChild>
             <FadeChild>
               <div className="mt-4 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <Button
-                  asChild
-                  size="lg"
-                  className="gap-2 rounded-xl bg-white text-blue-600 shadow-md hover:bg-blue-50"
-                >
-                  <Link to="/classify">
-                    Launch classification
-                    <ArrowRightIcon className="h-4 w-4" />
-                  </Link>
-                </Button>
+                {me ? (
+                  <Button
+                    asChild
+                    size="lg"
+                    className="gap-2 rounded-xl bg-white text-blue-600 shadow-md hover:bg-blue-50"
+                  >
+                    <Link to="/classify">
+                      Launch classification
+                      <ArrowRightIcon className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                ) : (
+                  <AuthModal
+                    showGuestOption
+                    onGuestContinue={() => navigate({ to: '/classify' })}
+                    trigger={
+                      <Button
+                        size="lg"
+                        className="gap-2 rounded-xl bg-white text-blue-600 shadow-md hover:bg-blue-50"
+                      >
+                        Launch classification
+                        <ArrowRightIcon className="h-4 w-4" />
+                      </Button>
+                    }
+                  />
+                )}
               </div>
             </FadeChild>
           </FadeStagger>
