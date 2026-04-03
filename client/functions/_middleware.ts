@@ -130,7 +130,8 @@ export async function onRequest({
         status: 302,
         headers: {
           Location: '/',
-          'Set-Cookie': 'staging_auth=true; Path=/; HttpOnly; SameSite=Strict',
+          'Set-Cookie':
+            'staging_auth=true; Path=/; HttpOnly; SameSite=Strict; Max-Age=28800',
         },
       })
     }
