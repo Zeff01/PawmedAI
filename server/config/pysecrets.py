@@ -35,7 +35,7 @@ SB_ANON = os.getenv("SB_ANON") or os.getenv("VITE_SUPABASE_ANON_KEY")
 SUPABASE_URL = (
     os.getenv("SUPABASE_URL")
     or os.getenv("SB_PROJECT_URL")
-    or os.getenv("VITE_SUPABASE_URL")
+    or os.getenv("SB_URL")
 )
 
 DATABASE_URL = os.getenv("DATABASE_URL")
