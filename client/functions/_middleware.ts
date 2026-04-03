@@ -115,8 +115,8 @@ export async function onRequest({
   const url = new URL(request.url)
   const cookie = request.headers.get('Cookie') || ''
   const isAuthenticated = cookie.includes('staging_auth=true')
+  const isAuthCallback = url.pathname.startsWith('/auth/callback')
 
-  // Handle login form submission
   if (request.method === 'POST' && url.pathname === '/__staging_auth') {
     const formData = await request.formData()
     const username = formData.get('username')
@@ -142,7 +142,12 @@ export async function onRequest({
     })
   }
 
-  // Block all routes if not authenticated
+  // Allow OAuth callback
+  if (!isAuthenticated && isAuthCallback) {
+    return next()
+  }
+
+  // Block all routes IF not authenticated
   if (!isAuthenticated) {
     return new Response(LOGIN_PAGE, {
       status: 401,
