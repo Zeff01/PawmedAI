@@ -6,6 +6,7 @@ import { registerSW } from 'virtual:pwa-register'
 import { useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 import { authKeys } from '@/hooks/useAuth'
+import { UserTypeDialog } from '@/features/classify-dss/components/UserTypeDialog'
 
 const router = createRouter({
   routeTree,
@@ -50,6 +51,7 @@ if (!rootElement.innerHTML) {
   root.render(
     <QueryClientProvider client={queryClient}>
       <AuthSync />
+      <UserTypeDialog />
       <RouterProvider router={router} />
     </QueryClientProvider>
   )

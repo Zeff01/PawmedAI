@@ -6,6 +6,8 @@ from rest_framework.exceptions import AuthenticationFailed
 from jwt import PyJWKClient
 from jwt.exceptions import PyJWKClientConnectionError
 
+from .models import UserProfile
+
 User = get_user_model()
 
 
@@ -109,4 +111,5 @@ class SupabaseJWTAuthentication(BaseAuthentication):
             user.email = email
             user.save(update_fields=["email"])
 
+        UserProfile.objects.get_or_create(user=user)
         return user

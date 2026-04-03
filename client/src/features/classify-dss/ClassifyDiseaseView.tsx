@@ -18,10 +18,10 @@ import ResultSkeletonLoader from './components/ResultSkeletonLoader'
 import { FadeStagger } from '@/components/motion/FadeStagger'
 import { FadeChild } from '@/components/motion/FadeChild'
 import { FadeIn } from '@/components/motion/FadeIn'
-import { UserTypeDialog } from './components/UserTypeDialog'
-import { useUserTypeStore, type UserType } from '@/stores/userTypeStore'
+import { useUserTypeStore } from '@/stores/userTypeStore'
+import type { UserType } from '@/types/auth'
 import { showLocalNotification } from '@/pwa/push'
-import { useMe } from '@/hooks/useAuth'
+import { useMe, useSupabaseSession } from '@/hooks/useAuth'
 import { AuthModal } from '@/components/AuthModal'
 
 export function ClassifyDiseaseView() {
@@ -41,14 +41,14 @@ export function ClassifyDiseaseView() {
 
   const userType = useUserTypeStore((state) => state.userType)
   const openDialog = useUserTypeStore((state) => state.openDialog)
+  const lockSelection = useUserTypeStore((state) => state.lockSelection)
+  const clearUserType = useUserTypeStore((state) => state.clearUserType)
+  const setLockSelection = useUserTypeStore((state) => state.setLockSelection)
   const prevUserTypeRef = React.useRef<UserType | null>(null)
-  const { data: me } = useMe()
+  const { session, isLoading: isSessionLoading } = useSupabaseSession()
+  const { data: me } = useMe({ enabled: Boolean(session) })
 
   const classifyMutation = useClassifyDisease()
-
-  React.useEffect(() => {
-    openDialog()
-  }, [openDialog])
 
   React.useEffect(() => {
     if (prevUserTypeRef.current && userType !== prevUserTypeRef.current) {
@@ -57,6 +57,17 @@ export function ClassifyDiseaseView() {
     }
     prevUserTypeRef.current = userType
   }, [userType, classifyMutation])
+
+  React.useEffect(() => {
+    if (isSessionLoading) return
+    if (!session) {
+      setLockSelection(true)
+      clearUserType({ openDialog: true })
+      return () => {
+        setLockSelection(false)
+      }
+    }
+  }, [isSessionLoading, session, clearUserType, setLockSelection])
 
   React.useEffect(() => {
     if (!imageFile) {
@@ -143,7 +154,6 @@ export function ClassifyDiseaseView() {
 
   return (
     <section className="relative z-10 min-h-screen pb-24">
-      <UserTypeDialog />
       <div className="page-wrap flex flex-col gap-6">
         <FadeStagger
           trigger="mount"
@@ -177,14 +187,16 @@ export function ClassifyDiseaseView() {
                           : 'Fur Parent'
                       : 'Select profile'}
                   </span>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={openDialog}
-                    className="h-8 rounded-full border-blue-200 px-3 text-[11px] font-semibold text-blue-600 hover:bg-blue-50"
-                  >
-                    Switch
-                  </Button>
+                  {!lockSelection || !session ? (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={openDialog}
+                      className="h-8 rounded-full border-blue-200 px-3 text-[11px] font-semibold text-blue-600 hover:bg-blue-50"
+                    >
+                      Switch
+                    </Button>
+                  ) : null}
                 </div>
               </header>
 
