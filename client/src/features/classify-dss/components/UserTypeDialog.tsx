@@ -8,7 +8,9 @@ import {
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { useUserTypeStore, type UserType } from '@/stores/userTypeStore'
+import { useUserTypeStore } from '@/stores/userTypeStore'
+import type { UserType } from '@/types/auth'
+import { useMe, useSetUserType, useSupabaseSession } from '@/hooks/useAuth'
 
 type UserTypeOption = {
   value: UserType
@@ -54,24 +56,85 @@ export function UserTypeDialog({
 }: UserTypeDialogProps) {
   const userType = useUserTypeStore((state) => state.userType)
   const dialogOpen = useUserTypeStore((state) => state.dialogOpen)
+  const lockSelection = useUserTypeStore((state) => state.lockSelection)
   const openDialog = useUserTypeStore((state) => state.openDialog)
   const closeDialog = useUserTypeStore((state) => state.closeDialog)
   const setUserType = useUserTypeStore((state) => state.setUserType)
+  const clearUserType = useUserTypeStore((state) => state.clearUserType)
+  const setLockSelection = useUserTypeStore((state) => state.setLockSelection)
+  const { session, isLoading: isSessionLoading } = useSupabaseSession()
+  const isAuthed = Boolean(session)
+  const { data: me, isLoading: isMeLoading } = useMe({ enabled: isAuthed })
+  const { mutateAsync: setUserTypeRemote, isPending: isSaving } =
+    useSetUserType()
   const [showDisclaimer, setShowDisclaimer] = React.useState(false)
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null)
 
-  const open = dialogOpen || !userType
-  const disableClose = dialogOpen
+  const open = dialogOpen || (lockSelection && !userType)
+  const disableClose = lockSelection
+
+  React.useEffect(() => {
+    if (isSessionLoading) return
+    if (!isAuthed) return
+    if (isMeLoading || !me) return
+
+    if (me.user_type) {
+      setUserType(me.user_type)
+      setLockSelection(true)
+      closeDialog()
+      return
+    }
+
+    setLockSelection(true)
+    clearUserType({ openDialog: true })
+  }, [
+    isAuthed,
+    isSessionLoading,
+    isMeLoading,
+    me,
+    me?.user_type,
+    setUserType,
+    setLockSelection,
+    clearUserType,
+    closeDialog,
+  ])
+
+  const persistSelection = async (nextType: UserType) => {
+    if (!isAuthed) {
+      setUserType(nextType)
+      return
+    }
+
+    if (me?.user_type) return
+
+    try {
+      setErrorMessage(null)
+      const updated = await setUserTypeRemote(nextType)
+      if (updated.user_type) {
+        setUserType(updated.user_type)
+      } else {
+        setUserType(nextType)
+      }
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : 'Unable to save profile type.'
+      setErrorMessage(message)
+      return
+    }
+  }
 
   const handleSelect = (nextType: UserType) => {
     if (nextType === 'fur_parent') {
       setShowDisclaimer(true)
       return
     }
-    setUserType(nextType)
+    void persistSelection(nextType)
   }
 
   const handleDisclaimerConfirm = () => {
-    setUserType('fur_parent')
+    void persistSelection('fur_parent')
     setShowDisclaimer(false)
   }
 
@@ -81,7 +144,7 @@ export function UserTypeDialog({
 
   const handleOpenChange = (nextOpen: boolean) => {
     if (nextOpen) {
-      openDialog()
+      if (!lockSelection) openDialog()
       return
     }
     if (!disableClose) closeDialog()
@@ -133,13 +196,18 @@ export function UserTypeDialog({
               <Button variant="outline" onClick={handleDisclaimerCancel}>
                 Go back
               </Button>
-              <Button onClick={handleDisclaimerConfirm}>
+              <Button onClick={handleDisclaimerConfirm} disabled={isSaving}>
                 I understand, continue
               </Button>
             </div>
           </div>
         ) : (
           <div className="mt-5 grid gap-3">
+            {errorMessage ? (
+              <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
+                {errorMessage}
+              </div>
+            ) : null}
             {options.map((option) => {
               const selected = option.value === userType
               return (
@@ -147,11 +215,13 @@ export function UserTypeDialog({
                   key={option.value}
                   type="button"
                   onClick={() => handleSelect(option.value)}
+                  disabled={isSaving}
                   className={cn(
                     'flex w-full flex-col gap-2 rounded-xl border px-4 py-3 text-left transition',
                     selected
                       ? 'border-blue-500 bg-blue-50'
                       : 'border-slate-200 bg-white hover:border-blue-200 hover:bg-blue-50/40',
+                    isSaving ? 'cursor-not-allowed opacity-70' : null,
                   )}
                 >
                   <div className="flex items-center justify-between">

@@ -6,7 +6,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .authentication import SupabaseJWTAuthentication
-from .serializers import OAuthCallbackSerializer, UserSerializer
+from .models import UserProfile
+from .serializers import OAuthCallbackSerializer, UserSerializer, UserTypeSerializer
 
 
 class OAuthCallbackView(APIView):
@@ -43,3 +44,24 @@ class MeView(APIView):
 
     def get(self, request: Request) -> Response:
         return Response(UserSerializer(request.user).data)
+
+
+class UserTypeView(APIView):
+    """Sets the user's profile type once."""
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request: Request) -> Response:
+        serializer = UserTypeSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        profile, _ = UserProfile.objects.get_or_create(user=request.user)
+        if profile.user_type:
+            return Response(
+                {"detail": "Profile type is already set."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        profile.user_type = serializer.validated_data["user_type"]
+        profile.save(update_fields=["user_type", "updated_at"])
+
+        return Response(UserSerializer(request.user).data, status=status.HTTP_200_OK)

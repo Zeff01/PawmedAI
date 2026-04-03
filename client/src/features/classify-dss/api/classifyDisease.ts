@@ -1,5 +1,5 @@
 import type { DiseaseClassificationResult } from '../types'
-import type { UserType } from '@/stores/userTypeStore'
+import type { UserType } from '@/types/auth'
 import { supabase } from '@/lib/supabase'
 
 const DEFAULT_BASE_URL = 'http://localhost:8000'
