@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { ClassifyDiseaseView } from '#/features/classify-dss/ClassifyDiseaseView'
-import { Seo } from '#/components/Seo'
-import { buildSoftwareApplicationSchema } from '#/utils/seo-schema'
+import { ClassifyDiseaseView } from '@/features/classify-dss/ClassifyDiseaseView'
+import { Seo } from '@/components/Seo'
+import { buildSoftwareApplicationSchema } from '@/utils/seo-schema'
 
 export const Route = createFileRoute('/classify/')({
   component: ClassifyDiseasePage,
