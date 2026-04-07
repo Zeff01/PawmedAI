@@ -30,7 +30,6 @@ export function AuthModal({
   const [internalOpen, setInternalOpen] = useState(false)
   const [isSigningIn, setIsSigningIn] = useState(false)
 
-  // Use external open state if provided, otherwise fall back to internal
   const isControlled = externalOpen !== undefined
   const open = isControlled ? externalOpen : internalOpen
 
