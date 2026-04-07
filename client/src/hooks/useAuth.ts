@@ -96,6 +96,31 @@ export function useOAuthCallback() {
   })
 }
 
+// ─── Google ID-token sign-in + Django sync ────────────────────────────────────
+
+export function useGoogleSignIn() {
+  const queryClient = useQueryClient()
+
+  return useMutation<UserProfile, Error, string>({
+    mutationFn: async (idToken: string): Promise<UserProfile> => {
+      const { data: authData, error } = await supabase.auth.signInWithIdToken({
+        provider: 'google',
+        token: idToken,
+      })
+      if (error) throw new Error(error.message)
+      if (!authData.session) throw new Error('No session returned')
+
+      const { data } = await apiClient.post<UserProfile>('/auth/callback/', {
+        access_token: authData.session.access_token,
+      })
+      return data
+    },
+    onSuccess: (user: UserProfile) => {
+      queryClient.setQueryData<UserProfile>(authKeys.me, user)
+    },
+  })
+}
+
 // ─── Logout ───────────────────────────────────────────────────────────────────
 
 export function useLogout() {
