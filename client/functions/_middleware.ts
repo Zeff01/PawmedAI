@@ -80,8 +80,7 @@ const LOGIN_PAGE = `<!DOCTYPE html>
 <body>
   <div class="card">
     <div class="logo">
-      <span>🐾 PawMed AI</span>
-      <span class="badge">Staging</span>
+      <span>PawMed AI</span>
     </div>
     <h2>Restricted Access</h2>
     <p>This is a staging environment for internal use only.</p>
