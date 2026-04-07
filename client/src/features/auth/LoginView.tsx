@@ -1,4 +1,6 @@
-import { useOAuthLogin } from '@/hooks/useAuth'
+import { useEffect, useRef, useCallback, useState } from 'react'
+import { useNavigate } from '@tanstack/react-router'
+import { useOAuthLogin, useGoogleSignIn } from '@/hooks/useAuth'
 import type { OAuthProvider } from '@/types/auth'
 
 interface ProviderConfig {
@@ -9,13 +11,6 @@ interface ProviderConfig {
 }
 
 const PROVIDERS: ProviderConfig[] = [
-  {
-    id: 'google',
-    label: 'Continue with Google',
-    bgClass:
-      'bg-white border border-slate-200 hover:border-blue-200 hover:bg-blue-50/40',
-    textClass: 'text-slate-700',
-  },
   {
     id: 'github',
     label: 'Continue with GitHub',
@@ -29,24 +24,24 @@ const GoogleMark = () => (
   <svg
     aria-hidden="true"
     viewBox="0 0 48 48"
-    className="h-4.5 w-4.5"
+    className="h-4 w-4"
     focusable="false"
   >
     <path
-      fill="#FFC107"
-      d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"
+      fill="#EA4335"
+      d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
     />
     <path
-      fill="#FF3D00"
-      d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"
+      fill="#4285F4"
+      d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
     />
     <path
-      fill="#4CAF50"
-      d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"
+      fill="#FBBC05"
+      d="M10.53 28.59a14.5 14.5 0 0 1 0-9.18l-7.98-6.19a24.014 24.014 0 0 0 0 21.56l7.98-6.19z"
     />
     <path
-      fill="#1976D2"
-      d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
+      fill="#34A853"
+      d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
     />
   </svg>
 )
@@ -68,19 +63,97 @@ const GitHubMark = () => (
 type LoginViewProps = {
   variant?: 'page' | 'modal'
   showTitle?: boolean
+  onPendingChange?: (pending: boolean) => void
 }
 
 export default function LoginPage({
   variant = 'page',
   showTitle = true,
+  onPendingChange,
 }: LoginViewProps) {
-  const { mutate: login, isPending, variables } = useOAuthLogin()
+  const {
+    mutate: login,
+    isPending: isGitHubPending,
+    variables,
+  } = useOAuthLogin()
+  const { mutate: googleSignIn, isPending: isGooglePending } = useGoogleSignIn()
+  const navigate = useNavigate()
+  const hiddenGoogleRef = useRef<HTMLDivElement>(null)
+  const [gisReady, setGisReady] = useState(false)
   const isModal = variant === 'modal'
+
+  const handleGoogleCredential = useCallback(
+    (response: GoogleCredentialResponse) => {
+      googleSignIn(response.credential, {
+        onSuccess: () => navigate({ to: '/classify', replace: true }),
+      })
+    },
+    [googleSignIn, navigate],
+  )
+
+  useEffect(() => {
+    const init = () => {
+      const el = hiddenGoogleRef.current
+      if (!el || !window.google?.accounts?.id) return
+
+      window.google.accounts.id.initialize({
+        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID as string,
+        callback: handleGoogleCredential,
+      })
+
+      window.google.accounts.id.renderButton(el, {
+        type: 'standard',
+        size: 'large',
+        width: 1,
+      })
+
+      setGisReady(true)
+    }
+
+    if (window.google?.accounts?.id) {
+      init()
+    } else {
+      const id = setInterval(() => {
+        if (window.google?.accounts?.id) {
+          clearInterval(id)
+          init()
+        }
+      }, 100)
+      return () => clearInterval(id)
+    }
+  }, [handleGoogleCredential])
+
+  const handleGoogleClick = () => {
+    const btn =
+      hiddenGoogleRef.current?.querySelector<HTMLElement>('div[role="button"]')
+    btn?.click()
+  }
+
+  const isPending = isGitHubPending || isGooglePending
+
+  useEffect(() => {
+    onPendingChange?.(isPending)
+  }, [isPending, onPendingChange])
+
+  if (isGooglePending) {
+    return (
+      <main
+        className={`flex flex-col items-center justify-center gap-4 ${
+          isModal ? 'w-full py-4' : 'min-h-screen'
+        }`}
+      >
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50">
+          <div className="h-5 w-5 animate-spin rounded-full border-2 border-blue-600 border-t-transparent" />
+        </div>
+        <p className="text-sm font-semibold text-slate-700">Signing you in…</p>
+      </main>
+    )
+  }
 
   return (
     <main
       className={`flex flex-col items-center justify-center gap-4 ${
-        isModal ? 'py-2 w-full' : 'min-h-screen'
+        isModal ? 'w-full py-2' : 'min-h-screen'
       }`}
     >
       {showTitle && (
@@ -90,31 +163,45 @@ export default function LoginPage({
       )}
 
       <div className={`flex flex-col gap-2.5 ${isModal ? 'w-full' : ''}`}>
-        {PROVIDERS.map(({ id, label, bgClass, textClass }) => {
-          const icon = id === 'google' ? <GoogleMark /> : <GitHubMark />
-          const iconWrap =
-            id === 'google'
-              ? 'bg-white border border-slate-200 text-slate-600'
-              : 'bg-white/10 border border-white/15 text-white'
-          return (
-            <button
-              key={id}
-              onClick={() => login(id)}
-              disabled={isPending}
-              aria-busy={isPending && variables === id}
-              className={`flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-[13px] font-semibold shadow-sm transition ${bgClass} ${textClass} disabled:opacity-60`}
-            >
-              <span
-                className={`flex h-6 w-6 items-center justify-center rounded-md ${iconWrap}`}
-              >
-                {icon}
-              </span>
-              <span>
-                {isPending && variables === id ? 'Redirecting…' : label}
-              </span>
-            </button>
-          )
-        })}
+        {/* Hidden GIS button for programmatic click */}
+        <div
+          ref={hiddenGoogleRef}
+          className="pointer-events-none absolute h-0 w-0 overflow-hidden opacity-0"
+          aria-hidden="true"
+        />
+
+        {/* Google button — triggers GIS popup */}
+        <button
+          onClick={handleGoogleClick}
+          disabled={isPending || !gisReady}
+          aria-busy={isGooglePending}
+          className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-[13px] font-semibold text-slate-700 shadow-sm transition hover:border-blue-200 hover:bg-blue-50/40 disabled:opacity-60"
+        >
+          <span className="flex h-6 w-6 items-center justify-center">
+            <GoogleMark />
+          </span>
+          <span>
+            {isGooglePending ? 'Signing in…' : 'Continue with Google'}
+          </span>
+        </button>
+
+        {/* GitHub button — redirect flow */}
+        {PROVIDERS.map(({ id, label, bgClass, textClass }) => (
+          <button
+            key={id}
+            onClick={() => login(id)}
+            disabled={isPending}
+            aria-busy={isPending && variables === id}
+            className={`flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-[13px] font-semibold shadow-sm transition ${bgClass} ${textClass} disabled:opacity-60`}
+          >
+            <span className="flex h-6 w-6 items-center justify-center rounded-md border border-white/15 bg-white/10 text-white">
+              <GitHubMark />
+            </span>
+            <span>
+              {isPending && variables === id ? 'Redirecting…' : label}
+            </span>
+          </button>
+        ))}
       </div>
     </main>
   )

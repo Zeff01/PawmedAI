@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useState, useCallback } from 'react'
 import LoginView from '@/features/auth/LoginView'
 import { Button } from '@/components/ui/button'
 import {
@@ -26,10 +27,29 @@ export function AuthModal({
   showGuestOption = false,
   onGuestContinue,
 }: AuthModalProps) {
+  const [isSigningIn, setIsSigningIn] = useState(false)
+  const handlePendingChange = useCallback((pending: boolean) => {
+    setIsSigningIn(pending)
+  }, [])
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog
+      open={open}
+      onOpenChange={(next) => {
+        if (isSigningIn) return
+        onOpenChange?.(next)
+      }}
+    >
       {trigger ? <DialogTrigger asChild>{trigger}</DialogTrigger> : null}
-      <DialogContent className="border border-slate-200 bg-white p-6 sm:p-7">
+      <DialogContent
+        className="border border-slate-200 bg-white p-6 sm:p-7"
+        onInteractOutside={(e) => {
+          if (isSigningIn) e.preventDefault()
+        }}
+        onEscapeKeyDown={(e) => {
+          if (isSigningIn) e.preventDefault()
+        }}
+      >
         <DialogHeader>
           <DialogTitle className="text-lg font-semibold text-slate-900">
             Sign in
@@ -39,9 +59,13 @@ export function AuthModal({
           </DialogDescription>
         </DialogHeader>
         <div className="mt-4">
-          <LoginView variant="modal" showTitle={false} />
+          <LoginView
+            variant="modal"
+            showTitle={false}
+            onPendingChange={handlePendingChange}
+          />
         </div>
-        {showGuestOption && (
+        {showGuestOption && !isSigningIn && (
           <Button
             type="button"
             variant="outline"
@@ -59,11 +83,13 @@ export function AuthModal({
           <span>Secure OAuth sign-in</span>
           <span className="h-px flex-1 bg-slate-100" />
         </div>
-        <DialogClose asChild>
-          <Button variant="ghost" className="mt-2 w-full">
-            Close
-          </Button>
-        </DialogClose>
+        {!isSigningIn && (
+          <DialogClose asChild>
+            <Button variant="ghost" className="mt-2 w-full">
+              Close
+            </Button>
+          </DialogClose>
+        )}
       </DialogContent>
     </Dialog>
   )
