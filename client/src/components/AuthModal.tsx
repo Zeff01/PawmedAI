@@ -22,22 +22,41 @@ type AuthModalProps = {
 
 export function AuthModal({
   trigger,
-  open,
-  onOpenChange,
+  open: externalOpen,
+  onOpenChange: externalOnOpenChange,
   showGuestOption = false,
   onGuestContinue,
 }: AuthModalProps) {
+  const [internalOpen, setInternalOpen] = useState(false)
   const [isSigningIn, setIsSigningIn] = useState(false)
+
+  // Use external open state if provided, otherwise fall back to internal
+  const isControlled = externalOpen !== undefined
+  const open = isControlled ? externalOpen : internalOpen
+
+  const setOpen = useCallback(
+    (next: boolean) => {
+      if (!isControlled) setInternalOpen(next)
+      externalOnOpenChange?.(next)
+    },
+    [isControlled, externalOnOpenChange],
+  )
+
   const handlePendingChange = useCallback((pending: boolean) => {
     setIsSigningIn(pending)
   }, [])
+
+  const handleLoginSuccess = useCallback(() => {
+    setIsSigningIn(false)
+    setOpen(false)
+  }, [setOpen])
 
   return (
     <Dialog
       open={open}
       onOpenChange={(next) => {
         if (isSigningIn) return
-        onOpenChange?.(next)
+        setOpen(next)
       }}
     >
       {trigger ? <DialogTrigger asChild>{trigger}</DialogTrigger> : null}
@@ -63,6 +82,7 @@ export function AuthModal({
             variant="modal"
             showTitle={false}
             onPendingChange={handlePendingChange}
+            onLoginSuccess={handleLoginSuccess}
           />
         </div>
         {showGuestOption && !isSigningIn && (

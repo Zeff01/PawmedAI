@@ -64,12 +64,14 @@ type LoginViewProps = {
   variant?: 'page' | 'modal'
   showTitle?: boolean
   onPendingChange?: (pending: boolean) => void
+  onLoginSuccess?: () => void
 }
 
 export default function LoginPage({
   variant = 'page',
   showTitle = true,
   onPendingChange,
+  onLoginSuccess,
 }: LoginViewProps) {
   const {
     mutate: login,
@@ -85,10 +87,13 @@ export default function LoginPage({
   const handleGoogleCredential = useCallback(
     (response: GoogleCredentialResponse) => {
       googleSignIn(response.credential, {
-        onSuccess: () => navigate({ to: '/classify', replace: true }),
+        onSuccess: () => {
+          onLoginSuccess?.()
+          navigate({ to: '/classify', replace: true })
+        },
       })
     },
-    [googleSignIn, navigate],
+    [googleSignIn, navigate, onLoginSuccess],
   )
 
   useEffect(() => {
