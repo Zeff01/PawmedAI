@@ -54,6 +54,7 @@ CSRF_TRUSTED_ORIGINS = [
 INSTALLED_APPS = [
     'rest_framework',
     'users',
+    'bug_report',
     'classify_dss',
     'notifications',
     'corsheaders',
