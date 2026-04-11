@@ -17,6 +17,8 @@ else:
         load_dotenv(default_env)
 
 GAPI_KEY = os.getenv("GOOGLE_API_KEY")
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
 GEMINI_MODEL = os.getenv("GEMINI_MODEL")
 
 HUGGING_FACE_KEY = os.getenv("HUGGING_FACE_KEY")

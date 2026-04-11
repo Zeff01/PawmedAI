@@ -96,13 +96,34 @@ export function useOAuthCallback() {
   })
 }
 
-// ─── Google ID-token sign-in + Django sync ────────────────────────────────────
+// ─── Google direct OAuth: exchange code → id_token → Supabase + Django sync ──
+
+interface GoogleCodePayload {
+  code: string
+  redirectUri: string
+}
 
 export function useGoogleSignIn() {
   const queryClient = useQueryClient()
 
-  return useMutation<UserProfile, Error, string>({
-    mutationFn: async (idToken: string): Promise<UserProfile> => {
+  return useMutation<UserProfile, Error, GoogleCodePayload>({
+    mutationFn: async ({ code, redirectUri }: GoogleCodePayload): Promise<UserProfile> => {
+      // 1. Send auth code to Django backend to exchange for id_token
+      const exchangeResp = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8000'}/api/user/auth/google/exchange/`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code, redirect_uri: redirectUri }),
+        },
+      )
+      if (!exchangeResp.ok) {
+        const err = await exchangeResp.json().catch(() => null)
+        throw new Error(err?.detail ?? 'Failed to exchange Google auth code')
+      }
+      const { id_token: idToken } = await exchangeResp.json()
+
+      // 2. Sign into Supabase with the id_token (records user in Supabase)
       const { data: authData, error } = await supabase.auth.signInWithIdToken({
         provider: 'google',
         token: idToken,
@@ -110,6 +131,7 @@ export function useGoogleSignIn() {
       if (error) throw new Error(error.message)
       if (!authData.session) throw new Error('No session returned')
 
+      // 3. Sync with Django
       const { data } = await apiClient.post<UserProfile>('/auth/callback/', {
         access_token: authData.session.access_token,
       })

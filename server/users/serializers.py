@@ -24,5 +24,11 @@ class OAuthCallbackSerializer(serializers.Serializer):
     )
 
 
+class GoogleCodeExchangeSerializer(serializers.Serializer):
+    """Validates the Google authorization code + redirect_uri from the frontend."""
+    code = serializers.CharField(required=True, allow_blank=False)
+    redirect_uri = serializers.URLField(required=True, allow_blank=False)
+
+
 class UserTypeSerializer(serializers.Serializer):
     user_type = serializers.ChoiceField(choices=UserProfile.UserType.choices)

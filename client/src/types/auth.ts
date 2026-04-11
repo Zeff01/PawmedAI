@@ -1,6 +1,6 @@
 import type { Provider } from '@supabase/supabase-js'
 
-export type OAuthProvider = Extract<Provider, 'google' | 'github'>
+export type OAuthProvider = Extract<Provider, 'github'>
 
 export type UserType = 'student' | 'professional' | 'fur_parent'
 

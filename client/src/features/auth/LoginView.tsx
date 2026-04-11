@@ -1,6 +1,5 @@
-import { useEffect, useRef, useCallback, useState } from 'react'
-import { useNavigate } from '@tanstack/react-router'
-import { useOAuthLogin, useGoogleSignIn } from '@/hooks/useAuth'
+import { useEffect, useCallback, useState } from 'react'
+import { useOAuthLogin } from '@/hooks/useAuth'
 import type { OAuthProvider } from '@/types/auth'
 
 interface ProviderConfig {
@@ -71,88 +70,36 @@ export default function LoginPage({
   variant = 'page',
   showTitle = true,
   onPendingChange,
-  onLoginSuccess,
 }: LoginViewProps) {
   const {
     mutate: login,
-    isPending: isGitHubPending,
+    isPending,
     variables,
   } = useOAuthLogin()
-  const { mutate: googleSignIn, isPending: isGooglePending } = useGoogleSignIn()
-  const navigate = useNavigate()
-  const hiddenGoogleRef = useRef<HTMLDivElement>(null)
-  const [gisReady, setGisReady] = useState(false)
-  
-  const [googleButtonKey, setGoogleButtonKey] = useState(0)
+  const [isGoogleRedirecting, setIsGoogleRedirecting] = useState(false)
   const isModal = variant === 'modal'
 
-  const handleGoogleCredential = useCallback(
-    (response: GoogleCredentialResponse) => {
-      googleSignIn(response.credential, {
-        onSuccess: () => {
-          onLoginSuccess?.()
-          navigate({ to: '/classify', replace: true })
-        },
-      })
-    },
-    [googleSignIn, navigate, onLoginSuccess],
-  )
+  const allPending = isPending || isGoogleRedirecting
 
   useEffect(() => {
-    const GIS_INIT_KEY = '__pawmed_gis_initialized__';
-    const win = window as typeof window & { [key: string]: any };
-    if (!window.google?.accounts?.id || win[GIS_INIT_KEY]) return;
-    window.google.accounts.id.initialize({
-      client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID as string,
-      callback: handleGoogleCredential,
-    });
-    win[GIS_INIT_KEY] = true;
-  }, [handleGoogleCredential]);
+    onPendingChange?.(allPending)
+  }, [allPending, onPendingChange])
 
-  useEffect(() => {
-    const el = hiddenGoogleRef.current;
-    if (el && window.google?.accounts?.id) {
-      window.google.accounts.id.renderButton(el, {
-        type: 'standard',
-        size: 'large',
-        width: 1,
-      });
-      setGisReady(true);
-    }
-  }, [googleButtonKey]);
-
-  const handleGoogleClick = () => {
-    const btn = hiddenGoogleRef.current?.querySelector<HTMLElement>('div[role="button"]')
-    btn?.click()
-
-    // If the user closes the popup or login fails, force re-render the button after a short delay
-    // (GIS does not expose popup window, so we need to use a timeout as a workaround)
-    setTimeout(() => {
-      setGoogleButtonKey((k) => k + 1)
-      setGisReady(false)
-    }, 3000)
-  }
-
-  const isPending = isGitHubPending || isGooglePending
-
-  useEffect(() => {
-    onPendingChange?.(isPending)
-  }, [isPending, onPendingChange])
-
-  if (isGooglePending) {
-    return (
-      <main
-        className={`flex flex-col items-center justify-center gap-4 ${
-          isModal ? 'w-full py-4' : 'min-h-screen'
-        }`}
-      >
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50">
-          <div className="h-5 w-5 animate-spin rounded-full border-2 border-blue-600 border-t-transparent" />
-        </div>
-        <p className="text-sm font-semibold text-slate-700">Signing you in…</p>
-      </main>
-    )
-  }
+  const handleGoogleLogin = useCallback(() => {
+    setIsGoogleRedirecting(true)
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID as string
+    const redirectUri = `${window.location.origin}/auth/google/callback`
+    const scope = 'openid email profile'
+    const params = new URLSearchParams({
+      client_id: clientId,
+      redirect_uri: redirectUri,
+      response_type: 'code',
+      scope,
+      access_type: 'offline',
+      prompt: 'select_account',
+    })
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`
+  }, [])
 
   return (
     <main
@@ -167,26 +114,18 @@ export default function LoginPage({
       )}
 
       <div className={`flex flex-col gap-2.5 ${isModal ? 'w-full' : ''}`}>
-        {/* Hidden GIS button for programmatic click */}
-        <div
-          key={googleButtonKey}
-          ref={hiddenGoogleRef}
-          className="pointer-events-none absolute h-0 w-0 overflow-hidden opacity-0"
-          aria-hidden="true"
-        />
-
-        {/* Google button — triggers GIS popup */}
+        {/* Google button — direct redirect to Google */}
         <button
-          onClick={handleGoogleClick}
-          disabled={isPending || !gisReady}
-          aria-busy={isGooglePending}
+          onClick={handleGoogleLogin}
+          disabled={allPending}
+          aria-busy={isGoogleRedirecting}
           className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-[13px] font-semibold text-slate-700 shadow-sm transition hover:border-blue-200 hover:bg-blue-50/40 disabled:opacity-60"
         >
           <span className="flex h-6 w-6 items-center justify-center">
             <GoogleMark />
           </span>
           <span>
-            {isGooglePending ? 'Signing in…' : 'Continue with Google'}
+            {isGoogleRedirecting ? 'Redirecting…' : 'Continue with Google'}
           </span>
         </button>
 
@@ -195,7 +134,7 @@ export default function LoginPage({
           <button
             key={id}
             onClick={() => login(id)}
-            disabled={isPending}
+            disabled={allPending}
             aria-busy={isPending && variables === id}
             className={`flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-[13px] font-semibold shadow-sm transition ${bgClass} ${textClass} disabled:opacity-60`}
           >

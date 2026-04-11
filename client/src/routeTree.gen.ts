@@ -14,6 +14,7 @@ import { Route as LifecycleIndexRouteImport } from './routes/lifecycle/index'
 import { Route as HomeIndexRouteImport } from './routes/home/index'
 import { Route as ClassifyIndexRouteImport } from './routes/classify/index'
 import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
+import { Route as AuthGoogleCallbackRouteImport } from './routes/auth/google/callback'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,6 +41,11 @@ const AuthCallbackRoute = AuthCallbackRouteImport.update({
   path: '/auth/callback',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthGoogleCallbackRoute = AuthGoogleCallbackRouteImport.update({
+  id: '/auth/google/callback',
+  path: '/auth/google/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/classify/': typeof ClassifyIndexRoute
   '/home/': typeof HomeIndexRoute
   '/lifecycle/': typeof LifecycleIndexRoute
+  '/auth/google/callback': typeof AuthGoogleCallbackRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/classify': typeof ClassifyIndexRoute
   '/home': typeof HomeIndexRoute
   '/lifecycle': typeof LifecycleIndexRoute
+  '/auth/google/callback': typeof AuthGoogleCallbackRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,12 +70,25 @@ export interface FileRoutesById {
   '/classify/': typeof ClassifyIndexRoute
   '/home/': typeof HomeIndexRoute
   '/lifecycle/': typeof LifecycleIndexRoute
+  '/auth/google/callback': typeof AuthGoogleCallbackRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth/callback' | '/classify/' | '/home/' | '/lifecycle/'
+  fullPaths:
+    | '/'
+    | '/auth/callback'
+    | '/classify/'
+    | '/home/'
+    | '/lifecycle/'
+    | '/auth/google/callback'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth/callback' | '/classify' | '/home' | '/lifecycle'
+  to:
+    | '/'
+    | '/auth/callback'
+    | '/classify'
+    | '/home'
+    | '/lifecycle'
+    | '/auth/google/callback'
   id:
     | '__root__'
     | '/'
@@ -75,6 +96,7 @@ export interface FileRouteTypes {
     | '/classify/'
     | '/home/'
     | '/lifecycle/'
+    | '/auth/google/callback'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -83,6 +105,7 @@ export interface RootRouteChildren {
   ClassifyIndexRoute: typeof ClassifyIndexRoute
   HomeIndexRoute: typeof HomeIndexRoute
   LifecycleIndexRoute: typeof LifecycleIndexRoute
+  AuthGoogleCallbackRoute: typeof AuthGoogleCallbackRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -122,6 +145,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth/google/callback': {
+      id: '/auth/google/callback'
+      path: '/auth/google/callback'
+      fullPath: '/auth/google/callback'
+      preLoaderRoute: typeof AuthGoogleCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -131,6 +161,7 @@ const rootRouteChildren: RootRouteChildren = {
   ClassifyIndexRoute: ClassifyIndexRoute,
   HomeIndexRoute: HomeIndexRoute,
   LifecycleIndexRoute: LifecycleIndexRoute,
+  AuthGoogleCallbackRoute: AuthGoogleCallbackRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
