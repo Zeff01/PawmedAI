@@ -99,36 +99,27 @@ export default function LoginPage({
   )
 
   useEffect(() => {
-    const init = () => {
-      const el = hiddenGoogleRef.current
-      if (!el || !window.google?.accounts?.id) return
+    const GIS_INIT_KEY = '__pawmed_gis_initialized__';
+    const win = window as typeof window & { [key: string]: any };
+    if (!window.google?.accounts?.id || win[GIS_INIT_KEY]) return;
+    window.google.accounts.id.initialize({
+      client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID as string,
+      callback: handleGoogleCredential,
+    });
+    win[GIS_INIT_KEY] = true;
+  }, [handleGoogleCredential]);
 
-      window.google.accounts.id.initialize({
-        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID as string,
-        callback: handleGoogleCredential,
-      })
-
+  useEffect(() => {
+    const el = hiddenGoogleRef.current;
+    if (el && window.google?.accounts?.id) {
       window.google.accounts.id.renderButton(el, {
         type: 'standard',
         size: 'large',
         width: 1,
-      })
-
-      setGisReady(true)
+      });
+      setGisReady(true);
     }
-
-    if (window.google?.accounts?.id) {
-      init()
-    } else {
-      const id = setInterval(() => {
-        if (window.google?.accounts?.id) {
-          clearInterval(id)
-          init()
-        }
-      }, 100)
-      return () => clearInterval(id)
-    }
-  }, [handleGoogleCredential])
+  }, [googleButtonKey]);
 
   const handleGoogleClick = () => {
     const btn = hiddenGoogleRef.current?.querySelector<HTMLElement>('div[role="button"]')
