@@ -82,6 +82,8 @@ export default function LoginPage({
   const navigate = useNavigate()
   const hiddenGoogleRef = useRef<HTMLDivElement>(null)
   const [gisReady, setGisReady] = useState(false)
+  
+  const [googleButtonKey, setGoogleButtonKey] = useState(0)
   const isModal = variant === 'modal'
 
   const handleGoogleCredential = useCallback(
@@ -129,9 +131,15 @@ export default function LoginPage({
   }, [handleGoogleCredential])
 
   const handleGoogleClick = () => {
-    const btn =
-      hiddenGoogleRef.current?.querySelector<HTMLElement>('div[role="button"]')
+    const btn = hiddenGoogleRef.current?.querySelector<HTMLElement>('div[role="button"]')
     btn?.click()
+
+    // If the user closes the popup or login fails, force re-render the button after a short delay
+    // (GIS does not expose popup window, so we need to use a timeout as a workaround)
+    setTimeout(() => {
+      setGoogleButtonKey((k) => k + 1)
+      setGisReady(false)
+    }, 3000)
   }
 
   const isPending = isGitHubPending || isGooglePending
@@ -170,6 +178,7 @@ export default function LoginPage({
       <div className={`flex flex-col gap-2.5 ${isModal ? 'w-full' : ''}`}>
         {/* Hidden GIS button for programmatic click */}
         <div
+          key={googleButtonKey}
           ref={hiddenGoogleRef}
           className="pointer-events-none absolute h-0 w-0 overflow-hidden opacity-0"
           aria-hidden="true"
