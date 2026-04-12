@@ -37,7 +37,7 @@ function RouteComponent() {
       {/* ── HERO ── */}
       <div className="border-b border-slate-100 bg-gradient-to-b from-blue-50/60 to-white px-6 py-12">
         <div className="mx-auto max-w-6xl flex flex-col items-center gap-3 text-center">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-blue-600">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold uppercase tracking-normal text-blue-600">
             <MapPinIcon className="h-3.5 w-3.5" />
             Location-based
           </span>
