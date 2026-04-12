@@ -34,13 +34,15 @@ const currentStateItems = [
 ]
 
 function LifeCycleNotesPage() {
-  const description = 'Lifecycle notes and release updates for Pawmed AI.'
+  const description =
+    'Stay up to date with the latest Pawmed AI release notes, new features, known limitations, and platform updates for our veterinary diagnostics tool.'
 
   return (
     <section className="px-6 py-16 sm:py-20">
       <Seo
-        title="Pawmed AI | Lifecycle Notes"
+        title="Lifecycle Notes | Pawmed AI"
         description={description}
+        keywords="pawmed ai updates, veterinary AI release notes, pawmed changelog, new features pawmed"
         canonicalPath="/lifecycle"
       />
 
