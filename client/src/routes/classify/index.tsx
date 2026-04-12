@@ -10,13 +10,14 @@ export const Route = createFileRoute('/classify/')({
 
 function ClassifyDiseasePage() {
   const description =
-    'Upload a clinical photo to generate a structured diagnostic brief for veterinary care.'
+    'Upload a clinical pet photo and get an AI-generated veterinary diagnostic brief with differential diagnoses, observations, and next steps — in under 5 minutes.'
 
   return (
     <section className="bg-[#ffffff]" aria-labelledby="classify-title">
       <Seo
         title="Classify Disease | Pawmed AI"
         description={description}
+        keywords="classify animal disease, veterinary disease classification, AI diagnostic brief, pet disease AI, differential diagnosis vet, clinical photo upload, pawmed ai classify"
         canonicalPath="/classify"
         structuredData={buildSoftwareApplicationSchema({
           pageUrl: '/classify',

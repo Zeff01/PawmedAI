@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 type SeoProps = {
   title?: string
   description?: string
+  keywords?: string
   canonicalPath?: string
   ogImage?: string
   noIndex?: boolean
@@ -63,6 +64,7 @@ function upsertJsonLd(data?: Record<string, unknown> | Array<Record<string, unkn
 export function Seo({
   title,
   description,
+  keywords,
   canonicalPath,
   ogImage,
   noIndex,
@@ -83,6 +85,7 @@ export function Seo({
     document.title = resolvedTitle
 
     upsertMeta('meta[name="description"]', { name: 'description' }, resolvedDescription)
+    upsertMeta('meta[name="keywords"]', { name: 'keywords' }, keywords)
     const resolvedNoIndex = Boolean(noIndex && ALLOW_NOINDEX)
     upsertMeta(
       'meta[name="robots"]',
@@ -102,7 +105,7 @@ export function Seo({
 
     upsertLink('canonical', resolvedUrl)
     upsertJsonLd(structuredData)
-  }, [title, description, canonicalPath, ogImage, noIndex, structuredData])
+  }, [title, description, keywords, canonicalPath, ogImage, noIndex, structuredData])
 
   return null
 }

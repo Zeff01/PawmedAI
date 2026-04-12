@@ -8,13 +8,14 @@ export const Route = createFileRoute('/')({ component: LandingPage })
 
 function LandingPage() {
   const description =
-    'AI-assisted veterinary diagnostics for faster, clearer clinical decisions.'
+    'Pawmed AI turns clinical pet photos into structured diagnostic briefs in under 5 minutes. AI-powered veterinary diagnostics for vets, students, and pet owners.'
 
   return (
     <>
       <Seo
         title="Pawmed AI | Veterinary Diagnostics"
         description={description}
+        keywords="veterinary diagnostics, AI vet tool, animal disease classification, clinical diagnostic brief, veterinary AI, pet diagnostics, vet decision support, pawmed ai"
         canonicalPath="/"
         structuredData={buildSoftwareApplicationSchema({
           pageUrl: '/',
