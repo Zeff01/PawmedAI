@@ -3,7 +3,6 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import type { VetClinic, MapboxSearchResponse, MapboxSearchFeature } from './types/vet';
 import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Phone, Navigation } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -101,7 +100,7 @@ export default function NearbyVetsGeoMap() {
         .setLngLat(vet.coords)
         .setPopup(
           new mapboxgl.Popup({ offset: 20 }).setHTML(`
-            <strong class="text-sm font-semibold">${vet.name}</strong><br/>
+            <strong class="text-sm font-semibold text-blue-500">${vet.name}</strong><br/>
             <span class="text-xs text-muted-foreground">${vet.address}</span><br/>
             <span class="text-xs">${vet.distance.toFixed(1)} km away</span>
           `)
@@ -132,10 +131,10 @@ export default function NearbyVetsGeoMap() {
   }
 
   return (
-    <div className="flex h-screen flex-col">
-      <div ref={mapContainer} className="h-[55%] shrink-0" />
+    <div className="flex flex-col gap-12">
+      <div ref={mapContainer} className="h-96 shrink-0 rounded-2xl" />
 
-      <div className="flex-1 space-y-3 overflow-y-auto bg-muted/40 p-4">
+      <div className="space-y-3 bg-white">
         {loading && (
           <p className="text-sm text-muted-foreground">Finding clinics near you...</p>
         )}
@@ -143,56 +142,55 @@ export default function NearbyVetsGeoMap() {
           <p className="text-sm text-destructive">{error}</p>
         )}
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {vets.map((vet) => (
-          <Card
-            key={vet.id}
-            onClick={() => flyToVet(vet)}
-            className={cn(
-              'cursor-pointer p-4 transition-all hover:shadow-lg',
-              selected === vet.id && 'ring-2 ring-primary'
-            )}
-          >
-            <div className="flex items-center justify-between">
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-semibold">{vet.name}</p>
-                <p className="mt-1 truncate text-xs text-muted-foreground">{vet.address}</p>
-                <div className="mt-2 flex items-center gap-2">
-                  {vet.open === true && (
-                    <Badge className="border-green-200 bg-green-50 text-green-700">Open</Badge>
+        <div>
+          <h3 className="font-bold text-xl text-blue-500">Clinics Near You</h3>
+          <p className="text-muted-foreground text-sm">These lists are based on your current location.</p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+          {vets.map((vet) => (
+            <Card
+              key={vet.id}
+              onClick={() => flyToVet(vet)}
+              className={cn(
+                'cursor-pointer p-4 transition-all border border-blue-100 rounded-xl hover:border-blue-200',
+                selected === vet.id && 'ring-1 ring-blue-300'
+              )}
+            >
+              <div className="flex items-center justify-between">
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-semibold">{vet.name}</p>
+                  <p className="mt-1 truncate text-xs text-muted-foreground">{vet.address}</p>
+                  <div className="mt-2 flex items-center gap-2">
+                    <span className="text-xs text-muted-foreground">{vet.distance.toFixed(1)} km</span>
+                  </div>
+                </div>
+
+                <div className="ml-4 flex shrink-0 flex-col gap-2">
+                  {vet.phone && (
+                    <a
+                      href={`tel:${vet.phone}`}
+                      onClick={(e) => e.stopPropagation()}
+                      className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-600 hover:text-emerald-700"
+                    >
+                      <Phone className="size-3.5" />
+                      Call
+                    </a>
                   )}
-                  {vet.open === false && (
-                    <Badge className="border-red-200 bg-red-50 text-red-700">Closed</Badge>
-                  )}
-                  <span className="text-xs text-muted-foreground">{vet.distance.toFixed(1)} km</span>
+                  <a
+                    href={`https://www.google.com/maps/dir/?api=1&destination=${vet.coords[1]},${vet.coords[0]}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-blue-600 hover:text-blue-700"
+                  >
+                    <Navigation className="size-3.5" />
+                    Directions
+                  </a>
                 </div>
               </div>
-
-              <div className="ml-4 flex shrink-0 flex-col gap-2">
-                {vet.phone && (
-                  <a
-                    href={`tel:${vet.phone}`}
-                    onClick={(e) => e.stopPropagation()}
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-600 hover:text-emerald-700"
-                  >
-                    <Phone className="size-3.5" />
-                    Call
-                  </a>
-                )}
-                <a
-                  href={`https://www.google.com/maps/dir/?api=1&destination=${vet.coords[1]},${vet.coords[0]}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                  className="inline-flex items-center gap-1.5 text-xs font-medium text-blue-600 hover:text-blue-700"
-                >
-                  <Navigation className="size-3.5" />
-                  Directions
-                </a>
-              </div>
-            </div>
-          </Card>
-        ))}
+            </Card>
+          ))}
         </div>
       </div>
     </div>
