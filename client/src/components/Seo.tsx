@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 type SeoProps = {
   title?: string
   description?: string
+  keywords?: string
   canonicalPath?: string
   ogImage?: string
   noIndex?: boolean
@@ -11,9 +12,9 @@ type SeoProps = {
 
 const DEFAULT_TITLE = 'Pawmed AI | Veterinary Diagnostics'
 const DEFAULT_DESCRIPTION =
-  'AI-assisted veterinary diagnostics for faster, clearer clinical decisions.'
+  'Pawmed AI turns clinical pet photos into structured diagnostic briefs in under 5 minutes. AI-powered veterinary diagnostics for vets, students, and pet owners.'
 const DEFAULT_SITE_NAME = 'Pawmed AI'
-const DEFAULT_OG_IMAGE = '/icons/paw.png'
+const DEFAULT_OG_IMAGE = '/images/hero_image.jpg'
 const DEFAULT_SITE_URL = import.meta.env.VITE_SITE_URL
 const ALLOW_NOINDEX =
   import.meta.env.MODE !== 'production' ||
@@ -63,6 +64,7 @@ function upsertJsonLd(data?: Record<string, unknown> | Array<Record<string, unkn
 export function Seo({
   title,
   description,
+  keywords,
   canonicalPath,
   ogImage,
   noIndex,
@@ -83,6 +85,7 @@ export function Seo({
     document.title = resolvedTitle
 
     upsertMeta('meta[name="description"]', { name: 'description' }, resolvedDescription)
+    upsertMeta('meta[name="keywords"]', { name: 'keywords' }, keywords)
     const resolvedNoIndex = Boolean(noIndex && ALLOW_NOINDEX)
     upsertMeta(
       'meta[name="robots"]',
@@ -102,7 +105,7 @@ export function Seo({
 
     upsertLink('canonical', resolvedUrl)
     upsertJsonLd(structuredData)
-  }, [title, description, canonicalPath, ogImage, noIndex, structuredData])
+  }, [title, description, keywords, canonicalPath, ogImage, noIndex, structuredData])
 
   return null
 }
