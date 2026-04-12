@@ -134,18 +134,31 @@ export default function NearbyVetsGeoMap() {
     <div className="flex flex-col gap-12">
       <div ref={mapContainer} className="h-96 shrink-0 rounded-2xl" />
 
-      <div className="space-y-3 bg-white">
+      <div className="space-y-4 bg-white">
+        {/* Section header */}
+        <div className="flex items-end justify-between">
+          <div>
+            <h2 className="font-bold text-xl text-blue-500">Clinics Near You</h2>
+            <p className="text-muted-foreground text-sm">Sorted by distance from your current location.</p>
+          </div>
+          {!loading && !error && vets.length > 0 && (
+            <span className="rounded-full bg-blue-50 border border-blue-100 px-3 py-1 text-xs font-semibold text-blue-600">
+              {vets.length} found
+            </span>
+          )}
+        </div>
+
         {loading && (
-          <p className="text-sm text-muted-foreground">Finding clinics near you...</p>
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-blue-300 border-t-blue-600" />
+            Searching for clinics near you…
+          </div>
         )}
         {error && (
-          <p className="text-sm text-destructive">{error}</p>
+          <div className="rounded-lg border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-600">
+            {error}
+          </div>
         )}
-
-        <div>
-          <h3 className="font-bold text-xl text-blue-500">Clinics Near You</h3>
-          <p className="text-muted-foreground text-sm">These lists are based on your current location.</p>
-        </div>
 
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
           {vets.map((vet) => (
