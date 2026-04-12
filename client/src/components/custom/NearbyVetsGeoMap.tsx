@@ -2,6 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import type { VetClinic, MapboxSearchResponse, MapboxSearchFeature } from './types/vet';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Phone, Navigation } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN as string;
 
@@ -26,7 +30,7 @@ export default function NearbyVetsGeoMap() {
 
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v12',
+      style: 'mapbox://styles/jpdevdotcom/cmnv70588005601svfx2i0fff',
       center: [lng, lat],
       zoom: 13,
     });
@@ -34,11 +38,7 @@ export default function NearbyVetsGeoMap() {
     map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
     const userDot = document.createElement('div');
-    userDot.style.cssText = `
-      width: 16px; height: 16px; background: #185FA5;
-      border: 3px solid white; border-radius: 50%;
-      box-shadow: 0 0 0 4px rgba(24,95,165,0.25);
-    `;
+    userDot.className = 'size-4 rounded-full border-[3px] border-white bg-[#185FA5] shadow-[0_0_0_4px_rgba(24,95,165,0.25)]';
     new mapboxgl.Marker(userDot).setLngLat([lng, lat]).addTo(map.current);
 
     searchNearbyVets(lat, lng);
@@ -94,21 +94,16 @@ export default function NearbyVetsGeoMap() {
 
     results.forEach((vet) => {
       const el = document.createElement('div');
-      el.style.cssText = `
-        width: 32px; height: 32px; background-color: #2D5CF3;
-        border: 2px solid white; border-radius: 50%;
-        display: flex; align-items: center; justify-content: center;
-        cursor: pointer;
-      `;
+      el.className = 'flex size-8 cursor-pointer items-center justify-center rounded-full border-2 border-white bg-[#2D5CF3] shadow-md';
       el.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="16" height="16" fill="#ffffff"><path d="M298.5 156.9c14.3 42.9-.3 86.2-32.6 96.8s-70.1-15.6-84.4-58.5s.3-86.2 32.6-96.8s70.1 15.6 84.4 58.5M164.4 262.6c18.9 32.4 14.3 70.1-10.2 84.1s-59.7-.9-78.5-33.3s-14.3-70.1 10.2-84.1s59.7.9 78.5 33.3m-31.2 202.6C185.6 323.9 278.7 288 320 288s134.4 35.9 186.8 177.2c3.6 9.7 5.2 20.1 5.2 30.5v1.6c0 25.8-20.9 46.7-46.7 46.7c-11.5 0-22.9-1.4-34-4.2l-88-22c-15.3-3.8-31.3-3.8-46.6 0l-88 22c-11.1 2.8-22.5 4.2-34 4.2c-25.8 0-46.7-20.9-46.7-46.7v-1.6c0-10.4 1.6-20.8 5.2-30.5m352.6-118.5c-24.5-14-29.1-51.7-10.2-84.1s54-47.3 78.5-33.3s29.1 51.7 10.2 84.1s-54 47.3-78.5 33.3m-111.7-93c-32.3-10.6-46.9-53.9-32.6-96.8s52.1-69.1 84.4-58.5s46.9 53.9 32.6 96.8s-52.1 69.1-84.4 58.5"/></svg>`;
 
       new mapboxgl.Marker(el)
         .setLngLat(vet.coords)
         .setPopup(
           new mapboxgl.Popup({ offset: 20 }).setHTML(`
-            <strong style="font-size:13px">${vet.name}</strong><br/>
-            <span style="font-size:12px;color:#555">${vet.address}</span><br/>
-            <span style="font-size:12px">${vet.distance.toFixed(1)} km away</span>
+            <strong class="text-sm font-semibold">${vet.name}</strong><br/>
+            <span class="text-xs text-muted-foreground">${vet.address}</span><br/>
+            <span class="text-xs">${vet.distance.toFixed(1)} km away</span>
           `)
         )
         .addTo(map.current!);
@@ -137,65 +132,68 @@ export default function NearbyVetsGeoMap() {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      <div ref={mapContainer} style={{ flex: '0 0 55%' }} />
+    <div className="flex h-screen flex-col">
+      <div ref={mapContainer} className="h-[55%] shrink-0" />
 
-      <div style={{ flex: 1, overflowY: 'auto', padding: '12px 16px', background: '#f9f9f9' }}>
-        {loading && <p style={{ color: '#888', fontSize: 14 }}>Finding clinics near you...</p>}
-        {error && <p style={{ color: '#c0392b', fontSize: 14 }}>{error}</p>}
+      <div className="flex-1 space-y-3 overflow-y-auto bg-muted/40 p-4">
+        {loading && (
+          <p className="text-sm text-muted-foreground">Finding clinics near you...</p>
+        )}
+        {error && (
+          <p className="text-sm text-destructive">{error}</p>
+        )}
 
-        {vets.map((vet) => (
-          <div
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {vets.map((vet) => (
+          <Card
             key={vet.id}
             onClick={() => flyToVet(vet)}
-            style={{
-              background: 'white',
-              border: selected === vet.id ? '1.5px solid #0F6E56' : '1px solid #e0e0e0',
-              borderRadius: 12,
-              padding: '12px 14px',
-              marginBottom: 10,
-              cursor: 'pointer',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
+            className={cn(
+              'cursor-pointer p-4 transition-all hover:shadow-lg',
+              selected === vet.id && 'ring-2 ring-primary'
+            )}
           >
-            <div>
-              <p style={{ margin: 0, fontWeight: 500, fontSize: 14 }}>{vet.name}</p>
-              <p style={{ margin: '3px 0 0', fontSize: 12, color: '#777' }}>{vet.address}</p>
-              <div style={{ display: 'flex', gap: 8, marginTop: 4, alignItems: 'center' }}>
-                {vet.open === true && (
-                  <span style={{ fontSize: 11, background: '#EAF3DE', color: '#3B6D11', padding: '2px 8px', borderRadius: 20 }}>Open</span>
+            <div className="flex items-center justify-between">
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-semibold">{vet.name}</p>
+                <p className="mt-1 truncate text-xs text-muted-foreground">{vet.address}</p>
+                <div className="mt-2 flex items-center gap-2">
+                  {vet.open === true && (
+                    <Badge className="border-green-200 bg-green-50 text-green-700">Open</Badge>
+                  )}
+                  {vet.open === false && (
+                    <Badge className="border-red-200 bg-red-50 text-red-700">Closed</Badge>
+                  )}
+                  <span className="text-xs text-muted-foreground">{vet.distance.toFixed(1)} km</span>
+                </div>
+              </div>
+
+              <div className="ml-4 flex shrink-0 flex-col gap-2">
+                {vet.phone && (
+                  <a
+                    href={`tel:${vet.phone}`}
+                    onClick={(e) => e.stopPropagation()}
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-600 hover:text-emerald-700"
+                  >
+                    <Phone className="size-3.5" />
+                    Call
+                  </a>
                 )}
-                {vet.open === false && (
-                  <span style={{ fontSize: 11, background: '#FCEBEB', color: '#A32D2D', padding: '2px 8px', borderRadius: 20 }}>Closed</span>
-                )}
-                <span style={{ fontSize: 12, color: '#999' }}>{vet.distance.toFixed(1)} km</span>
+                <a
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${vet.coords[1]},${vet.coords[0]}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="inline-flex items-center gap-1.5 text-xs font-medium text-blue-600 hover:text-blue-700"
+                >
+                  <Navigation className="size-3.5" />
+                  Directions
+                </a>
               </div>
             </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginLeft: 12 }}>
-              {vet.phone && (
-                <a
-                  href={`tel:${vet.phone}`}
-                  onClick={(e: React.MouseEvent<HTMLAnchorElement>) => e.stopPropagation()}
-                  style={{ fontSize: 12, color: '#0F6E56', textDecoration: 'none', fontWeight: 500 }}
-                >
-                  Call
-                </a>
-              )}
-              <a
-                href={`https://www.google.com/maps/dir/?api=1&destination=${vet.coords[1]},${vet.coords[0]}`}
-                target="_blank"
-                rel="noreferrer"
-                onClick={(e: React.MouseEvent<HTMLAnchorElement>) => e.stopPropagation()}
-                style={{ fontSize: 12, color: '#185FA5', textDecoration: 'none', fontWeight: 500 }}
-              >
-                Directions
-              </a>
-            </div>
-          </div>
+          </Card>
         ))}
+        </div>
       </div>
     </div>
   );

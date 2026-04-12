@@ -14,7 +14,9 @@ function RouteComponent() {
         description="Find nearby veterinary clinics on the map."
         canonicalPath="/nearby-vets"
       />
-      <NearbyVetsGeoMap />
+      <div className="p-12">
+        <NearbyVetsGeoMap />
+      </div>
     </section>
   )
 }
