@@ -19,6 +19,7 @@
   "dependencies": {
     "@fontsource-variable/inter": "^5.2.8",
     "@heroicons/react": "^2.1.5",
+    "@mapbox/mapbox-gl-geocoder": "^5.1.2",
     "@radix-ui/react-dialog": "latest",
     "@supabase/supabase-js": "^2.101.1",
     "@tailwindcss/vite": "^4.1.18",
@@ -34,6 +35,7 @@
     "jspdf": "^2.5.2",
     "lottie-react": "^2.4.1",
     "lucide-react": "^0.545.0",
+    "mapbox-gl": "^3.21.0",
     "motion": "latest",
     "radix-ui": "^1.4.3",
     "react": "^19.2.0",

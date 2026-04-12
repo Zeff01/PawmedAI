@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as NearbyVetsIndexRouteImport } from './routes/nearby-vets/index'
 import { Route as LifecycleIndexRouteImport } from './routes/lifecycle/index'
 import { Route as HomeIndexRouteImport } from './routes/home/index'
 import { Route as ClassifyIndexRouteImport } from './routes/classify/index'
@@ -19,6 +20,11 @@ import { Route as AuthGoogleCallbackRouteImport } from './routes/auth/google/cal
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NearbyVetsIndexRoute = NearbyVetsIndexRouteImport.update({
+  id: '/nearby-vets/',
+  path: '/nearby-vets/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LifecycleIndexRoute = LifecycleIndexRouteImport.update({
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/classify/': typeof ClassifyIndexRoute
   '/home/': typeof HomeIndexRoute
   '/lifecycle/': typeof LifecycleIndexRoute
+  '/nearby-vets/': typeof NearbyVetsIndexRoute
   '/auth/google/callback': typeof AuthGoogleCallbackRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/classify': typeof ClassifyIndexRoute
   '/home': typeof HomeIndexRoute
   '/lifecycle': typeof LifecycleIndexRoute
+  '/nearby-vets': typeof NearbyVetsIndexRoute
   '/auth/google/callback': typeof AuthGoogleCallbackRoute
 }
 export interface FileRoutesById {
@@ -70,6 +78,7 @@ export interface FileRoutesById {
   '/classify/': typeof ClassifyIndexRoute
   '/home/': typeof HomeIndexRoute
   '/lifecycle/': typeof LifecycleIndexRoute
+  '/nearby-vets/': typeof NearbyVetsIndexRoute
   '/auth/google/callback': typeof AuthGoogleCallbackRoute
 }
 export interface FileRouteTypes {
@@ -80,6 +89,7 @@ export interface FileRouteTypes {
     | '/classify/'
     | '/home/'
     | '/lifecycle/'
+    | '/nearby-vets/'
     | '/auth/google/callback'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -88,6 +98,7 @@ export interface FileRouteTypes {
     | '/classify'
     | '/home'
     | '/lifecycle'
+    | '/nearby-vets'
     | '/auth/google/callback'
   id:
     | '__root__'
@@ -96,6 +107,7 @@ export interface FileRouteTypes {
     | '/classify/'
     | '/home/'
     | '/lifecycle/'
+    | '/nearby-vets/'
     | '/auth/google/callback'
   fileRoutesById: FileRoutesById
 }
@@ -105,6 +117,7 @@ export interface RootRouteChildren {
   ClassifyIndexRoute: typeof ClassifyIndexRoute
   HomeIndexRoute: typeof HomeIndexRoute
   LifecycleIndexRoute: typeof LifecycleIndexRoute
+  NearbyVetsIndexRoute: typeof NearbyVetsIndexRoute
   AuthGoogleCallbackRoute: typeof AuthGoogleCallbackRoute
 }
 
@@ -115,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nearby-vets/': {
+      id: '/nearby-vets/'
+      path: '/nearby-vets'
+      fullPath: '/nearby-vets/'
+      preLoaderRoute: typeof NearbyVetsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lifecycle/': {
@@ -161,6 +181,7 @@ const rootRouteChildren: RootRouteChildren = {
   ClassifyIndexRoute: ClassifyIndexRoute,
   HomeIndexRoute: HomeIndexRoute,
   LifecycleIndexRoute: LifecycleIndexRoute,
+  NearbyVetsIndexRoute: NearbyVetsIndexRoute,
   AuthGoogleCallbackRoute: AuthGoogleCallbackRoute,
 }
 export const routeTree = rootRouteImport

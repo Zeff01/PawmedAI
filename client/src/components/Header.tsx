@@ -15,6 +15,7 @@ import { useMe, useLogout } from '@/hooks/useAuth'
 const navLinks = [
   { to: '/', label: 'Home' },
   { to: '/classify', label: 'Classify' },
+  { to: '/nearby-vets', label: 'Nearby Vets' },
 ]
 
 export function Header() {
