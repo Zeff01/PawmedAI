@@ -81,7 +81,7 @@ function RouteComponent() {
       {/* ── BOTTOM CTA ── */}
       <div className="border-t border-slate-100 bg-slate-50 px-6 py-12">
         <div className="mx-auto max-w-6xl flex flex-col items-center gap-4 text-center">
-          <p className="text-xs font-bold uppercase tracking-[0.3em] text-blue-500">
+          <p className="text-xs font-bold uppercase text-blue-500">
             While you wait
           </p>
           <h2 className="text-2xl font-bold tracking-tight text-slate-900">
@@ -98,7 +98,7 @@ function RouteComponent() {
             Start a classification →
           </Link>
           <p className="text-xs text-slate-400">
-            No account needed · Takes under 5 minutes
+            No account required · Takes under 5 minutes
           </p>
         </div>
       </div>

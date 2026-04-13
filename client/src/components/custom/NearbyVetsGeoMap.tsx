@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import type { VetClinic, MapboxSearchResponse, MapboxSearchFeature } from './types/vet';
 import { Card } from '@/components/ui/card';
-import { Phone, Navigation, MapPin } from 'lucide-react';
+import { Phone, Navigation, MapPin, LocateFixed, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN as string;
@@ -76,26 +76,66 @@ function LocationDenied() {
   );
 }
 
+// ── User marker HTML ───────────────────────────────────────────
+function createUserMarkerEl(): HTMLDivElement {
+  const el = document.createElement('div');
+  el.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:4px;';
+  el.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:3px solid white;background:#185FA5;box-shadow:0 0 0 4px rgba(24,95,165,0.25)">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+    </div>
+    <span style="background:#185FA5;color:white;font-size:10px;font-weight:700;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:2px 8px;border-radius:999px;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,0.15)">You are here</span>
+  `;
+  return el;
+}
+
 export default function NearbyVetsGeoMap() {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
+  const userMarker = useRef<mapboxgl.Marker | null>(null);
+  const vetMarkers = useRef<mapboxgl.Marker[]>([]);
   const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const [vets, setVets] = useState<VetClinic[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [locationDenied, setLocationDenied] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
+  const [userCoords, setUserCoords] = useState<[number, number] | null>(null);
+  const [userAddress, setUserAddress] = useState<string | null>(null);
+  const [relocating, setRelocating] = useState(false);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
-      ({ coords }: GeolocationPosition) =>
-        initMap(coords.latitude, coords.longitude),
+      ({ coords }: GeolocationPosition) => {
+        setUserCoords([coords.latitude, coords.longitude]);
+        initMap(coords.latitude, coords.longitude);
+        reverseGeocode(coords.latitude, coords.longitude);
+      },
       () => {
         setLocationDenied(true);
         setLoading(false);
       }
     );
   }, []);
+
+  async function reverseGeocode(lat: number, lng: number): Promise<void> {
+    try {
+      const url = new URL('https://api.mapbox.com/search/geocode/v6/reverse');
+      url.searchParams.set('longitude', String(lng));
+      url.searchParams.set('latitude', String(lat));
+      url.searchParams.set('language', 'en');
+      url.searchParams.set('access_token', mapboxgl.accessToken as string);
+
+      const res = await fetch(url.toString());
+      if (!res.ok) return;
+
+      const data = await res.json();
+      const place = data.features?.[0]?.properties?.full_address;
+      if (place) setUserAddress(place);
+    } catch {
+      // silently fail — address is not critical
+    }
+  }
 
   function initMap(lat: number, lng: number): void {
     if (!mapContainer.current) return;
@@ -109,14 +149,50 @@ export default function NearbyVetsGeoMap() {
 
     map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
-    const userDot = document.createElement('div');
-    userDot.className =
-      'flex size-9 cursor-default items-center justify-center rounded-full border-[3px] border-white bg-[#185FA5] shadow-[0_0_0_4px_rgba(24,95,165,0.25)]';
-    userDot.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>`;
-    new mapboxgl.Marker(userDot).setLngLat([lng, lat]).addTo(map.current);
+    userMarker.current = new mapboxgl.Marker(createUserMarkerEl())
+      .setLngLat([lng, lat])
+      .addTo(map.current);
 
     searchNearbyVets(lat, lng);
   }
+
+  // ── Relocate: re-fetch GPS, move marker, refresh clinics ────
+  const handleRelocate = useCallback(() => {
+    setRelocating(true);
+    setError(null);
+
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }: GeolocationPosition) => {
+        const { latitude: lat, longitude: lng } = coords;
+        setUserCoords([lat, lng]);
+        reverseGeocode(lat, lng);
+
+        // Move the user marker
+        if (userMarker.current) {
+          userMarker.current.setLngLat([lng, lat]);
+        }
+
+        // Re-center map
+        if (map.current) {
+          map.current.flyTo({ center: [lng, lat], zoom: 13, duration: 1000 });
+        }
+
+        // Remove old vet markers
+        vetMarkers.current.forEach((m) => m.remove());
+        vetMarkers.current = [];
+
+        // Clear state and search again
+        setSelected(null);
+        setVets([]);
+        searchNearbyVets(lat, lng).finally(() => setRelocating(false));
+      },
+      () => {
+        setError('Could not refresh location. Please check your browser settings.');
+        setRelocating(false);
+      },
+      { enableHighAccuracy: true, timeout: 10000 }
+    );
+  }, []);
 
   async function searchNearbyVets(lat: number, lng: number): Promise<void> {
     setLoading(true);
@@ -166,6 +242,10 @@ export default function NearbyVetsGeoMap() {
   function addVetMarkers(results: VetClinic[]): void {
     if (!map.current) return;
 
+    // Clear existing vet markers
+    vetMarkers.current.forEach((m) => m.remove());
+    vetMarkers.current = [];
+
     results.forEach((vet, index) => {
       const el = document.createElement('div');
       el.className =
@@ -181,21 +261,17 @@ export default function NearbyVetsGeoMap() {
         .setPopup(
           new mapboxgl.Popup({ offset: 20, maxWidth: '260px', closeButton: false }).setHTML(
             `<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:4px 2px;min-width:200px">
-              <!-- Rank + name -->
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
                 <div style="display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#2D5CF3;color:#fff;font-size:11px;font-weight:700;flex-shrink:0">
                   ${index + 1}
                 </div>
                 <span style="font-size:13px;font-weight:700;color:#0f172a;line-height:1.3">${vet.name}</span>
               </div>
-              <!-- Divider -->
               <div style="height:1px;background:#f1f5f9;margin-bottom:8px"></div>
-              <!-- Address row -->
               <div style="display:flex;align-items:flex-start;gap:6px;margin-bottom:6px">
                 <svg style="flex-shrink:0;margin-top:1px" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
                 <span style="font-size:11px;color:#64748b;line-height:1.4">${vet.address}</span>
               </div>
-              <!-- Distance row -->
               <div style="display:inline-flex;align-items:center;gap:4px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:999px;padding:2px 8px">
                 <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#2D5CF3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
                 <span style="font-size:11px;font-weight:600;color:#2D5CF3">${vet.distance.toFixed(1)} km away</span>
@@ -205,15 +281,14 @@ export default function NearbyVetsGeoMap() {
         )
         .addTo(map.current!);
 
-      // Clicking a marker selects & scrolls to the card
+      vetMarkers.current.push(marker);
+
       el.addEventListener('click', () => {
         setSelected(vet.id);
         setTimeout(() => {
           cardRefs.current[vet.id]?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }, 100);
       });
-
-      return marker;
     });
   }
 
@@ -240,8 +315,56 @@ export default function NearbyVetsGeoMap() {
 
   return (
     <div className="flex flex-col gap-10">
+      {/* User location bar + refresh button */}
+      {userAddress && (
+        <div className="flex items-center gap-3 rounded-xl border border-blue-100 bg-blue-50/50 px-4 py-3">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#185FA5] shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-blue-500">Your current location</p>
+            <p className="truncate text-sm text-slate-700">{userAddress}</p>
+          </div>
+          <button
+            onClick={handleRelocate}
+            disabled={relocating}
+            className="shrink-0 inline-flex items-center gap-1.5 rounded-lg border border-blue-200 bg-white px-3 py-2 text-xs font-semibold text-blue-600 shadow-sm hover:bg-blue-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {relocating ? (
+              <>
+                <Loader2 className="size-3.5 animate-spin" />
+                Locating…
+              </>
+            ) : (
+              <>
+                <LocateFixed className="size-3.5" />
+                Refresh location
+              </>
+            )}
+          </button>
+        </div>
+      )}
+
       {/* Map */}
-      <div ref={mapContainer} className="h-96 shrink-0 rounded-2xl" />
+      <div className="relative">
+        <div ref={mapContainer} className="h-96 shrink-0 rounded-2xl" />
+
+        {/* My Location button overlaid on map (bottom-left) */}
+        {map.current && !locationDenied && (
+          <button
+            onClick={handleRelocate}
+            disabled={relocating}
+            title="Re-center on my location"
+            className="absolute bottom-4 left-4 z-10 flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white shadow-md hover:bg-blue-50 transition-colors disabled:opacity-50"
+          >
+            {relocating ? (
+              <Loader2 className="size-4 animate-spin text-blue-600" />
+            ) : (
+              <LocateFixed className="size-4 text-blue-600" />
+            )}
+          </button>
+        )}
+      </div>
 
       <div className="space-y-4 bg-white">
         {/* Section header */}
@@ -289,21 +412,17 @@ export default function NearbyVetsGeoMap() {
               >
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
-                    {/* Initials avatar */}
                     <div className={cn(
                       'flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-bold',
                       avatarColor(vet.name)
                     )}>
                       {initials(vet.name)}
                     </div>
-
-                    {/* Name + address */}
                     <div className="min-w-0 flex-1">
                       <div className="flex items-start justify-between gap-1">
                         <p className="truncate text-sm font-semibold text-slate-800 leading-tight">
                           {vet.name}
                         </p>
-                        {/* Rank badge */}
                         <span className="shrink-0 ml-1 flex h-5 w-5 items-center justify-center rounded-full bg-slate-100 text-[10px] font-bold text-slate-500">
                           {index + 1}
                         </span>
@@ -311,7 +430,6 @@ export default function NearbyVetsGeoMap() {
                       <p className="mt-0.5 truncate text-xs text-muted-foreground">
                         {vet.address}
                       </p>
-                      {/* Distance pill */}
                       <span className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-500">
                         <MapPin className="size-2.5" />
                         {vet.distance.toFixed(1)} km away
@@ -319,7 +437,6 @@ export default function NearbyVetsGeoMap() {
                     </div>
                   </div>
 
-                  {/* Action buttons */}
                   <div className="flex gap-2 w-full">
                     {vet.phone ? (
                       <a
@@ -337,7 +454,7 @@ export default function NearbyVetsGeoMap() {
                       </span>
                     )}
                     <a
-                      href={`https://www.google.com/maps/dir/?api=1&destination=${vet.coords[1]},${vet.coords[0]}`}
+                      href={`https://www.google.com/maps/dir/?api=1${userCoords ? `&origin=${userCoords[0]},${userCoords[1]}` : ''}&destination=${encodeURIComponent(vet.name + ' ' + vet.address)}`}
                       target="_blank"
                       rel="noreferrer"
                       onClick={(e) => e.stopPropagation()}
