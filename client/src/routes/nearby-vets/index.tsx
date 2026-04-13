@@ -1,7 +1,11 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import NearbyVetsGeoMap from '@/components/custom/NearbyVetsGeoMap'
 import { Seo } from '@/components/Seo'
 import { MapPinIcon, PhoneIcon, ClockIcon } from '@heroicons/react/24/solid'
+import { useMe } from '@/hooks/useAuth'
+import { AuthModal } from '@/components/AuthModal'
+import { Button } from '@/components/ui/button'
+import { ArrowRightIcon } from 'lucide-react'
 
 export const Route = createFileRoute('/nearby-vets/')({
   component: RouteComponent,
@@ -26,6 +30,9 @@ const tips = [
 ]
 
 function RouteComponent() {
+  const { data: me } = useMe()
+  const navigate = useNavigate()
+
   return (
     <section className="bg-white text-slate-900 antialiased">
       <Seo
@@ -63,8 +70,12 @@ function RouteComponent() {
                 {tip.icon}
               </span>
               <div>
-                <p className="text-sm font-semibold text-slate-800">{tip.title}</p>
-                <p className="text-xs leading-relaxed text-slate-500">{tip.body}</p>
+                <p className="text-sm font-semibold text-slate-800">
+                  {tip.title}
+                </p>
+                <p className="text-xs leading-relaxed text-slate-500">
+                  {tip.body}
+                </p>
               </div>
             </div>
           ))}
@@ -91,12 +102,27 @@ function RouteComponent() {
             Run a quick AI classification before your appointment so you know
             what questions to ask the vet.
           </p>
-          <Link
-            to="/classify"
-            className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 transition-colors"
-          >
-            Start a classification →
-          </Link>
+          {me ? (
+            <Link
+              to="/classify"
+              className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 transition-colors"
+            >
+              Start a classification <ArrowRightIcon className="h-4 w-4" />
+            </Link>
+          ) : (
+            <AuthModal
+              showGuestOption
+              onGuestContinue={() => navigate({ to: '/classify' })}
+              trigger={
+                <Button
+                  size="lg"
+                  className="gap-2 rounded-xl bg-blue-600 hover:bg-blue-700"
+                >
+                  Start a classification <ArrowRightIcon className="h-4 w-4" />
+                </Button>
+              }
+            />
+          )}
           <p className="text-xs text-slate-400">
             No account required · Takes under 5 minutes
           </p>
