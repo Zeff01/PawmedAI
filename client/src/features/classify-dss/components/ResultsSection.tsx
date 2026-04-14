@@ -20,6 +20,7 @@ import { useDownloadPdf } from '../hooks/useDownloadPdf'
 import { BulletList, SectionLabel, TreatmentBlock } from './ResultsBlock'
 import { isNonAnimalResult } from '../utils/is-non-animal-result'
 import { useUserTypeStore } from '@/stores/userTypeStore'
+import { Link } from '@tanstack/react-router'
 
 function Divider() {
   return (
@@ -466,7 +467,9 @@ function FurParentResults({
               variant="outline"
               className="inline-flex items-center justify-center rounded-2xl border-white/60 bg-white px-5 py-3 text-xs font-semibold text-blue-700 hover:bg-blue-50"
             >
-              Consult a vet now
+              <Link to="/nearby-vets" className="flex items-center gap-2">
+                Consult a vet now
+              </Link>
             </Button>
           </div>
         </div>
@@ -480,7 +483,6 @@ function FurParentResults({
     </div>
   )
 }
-
 
 function ProfessionalResults({
   result,
