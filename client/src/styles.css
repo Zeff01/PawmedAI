@@ -13,6 +13,10 @@
   --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
 }
 
+.mapboxgl-ctrl-logo, .mapboxgl-ctrl-bottom-right {
+  opacity: 0;
+}
+
 button {
   cursor: pointer;
 }

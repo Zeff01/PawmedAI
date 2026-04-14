@@ -56,3 +56,17 @@ Body (form-data):
 ```bash
 docker compose --profile dev up -d --build client-dev
 ```
+
+If you installed a new package, execute these scripts one after another:
+
+```bash
+docker rm -f pawmedai-client-dev-1 pawmedai-server-dev-1
+```
+
+```bash
+docker compose down -v --rmi all --remove-orphans
+```
+
+```bash
+docker compose --profile dev up -d --build 
+```
