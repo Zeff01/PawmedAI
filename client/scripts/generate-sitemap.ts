@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename)
 const ROOT = path.resolve(__dirname, '..')
 const ROUTES_DIR = path.join(ROOT, 'src', 'routes')
 const OUTPUT = path.join(ROOT, 'public', 'sitemap.xml')
-const SITE_URL = process.env.SITE_URL ?? 'https://pawmed-ai.pages.dev'
+const SITE_URL = process.env.SITE_URL ?? 'https://pawmedai.com'
 
 const ROUTE_REGEX = /createFileRoute\(\s*['"]([^'"]+)['"]/g
 

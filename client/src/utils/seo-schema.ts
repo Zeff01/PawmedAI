@@ -3,7 +3,7 @@ type StructuredDataOptions = {
   description: string
 }
 
-const SITE_URL = import.meta.env.VITE_SITE_URL ?? 'https://pawmed-ai.pages.dev'
+const SITE_URL = import.meta.env.VITE_SITE_URL ?? 'https://pawmedai.com'
 const LOGO_URL = `${SITE_URL}/icons/paw.png`
 const OG_IMAGE_URL = `${SITE_URL}/images/hero_image.jpg`
 
