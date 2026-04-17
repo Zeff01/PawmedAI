@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'users',
     'bug_report',
     'classify_dss',
+    'classify_breed',
     'notifications',
     'corsheaders',
     'django.contrib.admin',

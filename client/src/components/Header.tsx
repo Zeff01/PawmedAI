@@ -15,6 +15,7 @@ import { useMe, useLogout } from '@/hooks/useAuth'
 const navLinks = [
   { to: '/', label: 'Home' },
   { to: '/classify', label: 'Classify' },
+  { to: '/classify-breed', label: 'Classify Breed' },
   { to: '/nearby-vets', label: 'Nearby Vets' },
 ]
 
@@ -30,7 +31,7 @@ export function Header() {
 
   const isActivePath = (to: string) => {
     if (to === '/') return location.pathname === '/'
-    return location.pathname.startsWith(to)
+    return location.pathname === to || location.pathname.startsWith(to + '/')
   }
 
   const renderNavItem = (
