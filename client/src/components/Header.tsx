@@ -14,7 +14,7 @@ import { useMe, useLogout } from '@/hooks/useAuth'
 
 const navLinks = [
   { to: '/', label: 'Home' },
-  { to: '/classify', label: 'Classify' },
+  { to: '/classify', label: 'Classify Disease' },
   { to: '/classify-breed', label: 'Classify Breed' },
   { to: '/nearby-vets', label: 'Nearby Vets' },
 ]
@@ -82,7 +82,7 @@ export function Header() {
       </header>
 
       <header className="sticky top-0 z-40 bg-white/70 backdrop-blur-lg">
-        <div className="border-b border-slate-100 px-0 shadow-[0_1px_12px_rgba(15,28,63,0.06)] md:px-14">
+        <div className="border-b border-slate-100 px-0 shadow-[0_1px_12px_rgba(15,28,63,0.06)] lg:px-14">
           <div className="page-wrap flex h-15.5 items-center justify-between px-5">
             <Link
               to="/"

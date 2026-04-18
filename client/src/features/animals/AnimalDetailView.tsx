@@ -36,14 +36,14 @@ interface Animal {
 }
 
 const STATUS_COLORS: Record<string, string> = {
-  'Least Concern': 'bg-green-100 text-green-700 border-green-200',
-  'Near Threatened': 'bg-yellow-100 text-yellow-700 border-yellow-200',
-  Vulnerable: 'bg-orange-100 text-orange-700 border-orange-200',
-  Endangered: 'bg-red-100 text-red-700 border-red-200',
-  'Critically Endangered': 'bg-red-200 text-red-800 border-red-300',
-  'Extinct in the Wild': 'bg-slate-200 text-slate-700 border-slate-300',
-  Extinct: 'bg-slate-300 text-slate-800 border-slate-400',
-  'Not Evaluated': 'bg-slate-100 text-slate-500 border-slate-200',
+  'Least Concern': 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  'Near Threatened': 'bg-yellow-50 text-yellow-700 border-yellow-200',
+  Vulnerable: 'bg-orange-50 text-orange-700 border-orange-200',
+  Endangered: 'bg-red-50 text-red-700 border-red-200',
+  'Critically Endangered': 'bg-red-100 text-red-800 border-red-300',
+  'Extinct in the Wild': 'bg-slate-100 text-slate-600 border-slate-200',
+  Extinct: 'bg-slate-200 text-slate-700 border-slate-300',
+  'Not Evaluated': 'bg-slate-50 text-slate-500 border-slate-200',
 }
 
 const CATEGORY_EMOJI: Record<string, string> = {
@@ -60,12 +60,19 @@ const CATEGORY_EMOJI: Record<string, string> = {
 }
 
 const TREND_COLOR: Record<string, string> = {
-  Increasing: 'text-green-600',
+  Increasing: 'text-emerald-600',
   Decreasing: 'text-red-500',
   Stable: 'text-blue-600',
 }
 
-function Section({
+function splitBullets(text: string): string[] {
+  return text
+    .split(/(?<=[a-z\d)])(?=[A-Z])|(?<=\.) (?=[A-Z])/)
+    .map((s) => s.trim())
+    .filter(Boolean)
+}
+
+function Card({
   title,
   children,
   delay = 0,
@@ -76,13 +83,52 @@ function Section({
 }) {
   return (
     <FadeIn trigger="mount" delay={delay}>
-      <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
-        <div className="border-b border-slate-100 px-5 py-3.5">
-          <h2 className="text-[13px] font-bold text-slate-800">{title}</h2>
+      <div className="overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm">
+        <div className="px-4 pt-4 pb-1">
+          <h2 className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
+            {title}
+          </h2>
         </div>
-        <div className="p-5">{children}</div>
+        <div className="px-4 pb-4 pt-2">{children}</div>
       </div>
     </FadeIn>
+  )
+}
+
+function StatTile({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-lg border border-slate-100 bg-slate-50 px-3 py-2.5">
+      <p className="text-[9.5px] font-semibold uppercase tracking-wider text-slate-400">
+        {label}
+      </p>
+      <p className="mt-0.5 text-[12.5px] font-bold text-slate-800">{value}</p>
+    </div>
+  )
+}
+
+function BulletList({
+  items,
+  color = 'bg-slate-300',
+  textColor = 'text-slate-700',
+}: {
+  items: string[]
+  color?: string
+  textColor?: string
+}) {
+  return (
+    <ul className="flex flex-col gap-1.5">
+      {items.map((item, i) => (
+        <li
+          key={i}
+          className={`flex items-start gap-2 text-[12.5px] leading-relaxed ${textColor}`}
+        >
+          <span
+            className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${color}`}
+          />
+          {item}
+        </li>
+      ))}
+    </ul>
   )
 }
 
@@ -109,7 +155,7 @@ export function AnimalDetailView({ slug }: { slug: string }) {
 
   if (notFound) {
     return (
-      <section className="page-wrap mt-16 text-center">
+      <section className="mx-auto w-full max-w-3xl px-4 sm:px-6 mt-16 text-center">
         <p className="text-[14px] text-slate-500">Animal not found.</p>
         <Link
           to="/classify-breed"
@@ -123,7 +169,7 @@ export function AnimalDetailView({ slug }: { slug: string }) {
 
   if (!animal) {
     return (
-      <section className="page-wrap mt-16 text-center">
+      <section className="mx-auto w-full max-w-3xl px-4 sm:px-6 mt-16 text-center">
         <p className="text-[13px] text-slate-400">Loading…</p>
       </section>
     )
@@ -145,55 +191,55 @@ export function AnimalDetailView({ slug }: { slug: string }) {
   )
 
   return (
-    <section className="relative z-10 min-h-screen pb-24 mt-10">
-      <div className="page-wrap max-w-4xl">
+    <section className="z-10 min-h-screen pb-16 mt-6">
+      <div className="mx-auto w-full max-w-3xl px-4 sm:px-6">
         {/* Back link */}
         <FadeIn trigger="mount">
           <Link
             to="/classify-breed"
-            className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-blue-600 hover:underline"
+            className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-blue-600 hover:text-blue-700"
           >
             <ArrowLeftIcon className="h-3.5 w-3.5" />
             Back to Classify Breed
           </Link>
         </FadeIn>
 
-        {/* ── Hero ─────────────────────────────────────────────────────── */}
+        {/* Hero */}
         <FadeIn trigger="mount" delay={0.05}>
-          <div className="mt-5 overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-md">
+          <div className="mt-4 overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm">
             {animal.image && (
               <img
                 src={animal.image}
                 alt={animal.name}
-                className="h-64 w-full object-cover sm:h-80"
+                className="h-52 w-full object-cover sm:h-64"
               />
             )}
-            <div className="p-6">
-              <div className="mb-3 flex flex-wrap items-center gap-2">
+            <div className="p-4 sm:p-5">
+              <div className="mb-2 flex flex-wrap items-center gap-1.5">
                 {animal.category && (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2.5 py-1 text-[11px] font-semibold text-blue-700">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2.5 py-0.5 text-[11px] font-semibold text-blue-700">
                     <span>{CATEGORY_EMOJI[animal.category] ?? '🐾'}</span>
                     {animal.category}
                   </span>
                 )}
                 {animal.status && (
                   <span
-                    className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-semibold ${STATUS_COLORS[animal.status] ?? 'bg-slate-100 text-slate-500 border-slate-200'}`}
+                    className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold ${STATUS_COLORS[animal.status] ?? 'bg-slate-50 text-slate-500 border-slate-200'}`}
                   >
                     {animal.status}
                   </span>
                 )}
               </div>
-              <h1 className="text-[26px] font-extrabold text-slate-900">
+              <h1 className="text-[22px] font-extrabold leading-tight text-slate-900">
                 {animal.name}
               </h1>
               {animal.scientific_name && (
-                <p className="mt-0.5 text-[13px] italic text-slate-400">
+                <p className="mt-0.5 text-[12px] italic text-slate-400">
                   {animal.scientific_name}
                 </p>
               )}
               {animal.description && (
-                <p className="mt-3 text-[14px] leading-relaxed text-slate-600">
+                <p className="mt-2.5 text-[13px] leading-relaxed text-slate-600">
                   {animal.description}
                 </p>
               )}
@@ -201,121 +247,95 @@ export function AnimalDetailView({ slug }: { slug: string }) {
           </div>
         </FadeIn>
 
-        <div className="mt-5 flex flex-col gap-5">
-          {/* ── At a Glance ─────────────────────────────────────────────── */}
+        <div className="mt-3 flex flex-col gap-3">
+          {/* At a Glance */}
           {hasQuickStats && (
-            <Section title="At a Glance" delay={0.08}>
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+            <Card title="At a Glance" delay={0.08}>
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
                 {Object.entries(animal.quick_stats).map(([label, value]) => (
-                  <div
-                    key={label}
-                    className="rounded-xl border border-slate-100 bg-slate-50 px-3 py-2.5"
-                  >
-                    <p className="text-[10.5px] font-semibold uppercase tracking-wide text-slate-400">
-                      {label}
-                    </p>
-                    <p className="mt-0.5 text-[13px] font-bold text-slate-800">
-                      {value}
-                    </p>
-                  </div>
+                  <StatTile key={label} label={label} value={value} />
                 ))}
               </div>
-            </Section>
+            </Card>
           )}
 
-          {/* ── Physical Measurements ───────────────────────────────────── */}
+          {/* Physical Measurements */}
           {hasMeasurements && (
-            <Section title="Physical Measurements" delay={0.1}>
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+            <Card title="Physical Measurements" delay={0.1}>
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                 {Object.entries(animal.measurements)
                   .filter(([, v]) => v && v !== '(0 lbs – 0 lbs)')
                   .map(([label, value]) => (
-                    <div
-                      key={label}
-                      className="rounded-xl border border-slate-100 bg-slate-50 px-3 py-2.5"
-                    >
-                      <p className="text-[10.5px] font-semibold uppercase tracking-wide text-slate-400">
-                        {label}
-                      </p>
-                      <p className="mt-0.5 text-[13px] font-bold text-slate-800">
-                        {value}
-                      </p>
-                    </div>
+                    <StatTile key={label} label={label} value={value} />
                   ))}
               </div>
-            </Section>
+            </Card>
           )}
 
-          {/* ── Distinguishing Features ─────────────────────────────────── */}
+          {/* Distinguishing Features */}
           {animal.features.length > 0 && (
-            <Section title="Distinguishing Features" delay={0.12}>
-              <ul className="flex flex-col gap-2">
-                {animal.features.map((f, i) => (
-                  <li key={i} className="flex items-start gap-2 text-[13px] text-slate-700">
-                    <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-400" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-            </Section>
+            <Card title="Distinguishing Features" delay={0.12}>
+              <BulletList
+                items={animal.features}
+                color="bg-blue-300"
+                textColor="text-slate-700"
+              />
+            </Card>
           )}
 
-          {/* ── Did You Know ────────────────────────────────────────────── */}
+          {/* Did You Know */}
           {animal.facts.length > 0 && (
-            <Section title="Did You Know?" delay={0.14}>
-              <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-                {animal.facts.map((fact, i) => (
-                  <div
-                    key={i}
-                    className="rounded-xl border border-amber-100 bg-amber-50 px-3.5 py-3 text-[12.5px] leading-relaxed text-amber-900"
-                  >
-                    {fact}
-                  </div>
-                ))}
+            <Card title="Did You Know?" delay={0.14}>
+              <div className="rounded-lg bg-amber-50 px-3.5 py-3">
+                <BulletList
+                  items={animal.facts}
+                  color="bg-amber-400"
+                  textColor="text-amber-900"
+                />
               </div>
-            </Section>
+            </Card>
           )}
 
-          {/* ── Conservation ────────────────────────────────────────────── */}
+          {/* Conservation Status */}
           {hasConservation && (
-            <Section title="Conservation Status" delay={0.16}>
-              <div className="flex flex-col gap-3">
-                {animal.status && (
-                  <span
-                    className={`inline-flex w-fit items-center rounded-full border px-3 py-1.5 text-[12px] font-bold ${STATUS_COLORS[animal.status] ?? 'bg-slate-100 text-slate-500 border-slate-200'}`}
-                  >
-                    {animal.status}
-                  </span>
-                )}
-                {animal.conservation.description && (
-                  <p className="text-[13px] text-slate-700">
-                    {animal.conservation.description}
-                  </p>
-                )}
-                {animal.conservation.trend && (
-                  <p
-                    className={`flex items-center gap-1.5 text-[12.5px] font-semibold ${trendKey ? TREND_COLOR[trendKey] : 'text-slate-600'}`}
-                  >
-                    <span>
+            <Card title="Conservation Status" delay={0.16}>
+              <div className="flex flex-col gap-2.5">
+                <div className="flex items-center gap-2 flex-wrap">
+                  {animal.status && (
+                    <span
+                      className={`inline-flex w-fit items-center rounded-full border px-2.5 py-1 text-[11.5px] font-bold ${STATUS_COLORS[animal.status] ?? 'bg-slate-50 text-slate-500 border-slate-200'}`}
+                    >
+                      {animal.status}
+                    </span>
+                  )}
+                  {animal.conservation.trend && (
+                    <span
+                      className={`text-[12px] font-semibold ${trendKey ? TREND_COLOR[trendKey] : 'text-slate-600'}`}
+                    >
                       {trendKey === 'Increasing'
                         ? '↑'
                         : trendKey === 'Decreasing'
                           ? '↓'
-                          : '→'}
+                          : '→'}{' '}
+                      {animal.conservation.trend}
                     </span>
-                    {animal.conservation.trend}
+                  )}
+                </div>
+                {animal.conservation.description && (
+                  <p className="text-[12.5px] text-slate-600">
+                    {animal.conservation.description}
                   </p>
                 )}
                 {(animal.conservation.protected_under?.length ?? 0) > 0 && (
                   <div>
-                    <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+                    <p className="mb-1.5 text-[9.5px] font-bold uppercase tracking-wider text-slate-400">
                       Protected Under
                     </p>
                     <div className="flex flex-wrap gap-1.5">
                       {animal.conservation.protected_under!.map((p, i) => (
                         <span
                           key={i}
-                          className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] text-slate-600"
+                          className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] text-slate-600"
                         >
                           {p}
                         </span>
@@ -324,26 +344,25 @@ export function AnimalDetailView({ slug }: { slug: string }) {
                   </div>
                 )}
               </div>
-            </Section>
+            </Card>
           )}
 
-          {/* ── Life Cycle ──────────────────────────────────────────────── */}
+          {/* Life Cycle */}
           {hasLifecycle && (
-            <Section title="Life Cycle" delay={0.18}>
-              <div className="flex flex-col gap-4">
-                {/* Stages */}
+            <Card title="Life Cycle" delay={0.18}>
+              <div className="flex flex-col gap-3">
                 {Object.keys(animal.lifecycle.stages ?? {}).length > 0 && (
-                  <div className="flex flex-wrap gap-3">
+                  <div className="flex flex-wrap gap-2">
                     {Object.entries(animal.lifecycle.stages!).map(
                       ([stage, val]) => (
                         <div
                           key={stage}
-                          className="rounded-xl border border-blue-100 bg-blue-50 px-4 py-2.5 text-center"
+                          className="rounded-lg border border-blue-100 bg-blue-50 px-3 py-2 text-center"
                         >
-                          <p className="text-[10.5px] font-semibold uppercase tracking-wide text-blue-500">
+                          <p className="text-[9.5px] font-bold uppercase tracking-wider text-blue-500">
                             {stage}
                           </p>
-                          <p className="mt-0.5 text-[14px] font-bold text-blue-800">
+                          <p className="mt-0.5 text-[13px] font-bold text-blue-800">
                             {val}
                           </p>
                         </div>
@@ -352,22 +371,21 @@ export function AnimalDetailView({ slug }: { slug: string }) {
                   </div>
                 )}
 
-                {/* Lifespans */}
                 {(animal.lifecycle.lifespans?.length ?? 0) > 0 && (
                   <div>
-                    <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+                    <p className="mb-1.5 text-[9.5px] font-bold uppercase tracking-wider text-slate-400">
                       Lifespan
                     </p>
-                    <div className="flex flex-col gap-1.5">
+                    <div className="flex flex-col gap-1">
                       {animal.lifecycle.lifespans!.map((ls, i) => (
                         <div
                           key={i}
-                          className="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2"
+                          className="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-1.5"
                         >
                           <span className="text-[12px] text-slate-500">
                             {ls.label}
                           </span>
-                          <span className="text-[13px] font-bold text-slate-800">
+                          <span className="text-[12.5px] font-bold text-slate-800">
                             {ls.value}
                           </span>
                         </div>
@@ -376,78 +394,72 @@ export function AnimalDetailView({ slug }: { slug: string }) {
                   </div>
                 )}
 
-                {/* Reproduction */}
                 {Object.keys(animal.lifecycle.reproduction ?? {}).length > 0 && (
                   <div>
-                    <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+                    <p className="mb-1.5 text-[9.5px] font-bold uppercase tracking-wider text-slate-400">
                       Reproduction
                     </p>
                     <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3">
                       {Object.entries(animal.lifecycle.reproduction!)
                         .filter(([, v]) => v && !v.includes('_'))
                         .map(([label, value]) => (
-                          <div
-                            key={label}
-                            className="rounded-lg border border-slate-100 bg-slate-50 px-3 py-2"
-                          >
-                            <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">
-                              {label}
-                            </p>
-                            <p className="mt-0.5 text-[12px] font-semibold text-slate-700">
-                              {value}
-                            </p>
-                          </div>
+                          <StatTile key={label} label={label} value={value} />
                         ))}
                     </div>
                   </div>
                 )}
 
-                {/* Reproduction description */}
                 {animal.lifecycle.reproduction_description && (
-                  <p className="text-[13px] leading-relaxed text-slate-600">
-                    {animal.lifecycle.reproduction_description}
-                  </p>
+                  <BulletList
+                    items={splitBullets(
+                      animal.lifecycle.reproduction_description,
+                    )}
+                    color="bg-slate-300"
+                    textColor="text-slate-600"
+                  />
                 )}
               </div>
-            </Section>
+            </Card>
           )}
 
-          {/* ── Behavior & Ecology ──────────────────────────────────────── */}
+          {/* Behavior & Ecology */}
           {hasBehavior && (
-            <Section title="Behavior & Ecology" delay={0.2}>
-              <div className="flex flex-col divide-y divide-slate-50">
+            <Card title="Behavior & Ecology" delay={0.2}>
+              <div className="flex flex-col gap-3">
                 {Object.entries(animal.behavior)
                   .filter(([, v]) => v)
                   .map(([label, text]) => (
-                    <div key={label} className="py-3 first:pt-0 last:pb-0">
-                      <p className="mb-1 text-[11px] font-bold uppercase tracking-wide text-slate-400">
+                    <div key={label}>
+                      <p className="mb-1.5 text-[9.5px] font-bold uppercase tracking-wider text-slate-400">
                         {label}
                       </p>
-                      <p className="text-[13px] leading-relaxed text-slate-700">
-                        {text}
-                      </p>
+                      <BulletList
+                        items={splitBullets(text)}
+                        color="bg-slate-300"
+                        textColor="text-slate-700"
+                      />
                     </div>
                   ))}
               </div>
-            </Section>
+            </Card>
           )}
 
-          {/* ── Scientific Classification ───────────────────────────────── */}
+          {/* Scientific Classification */}
           {classificationRows.length > 0 && (
-            <Section title="Scientific Classification" delay={0.22}>
-              <dl className="divide-y divide-slate-50">
+            <Card title="Scientific Classification" delay={0.22}>
+              <dl className="grid grid-cols-2 gap-x-4 gap-y-0 sm:grid-cols-3">
                 {classificationRows.map(([label, value]) => (
-                  <div key={label} className="flex py-2.5">
-                    <dt className="w-28 shrink-0 text-[12px] font-semibold text-slate-400">
+                  <div key={label} className="py-1.5">
+                    <dt className="text-[9.5px] font-bold uppercase tracking-wider text-slate-400">
                       {label}
                     </dt>
-                    <dd className="text-[12px] italic text-slate-700">
+                    <dd className="mt-0.5 text-[12.5px] italic text-slate-700">
                       {value}
                     </dd>
                   </div>
                 ))}
               </dl>
-            </Section>
+            </Card>
           )}
         </div>
       </div>

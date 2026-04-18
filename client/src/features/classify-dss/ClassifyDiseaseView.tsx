@@ -279,7 +279,7 @@ export function ClassifyDiseaseView() {
                     <span>
                       {me
                         ? 'Yey! You have 5 tries every 10 hours. You can try again after 5 hours.'
-                        : 'You only have 3 tries every 10 hours. Sign in to get 5 free classifications every 5 hours!'}
+                        : 'You only have 2 tries every 10 hours. Sign in to get 5 free classifications every 5 hours!'}
                     </span>
                   </div>
                 )}

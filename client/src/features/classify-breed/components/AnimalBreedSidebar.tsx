@@ -118,11 +118,11 @@ export function AnimalBreedSidebar() {
         placeholder="Search animals…"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-[12px] text-slate-700 placeholder-slate-400 shadow-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+        className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-[12px] text-slate-700 placeholder-slate-400 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
       />
 
       <div
-        className="flex flex-col gap-1 overflow-y-auto pr-0.5"
+        className="flex flex-col gap-5 overflow-y-auto pr-0.5"
         style={{ maxHeight: '72vh' }}
       >
         {loading ? (
@@ -165,7 +165,7 @@ export function AnimalBreedSidebar() {
                         key={animal.url}
                         to="/animals/$slug"
                         params={{ slug: toSlug(animal.name) }}
-                        className="flex items-center gap-2.5 rounded-xl border border-slate-100 bg-white p-2.5 shadow-sm transition hover:border-blue-200 hover:bg-blue-50/40"
+                        className="flex items-center gap-2.5 rounded-lg border border-gray-200 bg-white p-2.5 transition hover:border-blue-200 hover:bg-blue-50/40"
                       >
                         {animal.image ? (
                           <img

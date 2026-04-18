@@ -291,7 +291,7 @@ export function ClassifyBreedView() {
     !classifyMutation.isPending && imageFile !== null && uploadStatus === 'done'
 
   return (
-    <section className="relative z-10 min-h-screen pb-24 mt-12">
+    <section className="relative z-10 min-h-screen py-8 px-5 md:px-12">
       <div className="page-wrap">
         {/* ── Page header ─────────────────────────────────────────────── */}
         <FadeIn trigger="mount" className="mb-8 text-center">
@@ -307,7 +307,7 @@ export function ClassifyBreedView() {
         </FadeIn>
 
         {/* ── Two-column layout ───────────────────────────────────────── */}
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 lg:grid-cols-[1fr_280px]">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 lg:grid-cols-[1fr_360px]">
           {/* Main column */}
           <div>
             {/* ── Upload panel ──────────────────────────────────────── */}
@@ -365,7 +365,7 @@ export function ClassifyBreedView() {
                   <p className="text-center text-[11.5px] text-slate-400">
                     {me
                       ? '5 identifications per 5 hours.'
-                      : '3 free identifications · Sign in for 5 per 5 hours.'}
+                      : '2 free identifications · Sign in for 5 per 5 hours.'}
                   </p>
                 )}
               </div>
@@ -415,7 +415,7 @@ export function ClassifyBreedView() {
 
           {/* Sidebar column */}
           <FadeIn trigger="mount" delay={0.15}>
-            <div className="rounded-2xl border border-slate-100 bg-slate-50/60 p-4 shadow-sm">
+            <div className="rounded-2xl border border-gray-200 bg-gray-50/60 p-4 sticky top-20">
               <AnimalBreedSidebar />
             </div>
           </FadeIn>
