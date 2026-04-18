@@ -8,9 +8,18 @@ const __dirname = path.dirname(__filename)
 const ROOT = path.resolve(__dirname, '..')
 const ROUTES_DIR = path.join(ROOT, 'src', 'routes')
 const OUTPUT = path.join(ROOT, 'public', 'sitemap.xml')
-const SITE_URL = process.env.SITE_URL ?? 'https://pawmed-ai.pages.dev'
+const SITE_URL = process.env.SITE_URL ?? 'https://pawmedai.com'
 
 const ROUTE_REGEX = /createFileRoute\(\s*['"]([^'"]+)['"]/g
+
+const EXCLUDED_ROUTES = ['/home', '/auth/callback', '/auth/google/callback', '/$']
+
+const ROUTE_CONFIG: Record<string, { priority: string; changefreq: string }> = {
+  '/': { priority: '1.0', changefreq: 'weekly' },
+  '/classify': { priority: '0.95', changefreq: 'weekly' },
+  '/nearby-vets': { priority: '0.9', changefreq: 'weekly' },
+  '/lifecycle': { priority: '0.7', changefreq: 'monthly' },
+}
 
 const isDynamicRoute = (routePath: string) =>
   routePath.includes('$') || routePath.includes(':') || routePath.includes('*')
@@ -56,7 +65,9 @@ const main = async () => {
     const routes = extractRoutes(content)
     for (const routePath of routes) {
       if (isDynamicRoute(routePath)) continue
-      routePaths.add(normalizePath(routePath))
+      const normalized = normalizePath(routePath)
+      if (EXCLUDED_ROUTES.includes(normalized)) continue
+      routePaths.add(normalized)
     }
   }
 
@@ -67,15 +78,17 @@ const main = async () => {
     `<?xml version="1.0" encoding="UTF-8"?>\n` +
     `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
     urls
-      .map(
-        (routePath) =>
+      .map((routePath) => {
+        const config = ROUTE_CONFIG[routePath] ?? { priority: '0.8', changefreq: 'weekly' }
+        return (
           `  <url>\n` +
           `    <loc>${toUrl(routePath)}</loc>\n` +
           `    <lastmod>${lastmod}</lastmod>\n` +
-          `    <changefreq>weekly</changefreq>\n` +
-          `    <priority>${routePath === '/' ? '1.0' : '0.8'}</priority>\n` +
-          `  </url>`,
-      )
+          `    <changefreq>${config.changefreq}</changefreq>\n` +
+          `    <priority>${config.priority}</priority>\n` +
+          `  </url>`
+        )
+      })
       .join('\n') +
     `\n</urlset>\n`
 

@@ -2,7 +2,11 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import HomeView from '@/features/home/HomeView'
 import { Seo } from '@/components/Seo'
-import { buildSoftwareApplicationSchema } from '@/utils/seo-schema'
+import {
+  buildSoftwareApplicationSchema,
+  buildBreadcrumbSchema,
+  buildSiteSchemas,
+} from '@/utils/seo-schema'
 
 export const Route = createFileRoute('/')({ component: LandingPage })
 
@@ -17,10 +21,13 @@ function LandingPage() {
         description={description}
         keywords="veterinary diagnostics, AI vet tool, animal disease classification, clinical diagnostic brief, veterinary AI, pet diagnostics, vet decision support, pawmed ai"
         canonicalPath="/"
-        structuredData={buildSoftwareApplicationSchema({
-          pageUrl: '/',
-          description,
-        })}
+        ogImage="/images/hero_image.jpg"
+        ogImageAlt="Pawmed AI — AI-powered veterinary diagnostics platform"
+        structuredData={[
+          buildSoftwareApplicationSchema({ pageUrl: '/', description }),
+          buildBreadcrumbSchema([{ name: 'Home', path: '/' }]),
+          ...buildSiteSchemas(),
+        ]}
       />
       <HomeView />
     </>

@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { Seo } from '@/components/Seo'
+import { buildBreadcrumbSchema } from '@/utils/seo-schema'
 
 export const Route = createFileRoute('/lifecycle/')({
   component: LifeCycleNotesPage,
@@ -44,6 +45,14 @@ function LifeCycleNotesPage() {
         description={description}
         keywords="pawmed ai updates, veterinary AI release notes, pawmed changelog, new features pawmed"
         canonicalPath="/lifecycle"
+        ogImage="/images/feature-notes.jpg"
+        ogImageAlt="Pawmed AI lifecycle notes and release updates"
+        structuredData={[
+          buildBreadcrumbSchema([
+            { name: 'Home', path: '/' },
+            { name: 'Lifecycle Notes', path: '/lifecycle' },
+          ]),
+        ]}
       />
 
       <div className="mx-auto w-full max-w-3xl space-y-5">

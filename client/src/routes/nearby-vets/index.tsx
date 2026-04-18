@@ -6,6 +6,7 @@ import { useMe } from '@/hooks/useAuth'
 import { AuthModal } from '@/components/AuthModal'
 import { Button } from '@/components/ui/button'
 import { ArrowRightIcon } from 'lucide-react'
+import { buildBreadcrumbSchema } from '@/utils/seo-schema'
 
 export const Route = createFileRoute('/nearby-vets/')({
   component: RouteComponent,
@@ -33,16 +34,28 @@ function RouteComponent() {
   const { data: me } = useMe()
   const navigate = useNavigate()
 
+  const description =
+    'Locate the nearest veterinary clinics on a live map. Get directions, phone numbers, and distances — powered by Pawmed AI.'
+
   return (
     <section className="bg-white text-slate-900 antialiased">
       <Seo
         title="Find a Vet Near You | Pawmed AI"
-        description="Locate the nearest veterinary clinics on a live map. Get directions, phone numbers, and distances — powered by Pawmed AI."
+        description={description}
+        keywords="find vet near me, nearest veterinary clinic, vet locator map, animal hospital near me, emergency vet, pawmed ai nearby vets"
         canonicalPath="/nearby-vets"
+        ogImage="/images/hero-vet.jpg"
+        ogImageAlt="Find a veterinary clinic near you with Pawmed AI's live vet locator map"
+        structuredData={[
+          buildBreadcrumbSchema([
+            { name: 'Home', path: '/' },
+            { name: 'Find a Vet Near You', path: '/nearby-vets' },
+          ]),
+        ]}
       />
 
       {/* ── HERO ── */}
-      <div className="border-b border-slate-100 bg-gradient-to-b from-blue-50/60 to-white px-6 py-12">
+      <div className="border-b border-slate-100 bg-linear-to-b from-blue-50/60 to-white px-6 py-12">
         <div className="mx-auto max-w-6xl flex flex-col items-center gap-3 text-center">
           <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold uppercase tracking-normal text-blue-600">
             <MapPinIcon className="h-3.5 w-3.5" />

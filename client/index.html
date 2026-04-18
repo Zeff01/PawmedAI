@@ -5,13 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/favicon/favicon.ico" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
     <link
       rel="apple-touch-icon"
       href="/favicon/apple-touch-icon.png"
       sizes="180x180"
     />
     <link rel="manifest" href="/manifest.json" />
-    <link rel="canonical" href="https://pawmed-ai.pages.dev/" />
+    <link rel="canonical" href="https://pawmedai.com/" />
+
+    <!-- Preconnect to external services for faster load -->
+    <link rel="preconnect" href="https://obnxfwtsydsrripukuri.supabase.co" />
+    <link rel="preconnect" href="https://api.mapbox.com" />
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://pawmed-prod-e76m.onrender.com" />
+
     <title>Pawmed AI | Veterinary Diagnostics</title>
     <meta
       name="description"
@@ -23,6 +31,12 @@
     />
     <meta name="author" content="Pawmed AI" />
     <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+    <!-- Open Graph -->
     <meta property="og:title" content="Pawmed AI | Veterinary Diagnostics" />
     <meta
       property="og:description"
@@ -30,16 +44,20 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Pawmed AI" />
-    <meta property="og:url" content="https://pawmed-ai.pages.dev/" />
+    <meta property="og:url" content="https://pawmedai.com/" />
     <meta
       property="og:image"
-      content="https://pawmed-ai.pages.dev/images/hero_image.jpg"
+      content="https://pawmedai.com/images/hero_image.jpg"
     />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Pawmed AI — Veterinary Diagnostics powered by AI" />
+    <meta property="og:image:alt" content="Pawmed AI — AI-powered veterinary diagnostics platform" />
+    <meta property="og:image:type" content="image/jpeg" />
+
+    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@pawmedai" />
+    <meta name="twitter:creator" content="@pawmedai" />
     <meta name="twitter:title" content="Pawmed AI | Veterinary Diagnostics" />
     <meta
       name="twitter:description"
@@ -47,11 +65,11 @@
     />
     <meta
       name="twitter:image"
-      content="https://pawmed-ai.pages.dev/images/hero_image.jpg"
+      content="https://pawmedai.com/images/hero_image.jpg"
     />
-    <meta name="theme-color" content="#2563eb" />
+    <meta name="twitter:image:alt" content="Pawmed AI — AI-powered veterinary diagnostics platform" />
 
-    <!-- Static structured data: helps Google identify site name as "Pawmed AI" on first crawl -->
+    <!-- Static structured data: helps Google identify site on first crawl before JS runs -->
     <script type="application/ld+json">
     [
       {
@@ -60,12 +78,12 @@
         "name": "Pawmed AI",
         "alternateName": "PawmedAI",
         "description": "AI-powered veterinary diagnostics that transforms clinical pet photos into structured diagnostic briefs.",
-        "url": "https://pawmed-ai.pages.dev",
+        "url": "https://pawmedai.com",
         "potentialAction": {
           "@type": "SearchAction",
           "target": {
             "@type": "EntryPoint",
-            "urlTemplate": "https://pawmed-ai.pages.dev/classify?q={search_term_string}"
+            "urlTemplate": "https://pawmedai.com/classify?q={search_term_string}"
           },
           "query-input": "required name=search_term_string"
         }
@@ -75,10 +93,10 @@
         "@type": "Organization",
         "name": "Pawmed AI",
         "alternateName": "PawmedAI",
-        "url": "https://pawmed-ai.pages.dev",
+        "url": "https://pawmedai.com",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://pawmed-ai.pages.dev/icons/paw.png",
+          "url": "https://pawmedai.com/icons/paw.png",
           "width": 512,
           "height": 512
         },
@@ -94,13 +112,25 @@
         "alternateName": "PawmedAI",
         "applicationCategory": "MedicalApplication",
         "operatingSystem": "Web",
-        "url": "https://pawmed-ai.pages.dev",
+        "url": "https://pawmedai.com",
         "description": "AI-powered veterinary diagnostics that transforms clinical pet photos into structured diagnostic briefs in under 5 minutes.",
         "offers": {
           "@type": "Offer",
           "price": "0",
           "priceCurrency": "USD"
         }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://pawmedai.com"
+          }
+        ]
       }
     ]
     </script>

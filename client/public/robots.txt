@@ -2,4 +2,4 @@
 User-agent: *
 Disallow:
 Allow: /
-Sitemap: https://pawmed-ai.pages.dev/sitemap.xml
+Sitemap: https://pawmedai.com/sitemap.xml
