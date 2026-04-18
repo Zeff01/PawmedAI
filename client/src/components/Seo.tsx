@@ -6,6 +6,8 @@ type SeoProps = {
   keywords?: string
   canonicalPath?: string
   ogImage?: string
+  ogImageAlt?: string
+  ogType?: 'website' | 'article'
   noIndex?: boolean
   structuredData?: Record<string, unknown> | Array<Record<string, unknown>>
 }
@@ -16,6 +18,7 @@ const DEFAULT_DESCRIPTION =
 const DEFAULT_SITE_NAME = 'Pawmed AI'
 const DEFAULT_OG_IMAGE = '/images/hero_image.jpg'
 const DEFAULT_SITE_URL = import.meta.env.VITE_SITE_URL
+const TWITTER_HANDLE = '@pawmedai'
 const ALLOW_NOINDEX =
   import.meta.env.MODE !== 'production' ||
   import.meta.env.VITE_ALLOW_NOINDEX === 'true'
@@ -67,6 +70,8 @@ export function Seo({
   keywords,
   canonicalPath,
   ogImage,
+  ogImageAlt,
+  ogType = 'website',
   noIndex,
   structuredData,
 }: SeoProps) {
@@ -78,6 +83,7 @@ export function Seo({
     const resolvedImageUrl = resolvedImage.startsWith('http')
       ? resolvedImage
       : new URL(resolvedImage, resolvedSiteUrl).toString()
+    const resolvedImageAlt = ogImageAlt ?? resolvedTitle
     const resolvedUrl = canonicalPath
       ? new URL(canonicalPath, resolvedSiteUrl).toString()
       : window.location.href
@@ -92,20 +98,31 @@ export function Seo({
       { name: 'robots' },
       resolvedNoIndex ? 'noindex, nofollow' : 'index, follow'
     )
+
+    // Open Graph
     upsertMeta('meta[property="og:title"]', { property: 'og:title' }, resolvedTitle)
     upsertMeta('meta[property="og:description"]', { property: 'og:description' }, resolvedDescription)
-    upsertMeta('meta[property="og:type"]', { property: 'og:type' }, 'website')
+    upsertMeta('meta[property="og:type"]', { property: 'og:type' }, ogType)
     upsertMeta('meta[property="og:site_name"]', { property: 'og:site_name' }, DEFAULT_SITE_NAME)
     upsertMeta('meta[property="og:url"]', { property: 'og:url' }, resolvedUrl)
     upsertMeta('meta[property="og:image"]', { property: 'og:image' }, resolvedImageUrl)
+    upsertMeta('meta[property="og:image:width"]', { property: 'og:image:width' }, '1200')
+    upsertMeta('meta[property="og:image:height"]', { property: 'og:image:height' }, '630')
+    upsertMeta('meta[property="og:image:alt"]', { property: 'og:image:alt' }, resolvedImageAlt)
+    upsertMeta('meta[property="og:image:type"]', { property: 'og:image:type' }, 'image/jpeg')
+
+    // Twitter / X
     upsertMeta('meta[name="twitter:card"]', { name: 'twitter:card' }, 'summary_large_image')
+    upsertMeta('meta[name="twitter:site"]', { name: 'twitter:site' }, TWITTER_HANDLE)
+    upsertMeta('meta[name="twitter:creator"]', { name: 'twitter:creator' }, TWITTER_HANDLE)
     upsertMeta('meta[name="twitter:title"]', { name: 'twitter:title' }, resolvedTitle)
     upsertMeta('meta[name="twitter:description"]', { name: 'twitter:description' }, resolvedDescription)
     upsertMeta('meta[name="twitter:image"]', { name: 'twitter:image' }, resolvedImageUrl)
+    upsertMeta('meta[name="twitter:image:alt"]', { name: 'twitter:image:alt' }, resolvedImageAlt)
 
     upsertLink('canonical', resolvedUrl)
     upsertJsonLd(structuredData)
-  }, [title, description, keywords, canonicalPath, ogImage, noIndex, structuredData])
+  }, [title, description, keywords, canonicalPath, ogImage, ogImageAlt, ogType, noIndex, structuredData])
 
   return null
 }
