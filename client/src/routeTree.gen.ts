@@ -15,7 +15,9 @@ import { Route as NearbyVetsIndexRouteImport } from './routes/nearby-vets/index'
 import { Route as LifecycleIndexRouteImport } from './routes/lifecycle/index'
 import { Route as HomeIndexRouteImport } from './routes/home/index'
 import { Route as ClassifyIndexRouteImport } from './routes/classify/index'
+import { Route as ClassifyBreedIndexRouteImport } from './routes/classify-breed/index'
 import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
+import { Route as AnimalsSlugIndexRouteImport } from './routes/animals/$slug/index'
 import { Route as AuthGoogleCallbackRouteImport } from './routes/auth/google/callback'
 
 const SplatRoute = SplatRouteImport.update({
@@ -48,9 +50,19 @@ const ClassifyIndexRoute = ClassifyIndexRouteImport.update({
   path: '/classify/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ClassifyBreedIndexRoute = ClassifyBreedIndexRouteImport.update({
+  id: '/classify-breed/',
+  path: '/classify-breed/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthCallbackRoute = AuthCallbackRouteImport.update({
   id: '/auth/callback',
   path: '/auth/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnimalsSlugIndexRoute = AnimalsSlugIndexRouteImport.update({
+  id: '/animals/$slug/',
+  path: '/animals/$slug/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthGoogleCallbackRoute = AuthGoogleCallbackRouteImport.update({
@@ -63,32 +75,38 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/classify-breed/': typeof ClassifyBreedIndexRoute
   '/classify/': typeof ClassifyIndexRoute
   '/home/': typeof HomeIndexRoute
   '/lifecycle/': typeof LifecycleIndexRoute
   '/nearby-vets/': typeof NearbyVetsIndexRoute
   '/auth/google/callback': typeof AuthGoogleCallbackRoute
+  '/animals/$slug/': typeof AnimalsSlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/classify-breed': typeof ClassifyBreedIndexRoute
   '/classify': typeof ClassifyIndexRoute
   '/home': typeof HomeIndexRoute
   '/lifecycle': typeof LifecycleIndexRoute
   '/nearby-vets': typeof NearbyVetsIndexRoute
   '/auth/google/callback': typeof AuthGoogleCallbackRoute
+  '/animals/$slug': typeof AnimalsSlugIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/classify-breed/': typeof ClassifyBreedIndexRoute
   '/classify/': typeof ClassifyIndexRoute
   '/home/': typeof HomeIndexRoute
   '/lifecycle/': typeof LifecycleIndexRoute
   '/nearby-vets/': typeof NearbyVetsIndexRoute
   '/auth/google/callback': typeof AuthGoogleCallbackRoute
+  '/animals/$slug/': typeof AnimalsSlugIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -96,42 +114,50 @@ export interface FileRouteTypes {
     | '/'
     | '/$'
     | '/auth/callback'
+    | '/classify-breed/'
     | '/classify/'
     | '/home/'
     | '/lifecycle/'
     | '/nearby-vets/'
     | '/auth/google/callback'
+    | '/animals/$slug/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/$'
     | '/auth/callback'
+    | '/classify-breed'
     | '/classify'
     | '/home'
     | '/lifecycle'
     | '/nearby-vets'
     | '/auth/google/callback'
+    | '/animals/$slug'
   id:
     | '__root__'
     | '/'
     | '/$'
     | '/auth/callback'
+    | '/classify-breed/'
     | '/classify/'
     | '/home/'
     | '/lifecycle/'
     | '/nearby-vets/'
     | '/auth/google/callback'
+    | '/animals/$slug/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SplatRoute: typeof SplatRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
+  ClassifyBreedIndexRoute: typeof ClassifyBreedIndexRoute
   ClassifyIndexRoute: typeof ClassifyIndexRoute
   HomeIndexRoute: typeof HomeIndexRoute
   LifecycleIndexRoute: typeof LifecycleIndexRoute
   NearbyVetsIndexRoute: typeof NearbyVetsIndexRoute
   AuthGoogleCallbackRoute: typeof AuthGoogleCallbackRoute
+  AnimalsSlugIndexRoute: typeof AnimalsSlugIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -178,11 +204,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClassifyIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/classify-breed/': {
+      id: '/classify-breed/'
+      path: '/classify-breed'
+      fullPath: '/classify-breed/'
+      preLoaderRoute: typeof ClassifyBreedIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth/callback': {
       id: '/auth/callback'
       path: '/auth/callback'
       fullPath: '/auth/callback'
       preLoaderRoute: typeof AuthCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/animals/$slug/': {
+      id: '/animals/$slug/'
+      path: '/animals/$slug'
+      fullPath: '/animals/$slug/'
+      preLoaderRoute: typeof AnimalsSlugIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/google/callback': {
@@ -199,11 +239,13 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
   AuthCallbackRoute: AuthCallbackRoute,
+  ClassifyBreedIndexRoute: ClassifyBreedIndexRoute,
   ClassifyIndexRoute: ClassifyIndexRoute,
   HomeIndexRoute: HomeIndexRoute,
   LifecycleIndexRoute: LifecycleIndexRoute,
   NearbyVetsIndexRoute: NearbyVetsIndexRoute,
   AuthGoogleCallbackRoute: AuthGoogleCallbackRoute,
+  AnimalsSlugIndexRoute: AnimalsSlugIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
