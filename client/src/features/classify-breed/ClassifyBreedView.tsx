@@ -18,6 +18,7 @@ import { AuthModal } from '@/components/AuthModal'
 import { useMe } from '@/hooks/useAuth'
 import PawMedLoader from '@/features/classify-dss/components/ResultSkeletonLoader'
 import { CameraModal } from '@/features/classify-dss/components/CameraModal'
+import { AnimalBreedSidebar } from './components/AnimalBreedSidebar'
 
 /* ── Upload Zone ─────────────────────────────────────────────────────────── */
 function BreedUploadZone({
@@ -305,109 +306,120 @@ export function ClassifyBreedView() {
           </p>
         </FadeIn>
 
-        {/* ── Upload panel ────────────────────────────────────────────── */}
-        <FadeIn trigger="mount" delay={0.1}>
-          <div className="mx-auto max-w-4xl">
-            <BreedUploadZone
-              previewUrl={previewUrl}
-              onFile={handleFile}
-              onRemove={handleRemove}
-              onValidationError={setLocalError}
-            />
+        {/* ── Two-column layout ───────────────────────────────────────── */}
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 lg:grid-cols-[1fr_280px]">
+          {/* Main column */}
+          <div>
+            {/* ── Upload panel ──────────────────────────────────────── */}
+            <FadeIn trigger="mount" delay={0.1}>
+              <BreedUploadZone
+                previewUrl={previewUrl}
+                onFile={handleFile}
+                onRemove={handleRemove}
+                onValidationError={setLocalError}
+              />
 
-            {/* File strip */}
-            {imageFile && uploadStatus !== 'idle' && (
-              <div className="mt-3">
-                <FileStrip
-                  file={imageFile}
-                  status={uploadStatus as 'uploading' | 'done'}
-                  progress={uploadProgress}
-                />
-              </div>
-            )}
-
-            {/* Error / info banner */}
-            <div className="mt-3">
-              {errorMessage ? (
-                <div className="flex flex-col gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-[12.5px] text-red-700">
-                  <div className="flex items-start gap-2">
-                    <ExclamationCircleIcon className="mt-0.5 h-4 w-4 shrink-0" />
-                    <span>{errorMessage}</span>
-                  </div>
-                  {(() => {
-                    const err = classifyMutation.error as Error & {
-                      code?: string
-                      isAuthed?: boolean
-                    }
-                    if (err?.code === 'THROTTLE' && !err?.isAuthed) {
-                      return (
-                        <AuthModal
-                          trigger={
-                            <Button
-                              type="button"
-                              size="sm"
-                              className="w-fit rounded-md bg-blue-600 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-blue-700"
-                            >
-                              Sign in for more free identifications
-                            </Button>
-                          }
-                        />
-                      )
-                    }
-                    return null
-                  })()}
+              {/* File strip */}
+              {imageFile && uploadStatus !== 'idle' && (
+                <div className="mt-3">
+                  <FileStrip
+                    file={imageFile}
+                    status={uploadStatus as 'uploading' | 'done'}
+                    progress={uploadProgress}
+                  />
                 </div>
-              ) : (
-                <p className="text-center text-[11.5px] text-slate-400">
-                  {me
-                    ? '5 identifications per 5 hours.'
-                    : '3 free identifications · Sign in for 5 per 5 hours.'}
-                </p>
               )}
-            </div>
 
-            {/* CTA */}
-            <div className="mt-5 flex flex-col items-center gap-3">
-              <Button
-                onClick={handleSubmit}
-                disabled={!canSubmit}
-                className="w-full max-w-xs rounded-xl bg-blue-600 py-5 text-[13px] font-bold text-white shadow-md transition-all duration-150 hover:bg-blue-700 hover:-translate-y-px active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
-              >
-                {classifyMutation.isPending ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <ArrowPathIcon className="h-4 w-4 animate-spin" />
-                    Identifying breed…
-                  </span>
+              {/* Error / info banner */}
+              <div className="mt-3">
+                {errorMessage ? (
+                  <div className="flex flex-col gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-[12.5px] text-red-700">
+                    <div className="flex items-start gap-2">
+                      <ExclamationCircleIcon className="mt-0.5 h-4 w-4 shrink-0" />
+                      <span>{errorMessage}</span>
+                    </div>
+                    {(() => {
+                      const err = classifyMutation.error as Error & {
+                        code?: string
+                        isAuthed?: boolean
+                      }
+                      if (err?.code === 'THROTTLE' && !err?.isAuthed) {
+                        return (
+                          <AuthModal
+                            trigger={
+                              <Button
+                                type="button"
+                                size="sm"
+                                className="w-fit rounded-md bg-blue-600 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-blue-700"
+                              >
+                                Sign in for more free identifications
+                              </Button>
+                            }
+                          />
+                        )
+                      }
+                      return null
+                    })()}
+                  </div>
                 ) : (
-                  <span className="flex items-center justify-center gap-2">
-                    <MagnifyingGlassIcon className="h-4 w-4" />
-                    Identify Breed
-                  </span>
+                  <p className="text-center text-[11.5px] text-slate-400">
+                    {me
+                      ? '5 identifications per 5 hours.'
+                      : '3 free identifications · Sign in for 5 per 5 hours.'}
+                  </p>
                 )}
-              </Button>
-              <p className="flex items-center gap-1.5 text-[11px] text-slate-400">
-                <ShieldCheckIcon className="h-3.5 w-3.5" />
-                Photo is never stored or shared.
-              </p>
-            </div>
-          </div>
-        </FadeIn>
+              </div>
 
-        {/* ── Results ─────────────────────────────────────────────────── */}
-        <FadeIn trigger="mount" delay={0.2} className="mx-auto mt-10 max-w-4xl">
-          {classifyMutation.isPending ? (
-            <PawMedLoader />
-          ) : classifyMutation.data ? (
-            <BreedResults
-              result={classifyMutation.data}
-              previewUrl={previewUrl}
-            />
-          ) : (
-            <div className="rounded-2xl border border-dashed border-blue-200 bg-blue-50/40 px-6 py-14 text-center text-[13px] text-slate-400">
-              Your breed profile will appear here after identification.
+              {/* CTA */}
+              <div className="mt-5 flex flex-col items-center gap-3">
+                <Button
+                  onClick={handleSubmit}
+                  disabled={!canSubmit}
+                  className="w-full max-w-xs rounded-xl bg-blue-600 py-5 text-[13px] font-bold text-white shadow-md transition-all duration-150 hover:bg-blue-700 hover:-translate-y-px active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
+                >
+                  {classifyMutation.isPending ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <ArrowPathIcon className="h-4 w-4 animate-spin" />
+                      Identifying breed…
+                    </span>
+                  ) : (
+                    <span className="flex items-center justify-center gap-2">
+                      <MagnifyingGlassIcon className="h-4 w-4" />
+                      Identify Breed
+                    </span>
+                  )}
+                </Button>
+                <p className="flex items-center gap-1.5 text-[11px] text-slate-400">
+                  <ShieldCheckIcon className="h-3.5 w-3.5" />
+                  Photo is never stored or shared.
+                </p>
+              </div>
+            </FadeIn>
+
+            {/* ── Results ───────────────────────────────────────────── */}
+            <FadeIn trigger="mount" delay={0.2} className="mt-10">
+              {classifyMutation.isPending ? (
+                <PawMedLoader />
+              ) : classifyMutation.data ? (
+                <BreedResults
+                  result={classifyMutation.data}
+                  previewUrl={previewUrl}
+                />
+              ) : (
+                <div className="rounded-2xl border border-dashed border-blue-200 bg-blue-50/40 px-6 py-14 text-center text-[13px] text-slate-400">
+                  Your breed profile will appear here after identification.
+                </div>
+              )}
+            </FadeIn>
+          </div>
+
+          {/* Sidebar column */}
+          <FadeIn trigger="mount" delay={0.15}>
+            <div className="rounded-2xl border border-slate-100 bg-slate-50/60 p-4 shadow-sm">
+              <AnimalBreedSidebar />
             </div>
-          )}
-        </FadeIn>
+          </FadeIn>
+        </div>
       </div>
     </section>
   )
