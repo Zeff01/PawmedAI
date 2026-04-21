@@ -5,6 +5,7 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 import '../styles.css'
 import { AnalyticsTracker } from '@/components/AnalyticsTracker'
 import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer'
 import { NotificationPermissionPrompt } from '@/components/NotificationPermissionPrompt'
 import { SiteStructuredData } from '@/components/SiteStructuredData'
 
@@ -28,10 +29,9 @@ function RootComponent() {
       <main id="main-content" className="min-h-[calc(100vh-120px)]">
         <Outlet />
       </main>
+      
+      <Footer />
 
-      <footer className="border-t border-slate-100 bg-white/60 px-5 py-6 text-center text-xs text-slate-400">
-        <p>Pawmed AI • Veterinary diagnostics</p>
-      </footer>
       <NotificationPermissionPrompt />
       {import.meta.env.DEV && (
         <TanStackDevtools
