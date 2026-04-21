@@ -3,16 +3,16 @@ import { PawIcon } from './custom/custom-icons'
 import '../styles.css'
 
 const navLinks = [
-  { to: '#', label: 'Home' },
-  { to: '#', label: 'Classify Disease' },
-  { to: '#', label: 'Classify Breed' },
-  { to: '#', label: 'Nearby Vets' },
+  { to: '/', label: 'Home' },
+  { to: '/classify', label: 'Classify Disease' },
+  { to: '/classify-breed', label: 'Classify Breed' },
+  { to: '/nearby-vets', label: 'Nearby Vets' },
 ]
 
 const contactInfo = {
-    email: "pawmed.ai@email.com",
-    phone: "0912 345 6789",
-    address: "Philippines"
+    email: "pawmed.ai27@gmail.com",
+    phone: "0977 344 0291",
+    address: "Cebu City, Philippines"
 }
 
 const socialMediaLinks = [
