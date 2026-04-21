@@ -39,6 +39,7 @@
     "motion": "latest",
     "radix-ui": "^1.4.3",
     "react": "^19.2.0",
+    "react-bootstrap-icons": "^1.11.6",
     "react-dom": "^19.2.0",
     "shadcn": "^4.0.2",
     "tailwind-merge": "^3.5.0",

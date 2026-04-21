@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { PawIcon } from './custom/custom-icons'
+import { Facebook, Github, Instagram, Linkedin } from 'react-bootstrap-icons'
 import '../styles.css'
 
 const navLinks = [
@@ -16,10 +17,10 @@ const contactInfo = {
 }
 
 const socialMediaLinks = [
-    { platform: "Facebook", url: "#" },
-    { platform: "Instagram", url: "#"},
-    { platform: "LinkedIn", url: "#"},
-    { platform: "Github", url: "#"}
+    { platform: "Facebook", url: "https://www.facebook.com/Codebilitydev", icon: Facebook },
+    { platform: "Instagram", url: "https://www.instagram.com/codebilitydev/", icon: Instagram },
+    { platform: "LinkedIn", url: "https://www.linkedin.com/company/codebilitytech/posts/", icon: Linkedin },
+    { platform: "Github", url: "https://github.com/jpdevdotcom", icon: Github }
 ]
 
 export function Footer() {
@@ -69,13 +70,22 @@ export function Footer() {
                 {/* Social Media Links */}
                 <section>
                     <ul className="flex flex-row gap-4">
-                        {socialMediaLinks.map((social) => (
-                            <li key={social.platform}>
-                                <a href={social.url} aria-label={social.platform} className="text-xs text-slate-400 hover:text-slate-900">
-                                    {social.platform}
-                                </a>
-                            </li>
-                        ))}
+                        {socialMediaLinks.map((social) => {
+                            const IconComponent = social.icon
+                            const isInstagram = social.platform === 'Instagram'
+                            return (
+                                <li key={social.platform}>
+                                    <a href={social.url} aria-label={social.platform} className="text-slate-400 hover:text-slate-900 transition-colors" target="_blank" rel="noopener noreferrer">
+                                        <IconComponent 
+                                            size={20} 
+                                            fill="currentColor"
+                                            stroke={isInstagram ? 'none' : undefined}
+                                            strokeWidth={isInstagram ? 0 : undefined}
+                                        />
+                                    </a>
+                                </li>
+                            )
+                        })}
                     </ul>
                 </section>
             </div>
