@@ -1,10 +1,9 @@
 import { Link } from '@tanstack/react-router'
 import { PawIcon } from './custom/custom-icons'
-import { Facebook, Github, Instagram, Linkedin } from 'react-bootstrap-icons'
+import { Facebook, Github, Instagram, Linkedin, Envelope, Phone, GeoAlt } from 'react-bootstrap-icons'
 import '../styles.css'
 
 const navLinks = [
-  { to: '/', label: 'Home' },
   { to: '/classify', label: 'Classify Disease' },
   { to: '/classify-breed', label: 'Classify Breed' },
   { to: '/nearby-vets', label: 'Nearby Vets' },
@@ -25,69 +24,95 @@ const socialMediaLinks = [
 
 export function Footer() {
     return (
-        <footer className="border-t border-slate-100 bg-white/60 px-5 py-6">
-            <div className="flex justify-between items-start gap-8">
-                {/* Branding & Contact Info */}
-                <section>
-                    <Link to="/" className="flex items-center gap-3">
-                        <div className="relative flex h-9 w-9 items-center justify-center rounded-md bg-linear-to-br from-blue-500 to-blue-700 text-white shadow-sm">
-                            <div className="rotate-20">
-                                <PawIcon />
+        <footer className="border-t border-slate-200 bg-slate-50/50">
+            <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8 lg:py-16">
+                <div className="grid grid-cols-1 gap-12 lg:grid-cols-4 lg:gap-8">
+                    {/* Brand Section */}
+                    <div className="flex flex-col gap-6">
+                        <Link to="/" className="flex items-center gap-3 group">
+                            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 text-white shadow-lg transition-transform group-hover:scale-105">
+                                <div className="rotate-12 group-hover:rotate-0 transition-transform duration-300">
+                                    <PawIcon />
+                                </div>
                             </div>
+                            <div className="leading-tight">
+                                <p className="text-[14px] font-bold tracking-tight text-slate-900">
+                                    Pawmed AI
+                                </p>
+                                <p className="text-[10.5px] font-medium tracking-wide text-slate-400">
+                                    Veterinary Diagnostics
+                                </p>
+                            </div>
+                        </Link>
+                        <div className="flex items-center gap-4">
+                            {socialMediaLinks.map((social) => {
+                                const IconComponent = social.icon
+                                return (
+                                    <a 
+                                        key={social.platform}
+                                        href={social.url} 
+                                        aria-label={social.platform} 
+                                        className="rounded-full bg-white p-2 text-slate-400 shadow-sm ring-1 ring-slate-200 hover:text-blue-600 hover:ring-blue-600 transition-all"
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                    >
+                                        <IconComponent size={18} />
+                                    </a>
+                                )
+                            })}
                         </div>
-                        <div className="leading-tight">
-                            <p className="text-[14px] font-bold tracking-tight text-slate-900">
-                                Pawmed AI
-                            </p>
-                            <p className="text-[10.5px] font-medium tracking-wide text-slate-400">
-                                Veterinary diagnostics
-                            </p>
-                        </div>
-                    </Link>
-
-                    <div className="text-xs text-slate-400">
-                        <p>{contactInfo.email}</p>
-                        <p>{contactInfo.phone}</p>
-                        <p>{contactInfo.address}</p>
                     </div>
-                </section>
 
-                {/* Navigation Links */}
-                <section>
-                    <nav>
-                        <ul className="flex flex-row gap-4">
+                    {/* Quick Links */}
+                    <div className="flex flex-col gap-6">
+                        <h3 className="text-sm font-bold text-slate-900 uppercase tracking-widest">
+                            Services
+                        </h3>
+                        <ul className="space-y-4">
                             {navLinks.map((link) => (
                                 <li key={link.to}>
-                                    <Link to={link.to} className="text-xs text-slate-400">
+                                    <Link 
+                                        to={link.to}
+                                        className="text-sm text-slate-600 hover:text-blue-600 transition-colors font-medium flex items-center gap-2 group"
+                                    >
+                                        <span className="h-px w-0 bg-blue-600 transition-all group-hover:w-4"></span>
                                         {link.label}
                                     </Link>
                                 </li>
                             ))}
                         </ul>
-                    </nav>
-                </section>
+                    </div>
 
-                {/* Social Media Links */}
-                <section>
-                    <ul className="flex flex-row gap-4">
-                        {socialMediaLinks.map((social) => {
-                            const IconComponent = social.icon
-                            const isInstagram = social.platform === 'Instagram'
-                            return (
-                                <li key={social.platform}>
-                                    <a href={social.url} aria-label={social.platform} className="text-slate-400 hover:text-slate-900 transition-colors" target="_blank" rel="noopener noreferrer">
-                                        <IconComponent 
-                                            size={20} 
-                                            fill="currentColor"
-                                            stroke={isInstagram ? 'none' : undefined}
-                                            strokeWidth={isInstagram ? 0 : undefined}
-                                        />
-                                    </a>
-                                </li>
-                            )
-                        })}
-                    </ul>
-                </section>
+                    {/* Contact Info */}
+                    <div className="lg:col-span-2">
+                        <h3 className="text-sm font-bold text-slate-900 uppercase tracking-widest mb-6">
+                            Contact Us
+                        </h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="flex items-start gap-3 group">
+                                <Envelope className="mt-1 text-blue-600 flex-shrink-0" size={18} />
+                                <div>
+                                    <p className="text-xs font-bold text-slate-400 uppercase">Email</p>
+                                    <p className="text-sm text-slate-600 font-medium transition-colors">{contactInfo.email}</p>
+                                </div>
+                            </div>
+                            <div className="flex items-start gap-3">
+                                <GeoAlt className="mt-1 text-blue-600 flex-shrink-0" size={18} />
+                                <div>
+                                    <p className="text-xs font-bold text-slate-400 uppercase">Location</p>
+                                    <p className="text-sm text-slate-600 font-medium leading-relaxed">{contactInfo.address}</p>
+                                </div>
+                            </div>
+                            <div className="flex items-start gap-3 group">
+                                <Phone className="mt-1 text-blue-600 flex-shrink-0" size={18} />
+                                <div>
+                                    <p className="text-xs font-bold text-slate-400 uppercase">Phone</p>
+                                    <p className="text-sm text-slate-600 font-medium transition-colors">{contactInfo.phone}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </footer>
     )
