@@ -23,12 +23,12 @@ import { FadeIn } from '@/components/motion/FadeIn'
 const IMG: Record<string, string> = {
   hero: '/images/hero_image.jpg',
   brief:
-    'https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=600&q=80',
-  notes: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&q=80',
+    '/images/Rapid Diagnostic Brief.jpg', 
+  notes: '/images/Evident-guided notes.jpg',
   security:
-    'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&q=80',
+    '/images/Veterinary-grade security.jpg',
   analytics:
-    'https://images.unsplash.com/photo-1517849845537-4d257902454a?w=600&q=80',
+    '/images/Actionable analytics.jpg',
   capture:
     'https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?w=600&q=80',
   analyze:
