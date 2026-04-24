@@ -290,16 +290,17 @@ export function ClassifyDiseaseView() {
                     is analyzed securely and never stored.
                   </p>
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                  {imageFile ? (
                     <Button
                       type="button"
                       variant="outline"
                       onClick={() => openFileDialog?.()}
-                      disabled={!imageFile}
                       className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-md border-blue-200 px-4 py-5 text-xs font-semibold text-blue-600 transition hover:bg-blue-50 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       <ArrowUpTrayIcon className="h-4 w-4" />
                       Reupload Photo
                     </Button>
+                  ) : null}
                     <Button
                       onClick={handleSubmit}
                       variant="default"
