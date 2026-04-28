@@ -12,7 +12,6 @@ function NotFoundPage() {
         title="Page Not Found | Pawmed AI"
         description="The page you're looking for doesn't exist. Return to Pawmed AI to classify a disease or find a vet near you."
         noIndex={true}
-        canonicalPath="/"
       />
       <div className="flex min-h-[60vh] flex-col items-center justify-center px-6 py-20 text-center">
         <p className="text-xs font-semibold uppercase tracking-wide text-blue-500">404</p>

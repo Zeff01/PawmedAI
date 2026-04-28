@@ -8,8 +8,9 @@
   "scripts": {
     "dev": "vite dev --port 3000",
     "build": "vite build",
-    "postbuild": "tsx scripts/generate-sitemap.ts",
+    "postbuild": "tsx scripts/generate-sitemap.ts && tsx scripts/prerender-routes.ts",
     "sitemap": "tsx scripts/generate-sitemap.ts",
+    "prerender": "tsx scripts/prerender-routes.ts",
     "preview": "vite preview",
     "test": "vitest run",
     "lint": "eslint",

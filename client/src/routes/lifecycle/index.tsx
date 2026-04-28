@@ -36,14 +36,14 @@ const currentStateItems = [
 
 function LifeCycleNotesPage() {
   const description =
-    'Stay up to date with the latest Pawmed AI release notes, new features, known limitations, and platform updates for our veterinary diagnostics tool.'
+    'Pawmed AI release notes: current beta status, supported features, known limitations, accuracy disclaimers, and how to share feedback with the team.'
 
   return (
     <section className="px-6 py-16 sm:py-20">
       <Seo
-        title="Lifecycle Notes | Pawmed AI"
+        title="Lifecycle Notes & Release Updates | Pawmed AI"
         description={description}
-        keywords="pawmed ai updates, veterinary AI release notes, pawmed changelog, new features pawmed"
+        keywords="pawmed ai release notes, pawmed changelog, veterinary AI updates, pawmed beta status, pawmed lifecycle, pawmed ai roadmap"
         canonicalPath="/lifecycle"
         ogImage="/images/feature-notes.jpg"
         ogImageAlt="Pawmed AI lifecycle notes and release updates"
@@ -52,6 +52,22 @@ function LifeCycleNotesPage() {
             { name: 'Home', path: '/' },
             { name: 'Lifecycle Notes', path: '/lifecycle' },
           ]),
+          {
+            '@context': 'https://schema.org',
+            '@type': 'TechArticle',
+            headline: 'Pawmed AI — Lifecycle Notes & Release Updates',
+            description,
+            mainEntityOfPage: 'https://pawmedai.com/lifecycle',
+            author: { '@type': 'Organization', name: 'Pawmed AI' },
+            publisher: {
+              '@type': 'Organization',
+              name: 'Pawmed AI',
+              logo: {
+                '@type': 'ImageObject',
+                url: 'https://pawmedai.com/icons/paw.png',
+              },
+            },
+          },
         ]}
       />
 
@@ -120,6 +136,64 @@ function LifeCycleNotesPage() {
               </li>
             ))}
           </ul>
+        </div>
+
+        <div className="rounded-lg border border-slate-200 bg-white p-6">
+          <div className="mb-4 flex items-center gap-2">
+            <h2 className="text-sm font-semibold text-slate-900">
+              What's working today
+            </h2>
+            <div className="h-px flex-1 bg-slate-100" />
+          </div>
+          <ul className="space-y-2 text-sm text-slate-600">
+            <li>
+              <strong className="font-semibold text-slate-800">
+                Disease classification:
+              </strong>{' '}
+              Upload a clinical photo and receive a structured diagnostic brief
+              with differential diagnoses, observations, and suggested next
+              steps in under five minutes.
+            </li>
+            <li>
+              <strong className="font-semibold text-slate-800">
+                Breed classification:
+              </strong>{' '}
+              Identify dog, cat, and other animal breeds from a single image,
+              including scientific classification and a quick at-a-glance
+              profile linking to the species page.
+            </li>
+            <li>
+              <strong className="font-semibold text-slate-800">
+                Nearby vets:
+              </strong>{' '}
+              Locate the closest veterinary clinics on a live map with
+              directions, phone numbers, and distance from your current
+              location.
+            </li>
+            <li>
+              <strong className="font-semibold text-slate-800">
+                Animal profiles:
+              </strong>{' '}
+              Browse hundreds of species and breed profiles with lifespan,
+              behavior, conservation status, and key facts.
+            </li>
+          </ul>
+        </div>
+
+        <div className="rounded-lg border border-slate-200 bg-white p-6">
+          <div className="mb-4 flex items-center gap-2">
+            <h2 className="text-sm font-semibold text-slate-900">
+              Responsible use
+            </h2>
+            <div className="h-px flex-1 bg-slate-100" />
+          </div>
+          <p className="text-sm leading-relaxed text-slate-600">
+            Pawmed AI is a decision-support tool, not a substitute for
+            veterinary judgment. Outputs are intended to help vets, students,
+            and pet owners triage and prepare for an in-person consultation —
+            not to replace one. For urgent symptoms, contact a licensed
+            veterinarian immediately.
+          </p>
         </div>
 
         <div>

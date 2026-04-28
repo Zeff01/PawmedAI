@@ -1,4 +1,4 @@
-import { readdir, readFile, writeFile } from 'node:fs/promises'
+import { readdir, readFile, writeFile, stat } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -7,8 +7,10 @@ const __dirname = path.dirname(__filename)
 
 const ROOT = path.resolve(__dirname, '..')
 const ROUTES_DIR = path.join(ROOT, 'src', 'routes')
-const OUTPUT = path.join(ROOT, 'public', 'sitemap.xml')
-const SITE_URL = process.env.SITE_URL ?? 'https://pawmedai.com'
+const PUBLIC_OUTPUT = path.join(ROOT, 'public', 'sitemap.xml')
+const DIST_OUTPUT = path.join(ROOT, 'dist', 'sitemap.xml')
+const ANIMALS_JSON = path.join(ROOT, 'public', 'animals.json')
+const SITE_URL = (process.env.SITE_URL ?? 'https://pawmedai.com').replace(/\/$/, '')
 
 const ROUTE_REGEX = /createFileRoute\(\s*['"]([^'"]+)['"]/g
 
@@ -17,7 +19,8 @@ const EXCLUDED_ROUTES = ['/home', '/auth/callback', '/auth/google/callback', '/$
 const ROUTE_CONFIG: Record<string, { priority: string; changefreq: string }> = {
   '/': { priority: '1.0', changefreq: 'weekly' },
   '/classify': { priority: '0.95', changefreq: 'weekly' },
-  '/nearby-vets': { priority: '0.9', changefreq: 'weekly' },
+  '/classify-breed': { priority: '0.9', changefreq: 'weekly' },
+  '/nearby-vets': { priority: '0.85', changefreq: 'weekly' },
   '/lifecycle': { priority: '0.7', changefreq: 'monthly' },
 }
 
@@ -54,7 +57,32 @@ const extractRoutes = (content: string): string[] => {
 }
 
 const toUrl = (routePath: string) =>
-  `${SITE_URL}${routePath === '/' ? '' : routePath}`
+  `${SITE_URL}${routePath === '/' ? '/' : routePath}`
+
+const slugify = (name: string) =>
+  name
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '')
+
+const loadAnimalSlugs = async (): Promise<string[]> => {
+  try {
+    const raw = await readFile(ANIMALS_JSON, 'utf8')
+    const animals: Array<{ name: string }> = JSON.parse(raw)
+    return animals.map((a) => slugify(a.name)).filter(Boolean)
+  } catch {
+    return []
+  }
+}
+
+const fileExists = async (target: string) => {
+  try {
+    await stat(target)
+    return true
+  } catch {
+    return false
+  }
+}
 
 const main = async () => {
   const files = await walk(ROUTES_DIR)
@@ -71,6 +99,11 @@ const main = async () => {
     }
   }
 
+  const animalSlugs = await loadAnimalSlugs()
+  for (const slug of animalSlugs) {
+    routePaths.add(`/animals/${slug}`)
+  }
+
   const lastmod = new Date().toISOString().slice(0, 10)
   const urls = Array.from(routePaths).sort()
 
@@ -79,7 +112,11 @@ const main = async () => {
     `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
     urls
       .map((routePath) => {
-        const config = ROUTE_CONFIG[routePath] ?? { priority: '0.8', changefreq: 'weekly' }
+        const config =
+          ROUTE_CONFIG[routePath] ??
+          (routePath.startsWith('/animals/')
+            ? { priority: '0.6', changefreq: 'monthly' }
+            : { priority: '0.8', changefreq: 'weekly' })
         return (
           `  <url>\n` +
           `    <loc>${toUrl(routePath)}</loc>\n` +
@@ -92,8 +129,16 @@ const main = async () => {
       .join('\n') +
     `\n</urlset>\n`
 
-  await writeFile(OUTPUT, xml)
-  console.log(`Sitemap written to ${OUTPUT}`)
+  await writeFile(PUBLIC_OUTPUT, xml)
+  console.log(`Sitemap written to ${PUBLIC_OUTPUT} (${urls.length} URLs)`)
+
+  // When invoked as a postbuild step, dist/ already exists and Vite has
+  // already copied public/sitemap.xml — so write it directly to dist/ too.
+  const distRoot = path.dirname(DIST_OUTPUT)
+  if (await fileExists(distRoot)) {
+    await writeFile(DIST_OUTPUT, xml)
+    console.log(`Sitemap written to ${DIST_OUTPUT}`)
+  }
 }
 
 main().catch((error) => {

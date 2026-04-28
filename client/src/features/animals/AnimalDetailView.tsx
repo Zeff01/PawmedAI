@@ -2,6 +2,8 @@ import * as React from 'react'
 import { Link } from '@tanstack/react-router'
 import { ArrowLeftIcon } from '@heroicons/react/24/solid'
 import { FadeIn } from '@/components/motion/FadeIn'
+import { Seo } from '@/components/Seo'
+import { buildBreadcrumbSchema } from '@/utils/seo-schema'
 
 interface Lifespan {
   label: string
@@ -156,6 +158,12 @@ export function AnimalDetailView({ slug }: { slug: string }) {
   if (notFound) {
     return (
       <section className="mx-auto w-full max-w-3xl px-4 sm:px-6 mt-16 text-center">
+        <Seo
+          title="Animal not found | Pawmed AI"
+          description="The animal profile you requested could not be found on Pawmed AI."
+          canonicalPath={`/animals/${slug}`}
+          noIndex
+        />
         <p className="text-[14px] text-slate-500">Animal not found.</p>
         <Link
           to="/classify-breed"
@@ -170,9 +178,48 @@ export function AnimalDetailView({ slug }: { slug: string }) {
   if (!animal) {
     return (
       <section className="mx-auto w-full max-w-3xl px-4 sm:px-6 mt-16 text-center">
+        <Seo canonicalPath={`/animals/${slug}`} />
         <p className="text-[13px] text-slate-400">Loading…</p>
       </section>
     )
+  }
+
+  const seoDescriptionBase = animal.description?.trim()
+  const seoDescription = seoDescriptionBase
+    ? `${animal.name} — ${seoDescriptionBase}. Explore classification, lifespan, behavior, conservation status, and key facts on Pawmed AI.`
+    : `${animal.name} profile on Pawmed AI: scientific classification, lifespan, lifecycle, behavior, conservation status, and key facts.`
+  const seoTitle = animal.scientific_name
+    ? `${animal.name} (${animal.scientific_name}) — Profile, Lifespan & Facts | Pawmed AI`
+    : `${animal.name} — Profile, Lifespan & Facts | Pawmed AI`
+  const seoKeywords = [
+    animal.name,
+    animal.scientific_name,
+    animal.category,
+    `${animal.name} facts`,
+    `${animal.name} lifespan`,
+    `${animal.name} habitat`,
+    'pawmed ai animal profile',
+  ]
+    .filter(Boolean)
+    .join(', ')
+  const articleSchema: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: `${animal.name} — Profile & Facts`,
+    description: seoDescription,
+    mainEntityOfPage: `https://pawmedai.com/animals/${slug}`,
+    image: animal.image
+      ? [animal.image]
+      : ['https://pawmedai.com/images/hero_image.jpg'],
+    author: { '@type': 'Organization', name: 'Pawmed AI' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Pawmed AI',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://pawmedai.com/icons/paw.png',
+      },
+    },
   }
 
   const classificationRows = Object.entries(animal.classification).filter(
@@ -192,6 +239,23 @@ export function AnimalDetailView({ slug }: { slug: string }) {
 
   return (
     <section className="z-10 min-h-screen pb-16 mt-6">
+      <Seo
+        title={seoTitle}
+        description={seoDescription}
+        keywords={seoKeywords}
+        canonicalPath={`/animals/${slug}`}
+        ogImage={animal.image}
+        ogImageAlt={`${animal.name}${animal.scientific_name ? ` (${animal.scientific_name})` : ''} — Pawmed AI animal profile`}
+        ogType="article"
+        structuredData={[
+          articleSchema,
+          buildBreadcrumbSchema([
+            { name: 'Home', path: '/' },
+            { name: 'Classify Breed', path: '/classify-breed' },
+            { name: animal.name, path: `/animals/${slug}` },
+          ]),
+        ]}
+      />
       <div className="mx-auto w-full max-w-3xl px-4 sm:px-6">
         {/* Back link */}
         <FadeIn trigger="mount">
