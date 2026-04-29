@@ -176,11 +176,36 @@ body {
   animation-delay: 0.3s;
 }
 
+@keyframes bug-report-button-pulse {
+  0% {
+    box-shadow:
+      0 12px 28px rgba(37, 99, 235, 0.24),
+      0 0 0 0 rgba(37, 99, 235, 0.34);
+  }
+
+  70% {
+    box-shadow:
+      0 12px 28px rgba(37, 99, 235, 0.24),
+      0 0 0 12px rgba(37, 99, 235, 0);
+  }
+
+  100% {
+    box-shadow:
+      0 12px 28px rgba(37, 99, 235, 0.24),
+      0 0 0 0 rgba(37, 99, 235, 0);
+  }
+}
+
+.bug-report-button-pulse {
+  animation: bug-report-button-pulse 1s ease-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-rise,
   .animate-rise-delay-1,
   .animate-rise-delay-2,
-  .animate-rise-delay-3 {
+  .animate-rise-delay-3,
+  .bug-report-button-pulse {
     animation: none;
   }
 }
