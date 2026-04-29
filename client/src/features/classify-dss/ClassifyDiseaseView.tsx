@@ -42,7 +42,7 @@ export function ClassifyDiseaseView() {
   const userType = useUserTypeStore((state) => state.userType)
   const openDialog = useUserTypeStore((state) => state.openDialog)
   const lockSelection = useUserTypeStore((state) => state.lockSelection)
-  const clearUserType = useUserTypeStore((state) => state.clearUserType)
+  const setUserType = useUserTypeStore((state) => state.setUserType)
   const setLockSelection = useUserTypeStore((state) => state.setLockSelection)
   const prevUserTypeRef = React.useRef<UserType | null>(null)
   const { session, isLoading: isSessionLoading } = useSupabaseSession()
@@ -62,12 +62,12 @@ export function ClassifyDiseaseView() {
     if (isSessionLoading) return
     if (!session) {
       setLockSelection(true)
-      clearUserType({ openDialog: true })
+      setUserType('fur_parent')
       return () => {
         setLockSelection(false)
       }
     }
-  }, [isSessionLoading, session, clearUserType, setLockSelection])
+  }, [isSessionLoading, session, setLockSelection, setUserType])
 
   React.useEffect(() => {
     if (!imageFile) {
@@ -187,7 +187,7 @@ export function ClassifyDiseaseView() {
                           : 'Fur Parent'
                       : 'Select profile'}
                   </span>
-                  {!lockSelection || !session ? (
+                  {session && !lockSelection ? (
                     <Button
                       type="button"
                       variant="outline"
@@ -214,7 +214,7 @@ export function ClassifyDiseaseView() {
                     fileName={imageFile.name}
                     fileSize={formatBytes(imageFile.size)}
                     progress={uploadProgress}
-                    status={uploadStatus as 'uploading' | 'done' | 'error'}
+                    status={uploadStatus}
                     onRemove={handleRemove}
                   />
                 )}
@@ -251,11 +251,13 @@ export function ClassifyDiseaseView() {
                       <span>{errorMessage}</span>
                     </div>
                     {(() => {
-                      const err = classifyMutation.error as Error & {
-                        code?: string
-                        isAuthed?: boolean
-                      }
-                      if (err?.code === 'THROTTLE' && !err?.isAuthed) {
+                      const err = classifyMutation.error as
+                        | (Error & {
+                            code?: string
+                            isAuthed?: boolean
+                          })
+                        | null
+                      if (err?.code === 'THROTTLE' && !err.isAuthed) {
                         return (
                           <AuthModal
                             trigger={
