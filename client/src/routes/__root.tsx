@@ -8,6 +8,7 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { NotificationPermissionPrompt } from '@/components/NotificationPermissionPrompt'
 import { SiteStructuredData } from '@/components/SiteStructuredData'
+import { BugReportWidget } from '@/features/bug-report/components/BugReportWidget'
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -33,9 +34,10 @@ function RootComponent() {
       <Footer />
 
       <NotificationPermissionPrompt />
+      <BugReportWidget />
       {import.meta.env.DEV && (
         <TanStackDevtools
-          config={{ position: 'bottom-right' }}
+          config={{ position: 'bottom-left' }}
           plugins={[
             {
               name: 'TanStack Router',

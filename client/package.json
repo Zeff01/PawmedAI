@@ -20,6 +20,7 @@
   "dependencies": {
     "@fontsource-variable/inter": "^5.2.8",
     "@heroicons/react": "^2.1.5",
+    "@hookform/resolvers": "^5.2.2",
     "@mapbox/mapbox-gl-geocoder": "^5.1.2",
     "@radix-ui/react-dialog": "latest",
     "@supabase/supabase-js": "^2.101.1",
@@ -42,6 +43,7 @@
     "react": "^19.2.0",
     "react-bootstrap-icons": "^1.11.6",
     "react-dom": "^19.2.0",
+    "react-hook-form": "^7.74.0",
     "shadcn": "^4.0.2",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.1.18",
@@ -51,6 +53,7 @@
     "workbox-routing": "^7.4.0",
     "workbox-strategies": "^7.4.0",
     "workbox-window": "^7.4.0",
+    "zod": "^3.25.76",
     "zustand": "^5.0.11"
   },
   "devDependencies": {
