@@ -15,6 +15,7 @@ import { Route as NearbyVetsIndexRouteImport } from './routes/nearby-vets/index'
 import { Route as LifecycleIndexRouteImport } from './routes/lifecycle/index'
 import { Route as ClassifyIndexRouteImport } from './routes/classify/index'
 import { Route as ClassifyBreedIndexRouteImport } from './routes/classify-breed/index'
+import { Route as AboutIndexRouteImport } from './routes/about/index'
 import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
 import { Route as AnimalsSlugIndexRouteImport } from './routes/animals/$slug/index'
 import { Route as AuthGoogleCallbackRouteImport } from './routes/auth/google/callback'
@@ -49,6 +50,11 @@ const ClassifyBreedIndexRoute = ClassifyBreedIndexRouteImport.update({
   path: '/classify-breed/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutIndexRoute = AboutIndexRouteImport.update({
+  id: '/about/',
+  path: '/about/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthCallbackRoute = AuthCallbackRouteImport.update({
   id: '/auth/callback',
   path: '/auth/callback',
@@ -69,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/about/': typeof AboutIndexRoute
   '/classify-breed/': typeof ClassifyBreedIndexRoute
   '/classify/': typeof ClassifyIndexRoute
   '/lifecycle/': typeof LifecycleIndexRoute
@@ -80,6 +87,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/about': typeof AboutIndexRoute
   '/classify-breed': typeof ClassifyBreedIndexRoute
   '/classify': typeof ClassifyIndexRoute
   '/lifecycle': typeof LifecycleIndexRoute
@@ -92,6 +100,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/about/': typeof AboutIndexRoute
   '/classify-breed/': typeof ClassifyBreedIndexRoute
   '/classify/': typeof ClassifyIndexRoute
   '/lifecycle/': typeof LifecycleIndexRoute
@@ -105,6 +114,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$'
     | '/auth/callback'
+    | '/about/'
     | '/classify-breed/'
     | '/classify/'
     | '/lifecycle/'
@@ -116,6 +126,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$'
     | '/auth/callback'
+    | '/about'
     | '/classify-breed'
     | '/classify'
     | '/lifecycle'
@@ -127,6 +138,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$'
     | '/auth/callback'
+    | '/about/'
     | '/classify-breed/'
     | '/classify/'
     | '/lifecycle/'
@@ -139,6 +151,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SplatRoute: typeof SplatRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
+  AboutIndexRoute: typeof AboutIndexRoute
   ClassifyBreedIndexRoute: typeof ClassifyBreedIndexRoute
   ClassifyIndexRoute: typeof ClassifyIndexRoute
   LifecycleIndexRoute: typeof LifecycleIndexRoute
@@ -191,6 +204,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClassifyBreedIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about/': {
+      id: '/about/'
+      path: '/about'
+      fullPath: '/about/'
+      preLoaderRoute: typeof AboutIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth/callback': {
       id: '/auth/callback'
       path: '/auth/callback'
@@ -219,6 +239,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
   AuthCallbackRoute: AuthCallbackRoute,
+  AboutIndexRoute: AboutIndexRoute,
   ClassifyBreedIndexRoute: ClassifyBreedIndexRoute,
   ClassifyIndexRoute: ClassifyIndexRoute,
   LifecycleIndexRoute: LifecycleIndexRoute,
