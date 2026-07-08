@@ -237,6 +237,7 @@ export function PetRegistration() {
                                                     className="h-11 rounded-lg bg-white focus-visible:border-blue-500 focus-visible:ring-blue-100"
                                                     placeholder="0"
                                                     {...field}
+                                                    value={(field.value as number | undefined) ?? ""}
                                                 />
                                             </FormControl>
                                             <FormMessage />
