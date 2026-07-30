@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SplatRouteImport } from './routes/$'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ServicesIndexRouteImport } from './routes/services/index'
 import { Route as NearbyVetsIndexRouteImport } from './routes/nearby-vets/index'
 import { Route as LifecycleIndexRouteImport } from './routes/lifecycle/index'
 import { Route as ClassifyIndexRouteImport } from './routes/classify/index'
@@ -27,6 +28,11 @@ const SplatRoute = SplatRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesIndexRoute = ServicesIndexRouteImport.update({
+  id: '/services/',
+  path: '/services/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NearbyVetsIndexRoute = NearbyVetsIndexRouteImport.update({
@@ -73,6 +79,7 @@ export interface FileRoutesByFullPath {
   '/classify/': typeof ClassifyIndexRoute
   '/lifecycle/': typeof LifecycleIndexRoute
   '/nearby-vets/': typeof NearbyVetsIndexRoute
+  '/services/': typeof ServicesIndexRoute
   '/auth/google/callback': typeof AuthGoogleCallbackRoute
   '/animals/$slug/': typeof AnimalsSlugIndexRoute
 }
@@ -84,6 +91,7 @@ export interface FileRoutesByTo {
   '/classify': typeof ClassifyIndexRoute
   '/lifecycle': typeof LifecycleIndexRoute
   '/nearby-vets': typeof NearbyVetsIndexRoute
+  '/services': typeof ServicesIndexRoute
   '/auth/google/callback': typeof AuthGoogleCallbackRoute
   '/animals/$slug': typeof AnimalsSlugIndexRoute
 }
@@ -96,6 +104,7 @@ export interface FileRoutesById {
   '/classify/': typeof ClassifyIndexRoute
   '/lifecycle/': typeof LifecycleIndexRoute
   '/nearby-vets/': typeof NearbyVetsIndexRoute
+  '/services/': typeof ServicesIndexRoute
   '/auth/google/callback': typeof AuthGoogleCallbackRoute
   '/animals/$slug/': typeof AnimalsSlugIndexRoute
 }
@@ -109,6 +118,7 @@ export interface FileRouteTypes {
     | '/classify/'
     | '/lifecycle/'
     | '/nearby-vets/'
+    | '/services/'
     | '/auth/google/callback'
     | '/animals/$slug/'
   fileRoutesByTo: FileRoutesByTo
@@ -120,6 +130,7 @@ export interface FileRouteTypes {
     | '/classify'
     | '/lifecycle'
     | '/nearby-vets'
+    | '/services'
     | '/auth/google/callback'
     | '/animals/$slug'
   id:
@@ -131,6 +142,7 @@ export interface FileRouteTypes {
     | '/classify/'
     | '/lifecycle/'
     | '/nearby-vets/'
+    | '/services/'
     | '/auth/google/callback'
     | '/animals/$slug/'
   fileRoutesById: FileRoutesById
@@ -143,6 +155,7 @@ export interface RootRouteChildren {
   ClassifyIndexRoute: typeof ClassifyIndexRoute
   LifecycleIndexRoute: typeof LifecycleIndexRoute
   NearbyVetsIndexRoute: typeof NearbyVetsIndexRoute
+  ServicesIndexRoute: typeof ServicesIndexRoute
   AuthGoogleCallbackRoute: typeof AuthGoogleCallbackRoute
   AnimalsSlugIndexRoute: typeof AnimalsSlugIndexRoute
 }
@@ -161,6 +174,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/': {
+      id: '/services/'
+      path: '/services'
+      fullPath: '/services/'
+      preLoaderRoute: typeof ServicesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/nearby-vets/': {
@@ -223,6 +243,7 @@ const rootRouteChildren: RootRouteChildren = {
   ClassifyIndexRoute: ClassifyIndexRoute,
   LifecycleIndexRoute: LifecycleIndexRoute,
   NearbyVetsIndexRoute: NearbyVetsIndexRoute,
+  ServicesIndexRoute: ServicesIndexRoute,
   AuthGoogleCallbackRoute: AuthGoogleCallbackRoute,
   AnimalsSlugIndexRoute: AnimalsSlugIndexRoute,
 }

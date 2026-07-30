@@ -14,9 +14,11 @@ import { useMe, useLogout } from '@/hooks/useAuth'
 
 const navLinks = [
   { to: '/', label: 'Home' },
-  { to: '/classify', label: 'Classify Disease' },
-  { to: '/classify-breed', label: 'Classify Breed' },
-  { to: '/nearby-vets', label: 'Nearby Vets' },
+  // { to: '/classify', label: 'Classify Disease' },
+  // { to: '/classify-breed', label: 'Classify Breed' },
+  // { to: '/nearby-vets', label: 'Nearby Vets' },
+  { to: '/about', label: 'About'},
+  { to: '/services', label: 'Services' }
 ]
 
 export function Header() {
