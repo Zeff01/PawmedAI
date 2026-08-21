@@ -77,9 +77,9 @@ export function Header() {
 
   return (
     <>
-      <header>
+      {/* <header>
         <LifeCycle />
-      </header>
+      </header> */}
 
       <header className="sticky top-0 z-40 bg-white/70 backdrop-blur-lg">
         <div className="border-b border-slate-100 px-0 shadow-[0_1px_12px_rgba(15,28,63,0.06)] lg:px-14">
