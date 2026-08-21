@@ -9,9 +9,7 @@ import {
 } from '@heroicons/react/24/solid'
 
 function Divider() {
-  return (
-    <hr className="h-px border-0 bg-linear-to-r from-transparent via-slate-200 to-transparent" />
-  )
+  return <hr className="h-px border-0 bg-slate-200" />
 }
 
 const SIZE_COLORS: Record<BreedSize, string> = {
@@ -24,9 +22,9 @@ const SIZE_COLORS: Record<BreedSize, string> = {
 function ConfidenceBadge({ value }: { value: number }) {
   const color =
     value >= 80
-      ? 'bg-blue-50 text-blue-700 border-blue-200'
+      ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
       : value >= 50
-        ? 'bg-red-50 text-red-700 border-red-200'
+        ? 'bg-amber-50 text-amber-700 border-amber-200'
         : 'bg-slate-50 text-slate-600 border-slate-200'
   return (
     <span
@@ -89,8 +87,8 @@ export function BreedResults({
 }) {
   if (result.not_identified) {
     return (
-      <div className="overflow-hidden rounded-2xl border border-blue-200 bg-blue-50/80 ">
-        <div className="flex items-start gap-3 border-b border-blue-200/60 bg-blue-600/95 px-6 py-5 text-white">
+      <div className="overflow-hidden rounded-2xl border border-blue-200 bg-white">
+        <div className="flex items-start gap-3 border-b border-blue-200/60 bg-blue-600 px-6 py-5 text-white">
           <ExclamationCircleIcon className="mt-0.5 h-6 w-6 shrink-0" />
           <div>
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-100">
@@ -119,25 +117,26 @@ export function BreedResults({
     )
   }
 
-  const sizeColor = SIZE_COLORS[result.size] ?? SIZE_COLORS['medium']
+  const sizeColor = SIZE_COLORS[result.size]
 
   return (
-    <div className="animate-rise-in overflow-hidden rounded-2xl border border-slate-200/70 bg-white">
+    <div className="animate-rise-in overflow-hidden rounded-2xl border border-slate-200 bg-white">
       {/* Header */}
-      <div className="relative overflow-hidden bg-linear-to-br from-blue-800 via-blue-700 to-blue-600 px-7 py-8">
+      <div className="relative overflow-hidden bg-blue-700 px-6 py-7 sm:px-7 sm:py-8">
+        <div className="absolute inset-x-0 bottom-0 h-px bg-white/20" />
         <div className="relative z-10 flex flex-col gap-6 sm:flex-row sm:items-start">
           {previewUrl && (
             <div className="shrink-0">
               <img
                 src={previewUrl}
                 alt="Identified pet"
-                className="h-28 w-28 rounded-2xl border-2 border-white/30 object-cover shadow-lg sm:h-32 sm:w-32"
+                className="h-28 w-28 rounded-2xl border-2 border-white/30 object-cover sm:h-32 sm:w-32"
               />
             </div>
           )}
           <div className="flex-1 space-y-2">
-            <div className="flex flex-wrap justify-between items-center">
-              <div className="space-x-2">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex flex-wrap gap-2">
                 <span className="rounded-full border border-white/25 bg-white/12 px-2.5 py-0.5 text-[11px] font-semibold capitalize text-white">
                   {result.animal_type}
                 </span>
@@ -149,7 +148,7 @@ export function BreedResults({
 
               <ConfidenceBadge value={result.confidence} />
             </div>
-            <h2 className="text-[28px] font-bold leading-tight text-white">
+            <h2 className="text-[30px] font-extrabold leading-tight text-white">
               {result.breed_name}
             </h2>
             <p className="max-w-2xl text-[14px] leading-relaxed text-blue-100">
@@ -166,13 +165,13 @@ export function BreedResults({
       </div>
 
       {/* Body */}
-      <div className="space-y-6 px-7 py-7">
+      <div className="space-y-6 px-6 py-7 sm:px-7">
         {/* Temperament */}
         {result.temperament.length > 0 && (
           <>
             <div>
               <div className="mb-2.5">
-                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
                   Temperament
                 </p>
                 <span className="text-xs text-muted-foreground">
@@ -190,7 +189,7 @@ export function BreedResults({
           <>
             <div>
               <div className="mb-2.5">
-                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
                   Common Traits
                 </p>
 
@@ -211,7 +210,7 @@ export function BreedResults({
             <div>
               <div className="mb-3 flex items-center gap-2">
                 <HeartIcon className="h-4 w-4 text-rose-500" />
-                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
                   Care Tips
                 </p>
               </div>
