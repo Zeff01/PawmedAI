@@ -54,6 +54,21 @@ function SkeletonCard() {
   );
 }
 
+// ── Map skeleton (shown until tiles finish rendering) ──────────
+function MapSkeleton() {
+  return (
+    <div className="absolute inset-0 z-20 overflow-hidden rounded-2xl border border-slate-100 bg-slate-100">
+      <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-slate-100 via-slate-50 to-slate-200" />
+      <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
+        <Loader2 className="size-6 animate-spin text-blue-500" />
+        <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+          Loading map…
+        </p>
+      </div>
+    </div>
+  );
+}
+
 // ── Location-denied empty state ────────────────────────────────
 function LocationDenied() {
   return (
@@ -103,6 +118,8 @@ export default function NearbyVetsGeoMap() {
   const [userCoords, setUserCoords] = useState<[number, number] | null>(null);
   const [userAddress, setUserAddress] = useState<string | null>(null);
   const [relocating, setRelocating] = useState(false);
+  const [mapReady, setMapReady] = useState(false);
+  const readyTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -116,6 +133,12 @@ export default function NearbyVetsGeoMap() {
         setLoading(false);
       }
     );
+
+    return () => {
+      if (readyTimeout.current) clearTimeout(readyTimeout.current);
+      map.current?.remove();
+      map.current = null;
+    };
   }, []);
 
   async function reverseGeocode(lat: number, lng: number): Promise<void> {
@@ -146,6 +169,13 @@ export default function NearbyVetsGeoMap() {
       center: [lng, lat],
       zoom: 13,
     });
+
+    map.current.once('idle', () => {
+      if (readyTimeout.current) clearTimeout(readyTimeout.current);
+      setMapReady(true);
+    });
+
+    readyTimeout.current = setTimeout(() => setMapReady(true), 8000);
 
     map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
@@ -346,11 +376,19 @@ export default function NearbyVetsGeoMap() {
       )}
 
       {/* Map */}
-      <div className="relative">
-        <div ref={mapContainer} className="h-96 shrink-0 rounded-2xl" />
+      <div className="relative h-96">
+        <div
+          ref={mapContainer}
+          className={cn(
+            'h-96 shrink-0 overflow-hidden rounded-2xl transition-opacity duration-500',
+            mapReady ? 'opacity-100' : 'opacity-0'
+          )}
+        />
+
+        {!mapReady && !locationDenied && <MapSkeleton />}
 
         {/* My Location button overlaid on map (bottom-left) */}
-        {map.current && !locationDenied && (
+        {mapReady && !locationDenied && (
           <button
             onClick={handleRelocate}
             disabled={relocating}

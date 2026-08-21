@@ -8,7 +8,6 @@ import {
 } from '@heroicons/react/24/solid'
 import { PawIcon } from './custom/custom-icons'
 import { useState, useEffect } from 'react'
-import LifeCycle from './LifeCycle'
 import { AuthModal } from './AuthModal'
 import { useMe, useLogout } from '@/hooks/useAuth'
 
