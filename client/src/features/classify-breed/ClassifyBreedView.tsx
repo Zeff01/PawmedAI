@@ -160,6 +160,9 @@ function BreedUploadZone({
             <p className="mt-1 text-[13px] text-slate-500">
               PNG, JPG, or WEBP up to 5 MB
             </p>
+            <p className="mt-1 text-[12px] text-slate-400">
+              Optional — you can describe your pet below instead
+            </p>
           </div>
           <div className="flex flex-col items-center gap-2 sm:flex-row">
             <button
@@ -264,9 +267,13 @@ function EmptyBreedResult() {
 }
 
 /* ── Main view ───────────────────────────────────────────────────────────── */
+/** Matches MIN_DESCRIPTION_LENGTH in classify_breed/serializers.py. */
+const MIN_DESCRIPTION_LENGTH = 10
+
 export function ClassifyBreedView() {
   const [imageFile, setImageFile] = React.useState<File | null>(null)
   const [previewUrl, setPreviewUrl] = React.useState<string | null>(null)
+  const [textInput, setTextInput] = React.useState('')
   const [localError, setLocalError] = React.useState<string | null>(null)
   const [uploadProgress, setUploadProgress] = React.useState(0)
   const [uploadStatus, setUploadStatus] = React.useState<
@@ -320,17 +327,27 @@ export function ClassifyBreedView() {
     classifyMutation.reset()
   }
 
+  const trimmedText = textInput.trim()
+
   const handleSubmit = () => {
-    if (!imageFile) {
-      setLocalError('Please upload a photo to identify the breed.')
+    if (!imageFile && !trimmedText) {
+      setLocalError(
+        'Upload a photo or describe your pet to identify the breed.',
+      )
       return
     }
-    if (uploadStatus !== 'done') {
+    if (!imageFile && trimmedText.length < MIN_DESCRIPTION_LENGTH) {
+      setLocalError(
+        'Please describe your pet in a little more detail — breed, size, coat, and colour all help.',
+      )
+      return
+    }
+    if (imageFile && uploadStatus !== 'done') {
       setLocalError('Please wait for the image to finish uploading.')
       return
     }
     setLocalError(null)
-    classifyMutation.mutate({ imageFile })
+    classifyMutation.mutate({ imageFile, textInput: trimmedText })
   }
 
   const errorMessage = localError ?? classifyMutation.error?.message ?? null
@@ -340,8 +357,14 @@ export function ClassifyBreedView() {
         isAuthed?: boolean
       })
     | null
+
+  // A photo alone is enough, a description alone is enough, but a photo that is
+  // still "uploading" must finish first either way.
+  const imageReady = imageFile !== null && uploadStatus === 'done'
+  const descriptionReady = trimmedText.length >= MIN_DESCRIPTION_LENGTH
   const canSubmit =
-    !classifyMutation.isPending && imageFile !== null && uploadStatus === 'done'
+    !classifyMutation.isPending &&
+    (imageFile ? imageReady : descriptionReady)
 
   return (
     <section className="relative z-10 min-h-screen overflow-hidden px-5 py-8 md:px-12">
@@ -356,7 +379,8 @@ export function ClassifyBreedView() {
             What breed is your pet?
           </h1>
           <p className="mx-auto mt-3 max-w-xl text-[15px] leading-relaxed text-slate-500">
-            Upload a clear photo and our AI will identify the breed in seconds.
+            Upload a clear photo, describe your pet in your own words, or do
+            both — our AI will identify the breed in seconds.
           </p>
         </FadeIn>
 
@@ -369,10 +393,10 @@ export function ClassifyBreedView() {
               <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 backdrop-blur">
                 <div>
                   <p className="text-[13px] font-bold text-slate-800">
-                    Photo identification
+                    Photo or description
                   </p>
                   <p className="text-[11.5px] text-slate-400">
-                    Private image processing with no gallery storage
+                    Private processing with no gallery storage
                   </p>
                 </div>
                 <div className="flex items-center gap-2 text-[11px] font-semibold text-slate-500">
@@ -402,6 +426,45 @@ export function ClassifyBreedView() {
                   />
                 </div>
               )}
+
+              {/* Written description — works alongside a photo or on its own */}
+              <div className="mt-4 flex flex-col gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-4">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <label
+                    htmlFor="pet-description"
+                    className="text-[12.5px] font-bold text-slate-800"
+                  >
+                    Describe your pet{' '}
+                    <span className="font-semibold text-slate-400">
+                      {imageFile ? '(optional)' : '(or upload a photo above)'}
+                    </span>
+                  </label>
+                  {!imageFile && descriptionReady && (
+                    <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2.5 py-0.5 text-[10.5px] font-semibold text-blue-700">
+                      <CheckCircleIcon className="h-3 w-3" />
+                      Ready without a photo
+                    </span>
+                  )}
+                </div>
+                <textarea
+                  id="pet-description"
+                  name="pet-description"
+                  rows={4}
+                  maxLength={2000}
+                  value={textInput}
+                  onChange={(event) => setTextInput(event.target.value)}
+                  placeholder="Example: medium-sized dog, curly cream coat, floppy ears, about 12 kg, very friendly and playful…"
+                  className="w-full resize-none rounded-lg border border-slate-200 bg-white px-3 py-2 text-[12.5px] text-slate-700 outline-none transition focus:border-blue-300 focus:ring-2 focus:ring-blue-100"
+                />
+                <div className="flex flex-wrap items-center justify-between gap-2 text-[10.5px] text-slate-400">
+                  <span>
+                    {imageFile
+                      ? 'Size, coat, and temperament help settle what a photo cannot show.'
+                      : 'No photo? Describe size, coat, colour, ears, and temperament.'}
+                  </span>
+                  <span>{textInput.length}/2000</span>
+                </div>
+              </div>
 
               {/* Error / info banner */}
               <div className="mt-3">
@@ -463,7 +526,7 @@ export function ClassifyBreedView() {
                 </Button>
                 <p className="flex items-center gap-1.5 text-[11px] text-slate-400">
                   <ShieldCheckIcon className="h-3.5 w-3.5" />
-                  Photo is never stored or shared.
+                  Your photo and description are never stored or shared.
                 </p>
               </div>
             </FadeIn>

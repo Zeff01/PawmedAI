@@ -1,10 +1,16 @@
 from rest_framework import serializers
 
 
+MIN_DESCRIPTION_LENGTH = 10
+
+
 class BreedClassificationRequestSerializer(serializers.Serializer):
-    image = serializers.ImageField(required=True)
+    image = serializers.ImageField(required=False, allow_null=True)
+    text = serializers.CharField(required=False, allow_blank=True, max_length=2000)
 
     def validate_image(self, value):
+        if value in (None, ""):
+            return value
         max_size_mb = 5
         if value.size > max_size_mb * 1024 * 1024:
             raise serializers.ValidationError(
@@ -17,6 +23,21 @@ class BreedClassificationRequestSerializer(serializers.Serializer):
                 "Unsupported image type. Use JPEG, PNG, or WEBP."
             )
         return value
+
+    def validate(self, attrs):
+        image = attrs.get("image")
+        text = (attrs.get("text") or "").strip()
+
+        if not image and not text:
+            raise serializers.ValidationError(
+                "Provide a photo or a description of your pet to identify the breed."
+            )
+        if not image and len(text) < MIN_DESCRIPTION_LENGTH:
+            raise serializers.ValidationError(
+                "Please describe your pet in a little more detail "
+                f"(at least {MIN_DESCRIPTION_LENGTH} characters) when no photo is provided."
+            )
+        return attrs
 
 
 class BreedClassificationResponseSerializer(serializers.Serializer):

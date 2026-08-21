@@ -7,6 +7,7 @@ import {
   HeartIcon,
   LightBulbIcon,
 } from '@heroicons/react/24/solid'
+import { BreedReferenceCompare } from './BreedReferenceCompare'
 
 function Divider() {
   return <hr className="h-px border-0 bg-slate-200" />
@@ -163,6 +164,13 @@ export function BreedResults({
           </div>
         </div>
       </div>
+
+      {/* Breed reference photo — lets the user eyeball the match themselves */}
+      <BreedReferenceCompare
+        breedName={result.breed_name}
+        animalType={result.animal_type}
+        previewUrl={previewUrl}
+      />
 
       {/* Body */}
       <div className="space-y-6 px-6 py-7 sm:px-7">
