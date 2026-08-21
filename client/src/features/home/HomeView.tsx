@@ -294,8 +294,7 @@ function HomeView() {
                   </Button>
                 ) : (
                   <AuthModal
-                    showGuestOption
-                    onGuestContinue={() => navigate({ to: '/classify' })}
+                    onAuthenticated={() => navigate({ to: '/classify' })}
                     trigger={
                       <Button
                         size="lg"
@@ -662,8 +661,7 @@ function HomeView() {
                   </Button>
                 ) : (
                   <AuthModal
-                    showGuestOption
-                    onGuestContinue={() => navigate({ to: '/classify' })}
+                    onAuthenticated={() => navigate({ to: '/classify' })}
                     trigger={
                       <Button
                         size="lg"

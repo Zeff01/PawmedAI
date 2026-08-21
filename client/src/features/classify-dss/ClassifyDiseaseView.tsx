@@ -21,7 +21,7 @@ import { FadeIn } from '@/components/motion/FadeIn'
 import { useUserTypeStore } from '@/stores/userTypeStore'
 import type { UserType } from '@/types/auth'
 import { showLocalNotification } from '@/pwa/push'
-import { useMe, useSupabaseSession } from '@/hooks/useAuth'
+import { useSupabaseSession } from '@/hooks/useAuth'
 import { AuthModal } from '@/components/AuthModal'
 
 export function ClassifyDiseaseView() {
@@ -46,7 +46,6 @@ export function ClassifyDiseaseView() {
   const setLockSelection = useUserTypeStore((state) => state.setLockSelection)
   const prevUserTypeRef = React.useRef<UserType | null>(null)
   const { session, isLoading: isSessionLoading } = useSupabaseSession()
-  const { data: me } = useMe({ enabled: Boolean(session) })
 
   const classifyMutation = useClassifyDisease()
 
@@ -257,7 +256,7 @@ export function ClassifyDiseaseView() {
                             isAuthed?: boolean
                           })
                         | null
-                      if (err?.code === 'THROTTLE' && !err.isAuthed) {
+                      if (err?.code === 'UNAUTHENTICATED') {
                         return (
                           <AuthModal
                             trigger={
@@ -266,7 +265,7 @@ export function ClassifyDiseaseView() {
                                 size="sm"
                                 className="w-fit rounded-md bg-blue-600 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-blue-700"
                               >
-                                Sign in for 5 free classifications
+                                Sign in again
                               </Button>
                             }
                           />
@@ -279,9 +278,7 @@ export function ClassifyDiseaseView() {
                   <div className="flex items-start gap-2 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-[12.5px] text-amber-800">
                     <ExclamationTriangleIcon className="h-4 w-4 shrink-0 mt-0.5" />
                     <span>
-                      {me
-                        ? 'Yey! You have 5 tries every 10 hours. You can try again after 5 hours.'
-                        : 'You only have 2 tries every 10 hours. Sign in to get 5 free classifications every 5 hours!'}
+                      You have 5 classifications every 5 hours.
                     </span>
                   </div>
                 )}

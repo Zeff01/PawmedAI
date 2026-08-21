@@ -44,14 +44,18 @@ export async function classifyDisease(
 
   if (!response.ok) {
     const errorPayload = await response.json().catch(() => null)
-    const message =
-      response.status === 429
-        ? isAuthed
-          ? 'You have reached the 5 classification limit. You may try again after 5 hours.'
-          : 'You have reached the 2 classification limit. You may try again after 10 hours or you may try to login for 5 free classifications.'
-        : typeof errorPayload?.detail === 'string'
-          ? errorPayload.detail
-          : 'Classification failed. Please try again.'
+    let message: string
+    if (response.status === 429) {
+      message =
+        'You have reached the 5 classification limit. You may try again after 5 hours.'
+    } else if (response.status === 401 || response.status === 403) {
+      message = 'Your session has expired. Please sign in again to classify.'
+    } else if (typeof errorPayload?.detail === 'string') {
+      message = errorPayload.detail
+    } else {
+      message = 'Classification failed. Please try again.'
+    }
+
     const err = new Error(message) as Error & {
       code?: string
       isAuthed?: boolean
@@ -59,6 +63,9 @@ export async function classifyDisease(
     if (response.status === 429) {
       err.code = 'THROTTLE'
       err.isAuthed = isAuthed
+    }
+    if (response.status === 401 || response.status === 403) {
+      err.code = 'UNAUTHENTICATED'
     }
     throw err
   }

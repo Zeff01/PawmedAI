@@ -9,10 +9,10 @@ const config = defineConfig({
   server: {
     host: '0.0.0.0',
     port: 3000,
-    watch: {
-      usePolling: true,
-      interval: 200,
-    },
+    watch:
+      process.env.VITE_USE_POLLING === '1'
+        ? { usePolling: true, interval: 1000 }
+        : undefined,
   },
   plugins: [
     tsconfigPaths({ projects: ['./tsconfig.json'] }),

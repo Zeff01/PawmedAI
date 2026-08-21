@@ -1,16 +1,36 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { useState } from 'react'
 
 import HomeView from '@/features/home/HomeView'
 import { Seo } from '@/components/Seo'
+import { AuthModal } from '@/components/AuthModal'
 import {
   buildSoftwareApplicationSchema,
   buildBreadcrumbSchema,
   buildSiteSchemas,
 } from '@/utils/seo-schema'
 
-export const Route = createFileRoute('/')({ component: LandingPage })
+type HomeSearch = { signin?: 'required' }
+
+export const Route = createFileRoute('/')({
+  validateSearch: (search: Record<string, unknown>): HomeSearch => ({
+    signin: search.signin === 'required' ? 'required' : undefined,
+  }),
+  component: LandingPage,
+})
 
 function LandingPage() {
+  const navigate = useNavigate()
+  const { signin } = Route.useSearch()
+  const [gateOpen, setGateOpen] = useState(signin === 'required')
+
+  const closeGate = (next: boolean) => {
+    setGateOpen(next)
+    if (!next && signin) {
+      navigate({ to: '/', search: {}, replace: true })
+    }
+  }
+
   const description =
     'Pawmed AI turns clinical pet photos into structured diagnostic briefs in under 5 minutes. AI-powered veterinary diagnostics for vets, students, and pet owners.'
 
@@ -28,6 +48,12 @@ function LandingPage() {
           buildBreadcrumbSchema([{ name: 'Home', path: '/' }]),
           ...buildSiteSchemas(),
         ]}
+      />
+      <AuthModal
+        open={gateOpen}
+        onOpenChange={closeGate}
+        notice="Classify Disease requires an account. Sign in to continue."
+        onAuthenticated={() => navigate({ to: '/classify' })}
       />
       <HomeView />
     </>

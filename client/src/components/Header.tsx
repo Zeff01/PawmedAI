@@ -45,8 +45,8 @@ export function Header() {
     if (item.to === '/classify' && !me && !isClassify) {
       return (
         <AuthModal
-          showGuestOption
-          onGuestContinue={() => navigate({ to: '/classify' })}
+          notice="Classify Disease requires an account. Sign in to continue."
+          onAuthenticated={() => navigate({ to: '/classify' })}
           trigger={
             <button type="button" className={mergedClassName}>
               {item.label}
@@ -170,8 +170,7 @@ export function Header() {
                 <AuthModal
                   open={authOpen}
                   onOpenChange={setAuthOpen}
-                  showGuestOption
-                  onGuestContinue={() => {
+                  onAuthenticated={() => {
                     setAuthOpen(false)
                     navigate({ to: '/classify' })
                   }}
@@ -294,8 +293,7 @@ export function Header() {
             </Button>
           ) : (
             <AuthModal
-              showGuestOption
-              onGuestContinue={() => navigate({ to: '/classify' })}
+              onAuthenticated={() => navigate({ to: '/classify' })}
               trigger={
                 <Button className="w-full rounded-xl bg-blue-600 py-2.5 text-[13px] font-semibold text-white hover:bg-blue-700">
                   <BeakerIcon className="h-4 w-4" />

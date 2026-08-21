@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { ClassifyDiseaseView } from '@/features/classify-dss/ClassifyDiseaseView'
 import { Seo } from '@/components/Seo'
+import { requireAuth } from '@/lib/authGuard'
 import {
   buildSoftwareApplicationSchema,
   buildMedicalWebPageSchema,
@@ -9,6 +10,7 @@ import {
 } from '@/utils/seo-schema'
 
 export const Route = createFileRoute('/classify/')({
+  beforeLoad: requireAuth,
   component: ClassifyDiseasePage,
 })
 

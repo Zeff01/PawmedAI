@@ -7,10 +7,14 @@ import { useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 import { authKeys } from '@/hooks/useAuth'
 import { UserTypeDialog } from '@/features/classify-dss/components/UserTypeDialog'
+import { RoutePending } from '@/components/RoutePending'
 
 const router = createRouter({
   routeTree,
   defaultPreload: 'intent',
+  defaultPendingComponent: RoutePending,
+  defaultPendingMs: 150,
+  defaultPendingMinMs: 300,
   scrollRestoration: true,
 })
 

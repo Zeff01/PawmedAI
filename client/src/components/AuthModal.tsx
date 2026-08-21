@@ -16,16 +16,16 @@ type AuthModalProps = {
   trigger?: React.ReactNode
   open?: boolean
   onOpenChange?: (open: boolean) => void
-  showGuestOption?: boolean
-  onGuestContinue?: () => void
+  notice?: string
+  onAuthenticated?: () => void
 }
 
 export function AuthModal({
   trigger,
   open: externalOpen,
   onOpenChange: externalOnOpenChange,
-  showGuestOption = false,
-  onGuestContinue,
+  notice,
+  onAuthenticated,
 }: AuthModalProps) {
   const [internalOpen, setInternalOpen] = useState(false)
   const [isSigningIn, setIsSigningIn] = useState(false)
@@ -48,7 +48,8 @@ export function AuthModal({
   const handleLoginSuccess = useCallback(() => {
     setIsSigningIn(false)
     setOpen(false)
-  }, [setOpen])
+    onAuthenticated?.()
+  }, [setOpen, onAuthenticated])
 
   return (
     <Dialog
@@ -76,6 +77,11 @@ export function AuthModal({
             Use your trusted provider to continue.
           </DialogDescription>
         </DialogHeader>
+        {notice && (
+          <p className="mt-4 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-[12px] text-amber-800">
+            {notice}
+          </p>
+        )}
         <div className="mt-4">
           <LoginView
             variant="modal"
@@ -84,18 +90,8 @@ export function AuthModal({
             onLoginSuccess={handleLoginSuccess}
           />
         </div>
-        {showGuestOption && !isSigningIn && (
-          <Button
-            type="button"
-            variant="outline"
-            className="mt-3 w-full"
-            onClick={onGuestContinue}
-          >
-            Continue as guest
-          </Button>
-        )}
         <p className="mt-3 text-center text-[12px] text-slate-500">
-          By logging in, you can classify disease up to 5 times every 5 hours.
+          Signing in lets you classify disease up to 5 times every 5 hours.
         </p>
         <div className="mt-4 flex items-center gap-3 text-[11px] text-slate-400">
           <span className="h-px flex-1 bg-slate-100" />

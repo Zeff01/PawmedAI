@@ -124,8 +124,7 @@ function RouteComponent() {
             </Link>
           ) : (
             <AuthModal
-              showGuestOption
-              onGuestContinue={() => navigate({ to: '/classify' })}
+              onAuthenticated={() => navigate({ to: '/classify' })}
               trigger={
                 <Button
                   size="lg"
@@ -137,7 +136,7 @@ function RouteComponent() {
             />
           )}
           <p className="text-xs text-slate-400">
-            No account required · Takes under 5 minutes
+            Free with an account · Takes under 5 minutes
           </p>
         </div>
       </div>
