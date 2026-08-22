@@ -3,285 +3,137 @@ import { useClassifyBreed } from './hooks/useClassifyBreed'
 import { BreedResults } from './components/BreedResults'
 import {
   ArrowPathIcon,
-  ArrowUpTrayIcon,
+  BoltIcon,
   CheckCircleIcon,
-  CameraIcon,
-  DocumentIcon,
   ExclamationCircleIcon,
+  LockClosedIcon,
   MagnifyingGlassIcon,
+  PencilSquareIcon,
   PhotoIcon,
   ShieldCheckIcon,
   SparklesIcon,
   XMarkIcon,
 } from '@heroicons/react/24/solid'
 import { Button } from '@/components/ui/button'
-import { formatBytes } from '@/utils/format-bytes'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { AuthModal } from '@/components/AuthModal'
 import { useMe, useSupabaseSession } from '@/hooks/useAuth'
 import PawMedLoader from '@/features/classify-dss/components/ResultSkeletonLoader'
-import { CameraModal } from '@/features/classify-dss/components/CameraModal'
 import { AnimalBreedSidebar } from './components/AnimalBreedSidebar'
+import { BreedUploadZone } from './components/BreedUploadZone'
+import type { UploadStatus } from './components/BreedUploadZone'
+import {
+  BreedDescriptionInput,
+  MIN_DESCRIPTION_LENGTH,
+} from './components/BreedDescriptionInput'
 
-/* ── Upload Zone ─────────────────────────────────────────────────────────── */
-const FILE_INPUT_ID = 'breed-photo-input'
+type InputMode = 'photo' | 'text'
 
-function BreedUploadZone({
-  previewUrl,
-  onFile,
-  onRemove,
-  onValidationError,
-}: {
-  previewUrl: string | null
-  onFile: (file: File) => void
-  onRemove: () => void
-  onValidationError: (msg: string) => void
-}) {
-  const [dragActive, setDragActive] = React.useState(false)
-  const [cameraOpen, setCameraOpen] = React.useState(false)
-  const fileInputRef = React.useRef<HTMLInputElement | null>(null)
+const TABS: {
+  id: InputMode
+  label: string
+  hint: string
+  icon: typeof PhotoIcon
+}[] = [
+  { id: 'photo', label: 'Use a photo', hint: 'Most accurate', icon: PhotoIcon },
+  {
+    id: 'text',
+    label: 'Describe it',
+    hint: 'No photo needed',
+    icon: PencilSquareIcon,
+  },
+]
 
-  const validate = React.useCallback(
-    (file: File) => {
-      const allowed = ['image/jpeg', 'image/png', 'image/webp']
-      if (!allowed.includes(file.type)) {
-        onValidationError('Only JPEG, PNG, or WEBP images are supported.')
-        return
-      }
-      if (file.size > 5 * 1024 * 1024) {
-        onValidationError('Please upload an image smaller than 5 MB.')
-        return
-      }
-      onFile(file)
-    },
-    [onFile, onValidationError],
-  )
+/* ── Small building blocks ───────────────────────────────────────────────── */
 
-  if (previewUrl) {
-    return (
-      <div className="group relative overflow-hidden rounded-2xl border border-blue-200 bg-white">
-        <img
-          src={previewUrl}
-          alt="Preview"
-          className="h-[20rem] w-full object-cover transition duration-200 group-hover:scale-[1.01] group-hover:opacity-75 sm:h-[26rem]"
-        />
-        <div className="pointer-events-none absolute inset-0 bg-slate-950/20 opacity-100 transition-opacity duration-200" />
-        <div className="pointer-events-none absolute inset-x-4 bottom-4 flex flex-wrap items-center justify-between gap-3">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-white/90 px-3 py-1.5 text-[12px] font-semibold text-blue-700">
-            <PhotoIcon className="h-3.5 w-3.5" />
-            Click to change photo
-          </span>
-          <span className="rounded-full border border-white/25 bg-slate-950/40 px-3 py-1.5 text-[11px] font-semibold text-white backdrop-blur">
-            Preview ready
-          </span>
-        </div>
-        <label
-          htmlFor={FILE_INPUT_ID}
-          className="absolute inset-0 cursor-pointer"
-          aria-label="Change photo"
-        />
-        {/* Remove button */}
-        <button
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation()
-            onRemove()
-          }}
-          className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-slate-600 transition hover:bg-white hover:text-red-500"
-          aria-label="Remove photo"
-        >
-          <XMarkIcon className="h-4 w-4" />
-        </button>
-        <input
-          ref={fileInputRef}
-          id={FILE_INPUT_ID}
-          type="file"
-          accept="image/jpeg,image/png,image/webp"
-          className="sr-only"
-          onChange={(e) => {
-            const f = e.target.files?.[0]
-            if (f) validate(f)
-            e.target.value = ''
-          }}
-        />
-      </div>
-    )
-  }
-
+function StepBadge({ n, active }: { n: number; active: boolean }) {
   return (
-    <>
-      {cameraOpen && (
-        <CameraModal
-          onCapture={validate}
-          onClose={() => setCameraOpen(false)}
-        />
-      )}
-      <div
-        className={`group relative flex cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border transition-all duration-200 ${
-          dragActive
-            ? 'border-blue-500 bg-blue-50'
-            : 'border-blue-200 bg-white hover:border-blue-300'
-        }`}
-        onClick={(e) => {
-          if ((e.target as HTMLElement).closest('label,button')) return
-          fileInputRef.current?.click()
-        }}
-        onDragOver={(e) => {
-          e.preventDefault()
-          setDragActive(true)
-        }}
-        onDragLeave={() => setDragActive(false)}
-        onDrop={(e) => {
-          e.preventDefault()
-          setDragActive(false)
-          if (e.dataTransfer.files.length > 0) {
-            validate(e.dataTransfer.files[0])
-          }
-        }}
-      >
-        <input
-          ref={fileInputRef}
-          id={FILE_INPUT_ID}
-          type="file"
-          accept="image/jpeg,image/png,image/webp"
-          className="sr-only"
-          onChange={(e) => {
-            const f = e.target.files?.[0]
-            if (f) validate(f)
-            e.target.value = ''
-          }}
-        />
-
-        <div className="relative flex min-h-[22rem] flex-col items-center justify-center gap-5 px-6 py-10 text-center sm:px-8 sm:py-12">
-          <div
-            className={`flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-600 text-white transition-transform duration-200 ${dragActive ? 'scale-110' : 'group-hover:-translate-y-0.5'}`}
-          >
-            <ArrowUpTrayIcon className="h-6 w-6" />
-          </div>
-          <div>
-            <p className="text-[17px] font-extrabold text-slate-800">
-              {dragActive ? 'Release to upload' : 'Drop your pet photo here'}
-            </p>
-            <p className="mt-1 text-[13px] text-slate-500">
-              PNG, JPG, or WEBP up to 5 MB
-            </p>
-            <p className="mt-1 text-[12px] text-slate-400">
-              Optional — you can describe your pet below instead
-            </p>
-          </div>
-          <div className="flex flex-col items-center gap-2 sm:flex-row">
-            <label
-              htmlFor={FILE_INPUT_ID}
-              className="pointer-events-auto inline-flex h-10 cursor-pointer items-center gap-2 rounded-lg border border-blue-200 bg-blue-600 px-4 text-[13px] font-bold text-white transition hover:bg-blue-700 focus-within:ring-2 focus-within:ring-blue-300"
-            >
-              <DocumentIcon className="h-4 w-4" />
-              Browse files
-            </label>
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation()
-                setCameraOpen(true)
-              }}
-              className="pointer-events-auto inline-flex h-10 items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 text-[13px] font-bold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
-            >
-              <CameraIcon className="h-4 w-4" />
-              Use camera
-            </button>
-          </div>
-          <div className="grid w-full max-w-md grid-cols-3 gap-2 pt-2">
-            {['Good lighting', 'Single animal', 'Face visible'].map((item) => (
-              <span
-                key={item}
-                className="rounded-full border border-slate-200 bg-slate-50 px-2 py-1 text-[10.5px] font-semibold text-slate-500"
-              >
-                {item}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-    </>
+    <span
+      aria-hidden="true"
+      className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-extrabold transition-colors ${
+        active ? 'bg-blue-600 text-white' : 'bg-slate-200 text-slate-500'
+      }`}
+    >
+      {n}
+    </span>
   )
 }
 
-/* ── File info strip ─────────────────────────────────────────────────────── */
-function FileStrip({
-  file,
-  status,
-  progress,
+function InputChip({
+  icon: Icon,
+  label,
+  onRemove,
+  removeLabel,
 }: {
-  file: File
-  status: 'uploading' | 'done'
-  progress: number
+  icon: typeof PhotoIcon
+  label: string
+  onRemove: () => void
+  removeLabel: string
 }) {
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-blue-100 bg-white px-4 py-3">
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
-        <DocumentIcon className="h-4 w-4" />
-      </div>
-      <div className="min-w-0 flex-1">
-        <p className="truncate text-[12px] font-semibold text-slate-700">
-          {file.name}
-        </p>
-        <p className="text-[11px] text-slate-400">{formatBytes(file.size)}</p>
-      </div>
-      {status === 'uploading' ? (
-        <div className="flex min-w-22 items-center gap-2">
-          <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-blue-100">
-            <div
-              className="h-full rounded-full bg-blue-600 transition-all duration-200"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-          <span className="w-8 text-right text-[11px] font-semibold text-blue-600">
-            {progress}%
-          </span>
-        </div>
-      ) : (
-        <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2.5 py-0.5 text-[10.5px] font-semibold text-blue-700">
-          <CheckCircleIcon className="h-3 w-3" />
-          Ready
-        </span>
-      )}
-    </div>
+    <span className="inline-flex max-w-full items-center gap-1.5 rounded-full border border-blue-200 bg-white px-2.5 py-1 text-[11.5px] font-semibold text-blue-700">
+      <Icon className="h-3.5 w-3.5 shrink-0" />
+      <span className="truncate">{label}</span>
+      <button
+        type="button"
+        onClick={onRemove}
+        aria-label={removeLabel}
+        className="-mr-1 flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-blue-400 transition hover:bg-blue-100 hover:text-blue-700"
+      >
+        <XMarkIcon className="h-3 w-3" />
+      </button>
+    </span>
   )
 }
 
 function EmptyBreedResult() {
+  const lines = [
+    'The likely breed with a confidence score',
+    'Origin, size, and a side-by-side reference photo',
+    'Temperament and common traits',
+    'Care tips and a fun fact',
+  ]
   return (
-    <div className="overflow-hidden rounded-2xl border border-dashed border-blue-200 bg-white">
-      <div className="flex flex-col items-center px-6 py-12 text-center">
-        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
-          <SparklesIcon className="h-6 w-6" />
+    <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50/60 px-6 py-8 sm:px-8">
+      <div className="flex flex-col items-center text-center">
+        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-blue-600 shadow-sm">
+          <SparklesIcon className="h-5 w-5" />
         </div>
-        <p className="mt-4 text-[15px] font-bold text-slate-800">
-          Breed profile appears here
+        <p className="mt-3 text-[15px] font-bold text-slate-800">
+          Your breed profile shows up here
         </p>
-        <p className="mt-1 max-w-md text-[13px] leading-relaxed text-slate-500">
-          Results include the likely breed, confidence, origin, temperament,
-          traits, and care notes.
+        <p className="mt-1 text-[12.5px] text-slate-500">
+          Add a photo or a description above, then run the identifier.
         </p>
       </div>
+      <ul className="mx-auto mt-5 grid max-w-xl gap-2 sm:grid-cols-2">
+        {lines.map((line) => (
+          <li
+            key={line}
+            className="flex items-start gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-[12px] text-slate-600"
+          >
+            <CheckCircleIcon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-blue-500" />
+            {line}
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
 
 /* ── Main view ───────────────────────────────────────────────────────────── */
-/** Matches MIN_DESCRIPTION_LENGTH in classify_breed/serializers.py. */
-const MIN_DESCRIPTION_LENGTH = 10
 
 export function ClassifyBreedView() {
+  const [mode, setMode] = React.useState<InputMode>('photo')
   const [imageFile, setImageFile] = React.useState<File | null>(null)
   const [previewUrl, setPreviewUrl] = React.useState<string | null>(null)
   const [textInput, setTextInput] = React.useState('')
   const [localError, setLocalError] = React.useState<string | null>(null)
   const [imageAuthOpen, setImageAuthOpen] = React.useState(false)
   const [uploadProgress, setUploadProgress] = React.useState(0)
-  const [uploadStatus, setUploadStatus] = React.useState<
-    'idle' | 'uploading' | 'done'
-  >('idle')
+  const [uploadStatus, setUploadStatus] = React.useState<UploadStatus>('idle')
   const timerRef = React.useRef<ReturnType<typeof setInterval> | null>(null)
+  const resultsRef = React.useRef<HTMLDivElement | null>(null)
 
   const { session, isLoading: isSessionLoading } = useSupabaseSession()
   const { data: me } = useMe({ enabled: Boolean(session) })
@@ -297,6 +149,26 @@ export function ClassifyBreedView() {
     return () => URL.revokeObjectURL(url)
   }, [imageFile])
 
+  React.useEffect(
+    () => () => {
+      if (timerRef.current) clearInterval(timerRef.current)
+    },
+    [],
+  )
+
+  // Bring the result area into view as soon as work starts, so the user is not
+  // left staring at the form wondering whether anything happened.
+  React.useEffect(() => {
+    if (!classifyMutation.isPending) return
+    const reduced = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches
+    resultsRef.current?.scrollIntoView({
+      behavior: reduced ? 'auto' : 'smooth',
+      block: 'start',
+    })
+  }, [classifyMutation.isPending])
+
   const handleFile = React.useCallback(
     (file: File) => {
       setLocalError(null)
@@ -307,7 +179,7 @@ export function ClassifyBreedView() {
       let current = 0
       if (timerRef.current) clearInterval(timerRef.current)
       timerRef.current = setInterval(() => {
-        current += Math.random() * (current < 60 ? 12 : current < 85 ? 4 : 8)
+        current += Math.random() * (current < 60 ? 18 : 10)
         if (current >= 100) {
           setUploadProgress(100)
           setUploadStatus('done')
@@ -315,46 +187,60 @@ export function ClassifyBreedView() {
         } else {
           setUploadProgress(Math.round(current))
         }
-      }, 180)
+      }, 120)
     },
     [classifyMutation],
   )
 
-  const handleRemove = () => {
+  const handleRemoveImage = () => {
     if (timerRef.current) clearInterval(timerRef.current)
     setImageFile(null)
     setPreviewUrl(null)
     setUploadProgress(0)
     setUploadStatus('idle')
     setLocalError(null)
+  }
+
+  const handleReset = () => {
+    handleRemoveImage()
+    setTextInput('')
     classifyMutation.reset()
+    setMode('photo')
   }
 
   const trimmedText = textInput.trim()
+  const hasInput = Boolean(imageFile) || trimmedText.length > 0
+  const descriptionReady = trimmedText.length >= MIN_DESCRIPTION_LENGTH
+  const needsAuthForImage = !isSessionLoading && !session && imageFile !== null
+  const isReady = imageFile ? true : descriptionReady
 
-  const runClassification = () => {
+  const runClassification = React.useCallback(() => {
     setLocalError(null)
+    // The progress bar is cosmetic — the file itself goes out with the request,
+    // so a submit mid-animation just finishes the animation instead of waiting.
+    if (imageFile) {
+      if (timerRef.current) clearInterval(timerRef.current)
+      setUploadProgress(100)
+      setUploadStatus('done')
+    }
     classifyMutation.mutate({ imageFile, textInput: trimmedText })
-  }
+  }, [classifyMutation, imageFile, trimmedText])
 
   const handleSubmit = () => {
-    if (!imageFile && !trimmedText) {
+    if (classifyMutation.isPending) return
+    if (!hasInput) {
       setLocalError(
-        'Upload a photo or describe your pet to identify the breed.',
+        'Add a photo or a short description first — either one is enough.',
       )
       return
     }
-    if (!imageFile && trimmedText.length < MIN_DESCRIPTION_LENGTH) {
+    if (!imageFile && !descriptionReady) {
       setLocalError(
-        'Please describe your pet in a little more detail — breed, size, coat, and colour all help.',
+        `Your description is a little short. Add at least ${MIN_DESCRIPTION_LENGTH} characters — breed, size, coat, and colour all help.`,
       )
+      setMode('text')
       return
     }
-    if (imageFile && uploadStatus !== 'done') {
-      setLocalError('Please wait for the image to finish uploading.')
-      return
-    }
-
     if (needsAuthForImage) {
       setLocalError(null)
       setImageAuthOpen(true)
@@ -365,219 +251,393 @@ export function ClassifyBreedView() {
 
   const errorMessage = localError ?? classifyMutation.error?.message ?? null
   const throttleError = classifyMutation.error as
-    | (Error & {
-        code?: string
-        isAuthed?: boolean
-      })
+    | (Error & { code?: string; isAuthed?: boolean })
     | null
+  const showThrottleSignIn =
+    (throttleError?.code === 'THROTTLE' && !throttleError.isAuthed) ||
+    throttleError?.code === 'IMAGE_REQUIRES_AUTH'
 
-  // A photo alone is enough, a description alone is enough, but a photo that is
-  // still "uploading" must finish first either way.
-  const imageReady = imageFile !== null && uploadStatus === 'done'
-  const descriptionReady = trimmedText.length >= MIN_DESCRIPTION_LENGTH
-  const canSubmit =
-    !classifyMutation.isPending &&
-    (imageFile ? imageReady : descriptionReady)
+  const result = classifyMutation.data
+  const statusText = classifyMutation.isPending
+    ? 'Identifying the breed. This usually takes a few seconds.'
+    : result
+      ? result.not_identified
+        ? 'No breed could be identified from what you sent.'
+        : `Result ready: ${result.breed_name}, ${result.confidence}% match.`
+      : ''
 
-  const needsAuthForImage =
-    !isSessionLoading && !session && imageFile !== null
+  const activeStep = result ? 3 : classifyMutation.isPending ? 2 : 1
 
   return (
-    <section className="relative z-10 min-h-screen overflow-hidden px-5 py-8 md:px-12">
-      <div className="page-wrap relative">
-        {/* ── Page header ─────────────────────────────────────────────── */}
-        <FadeIn trigger="mount" className="mx-auto mb-8 max-w-3xl text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-blue-700">
+    <section className="relative z-10 min-h-screen px-5 pb-20 pt-7 md:px-10">
+      <div className="mx-auto max-w-6xl">
+        {/* ── Page header ───────────────────────────────────────────────── */}
+        <FadeIn trigger="mount" className="mx-auto mb-7 max-w-3xl text-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-blue-700">
             <SparklesIcon className="h-3.5 w-3.5" />
             AI Breed Identifier
           </span>
-          <h1 className="mt-4 text-[32px] font-extrabold leading-tight text-slate-950 sm:text-[44px]">
+          <h1 className="mt-4 text-[30px] font-extrabold leading-tight text-slate-950 sm:text-[40px]">
             What breed is your pet?
           </h1>
-          <p className="mx-auto mt-3 max-w-xl text-[15px] leading-relaxed text-slate-500">
-            Upload a clear photo, describe your pet in your own words, or do
-            both — our AI will identify the breed in seconds.
+          <p className="mx-auto mt-3 max-w-xl text-[14.5px] leading-relaxed text-slate-500">
+            Upload a clear photo or just describe your pet in your own words —
+            you only need one of the two.
           </p>
+          <ul className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12px] font-semibold text-slate-500">
+            {[
+              { icon: BoltIcon, label: 'Answer in about 10 seconds' },
+              { icon: PencilSquareIcon, label: 'Photo or description' },
+              { icon: ShieldCheckIcon, label: 'Never stored or shared' },
+            ].map(({ icon: Icon, label }) => (
+              <li key={label} className="inline-flex items-center gap-1.5">
+                <Icon className="h-4 w-4 text-blue-500" />
+                {label}
+              </li>
+            ))}
+          </ul>
         </FadeIn>
 
-        {/* ── Two-column layout ───────────────────────────────────────── */}
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_360px] xl:grid-cols-[minmax(0,1fr)_390px]">
-          {/* Main column */}
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_340px] xl:grid-cols-[minmax(0,1fr)_370px]">
+          {/* ── Main column ─────────────────────────────────────────────── */}
           <div className="min-w-0">
-            {/* ── Upload panel ──────────────────────────────────────── */}
-            <FadeIn trigger="mount" delay={0.1}>
-              <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 backdrop-blur">
-                <div>
-                  <p className="text-[13px] font-bold text-slate-800">
-                    Photo or description
-                  </p>
-                  <p className="text-[11.5px] text-slate-400">
-                    Private processing with no gallery storage
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 text-[11px] font-semibold text-slate-500">
-                  <span className="rounded-full bg-blue-50 px-2.5 py-1 text-blue-700">
-                    {me ? '5 scans / 5 hours' : '2 free scans'}
-                  </span>
-                  <span className="hidden rounded-full bg-emerald-50 px-2.5 py-1 text-emerald-700 sm:inline-flex">
-                    Secure upload
-                  </span>
-                </div>
-              </div>
-
-              <BreedUploadZone
-                previewUrl={previewUrl}
-                onFile={handleFile}
-                onRemove={handleRemove}
-                onValidationError={setLocalError}
-              />
-
-              {/* File strip */}
-              {imageFile && uploadStatus !== 'idle' && (
-                <div className="mt-3">
-                  <FileStrip
-                    file={imageFile}
-                    status={uploadStatus}
-                    progress={uploadProgress}
-                  />
-                </div>
-              )}
-
-              {/* Written description — works alongside a photo or on its own */}
-              <div className="mt-4 flex flex-col gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-4">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <label
-                    htmlFor="pet-description"
-                    className="text-[12.5px] font-bold text-slate-800"
-                  >
-                    Describe your pet{' '}
-                    <span className="font-semibold text-slate-400">
-                      {imageFile ? '(optional)' : '(or upload a photo above)'}
-                    </span>
-                  </label>
-                  {!imageFile && descriptionReady && (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2.5 py-0.5 text-[10.5px] font-semibold text-blue-700">
-                      <CheckCircleIcon className="h-3 w-3" />
-                      Ready without a photo
-                    </span>
-                  )}
-                </div>
-                <textarea
-                  id="pet-description"
-                  name="pet-description"
-                  rows={4}
-                  maxLength={2000}
-                  value={textInput}
-                  onChange={(event) => setTextInput(event.target.value)}
-                  placeholder="Example: medium-sized dog, curly cream coat, floppy ears, about 12 kg, very friendly and playful…"
-                  className="w-full resize-none rounded-lg border border-slate-200 bg-white px-3 py-2 text-[12.5px] text-slate-700 outline-none transition focus:border-blue-300 focus:ring-2 focus:ring-blue-100"
-                />
-                <div className="flex flex-wrap items-center justify-between gap-2 text-[10.5px] text-slate-400">
-                  <span>
-                    {imageFile
-                      ? 'Size, coat, and temperament help settle what a photo cannot show.'
-                      : 'No photo? Describe size, coat, colour, ears, and temperament.'}
-                  </span>
-                  <span>{textInput.length}/2000</span>
-                </div>
-              </div>
-
-              {/* Error / info banner */}
-              <div className="mt-3">
-                {errorMessage ? (
-                  <div className="flex flex-col gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-[12.5px] text-red-700">
-                    <div className="flex items-start gap-2">
-                      <ExclamationCircleIcon className="mt-0.5 h-4 w-4 shrink-0" />
-                      <span>{errorMessage}</span>
+            <FadeIn trigger="mount" delay={0.08}>
+              <section
+                aria-labelledby="breed-input-title"
+                className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_2px_20px_rgba(15,28,63,0.06)]"
+              >
+                <header className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 bg-slate-50/70 px-4 py-3.5 sm:px-5">
+                  <div className="flex items-center gap-2.5">
+                    <StepBadge n={1} active={activeStep === 1} />
+                    <div>
+                      <h2
+                        id="breed-input-title"
+                        className="text-[13.5px] font-extrabold text-slate-900"
+                      >
+                        Tell us about your pet
+                      </h2>
+                      <p className="text-[11.5px] text-slate-500">
+                        A photo, a description, or both
+                      </p>
                     </div>
-                    {(() => {
-                      if (
-                        (throttleError?.code === 'THROTTLE' &&
-                          !throttleError.isAuthed) ||
-                        throttleError?.code === 'IMAGE_REQUIRES_AUTH'
-                      ) {
-                        return (
-                          <AuthModal
-                            onAuthenticated={runClassification}
-                            trigger={
-                              <Button
-                                type="button"
-                                size="sm"
-                                className="w-fit rounded-md bg-blue-600 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-blue-700"
-                              >
-                                {throttleError?.code === 'IMAGE_REQUIRES_AUTH'
-                                  ? 'Sign in to use a photo'
-                                  : 'Sign in for more free identifications'}
-                              </Button>
-                            }
-                          />
-                        )
-                      }
-                      return null
-                    })()}
                   </div>
-                ) : (
-                  <p className="text-center text-[11.5px] text-slate-400">
-                    {me
-                      ? '5 identifications per 5 hours · photo or description.'
-                      : '2 free description-based identifications · Sign in to use photos and get 5 per 5 hours.'}
-                  </p>
+                  <span
+                    className="rounded-full bg-blue-100 px-2.5 py-1 text-[11px] font-bold text-blue-700"
+                    title={
+                      me
+                        ? 'Signed in: 5 identifications every 5 hours.'
+                        : 'Signed out: 2 free description-based identifications.'
+                    }
+                  >
+                    {me ? '5 per 5 hrs' : '2 free tries'}
+                  </span>
+                </header>
+
+                <div className="p-4 sm:p-5">
+                  {/* Input method switcher */}
+                  <div
+                    role="tablist"
+                    aria-label="How do you want to identify the breed?"
+                    className="grid grid-cols-2 gap-1.5 rounded-xl bg-slate-100 p-1.5"
+                  >
+                    {TABS.map(({ id, label, hint, icon: Icon }) => {
+                      const selected = mode === id
+                      const filled =
+                        id === 'photo'
+                          ? Boolean(imageFile)
+                          : trimmedText.length > 0
+                      return (
+                        <button
+                          key={id}
+                          type="button"
+                          role="tab"
+                          id={`breed-tab-${id}`}
+                          aria-selected={selected}
+                          aria-controls={`breed-panel-${id}`}
+                          onClick={() => setMode(id)}
+                          onKeyDown={(event) => {
+                            if (
+                              event.key !== 'ArrowRight' &&
+                              event.key !== 'ArrowLeft'
+                            )
+                              return
+                            event.preventDefault()
+                            const step = event.key === 'ArrowRight' ? 1 : -1
+                            const index = TABS.findIndex((tab) => tab.id === id)
+                            const next =
+                              TABS[(index + step + TABS.length) % TABS.length]
+                            setMode(next.id)
+                            document
+                              .getElementById(`breed-tab-${next.id}`)
+                              ?.focus()
+                          }}
+                          className={`flex items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-[13px] font-bold transition ${
+                            selected
+                              ? 'bg-white text-blue-700 shadow-sm'
+                              : 'text-slate-500 hover:text-slate-700'
+                          }`}
+                        >
+                          <Icon className="h-4 w-4 shrink-0" />
+                          <span className="truncate">{label}</span>
+                          {filled ? (
+                            <CheckCircleIcon className="h-4 w-4 shrink-0 text-emerald-500" />
+                          ) : (
+                            <span className="hidden text-[10.5px] font-semibold text-slate-400 sm:inline">
+                              · {hint}
+                            </span>
+                          )}
+                        </button>
+                      )
+                    })}
+                  </div>
+
+                  {/* Panels stay mounted so switching never loses work */}
+                  <div className="mt-4">
+                    <div
+                      role="tabpanel"
+                      id="breed-panel-photo"
+                      aria-labelledby="breed-tab-photo"
+                      hidden={mode !== 'photo'}
+                    >
+                      <BreedUploadZone
+                        file={imageFile}
+                        previewUrl={previewUrl}
+                        status={uploadStatus}
+                        progress={uploadProgress}
+                        onFile={handleFile}
+                        onRemove={handleRemoveImage}
+                        onValidationError={setLocalError}
+                      />
+                      {!imageFile && (
+                        <p className="mt-3 text-center text-[12px] text-slate-500">
+                          No photo handy?{' '}
+                          <button
+                            type="button"
+                            onClick={() => setMode('text')}
+                            className="font-bold text-blue-600 underline-offset-2 hover:underline"
+                          >
+                            Describe your pet instead
+                          </button>
+                        </p>
+                      )}
+                    </div>
+
+                    <div
+                      role="tabpanel"
+                      id="breed-panel-text"
+                      aria-labelledby="breed-tab-text"
+                      hidden={mode !== 'text'}
+                    >
+                      <BreedDescriptionInput
+                        value={textInput}
+                        onChange={(next) => {
+                          setTextInput(next)
+                          setLocalError(null)
+                        }}
+                        onSubmitShortcut={handleSubmit}
+                      />
+                    </div>
+                  </div>
+
+                  {/* What will be sent */}
+                  {hasInput && (
+                    <div className="mt-4 flex flex-wrap items-center gap-2 rounded-xl border border-blue-100 bg-blue-50/70 px-3 py-2.5">
+                      <span className="text-[10.5px] font-extrabold uppercase tracking-wider text-blue-700">
+                        Sending
+                      </span>
+                      {imageFile && (
+                        <InputChip
+                          icon={PhotoIcon}
+                          label={imageFile.name}
+                          onRemove={handleRemoveImage}
+                          removeLabel="Remove the photo"
+                        />
+                      )}
+                      {trimmedText.length > 0 && (
+                        <InputChip
+                          icon={PencilSquareIcon}
+                          label={`Description · ${trimmedText.length} chars`}
+                          onRemove={() => setTextInput('')}
+                          removeLabel="Clear the description"
+                        />
+                      )}
+                    </div>
+                  )}
+
+                  {/* Sign-in requirement surfaced before the user commits */}
+                  {needsAuthForImage && !errorMessage && (
+                    <div className="mt-3 flex flex-wrap items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
+                      <LockClosedIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />
+                      <div className="min-w-0 flex-1">
+                        <p className="text-[12.5px] font-bold text-amber-900">
+                          Photo identification needs an account
+                        </p>
+                        <p className="mt-0.5 text-[11.5px] leading-relaxed text-amber-800">
+                          Sign in to identify from a photo — or switch to{' '}
+                          <button
+                            type="button"
+                            onClick={() => setMode('text')}
+                            className="font-bold underline underline-offset-2"
+                          >
+                            a written description
+                          </button>
+                          , which is free.
+                        </p>
+                      </div>
+                      <AuthModal
+                        onAuthenticated={runClassification}
+                        trigger={
+                          <Button
+                            type="button"
+                            size="sm"
+                            className="h-8 rounded-lg bg-amber-600 px-3 text-[11.5px] font-bold text-white hover:bg-amber-700"
+                          >
+                            Sign in
+                          </Button>
+                        }
+                      />
+                    </div>
+                  )}
+
+                  {/* Errors */}
+                  {errorMessage && (
+                    <div
+                      role="alert"
+                      className="mt-3 flex flex-col gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-[12.5px] text-red-700"
+                    >
+                      <div className="flex items-start gap-2">
+                        <ExclamationCircleIcon className="mt-0.5 h-4 w-4 shrink-0" />
+                        <span>{errorMessage}</span>
+                      </div>
+                      {showThrottleSignIn && (
+                        <AuthModal
+                          onAuthenticated={runClassification}
+                          trigger={
+                            <Button
+                              type="button"
+                              size="sm"
+                              className="w-fit rounded-md bg-blue-600 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-blue-700"
+                            >
+                              {throttleError.code === 'IMAGE_REQUIRES_AUTH'
+                                ? 'Sign in to use a photo'
+                                : 'Sign in for more free identifications'}
+                            </Button>
+                          }
+                        />
+                      )}
+                    </div>
+                  )}
+
+                  <AuthModal
+                    open={imageAuthOpen}
+                    onOpenChange={setImageAuthOpen}
+                    notice="Identifying a breed from a photo needs an account. Sign in to continue — or remove the photo and describe your pet instead, which is free."
+                    onAuthenticated={() => {
+                      setImageAuthOpen(false)
+                      runClassification()
+                    }}
+                  />
+
+                  {/* Actions */}
+                  <div className="mt-5 flex flex-col gap-3 border-t border-slate-100 pt-4 sm:flex-row-reverse sm:items-center sm:justify-between">
+                    <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center">
+                      {hasInput && (
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          onClick={handleReset}
+                          className="h-11 rounded-xl px-4 text-[12.5px] font-bold text-slate-500 hover:bg-slate-100 hover:text-slate-700"
+                        >
+                          Start over
+                        </Button>
+                      )}
+                      <Button
+                        type="button"
+                        onClick={handleSubmit}
+                        disabled={classifyMutation.isPending}
+                        className={`h-11 rounded-xl px-6 text-[13.5px] font-bold text-white transition-all duration-150 hover:-translate-y-px active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60 ${
+                          isReady
+                            ? 'bg-blue-600 hover:bg-blue-700'
+                            : 'bg-blue-600/70 hover:bg-blue-600'
+                        }`}
+                      >
+                        {classifyMutation.isPending ? (
+                          <span className="flex items-center justify-center gap-2">
+                            <ArrowPathIcon className="h-4 w-4 animate-spin" />
+                            Identifying…
+                          </span>
+                        ) : (
+                          <span className="flex items-center justify-center gap-2">
+                            <MagnifyingGlassIcon className="h-4 w-4" />
+                            {result ? 'Identify again' : 'Identify breed'}
+                          </span>
+                        )}
+                      </Button>
+                    </div>
+
+                    <p className="text-[11.5px] leading-relaxed text-slate-400">
+                      {isReady ? (
+                        <span className="inline-flex items-center gap-1.5 font-semibold text-emerald-600">
+                          <CheckCircleIcon className="h-3.5 w-3.5" />
+                          Ready to identify
+                        </span>
+                      ) : (
+                        'Add a photo or at least a short description to continue.'
+                      )}
+                    </p>
+                  </div>
+                </div>
+              </section>
+            </FadeIn>
+
+            {/* ── Results ───────────────────────────────────────────────── */}
+            <div ref={resultsRef} className="mt-8 scroll-mt-24">
+              <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5">
+                  <StepBadge n={2} active={activeStep >= 2} />
+                  <div>
+                    <h2 className="text-[13.5px] font-extrabold text-slate-900">
+                      Breed profile
+                    </h2>
+                    <p className="text-[11.5px] text-slate-500">
+                      {classifyMutation.isPending
+                        ? 'Reading the details…'
+                        : result
+                          ? 'Based on what you sent — always a suggestion, never a pedigree.'
+                          : 'Waiting for a photo or a description.'}
+                    </p>
+                  </div>
+                </div>
+                {result && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={handleReset}
+                    className="h-9 rounded-lg border-slate-200 px-3 text-[12px] font-bold text-slate-600 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
+                  >
+                    <ArrowPathIcon className="h-3.5 w-3.5" />
+                    Identify another pet
+                  </Button>
                 )}
               </div>
 
-              {/* CTA */}
-              <div className="mt-5 flex flex-col items-center gap-3">
-                <AuthModal
-                  open={imageAuthOpen}
-                  onOpenChange={setImageAuthOpen}
-                  notice="Identifying a breed from a photo needs an account. Sign in to continue — or remove the photo and describe your pet instead, which is free."
-                  onAuthenticated={() => {
-                    setImageAuthOpen(false)
-                    runClassification()
-                  }}
-                />
-                <Button
-                  onClick={handleSubmit}
-                  disabled={!canSubmit}
-                  className="w-full max-w-sm rounded-xl bg-blue-600 py-5 text-[14px] font-bold text-white transition-all duration-150 hover:-translate-y-px hover:bg-blue-700 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  {classifyMutation.isPending ? (
-                    <span className="flex items-center justify-center gap-2">
-                      <ArrowPathIcon className="h-4 w-4 animate-spin" />
-                      Identifying breed…
-                    </span>
-                  ) : (
-                    <span className="flex items-center justify-center gap-2">
-                      <MagnifyingGlassIcon className="h-4 w-4" />
-                      Identify Breed
-                    </span>
-                  )}
-                </Button>
-                <p className="flex items-center gap-1.5 text-[11px] text-slate-400">
-                  <ShieldCheckIcon className="h-3.5 w-3.5" />
-                  Your photo and description are never stored or shared.
-                </p>
-              </div>
-            </FadeIn>
+              <p aria-live="polite" className="sr-only">
+                {statusText}
+              </p>
 
-            {/* ── Results ───────────────────────────────────────────── */}
-            <FadeIn trigger="mount" delay={0.2} className="mt-10">
               {classifyMutation.isPending ? (
                 <PawMedLoader />
-              ) : classifyMutation.data ? (
-                <BreedResults
-                  result={classifyMutation.data}
-                  previewUrl={previewUrl}
-                />
+              ) : result ? (
+                <BreedResults result={result} previewUrl={previewUrl} />
               ) : (
                 <EmptyBreedResult />
               )}
-            </FadeIn>
+            </div>
           </div>
 
-          {/* Sidebar column */}
-          <FadeIn trigger="mount" delay={0.15}>
-            <div className="sticky top-20">
+          {/* ── Sidebar ─────────────────────────────────────────────────── */}
+          <FadeIn trigger="mount" delay={0.14} className="min-w-0">
+            <div className="lg:sticky lg:top-20">
               <AnimalBreedSidebar />
             </div>
           </FadeIn>

@@ -1,6 +1,5 @@
 import type { BreedClassificationResult, BreedSize } from '../types'
 import {
-  CheckCircleIcon,
   ExclamationCircleIcon,
   SparklesIcon,
   MapPinIcon,
@@ -13,27 +12,50 @@ function Divider() {
   return <hr className="h-px border-0 bg-slate-200" />
 }
 
-const SIZE_COLORS: Record<BreedSize, string> = {
-  small: 'bg-sky-50 text-sky-700 border-sky-200',
-  medium: 'bg-blue-50 text-blue-700 border-blue-200',
-  large: 'bg-indigo-50 text-indigo-700 border-indigo-200',
-  'extra-large': 'bg-violet-50 text-violet-700 border-violet-200',
+const SIZE_LABELS: Record<BreedSize, string> = {
+  small: 'Small breed',
+  medium: 'Medium breed',
+  large: 'Large breed',
+  'extra-large': 'Extra-large breed',
 }
 
-function ConfidenceBadge({ value }: { value: number }) {
-  const color =
-    value >= 80
-      ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-      : value >= 50
-        ? 'bg-amber-50 text-amber-700 border-amber-200'
-        : 'bg-slate-50 text-slate-600 border-slate-200'
+function confidenceTone(value: number) {
+  if (value >= 80)
+    return {
+      label: 'Strong match',
+      bar: 'bg-emerald-400',
+      text: 'text-emerald-100',
+    }
+  if (value >= 50)
+    return {
+      label: 'Likely match',
+      bar: 'bg-amber-300',
+      text: 'text-amber-100',
+    }
+  return { label: 'Rough guess', bar: 'bg-orange-300', text: 'text-orange-100' }
+}
+
+/** A number alone reads as precision it does not have — show the scale too. */
+function ConfidenceMeter({ value }: { value: number }) {
+  const tone = confidenceTone(value)
   return (
-    <span
-      className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-[11px] font-semibold ${color}`}
-    >
-      <CheckCircleIcon className="h-3 w-3" />
-      {value}% Match
-    </span>
+    <div className="w-full max-w-52 rounded-xl border border-white/25 bg-white/10 px-3 py-2">
+      <div className="flex items-baseline justify-between gap-2">
+        <span className="text-[11px] font-bold uppercase tracking-wider text-blue-100">
+          Confidence
+        </span>
+        <span className="text-[15px] font-extrabold text-white">{value}%</span>
+      </div>
+      <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-white/25">
+        <div
+          className={`h-full rounded-full ${tone.bar}`}
+          style={{ width: `${Math.min(100, Math.max(0, value))}%` }}
+        />
+      </div>
+      <p className={`mt-1 text-[11px] font-semibold ${tone.text}`}>
+        {tone.label}
+      </p>
+    </div>
   )
 }
 
@@ -96,32 +118,36 @@ export function BreedResults({
               Unable to identify
             </p>
             <h2 className="mt-1 text-xl font-semibold">
-              Could not identify a breed from this image.
+              We could not pin down a breed this time.
             </h2>
             <p className="mt-2 text-sm text-blue-100/90">
-              Please upload a clear photo of a single animal, ideally with the
-              full body or face visible.
+              Nothing is wrong on your end — the identifier just needs a clearer
+              signal to work from.
             </p>
           </div>
         </div>
-        <div className="space-y-2 px-6 py-5 text-sm text-slate-700">
-          <p className="font-semibold text-slate-900">
-            Tips for a better result:
-          </p>
-          <ul className="list-disc space-y-1 pl-5">
-            <li>Make sure the animal is clearly in frame.</li>
-            <li>Use good lighting — avoid shadows or flash glare.</li>
-            <li>Avoid blurry or low-resolution photos.</li>
+        <div className="space-y-3 px-6 py-5 text-sm text-slate-700">
+          <p className="font-semibold text-slate-900">What usually helps:</p>
+          <ul className="space-y-2">
+            {[
+              'One animal in frame, facing the camera.',
+              'Even lighting — no harsh shadows or flash glare.',
+              'A sharp, full-size photo rather than a crop of a crop.',
+              'Add a written description too: size, coat, colour, and ears.',
+            ].map((tip) => (
+              <li key={tip} className="flex gap-2.5 text-[13px]">
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500" />
+                {tip}
+              </li>
+            ))}
           </ul>
         </div>
       </div>
     )
   }
 
-  const sizeColor = SIZE_COLORS[result.size]
-
   return (
-    <div className="animate-rise-in overflow-hidden rounded-2xl border border-slate-200 bg-white">
+    <div className="animate-rise-in overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_2px_20px_rgba(15,28,63,0.06)]">
       {/* Header */}
       <div className="relative overflow-hidden bg-blue-700 px-6 py-7 sm:px-7 sm:py-8">
         <div className="absolute inset-x-0 bottom-0 h-px bg-white/20" />
@@ -135,19 +161,14 @@ export function BreedResults({
               />
             </div>
           )}
-          <div className="flex-1 space-y-2">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div className="flex flex-wrap gap-2">
-                <span className="rounded-full border border-white/25 bg-white/12 px-2.5 py-0.5 text-[11px] font-semibold capitalize text-white">
-                  {result.animal_type}
-                </span>
-
-                <span className="rounded-full border border-white/25 bg-white/12 px-2.5 py-0.5 text-[11px] font-semibold capitalize text-white">
-                  {result.size}
-                </span>
-              </div>
-
-              <ConfidenceBadge value={result.confidence} />
+          <div className="flex-1 space-y-2.5">
+            <div className="flex flex-wrap gap-2">
+              <span className="rounded-full border border-white/25 bg-white/12 px-2.5 py-0.5 text-[11px] font-semibold capitalize text-white">
+                {result.animal_type}
+              </span>
+              <span className="rounded-full border border-white/25 bg-white/12 px-2.5 py-0.5 text-[11px] font-semibold text-white">
+                {SIZE_LABELS[result.size]}
+              </span>
             </div>
             <h2 className="text-[30px] font-extrabold leading-tight text-white">
               {result.breed_name}
@@ -155,17 +176,31 @@ export function BreedResults({
             <p className="max-w-2xl text-[14px] leading-relaxed text-blue-100">
               {result.description}
             </p>
-            {result.origin && (
-              <div className="inline-flex items-center gap-1.5 rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-[12px] font-medium text-white">
-                <MapPinIcon className="h-3.5 w-3.5 shrink-0 text-blue-200" />
-                {result.origin}
-              </div>
-            )}
+            <div className="flex flex-wrap items-end gap-3 pt-1">
+              <ConfidenceMeter value={result.confidence} />
+              {result.origin && (
+                <div className="inline-flex items-center gap-1.5 rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-[12px] font-medium text-white">
+                  <MapPinIcon className="h-3.5 w-3.5 shrink-0 text-blue-200" />
+                  {result.origin}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Breed reference photo — lets the user eyeball the match themselves */}
+      {/* A weak match is worth saying out loud before the profile is read */}
+      {result.confidence < 50 && (
+        <div className="flex items-start gap-2.5 border-b border-amber-200 bg-amber-50 px-6 py-3.5 sm:px-7">
+          <ExclamationCircleIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />
+          <p className="text-[12.5px] leading-relaxed text-amber-900">
+            Low confidence — treat this as a starting point. A brighter photo
+            with the animal facing the camera, or a few extra details about size
+            and coat, usually sharpens the result.
+          </p>
+        </div>
+      )}
+
       <BreedReferenceCompare
         breedName={result.breed_name}
         animalType={result.animal_type}

@@ -5,6 +5,7 @@ import {
   ChevronRightIcon,
   MagnifyingGlassIcon,
   Squares2X2Icon,
+  XMarkIcon,
 } from '@heroicons/react/24/solid'
 
 interface Animal {
@@ -54,6 +55,8 @@ const CATEGORY_ORDER = [
   'Other',
 ]
 
+const PAGE_SIZE = 10
+
 function toSlug(name: string) {
   return name
     .toLowerCase()
@@ -61,170 +64,280 @@ function toSlug(name: string) {
     .replace(/[^a-z0-9-]/g, '')
 }
 
+function AnimalRow({ animal }: { animal: Animal }) {
+  return (
+    <Link
+      to="/animals/$slug"
+      params={{ slug: toSlug(animal.name) }}
+      className="group flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-2.5 transition hover:border-blue-300 hover:bg-blue-50/60 focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:outline-none"
+    >
+      {animal.image ? (
+        <img
+          src={animal.image}
+          alt=""
+          className="h-12 w-12 shrink-0 rounded-xl object-cover ring-1 ring-slate-100"
+          loading="lazy"
+        />
+      ) : (
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-lg">
+          {CATEGORY_EMOJI[animal.category] ?? '🐾'}
+        </div>
+      )}
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-[13px] font-bold text-slate-800 transition group-hover:text-blue-700">
+          {animal.name}
+        </p>
+        <p className="truncate text-[11px] text-slate-400">
+          {animal.description}
+        </p>
+        {animal.status && (
+          <span
+            className={`mt-1 inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold ${
+              STATUS_COLORS[animal.status] ?? 'bg-slate-100 text-slate-500'
+            }`}
+          >
+            {animal.status}
+          </span>
+        )}
+      </div>
+      <ChevronRightIcon className="h-4 w-4 shrink-0 text-slate-300 transition group-hover:text-blue-500" />
+    </Link>
+  )
+}
+
 export function AnimalBreedSidebar() {
   const [animals, setAnimals] = React.useState<Animal[]>([])
   const [query, setQuery] = React.useState('')
-  const [openCategories, setOpenCategories] = React.useState<Set<string>>(
-    new Set(CATEGORY_ORDER),
-  )
+  const [category, setCategory] = React.useState<string | null>(null)
+  const [visible, setVisible] = React.useState(PAGE_SIZE)
   const [loading, setLoading] = React.useState(true)
+  const [expanded, setExpanded] = React.useState(false)
 
   React.useEffect(() => {
+    let active = true
     fetch('/animals.json')
-      .then((r) => r.json())
+      .then((response) => response.json())
       .then((data: Animal[]) => {
+        if (!active) return
         setAnimals(data)
         setLoading(false)
       })
-      .catch(() => setLoading(false))
+      .catch(() => {
+        if (active) setLoading(false)
+      })
+    return () => {
+      active = false
+    }
   }, [])
+
+  const counts = React.useMemo(() => {
+    const map: Record<string, number> = {}
+    for (const animal of animals) {
+      map[animal.category] = (map[animal.category] ?? 0) + 1
+    }
+    return map
+  }, [animals])
+
+  const categories = React.useMemo(
+    () => CATEGORY_ORDER.filter((name) => counts[name]),
+    [counts],
+  )
 
   const filtered = React.useMemo(() => {
     const q = query.trim().toLowerCase()
-    if (!q) return animals
-    return animals.filter(
-      (a) =>
-        a.name.toLowerCase().includes(q) ||
-        a.description.toLowerCase().includes(q) ||
-        a.category.toLowerCase().includes(q),
-    )
-  }, [animals, query])
-
-  const grouped = React.useMemo(() => {
-    const map: Partial<Record<string, Animal[]>> = {}
-    for (const a of filtered) {
-      const cat = a.category
-      if (!map[cat]) map[cat] = []
-      map[cat].push(a)
-    }
-    return map
-  }, [filtered])
-
-  const categories = CATEGORY_ORDER.filter((c) => grouped[c]?.length)
-
-  const toggleCategory = (cat: string) => {
-    setOpenCategories((prev) => {
-      const next = new Set(prev)
-      next.has(cat) ? next.delete(cat) : next.add(cat)
-      return next
+    return animals.filter((animal) => {
+      if (category && animal.category !== category) return false
+      if (!q) return true
+      return (
+        animal.name.toLowerCase().includes(q) ||
+        animal.description.toLowerCase().includes(q) ||
+        animal.category.toLowerCase().includes(q)
+      )
     })
-  }
+  }, [animals, category, query])
+
+  // Any change to the filters starts the list from the top again.
+  React.useEffect(() => {
+    setVisible(PAGE_SIZE)
+  }, [query, category])
+
+  const hasFilters = Boolean(query.trim()) || category !== null
 
   return (
-    <aside className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-      <div className="border-b border-slate-100 bg-slate-50/70 px-4 py-4">
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <h2 className="text-[14px] font-extrabold text-slate-900">
-              Breed Library
-            </h2>
-            <p className="mt-0.5 text-[11.5px] text-slate-500">
-              {animals.length || '...'} profiles available
-            </p>
-          </div>
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
-            <Squares2X2Icon className="h-4 w-4" />
-          </div>
-        </div>
-      </div>
-
-      <div className="space-y-3 p-4">
-        <label className="relative block">
-          <MagnifyingGlassIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-          <input
-            type="search"
-            placeholder="Search breeds or species"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="h-11 w-full rounded-xl border border-slate-200 bg-white pl-9 pr-3 text-[13px] text-slate-700 placeholder-slate-400 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+    <aside className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_2px_20px_rgba(15,28,63,0.06)]">
+      {/* Header — doubles as the disclosure toggle on small screens */}
+      <div className="border-b border-slate-100 bg-slate-50/70">
+        <button
+          type="button"
+          onClick={() => setExpanded((prev) => !prev)}
+          aria-expanded={expanded}
+          aria-controls="breed-library-body"
+          className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left lg:cursor-default"
+        >
+          <span className="flex items-center gap-2.5">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-blue-700">
+              <Squares2X2Icon className="h-4 w-4" />
+            </span>
+            <span>
+              <span className="block text-[13.5px] font-extrabold text-slate-900">
+                Breed library
+              </span>
+              <span className="block text-[11.5px] text-slate-500">
+                {loading
+                  ? 'Loading profiles…'
+                  : `Browse ${animals.length} animal profiles`}
+              </span>
+            </span>
+          </span>
+          <ChevronDownIcon
+            className={`h-4 w-4 shrink-0 text-slate-400 transition-transform lg:hidden ${
+              expanded ? 'rotate-180' : ''
+            }`}
           />
-        </label>
+        </button>
       </div>
 
       <div
-        className="flex flex-col gap-4 overflow-y-auto px-4 pb-4"
-        style={{ maxHeight: '68vh' }}
+        id="breed-library-body"
+        className={expanded ? 'block' : 'hidden lg:block'}
       >
-        {loading ? (
-          <p className="py-8 text-center text-[12px] text-slate-400">
-            Loading…
-          </p>
-        ) : categories.length === 0 ? (
-          <p className="py-8 text-center text-[12px] text-slate-400">
-            No animals found.
-          </p>
-        ) : (
-          categories.map((cat) => {
-            const isOpen = openCategories.has(cat)
-            const items = grouped[cat] ?? []
-            return (
-              <div key={cat}>
-                {/* Category header */}
+        <div className="space-y-3 px-4 pb-3 pt-4">
+          <div className="relative">
+            <MagnifyingGlassIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+            <input
+              type="search"
+              aria-label="Search the breed library"
+              placeholder="Search a breed or species"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              className="h-11 w-full rounded-xl border border-slate-200 bg-white pl-9 pr-9 text-[13px] text-slate-700 placeholder-slate-400 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+            />
+            {query && (
+              <button
+                type="button"
+                onClick={() => setQuery('')}
+                aria-label="Clear the search"
+                className="absolute right-2.5 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
+              >
+                <XMarkIcon className="h-3.5 w-3.5" />
+              </button>
+            )}
+          </div>
+
+          {/* Category filter — replaces ten separately collapsible groups */}
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-linear-to-l from-white to-transparent" />
+            <div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 pb-1">
+              <button
+                type="button"
+                onClick={() => setCategory(null)}
+                aria-pressed={category === null}
+                className={`shrink-0 rounded-full border px-2.5 py-1 text-[11.5px] font-bold transition ${
+                  category === null
+                    ? 'border-blue-600 bg-blue-600 text-white'
+                    : 'border-slate-200 bg-white text-slate-600 hover:border-blue-300 hover:text-blue-700'
+                }`}
+              >
+                All
+              </button>
+              {categories.map((name) => {
+                const active = category === name
+                return (
+                  <button
+                    key={name}
+                    type="button"
+                    onClick={() => setCategory(active ? null : name)}
+                    aria-pressed={active}
+                    className={`shrink-0 rounded-full border px-2.5 py-1 text-[11.5px] font-bold transition ${
+                      active
+                        ? 'border-blue-600 bg-blue-600 text-white'
+                        : 'border-slate-200 bg-white text-slate-600 hover:border-blue-300 hover:text-blue-700'
+                    }`}
+                  >
+                    <span aria-hidden="true">
+                      {CATEGORY_EMOJI[name] ?? '🐾'}
+                    </span>{' '}
+                    {name}
+                    <span
+                      className={`ml-1 ${active ? 'text-blue-100' : 'text-slate-400'}`}
+                    >
+                      {counts[name]}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between gap-2">
+            <p
+              className="text-[11px] font-semibold text-slate-400"
+              aria-live="polite"
+            >
+              {loading
+                ? 'Loading…'
+                : `${filtered.length} of ${animals.length} profiles`}
+            </p>
+            {hasFilters && (
+              <button
+                type="button"
+                onClick={() => {
+                  setQuery('')
+                  setCategory(null)
+                }}
+                className="text-[11px] font-bold text-blue-600 underline-offset-2 hover:underline"
+              >
+                Reset filters
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div className="max-h-104 overflow-y-auto px-4 pb-4 lg:max-h-[60vh]">
+          {loading ? (
+            <div className="flex flex-col gap-2">
+              {Array.from({ length: 4 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="h-17 animate-pulse rounded-xl bg-slate-100"
+                />
+              ))}
+            </div>
+          ) : filtered.length === 0 ? (
+            <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 px-4 py-8 text-center">
+              <p className="text-[12.5px] font-semibold text-slate-600">
+                No match for “{query.trim()}”
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setQuery('')
+                  setCategory(null)
+                }}
+                className="mt-1 text-[11.5px] font-bold text-blue-600 underline-offset-2 hover:underline"
+              >
+                Clear the filters
+              </button>
+            </div>
+          ) : (
+            <>
+              <div className="flex flex-col gap-2">
+                {filtered.slice(0, visible).map((animal) => (
+                  <AnimalRow key={animal.url} animal={animal} />
+                ))}
+              </div>
+              {filtered.length > visible && (
                 <button
                   type="button"
-                  onClick={() => toggleCategory(cat)}
-                  aria-expanded={isOpen}
-                  className="flex w-full items-center justify-between rounded-xl px-2 py-2 text-left transition hover:bg-slate-50"
+                  onClick={() => setVisible((prev) => prev + PAGE_SIZE)}
+                  className="mt-2.5 w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 text-[12px] font-bold text-slate-600 transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
                 >
-                  <span className="flex min-w-0 items-center gap-2 text-[11.5px] font-bold uppercase tracking-wide text-slate-600">
-                    <span>{CATEGORY_EMOJI[cat] ?? '🐾'}</span>
-                    <span className="truncate">{cat}</span>
-                    <span className="rounded-full bg-slate-100 px-2 py-px text-[10px] font-semibold text-slate-500">
-                      {items.length}
-                    </span>
-                  </span>
-                  {isOpen ? (
-                    <ChevronDownIcon className="h-4 w-4 text-slate-400" />
-                  ) : (
-                    <ChevronRightIcon className="h-4 w-4 text-slate-400" />
-                  )}
+                  Show {Math.min(PAGE_SIZE, filtered.length - visible)} more
                 </button>
-
-                {/* Animal cards */}
-                {isOpen && (
-                  <div className="mt-1 flex flex-col gap-2">
-                    {items.map((animal) => (
-                      <Link
-                        key={animal.url}
-                        to="/animals/$slug"
-                        params={{ slug: toSlug(animal.name) }}
-                        className="group flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-2.5 transition hover:border-blue-200 hover:bg-blue-50/50"
-                      >
-                        {animal.image ? (
-                          <img
-                            src={animal.image}
-                            alt={animal.name}
-                            className="h-12 w-12 shrink-0 rounded-xl object-cover ring-1 ring-slate-100"
-                            loading="lazy"
-                          />
-                        ) : (
-                          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-lg">
-                            {CATEGORY_EMOJI[cat] ?? '🐾'}
-                          </div>
-                        )}
-                        <div className="min-w-0 flex-1">
-                          <p className="truncate text-[13px] font-bold text-slate-800 transition group-hover:text-blue-700">
-                            {animal.name}
-                          </p>
-                          <p className="truncate text-[11px] text-slate-400">
-                            {animal.description}
-                          </p>
-                          {animal.status && (
-                            <span
-                              className={`mt-1 inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold ${STATUS_COLORS[animal.status] ?? 'bg-slate-100 text-slate-500'}`}
-                            >
-                              {animal.status}
-                            </span>
-                          )}
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )
-          })
-        )}
+              )}
+            </>
+          )}
+        </div>
       </div>
     </aside>
   )
