@@ -18,12 +18,14 @@ import { Button } from '@/components/ui/button'
 import { formatBytes } from '@/utils/format-bytes'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { AuthModal } from '@/components/AuthModal'
-import { useMe } from '@/hooks/useAuth'
+import { useMe, useSupabaseSession } from '@/hooks/useAuth'
 import PawMedLoader from '@/features/classify-dss/components/ResultSkeletonLoader'
 import { CameraModal } from '@/features/classify-dss/components/CameraModal'
 import { AnimalBreedSidebar } from './components/AnimalBreedSidebar'
 
 /* ── Upload Zone ─────────────────────────────────────────────────────────── */
+const FILE_INPUT_ID = 'breed-photo-input'
+
 function BreedUploadZone({
   previewUrl,
   onFile,
@@ -73,11 +75,9 @@ function BreedUploadZone({
             Preview ready
           </span>
         </div>
-        {/* Click overlay to re-upload */}
-        <button
-          type="button"
+        <label
+          htmlFor={FILE_INPUT_ID}
           className="absolute inset-0 cursor-pointer"
-          onClick={() => fileInputRef.current?.click()}
           aria-label="Change photo"
         />
         {/* Remove button */}
@@ -94,9 +94,10 @@ function BreedUploadZone({
         </button>
         <input
           ref={fileInputRef}
+          id={FILE_INPUT_ID}
           type="file"
           accept="image/jpeg,image/png,image/webp"
-          className="hidden"
+          className="sr-only"
           onChange={(e) => {
             const f = e.target.files?.[0]
             if (f) validate(f)
@@ -121,7 +122,10 @@ function BreedUploadZone({
             ? 'border-blue-500 bg-blue-50'
             : 'border-blue-200 bg-white hover:border-blue-300'
         }`}
-        onClick={() => fileInputRef.current?.click()}
+        onClick={(e) => {
+          if ((e.target as HTMLElement).closest('label,button')) return
+          fileInputRef.current?.click()
+        }}
         onDragOver={(e) => {
           e.preventDefault()
           setDragActive(true)
@@ -137,9 +141,10 @@ function BreedUploadZone({
       >
         <input
           ref={fileInputRef}
+          id={FILE_INPUT_ID}
           type="file"
           accept="image/jpeg,image/png,image/webp"
-          className="hidden"
+          className="sr-only"
           onChange={(e) => {
             const f = e.target.files?.[0]
             if (f) validate(f)
@@ -165,17 +170,13 @@ function BreedUploadZone({
             </p>
           </div>
           <div className="flex flex-col items-center gap-2 sm:flex-row">
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation()
-                fileInputRef.current?.click()
-              }}
-              className="pointer-events-auto inline-flex h-10 items-center gap-2 rounded-lg border border-blue-200 bg-blue-600 px-4 text-[13px] font-bold text-white transition hover:bg-blue-700"
+            <label
+              htmlFor={FILE_INPUT_ID}
+              className="pointer-events-auto inline-flex h-10 cursor-pointer items-center gap-2 rounded-lg border border-blue-200 bg-blue-600 px-4 text-[13px] font-bold text-white transition hover:bg-blue-700 focus-within:ring-2 focus-within:ring-blue-300"
             >
               <DocumentIcon className="h-4 w-4" />
               Browse files
-            </button>
+            </label>
             <button
               type="button"
               onClick={(e) => {
@@ -275,13 +276,15 @@ export function ClassifyBreedView() {
   const [previewUrl, setPreviewUrl] = React.useState<string | null>(null)
   const [textInput, setTextInput] = React.useState('')
   const [localError, setLocalError] = React.useState<string | null>(null)
+  const [imageAuthOpen, setImageAuthOpen] = React.useState(false)
   const [uploadProgress, setUploadProgress] = React.useState(0)
   const [uploadStatus, setUploadStatus] = React.useState<
     'idle' | 'uploading' | 'done'
   >('idle')
   const timerRef = React.useRef<ReturnType<typeof setInterval> | null>(null)
 
-  const { data: me } = useMe()
+  const { session, isLoading: isSessionLoading } = useSupabaseSession()
+  const { data: me } = useMe({ enabled: Boolean(session) })
   const classifyMutation = useClassifyBreed()
 
   React.useEffect(() => {
@@ -329,6 +332,11 @@ export function ClassifyBreedView() {
 
   const trimmedText = textInput.trim()
 
+  const runClassification = () => {
+    setLocalError(null)
+    classifyMutation.mutate({ imageFile, textInput: trimmedText })
+  }
+
   const handleSubmit = () => {
     if (!imageFile && !trimmedText) {
       setLocalError(
@@ -346,8 +354,13 @@ export function ClassifyBreedView() {
       setLocalError('Please wait for the image to finish uploading.')
       return
     }
-    setLocalError(null)
-    classifyMutation.mutate({ imageFile, textInput: trimmedText })
+
+    if (needsAuthForImage) {
+      setLocalError(null)
+      setImageAuthOpen(true)
+      return
+    }
+    runClassification()
   }
 
   const errorMessage = localError ?? classifyMutation.error?.message ?? null
@@ -365,6 +378,9 @@ export function ClassifyBreedView() {
   const canSubmit =
     !classifyMutation.isPending &&
     (imageFile ? imageReady : descriptionReady)
+
+  const needsAuthForImage =
+    !isSessionLoading && !session && imageFile !== null
 
   return (
     <section className="relative z-10 min-h-screen overflow-hidden px-5 py-8 md:px-12">
@@ -476,18 +492,22 @@ export function ClassifyBreedView() {
                     </div>
                     {(() => {
                       if (
-                        throttleError?.code === 'THROTTLE' &&
-                        !throttleError.isAuthed
+                        (throttleError?.code === 'THROTTLE' &&
+                          !throttleError.isAuthed) ||
+                        throttleError?.code === 'IMAGE_REQUIRES_AUTH'
                       ) {
                         return (
                           <AuthModal
+                            onAuthenticated={runClassification}
                             trigger={
                               <Button
                                 type="button"
                                 size="sm"
                                 className="w-fit rounded-md bg-blue-600 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-blue-700"
                               >
-                                Sign in for more free identifications
+                                {throttleError?.code === 'IMAGE_REQUIRES_AUTH'
+                                  ? 'Sign in to use a photo'
+                                  : 'Sign in for more free identifications'}
                               </Button>
                             }
                           />
@@ -499,14 +519,23 @@ export function ClassifyBreedView() {
                 ) : (
                   <p className="text-center text-[11.5px] text-slate-400">
                     {me
-                      ? '5 identifications per 5 hours.'
-                      : '2 free identifications · Sign in for 5 per 5 hours.'}
+                      ? '5 identifications per 5 hours · photo or description.'
+                      : '2 free description-based identifications · Sign in to use photos and get 5 per 5 hours.'}
                   </p>
                 )}
               </div>
 
               {/* CTA */}
               <div className="mt-5 flex flex-col items-center gap-3">
+                <AuthModal
+                  open={imageAuthOpen}
+                  onOpenChange={setImageAuthOpen}
+                  notice="Identifying a breed from a photo needs an account. Sign in to continue — or remove the photo and describe your pet instead, which is free."
+                  onAuthenticated={() => {
+                    setImageAuthOpen(false)
+                    runClassification()
+                  }}
+                />
                 <Button
                   onClick={handleSubmit}
                   disabled={!canSubmit}

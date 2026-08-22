@@ -22,7 +22,27 @@ class BreedClassificationAPIView(APIView):
     throttle_classes = [DiseaseClassificationIPThrottle]
     permission_classes = [AllowAny]
 
+    def _is_unauthenticated_image_request(self, request) -> bool:
+        return bool(request.FILES.get("image")) and not request.user.is_authenticated
+
+    def check_throttles(self, request):
+        if self._is_unauthenticated_image_request(request):
+            return
+        super().check_throttles(request)
+
     def post(self, request):
+        if self._is_unauthenticated_image_request(request):
+            return Response(
+                {
+                    "detail": (
+                        "Sign in to identify a breed from a photo. You can still "
+                        "identify your pet by describing it, without an account."
+                    ),
+                    "code": "image_requires_auth",
+                },
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+
         request_serializer = BreedClassificationRequestSerializer(data=request.data)
         if not request_serializer.is_valid():
             return Response(

@@ -80,6 +80,9 @@ export async function classifyBreed(
       err.code = 'THROTTLE'
       err.isAuthed = isAuthed
     }
+    if (errorPayload?.code === 'image_requires_auth') {
+      err.code = 'IMAGE_REQUIRES_AUTH'
+    }
     throw err
   }
 
