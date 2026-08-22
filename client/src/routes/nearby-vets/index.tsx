@@ -1,7 +1,12 @@
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import NearbyVetsGeoMap from '@/components/custom/NearbyVetsGeoMap'
 import { Seo } from '@/components/Seo'
-import { MapPinIcon, PhoneIcon, ClockIcon } from '@heroicons/react/24/solid'
+import {
+  MapPinIcon,
+  PhoneIcon,
+  ClockIcon,
+  MagnifyingGlassIcon,
+} from '@heroicons/react/24/solid'
 import { useMe } from '@/hooks/useAuth'
 import { AuthModal } from '@/components/AuthModal'
 import { Button } from '@/components/ui/button'
@@ -17,6 +22,11 @@ const tips = [
     icon: <MapPinIcon className="h-5 w-5 text-blue-500" />,
     title: 'Live location',
     body: 'Clinics are sorted by distance from your current position in real time.',
+  },
+  {
+    icon: <MagnifyingGlassIcon className="h-5 w-5 text-amber-500" />,
+    title: 'Search any area',
+    body: 'Type a city, barangay, or address to find clinics somewhere other than where you are.',
   },
   {
     icon: <PhoneIcon className="h-5 w-5 text-emerald-500" />,
@@ -35,14 +45,14 @@ function RouteComponent() {
   const navigate = useNavigate()
 
   const description =
-    'Locate the nearest veterinary clinics on a live map. Get directions, phone numbers, and distances — powered by Pawmed AI.'
+    'Locate the nearest veterinary clinics on a live map, or search any city or address. Get directions, phone numbers, and distances — powered by Pawmed AI.'
 
   return (
     <section className="bg-white text-slate-900 antialiased">
       <Seo
         title="Find a Vet Near You | Pawmed AI"
         description={description}
-        keywords="find vet near me, nearest veterinary clinic, vet locator map, animal hospital near me, emergency vet, pawmed ai nearby vets"
+        keywords="find vet near me, nearest veterinary clinic, vet locator map, animal hospital near me, emergency vet, search vet by city, vet clinics by address, pawmed ai nearby vets"
         canonicalPath="/nearby-vets"
         ogImage="/images/hero-vet.jpg"
         ogImageAlt="Find a veterinary clinic near you with Pawmed AI's live vet locator map"
@@ -66,14 +76,15 @@ function RouteComponent() {
           </h1>
           <p className="max-w-xl text-sm leading-relaxed text-slate-500 md:text-base">
             Instantly discover veterinary clinics in your area. Allow location
-            access and we'll plot the nearest options on the map for you.
+            access, or search any city or address, and we'll plot the nearest
+            options on the map for you.
           </p>
         </div>
       </div>
 
       {/* ── TIPS STRIP ── */}
       <div className="border-b border-slate-100 px-6 py-6">
-        <div className="mx-auto max-w-6xl grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div className="mx-auto max-w-6xl grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {tips.map((tip) => (
             <div
               key={tip.title}

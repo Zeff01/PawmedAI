@@ -3,7 +3,7 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import type { VetClinic, MapboxSearchResponse, MapboxSearchFeature } from './types/vet';
 import { Card } from '@/components/ui/card';
-import { Phone, Navigation, MapPin, LocateFixed, Loader2 } from 'lucide-react';
+import { Phone, Navigation, MapPin, LocateFixed, Loader2, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN as string;
@@ -69,37 +69,220 @@ function MapSkeleton() {
   );
 }
 
-// ── Location-denied empty state ────────────────────────────────
-function LocationDenied() {
+// ── Manual location fallback ───────────────────────────────────
+type PlaceSuggestion = { name: string; lat: number; lng: number };
+
+async function forwardGeocode(query: string): Promise<PlaceSuggestion[]> {
+  const url = new URL('https://api.mapbox.com/search/geocode/v6/forward');
+  url.searchParams.set('q', query);
+  url.searchParams.set('limit', '5');
+  url.searchParams.set('language', 'en');
+  url.searchParams.set('access_token', mapboxgl.accessToken as string);
+
+  const res = await fetch(url.toString());
+  if (!res.ok) throw new Error(`Mapbox geocoding error: ${res.status}`);
+
+  const data = await res.json();
+  return (data.features ?? [])
+    .map((f: { properties?: { full_address?: string; name?: string }; geometry?: { coordinates?: [number, number] } }) => {
+      const coords = f.geometry?.coordinates;
+      const name = f.properties?.full_address ?? f.properties?.name;
+      if (!coords || !name) return null;
+      return { name, lat: coords[1], lng: coords[0] };
+    })
+    .filter((p: PlaceSuggestion | null): p is PlaceSuggestion => p !== null);
+}
+
+function LocationSearch({
+  onPick,
+  label,
+  placeholder = 'City, barangay, or address',
+  overlayResults = false,
+  className,
+}: {
+  onPick: (place: PlaceSuggestion) => void;
+  label?: string;
+  placeholder?: string;
+  overlayResults?: boolean;
+  className?: string;
+}) {
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState<PlaceSuggestion[]>([]);
+  const [searching, setSearching] = useState(false);
+  const [searchError, setSearchError] = useState<string | null>(null);
+
+  async function runSearch(e: React.FormEvent) {
+    e.preventDefault();
+    const q = query.trim();
+    if (!q) return;
+
+    setSearching(true);
+    setSearchError(null);
+    try {
+      const places = await forwardGeocode(q);
+      setResults(places);
+      if (!places.length) setSearchError('No places matched that search.');
+    } catch (err: unknown) {
+      setSearchError(err instanceof Error ? err.message : 'Search failed.');
+    } finally {
+      setSearching(false);
+    }
+  }
+
+  function pick(place: PlaceSuggestion) {
+    setResults([]);
+    setSearchError(null);
+    setQuery('');
+    onPick(place);
+  }
+
+  return (
+    <div className={cn('relative w-full', className)}>
+      {label && (
+        <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-400">
+          {label}
+        </p>
+      )}
+      <form onSubmit={runSearch} className="flex gap-2">
+        <div className="relative min-w-0 flex-1">
+          <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-slate-400" />
+          <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={placeholder}
+            aria-label="Search for a location"
+            className="w-full rounded-lg border border-slate-200 bg-white py-2 pl-8 pr-3 text-sm text-slate-700 placeholder:text-slate-400 focus:border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-100"
+          />
+        </div>
+        <button
+          type="submit"
+          disabled={searching || !query.trim()}
+          className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {searching ? <Loader2 className="size-3.5 animate-spin" /> : <Search className="size-3.5" />}
+          Search
+        </button>
+      </form>
+
+      {searchError && <p className="mt-2 text-left text-xs text-red-500">{searchError}</p>}
+
+      {results.length > 0 && (
+        <ul
+          className={cn(
+            'divide-y divide-slate-100 overflow-hidden rounded-lg border border-slate-200 bg-white text-left',
+            overlayResults
+              ? 'absolute left-0 right-0 top-full z-30 mt-2 shadow-lg'
+              : 'mt-2'
+          )}
+        >
+          {results.map((place) => (
+            <li key={`${place.lat},${place.lng}`}>
+              <button
+                onClick={() => pick(place)}
+                className="flex w-full items-start gap-2 px-3 py-2.5 text-left text-xs text-slate-600 transition-colors hover:bg-blue-50"
+              >
+                <MapPin className="mt-0.5 size-3.5 shrink-0 text-blue-500" />
+                <span>{place.name}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+// ── Geolocation failure empty state ────────────────────────────
+type GeoFailure = { code: number; message: string };
+
+function GeoErrorState({
+  failure,
+  onRetry,
+  retrying,
+  onPickPlace,
+}: {
+  failure: GeoFailure;
+  onRetry: () => void;
+  retrying: boolean;
+  onPickPlace: (place: PlaceSuggestion) => void;
+}) {
+  const { title, hint, steps } =
+    failure.code === 1
+      ? {
+          title: 'Location access denied',
+          hint: 'To find clinics near you, allow location access in your browser.',
+          steps: [
+            <>Click the lock / info icon in the address bar</>,
+            <>Set <span className="font-medium text-slate-600">Location</span> to <span className="font-medium text-slate-600">Allow</span></>,
+            <>Reload this page, then allow the prompt</>,
+          ],
+        }
+      : failure.code === 3
+        ? {
+            title: 'Location request timed out',
+            hint: 'Your browser did not return a position in time. This usually clears on a retry.',
+            steps: [
+              <>Make sure Wi-Fi is on — it improves accuracy indoors</>,
+              <>Press <span className="font-medium text-slate-600">Try again</span> below</>,
+            ],
+          }
+        : {
+            title: "Couldn't determine your location",
+            hint: 'Access is allowed, but your device could not produce a position fix.',
+            steps: [
+              <>Open <span className="font-medium text-slate-600">System Settings → Privacy &amp; Security → Location Services</span> and enable it for your browser</>,
+              <>Fully quit and reopen the browser after changing that toggle</>,
+              <>Turn Wi-Fi on — location fixes rely on it when there is no GPS</>,
+              <>Press <span className="font-medium text-slate-600">Try again</span> below</>,
+            ],
+          };
+
   return (
     <div className="flex flex-col items-center gap-4 rounded-2xl border border-slate-100 bg-slate-50 px-6 py-12 text-center">
       <span className="flex h-14 w-14 items-center justify-center rounded-full bg-red-50 text-red-400">
         <MapPin className="h-7 w-7" />
       </span>
       <div>
-        <p className="font-semibold text-slate-800">Location access denied</p>
-        <p className="mt-1 text-sm text-slate-500">
-          To find clinics near you, allow location access in your browser.
-        </p>
+        <p className="font-semibold text-slate-800">{title}</p>
+        <p className="mt-1 text-sm text-slate-500">{hint}</p>
       </div>
       <ol className="text-left text-xs text-slate-400 space-y-1 list-decimal list-inside">
-        <li>Click the lock / info icon in the address bar</li>
-        <li>Set <span className="font-medium text-slate-600">Location</span> to <span className="font-medium text-slate-600">Allow</span></li>
-        <li>Refresh this page</li>
+        {steps.map((step, i) => <li key={i}>{step}</li>)}
       </ol>
+      <button
+        onClick={onRetry}
+        disabled={retrying}
+        className="inline-flex items-center gap-1.5 rounded-lg border border-blue-200 bg-white px-4 py-2 text-xs font-semibold text-blue-600 shadow-sm transition-colors hover:bg-blue-50 disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        {retrying ? <Loader2 className="size-3.5 animate-spin" /> : <LocateFixed className="size-3.5" />}
+        {retrying ? 'Locating…' : 'Try again'}
+      </button>
+      {failure.message && (
+        <p className="text-[11px] text-slate-400">
+          Browser reported: {failure.message} (code {failure.code})
+        </p>
+      )}
+
+      <div className="mt-2 flex w-full flex-col items-center border-t border-slate-200 pt-6">
+        <LocationSearch
+          onPick={onPickPlace}
+          label="Or search a location instead"
+          className="max-w-md"
+        />
+      </div>
     </div>
   );
 }
 
 // ── User marker HTML ───────────────────────────────────────────
-function createUserMarkerEl(): HTMLDivElement {
+function createUserMarkerEl(label = 'You are here'): HTMLDivElement {
   const el = document.createElement('div');
   el.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:4px;';
   el.innerHTML = `
     <div style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:3px solid white;background:#185FA5;box-shadow:0 0 0 4px rgba(24,95,165,0.25)">
       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
     </div>
-    <span style="background:#185FA5;color:white;font-size:10px;font-weight:700;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:2px 8px;border-radius:999px;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,0.15)">You are here</span>
+    <span style="background:#185FA5;color:white;font-size:10px;font-weight:700;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:2px 8px;border-radius:999px;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,0.15)">${label}</span>
   `;
   return el;
 }
@@ -112,34 +295,76 @@ export default function NearbyVetsGeoMap() {
   const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const [vets, setVets] = useState<VetClinic[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [locationDenied, setLocationDenied] = useState<boolean>(false);
+  const [geoFailure, setGeoFailure] = useState<GeoFailure | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
   const [userCoords, setUserCoords] = useState<[number, number] | null>(null);
   const [userAddress, setUserAddress] = useState<string | null>(null);
   const [relocating, setRelocating] = useState(false);
   const [mapReady, setMapReady] = useState(false);
+  const [manualLocation, setManualLocation] = useState(false);
   const readyTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => {
+  const locate = useCallback(() => {
+    if (!navigator.geolocation) {
+      setGeoFailure({ code: 2, message: 'Geolocation is not supported by this browser.' });
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
+
     navigator.geolocation.getCurrentPosition(
       ({ coords }: GeolocationPosition) => {
-        setUserCoords([coords.latitude, coords.longitude]);
-        initMap(coords.latitude, coords.longitude);
-        reverseGeocode(coords.latitude, coords.longitude);
+        const { latitude: lat, longitude: lng } = coords;
+        setGeoFailure(null);
+        setManualLocation(false);
+        setUserCoords([lat, lng]);
+        reverseGeocode(lat, lng);
+
+        if (map.current) {
+          userMarker.current?.setLngLat([lng, lat]);
+          map.current.flyTo({ center: [lng, lat], zoom: 13, duration: 1000 });
+          searchNearbyVets(lat, lng);
+        }
       },
-      () => {
-        setLocationDenied(true);
+      (err: GeolocationPositionError) => {
+        setGeoFailure({ code: err.code, message: err.message });
         setLoading(false);
-      }
+      },
+      { enableHighAccuracy: false, timeout: 15000, maximumAge: 300000 }
     );
+  }, []);
+
+  useEffect(() => {
+    locate();
 
     return () => {
       if (readyTimeout.current) clearTimeout(readyTimeout.current);
       map.current?.remove();
       map.current = null;
     };
+  }, [locate]);
+
+  const handlePickPlace = useCallback((place: PlaceSuggestion) => {
+    setLoading(true);
+    setError(null);
+    setGeoFailure(null);
+    setManualLocation(true);
+    setUserAddress(place.name);
+    setUserCoords([place.lat, place.lng]);
+
+    if (map.current) {
+      userMarker.current?.setLngLat([place.lng, place.lat]);
+      map.current.flyTo({ center: [place.lng, place.lat], zoom: 13, duration: 1000 });
+      searchNearbyVets(place.lat, place.lng);
+    }
   }, []);
+
+  useEffect(() => {
+    if (!userCoords || geoFailure || map.current) return;
+    initMap(userCoords[0], userCoords[1]);
+  }, [userCoords, geoFailure]);
 
   async function reverseGeocode(lat: number, lng: number): Promise<void> {
     try {
@@ -179,7 +404,9 @@ export default function NearbyVetsGeoMap() {
 
     map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
-    userMarker.current = new mapboxgl.Marker(createUserMarkerEl())
+    userMarker.current = new mapboxgl.Marker(
+      createUserMarkerEl(manualLocation ? 'Searching here' : 'You are here')
+    )
       .setLngLat([lng, lat])
       .addTo(map.current);
 
@@ -194,6 +421,7 @@ export default function NearbyVetsGeoMap() {
     navigator.geolocation.getCurrentPosition(
       ({ coords }: GeolocationPosition) => {
         const { latitude: lat, longitude: lng } = coords;
+        setManualLocation(false);
         setUserCoords([lat, lng]);
         reverseGeocode(lat, lng);
 
@@ -216,16 +444,21 @@ export default function NearbyVetsGeoMap() {
         setVets([]);
         searchNearbyVets(lat, lng).finally(() => setRelocating(false));
       },
-      () => {
-        setError('Could not refresh location. Please check your browser settings.');
+      (err: GeolocationPositionError) => {
+        setError(
+          err.code === 1
+            ? 'Location access is blocked for this site. Allow it from the address bar, then reload.'
+            : `Could not refresh location: ${err.message || 'no position fix available'} (code ${err.code})`
+        );
         setRelocating(false);
       },
-      { enableHighAccuracy: true, timeout: 10000 }
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
     );
   }, []);
 
   async function searchNearbyVets(lat: number, lng: number): Promise<void> {
     setLoading(true);
+    setError(null);
     try {
       const url = new URL('https://api.mapbox.com/search/searchbox/v1/category/veterinarian');
       url.searchParams.set('proximity', `${lng},${lat}`);
@@ -239,7 +472,11 @@ export default function NearbyVetsGeoMap() {
       const data: MapboxSearchResponse = await res.json();
 
       if (!data.features.length) {
-        setError('No veterinary clinics found nearby.');
+        setError('No veterinary clinics found in this area. Try a nearby city.');
+        setVets([]);
+        setSelected(null);
+        vetMarkers.current.forEach((m) => m.remove());
+        vetMarkers.current = [];
         return;
       }
 
@@ -345,81 +582,110 @@ export default function NearbyVetsGeoMap() {
 
   return (
     <div className="flex flex-col gap-10">
-      {/* User location bar + refresh button */}
-      {userAddress && (
-        <div className="flex items-center gap-3 rounded-xl border border-blue-100 bg-blue-50/50 px-4 py-3">
-          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#185FA5] shadow-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
-          </span>
-          <div className="min-w-0 flex-1">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-blue-500">Your current location</p>
-            <p className="truncate text-sm text-slate-700">{userAddress}</p>
+      {!geoFailure && (
+        <div className="space-y-3 rounded-xl border border-blue-100 bg-blue-50/50 p-4">
+          <div className="flex items-center gap-3">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#185FA5] shadow-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-blue-500">
+                {manualLocation ? 'Searching around' : 'Your current location'}
+              </p>
+              <p className="truncate text-sm text-slate-700">
+                {userAddress ??
+                  (userCoords
+                    ? `${userCoords[0].toFixed(4)}, ${userCoords[1].toFixed(4)}`
+                    : 'Locating…')}
+              </p>
+            </div>
+            <button
+              onClick={handleRelocate}
+              disabled={relocating}
+              className="shrink-0 inline-flex items-center gap-1.5 rounded-lg border border-blue-200 bg-white px-3 py-2 text-xs font-semibold text-blue-600 shadow-sm hover:bg-blue-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {relocating ? (
+                <>
+                  <Loader2 className="size-3.5 animate-spin" />
+                  Locating…
+                </>
+              ) : (
+                <>
+                  <LocateFixed className="size-3.5" />
+                  {manualLocation ? 'Use my location' : 'Refresh location'}
+                </>
+              )}
+            </button>
           </div>
-          <button
-            onClick={handleRelocate}
-            disabled={relocating}
-            className="shrink-0 inline-flex items-center gap-1.5 rounded-lg border border-blue-200 bg-white px-3 py-2 text-xs font-semibold text-blue-600 shadow-sm hover:bg-blue-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {relocating ? (
-              <>
-                <Loader2 className="size-3.5 animate-spin" />
-                Locating…
-              </>
-            ) : (
-              <>
-                <LocateFixed className="size-3.5" />
-                Refresh location
-              </>
-            )}
-          </button>
+
+          <div className="border-t border-blue-100 pt-3">
+            <LocationSearch
+              onPick={handlePickPlace}
+              placeholder="Search another area — city, barangay, or address"
+              overlayResults
+            />
+          </div>
         </div>
       )}
 
-      {/* Map */}
-      <div className="relative h-96">
-        <div
-          ref={mapContainer}
-          className={cn(
-            'h-96 shrink-0 overflow-hidden rounded-2xl transition-opacity duration-500',
-            mapReady ? 'opacity-100' : 'opacity-0'
-          )}
-        />
-
-        {!mapReady && !locationDenied && <MapSkeleton />}
-
-        {/* My Location button overlaid on map (bottom-left) */}
-        {mapReady && !locationDenied && (
-          <button
-            onClick={handleRelocate}
-            disabled={relocating}
-            title="Re-center on my location"
-            className="absolute bottom-4 left-4 z-10 flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white shadow-md hover:bg-blue-50 transition-colors disabled:opacity-50"
-          >
-            {relocating ? (
-              <Loader2 className="size-4 animate-spin text-blue-600" />
-            ) : (
-              <LocateFixed className="size-4 text-blue-600" />
+      {!geoFailure && (
+        <div className="relative h-96">
+          <div
+            ref={mapContainer}
+            className={cn(
+              'h-96 shrink-0 overflow-hidden rounded-2xl transition-opacity duration-500',
+              mapReady ? 'opacity-100' : 'opacity-0'
             )}
-          </button>
-        )}
-      </div>
+          />
+
+          {!mapReady && <MapSkeleton />}
+
+          {/* My Location button overlaid on map (bottom-left) */}
+          {mapReady && (
+            <button
+              onClick={handleRelocate}
+              disabled={relocating}
+              title="Re-center on my location"
+              className="absolute bottom-4 left-4 z-10 flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white shadow-md hover:bg-blue-50 transition-colors disabled:opacity-50"
+            >
+              {relocating ? (
+                <Loader2 className="size-4 animate-spin text-blue-600" />
+              ) : (
+                <LocateFixed className="size-4 text-blue-600" />
+              )}
+            </button>
+          )}
+        </div>
+      )}
 
       <div className="space-y-4 bg-white">
         {/* Section header */}
         <div className="flex items-end justify-between">
           <div>
-            <h2 className="font-bold text-xl text-blue-500">Clinics Near You</h2>
-            <p className="text-muted-foreground text-sm">Sorted by distance from your current location.</p>
+            <h2 className="font-bold text-xl text-blue-500">
+              {manualLocation ? 'Clinics In This Area' : 'Clinics Near You'}
+            </h2>
+            <p className="text-muted-foreground text-sm">
+              {manualLocation
+                ? 'Sorted by distance from the location you searched.'
+                : 'Sorted by distance from your current location.'}
+            </p>
           </div>
-          {!loading && !locationDenied && !error && vets.length > 0 && (
+          {!loading && !geoFailure && !error && vets.length > 0 && (
             <span className="rounded-full bg-blue-50 border border-blue-100 px-3 py-1 text-xs font-semibold text-blue-600">
               {vets.length} found
             </span>
           )}
         </div>
 
-        {/* Location denied */}
-        {locationDenied && <LocationDenied />}
+        {geoFailure && (
+          <GeoErrorState
+            failure={geoFailure}
+            onRetry={locate}
+            retrying={loading}
+            onPickPlace={handlePickPlace}
+          />
+        )}
 
         {/* Generic error */}
         {error && (
@@ -429,7 +695,7 @@ export default function NearbyVetsGeoMap() {
         )}
 
         {/* Skeleton loading */}
-        {loading && (
+        {loading && !geoFailure && (
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
           </div>
