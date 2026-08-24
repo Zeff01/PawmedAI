@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/", include("classify_dss.urls")),
     path("api/", include("classify_breed.urls")),
+    path("api/", include("cbc_analyzer.urls")),
     path("api/push/", include("notifications.urls")),
     path("api/user/", include("users.urls")),
     path("api/bug/", include("bug_report.urls")),

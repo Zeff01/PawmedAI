@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'bug_report',
     'classify_dss',
     'classify_breed',
+    'cbc_analyzer',
     'notifications',
     'corsheaders',
     'django.contrib.admin',
@@ -163,6 +164,11 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'disease_classify_user': '5/5h',
         'disease_classify_anon': '2/10h',
+        # The CBC analyzer is professional-only, so this bounds Gemini spend on
+        # a misbehaving client rather than rationing clinical work. Uses DRF's
+        # stock rate syntax — the `N/Xh` form only works with the custom
+        # parse_rate in classify_dss.throttles.
+        'cbc_analyze_user': '30/hour',
     }
     ,
     'NUM_PROXIES': 1,
