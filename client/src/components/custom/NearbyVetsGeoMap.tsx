@@ -287,6 +287,10 @@ function createUserMarkerEl(label = 'You are here'): HTMLDivElement {
   return el;
 }
 
+function getGeolocation(): Geolocation | undefined {
+  return navigator.geolocation as Geolocation | undefined;
+}
+
 export default function NearbyVetsGeoMap() {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
@@ -306,7 +310,8 @@ export default function NearbyVetsGeoMap() {
   const readyTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const locate = useCallback(() => {
-    if (!navigator.geolocation) {
+    const geolocation = getGeolocation();
+    if (!geolocation) {
       setGeoFailure({ code: 2, message: 'Geolocation is not supported by this browser.' });
       setLoading(false);
       return;
@@ -314,7 +319,7 @@ export default function NearbyVetsGeoMap() {
 
     setLoading(true);
 
-    navigator.geolocation.getCurrentPosition(
+    geolocation.getCurrentPosition(
       ({ coords }: GeolocationPosition) => {
         const { latitude: lat, longitude: lng } = coords;
         setGeoFailure(null);
@@ -415,10 +420,16 @@ export default function NearbyVetsGeoMap() {
 
   // ── Relocate: re-fetch GPS, move marker, refresh clinics ────
   const handleRelocate = useCallback(() => {
+    const geolocation = getGeolocation();
+    if (!geolocation) {
+      setError('Geolocation is not supported by this browser.');
+      return;
+    }
+
     setRelocating(true);
     setError(null);
 
-    navigator.geolocation.getCurrentPosition(
+    geolocation.getCurrentPosition(
       ({ coords }: GeolocationPosition) => {
         const { latitude: lat, longitude: lng } = coords;
         setManualLocation(false);
@@ -707,7 +718,7 @@ export default function NearbyVetsGeoMap() {
             {vets.map((vet, index) => (
               <Card
                 key={vet.id}
-                ref={(el) => { cardRefs.current[vet.id] = el as HTMLDivElement | null; }}
+                ref={(el) => { cardRefs.current[vet.id] = el; }}
                 onClick={() => flyToVet(vet)}
                 className={cn(
                   'cursor-pointer p-4 transition-all shadow-none border border-blue-100 rounded-xl hover:border-blue-300 hover:shadow-sm',
