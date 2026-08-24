@@ -6,6 +6,7 @@ import '../styles.css'
 const navLinks = [
   { to: '/classify', label: 'Classify Disease' },
   { to: '/classify-breed', label: 'Classify Breed' },
+  { to: '/cbc-analyzer', label: 'CBC Analyzer' },
   { to: '/nearby-vets', label: 'Nearby Vets' },
 ]
 

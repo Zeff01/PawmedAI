@@ -18,6 +18,11 @@ const navLinks = [
   { to: '/nearby-vets', label: 'Nearby Vets' },
 ]
 
+const professionalNavLinks = [
+  { to: '/cbc-analyzer', label: 'CBC Analyzer' },
+  { to: '/medical-log', label: 'Medical Log' },
+]
+
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
@@ -27,6 +32,11 @@ export function Header() {
   const [authOpen, setAuthOpen] = useState(false)
   const isClassify = location.pathname.startsWith('/classify')
   const [signingOut, setSigningOut] = useState(false)
+
+  const visibleNavLinks =
+    me?.user_type === 'professional'
+      ? [...navLinks, ...professionalNavLinks]
+      : navLinks
 
   const isActivePath = (to: string) => {
     if (to === '/') return location.pathname === '/'
@@ -106,7 +116,7 @@ export function Header() {
             {/* Desktop Nav */}
             <nav className="hidden items-center md:flex" aria-label="Primary">
               <ul className="flex items-center gap-6">
-                {navLinks.map((item) => (
+                {visibleNavLinks.map((item) => (
                   <li key={item.to}>
                     {renderNavItem(
                       item,
@@ -264,7 +274,7 @@ export function Header() {
             Navigation
           </p>
           <ul className="flex flex-col gap-1">
-            {navLinks.map((item) => (
+            {visibleNavLinks.map((item) => (
               <li key={item.to}>
                 {renderNavItem(
                   item,
