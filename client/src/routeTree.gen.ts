@@ -12,9 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SplatRouteImport } from './routes/$'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as NearbyVetsIndexRouteImport } from './routes/nearby-vets/index'
+import { Route as MedicalLogIndexRouteImport } from './routes/medical-log/index'
 import { Route as LifecycleIndexRouteImport } from './routes/lifecycle/index'
 import { Route as ClassifyIndexRouteImport } from './routes/classify/index'
 import { Route as ClassifyBreedIndexRouteImport } from './routes/classify-breed/index'
+import { Route as CbcAnalyzerIndexRouteImport } from './routes/cbc-analyzer/index'
+import { Route as MedicalLogRecordIdRouteImport } from './routes/medical-log/$recordId'
 import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
 import { Route as AnimalsSlugIndexRouteImport } from './routes/animals/$slug/index'
 import { Route as AuthGoogleCallbackRouteImport } from './routes/auth/google/callback'
@@ -34,6 +37,11 @@ const NearbyVetsIndexRoute = NearbyVetsIndexRouteImport.update({
   path: '/nearby-vets/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MedicalLogIndexRoute = MedicalLogIndexRouteImport.update({
+  id: '/medical-log/',
+  path: '/medical-log/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LifecycleIndexRoute = LifecycleIndexRouteImport.update({
   id: '/lifecycle/',
   path: '/lifecycle/',
@@ -47,6 +55,16 @@ const ClassifyIndexRoute = ClassifyIndexRouteImport.update({
 const ClassifyBreedIndexRoute = ClassifyBreedIndexRouteImport.update({
   id: '/classify-breed/',
   path: '/classify-breed/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CbcAnalyzerIndexRoute = CbcAnalyzerIndexRouteImport.update({
+  id: '/cbc-analyzer/',
+  path: '/cbc-analyzer/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MedicalLogRecordIdRoute = MedicalLogRecordIdRouteImport.update({
+  id: '/medical-log/$recordId',
+  path: '/medical-log/$recordId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthCallbackRoute = AuthCallbackRouteImport.update({
@@ -69,9 +87,12 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/medical-log/$recordId': typeof MedicalLogRecordIdRoute
+  '/cbc-analyzer/': typeof CbcAnalyzerIndexRoute
   '/classify-breed/': typeof ClassifyBreedIndexRoute
   '/classify/': typeof ClassifyIndexRoute
   '/lifecycle/': typeof LifecycleIndexRoute
+  '/medical-log/': typeof MedicalLogIndexRoute
   '/nearby-vets/': typeof NearbyVetsIndexRoute
   '/auth/google/callback': typeof AuthGoogleCallbackRoute
   '/animals/$slug/': typeof AnimalsSlugIndexRoute
@@ -80,9 +101,12 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/medical-log/$recordId': typeof MedicalLogRecordIdRoute
+  '/cbc-analyzer': typeof CbcAnalyzerIndexRoute
   '/classify-breed': typeof ClassifyBreedIndexRoute
   '/classify': typeof ClassifyIndexRoute
   '/lifecycle': typeof LifecycleIndexRoute
+  '/medical-log': typeof MedicalLogIndexRoute
   '/nearby-vets': typeof NearbyVetsIndexRoute
   '/auth/google/callback': typeof AuthGoogleCallbackRoute
   '/animals/$slug': typeof AnimalsSlugIndexRoute
@@ -92,9 +116,12 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/medical-log/$recordId': typeof MedicalLogRecordIdRoute
+  '/cbc-analyzer/': typeof CbcAnalyzerIndexRoute
   '/classify-breed/': typeof ClassifyBreedIndexRoute
   '/classify/': typeof ClassifyIndexRoute
   '/lifecycle/': typeof LifecycleIndexRoute
+  '/medical-log/': typeof MedicalLogIndexRoute
   '/nearby-vets/': typeof NearbyVetsIndexRoute
   '/auth/google/callback': typeof AuthGoogleCallbackRoute
   '/animals/$slug/': typeof AnimalsSlugIndexRoute
@@ -105,9 +132,12 @@ export interface FileRouteTypes {
     | '/'
     | '/$'
     | '/auth/callback'
+    | '/medical-log/$recordId'
+    | '/cbc-analyzer/'
     | '/classify-breed/'
     | '/classify/'
     | '/lifecycle/'
+    | '/medical-log/'
     | '/nearby-vets/'
     | '/auth/google/callback'
     | '/animals/$slug/'
@@ -116,9 +146,12 @@ export interface FileRouteTypes {
     | '/'
     | '/$'
     | '/auth/callback'
+    | '/medical-log/$recordId'
+    | '/cbc-analyzer'
     | '/classify-breed'
     | '/classify'
     | '/lifecycle'
+    | '/medical-log'
     | '/nearby-vets'
     | '/auth/google/callback'
     | '/animals/$slug'
@@ -127,9 +160,12 @@ export interface FileRouteTypes {
     | '/'
     | '/$'
     | '/auth/callback'
+    | '/medical-log/$recordId'
+    | '/cbc-analyzer/'
     | '/classify-breed/'
     | '/classify/'
     | '/lifecycle/'
+    | '/medical-log/'
     | '/nearby-vets/'
     | '/auth/google/callback'
     | '/animals/$slug/'
@@ -139,9 +175,12 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SplatRoute: typeof SplatRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
+  MedicalLogRecordIdRoute: typeof MedicalLogRecordIdRoute
+  CbcAnalyzerIndexRoute: typeof CbcAnalyzerIndexRoute
   ClassifyBreedIndexRoute: typeof ClassifyBreedIndexRoute
   ClassifyIndexRoute: typeof ClassifyIndexRoute
   LifecycleIndexRoute: typeof LifecycleIndexRoute
+  MedicalLogIndexRoute: typeof MedicalLogIndexRoute
   NearbyVetsIndexRoute: typeof NearbyVetsIndexRoute
   AuthGoogleCallbackRoute: typeof AuthGoogleCallbackRoute
   AnimalsSlugIndexRoute: typeof AnimalsSlugIndexRoute
@@ -170,6 +209,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NearbyVetsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/medical-log/': {
+      id: '/medical-log/'
+      path: '/medical-log'
+      fullPath: '/medical-log/'
+      preLoaderRoute: typeof MedicalLogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lifecycle/': {
       id: '/lifecycle/'
       path: '/lifecycle'
@@ -189,6 +235,20 @@ declare module '@tanstack/react-router' {
       path: '/classify-breed'
       fullPath: '/classify-breed/'
       preLoaderRoute: typeof ClassifyBreedIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cbc-analyzer/': {
+      id: '/cbc-analyzer/'
+      path: '/cbc-analyzer'
+      fullPath: '/cbc-analyzer/'
+      preLoaderRoute: typeof CbcAnalyzerIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/medical-log/$recordId': {
+      id: '/medical-log/$recordId'
+      path: '/medical-log/$recordId'
+      fullPath: '/medical-log/$recordId'
+      preLoaderRoute: typeof MedicalLogRecordIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/callback': {
@@ -219,9 +279,12 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
   AuthCallbackRoute: AuthCallbackRoute,
+  MedicalLogRecordIdRoute: MedicalLogRecordIdRoute,
+  CbcAnalyzerIndexRoute: CbcAnalyzerIndexRoute,
   ClassifyBreedIndexRoute: ClassifyBreedIndexRoute,
   ClassifyIndexRoute: ClassifyIndexRoute,
   LifecycleIndexRoute: LifecycleIndexRoute,
+  MedicalLogIndexRoute: MedicalLogIndexRoute,
   NearbyVetsIndexRoute: NearbyVetsIndexRoute,
   AuthGoogleCallbackRoute: AuthGoogleCallbackRoute,
   AnimalsSlugIndexRoute: AnimalsSlugIndexRoute,
