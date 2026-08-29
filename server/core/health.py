@@ -5,7 +5,7 @@ from django.core.cache import cache, caches
 from django.http import JsonResponse
 from django.utils import timezone
 
-from classify_dss.throttles import DiseaseClassificationIPThrottle
+from core.throttles import AIRunThrottle
 
 
 def health_check(request):
@@ -51,7 +51,7 @@ def throttle_health_check(request):
     if not settings.DEBUG and not os.getenv("DJANGO_HEALTH_DEBUG"):
         return JsonResponse({"detail": "Not found."}, status=404)
 
-    throttle = DiseaseClassificationIPThrottle()
+    throttle = AIRunThrottle()
     cache_key = throttle.get_cache_key(request, None)
     throttle_count = None
     cache_error = None

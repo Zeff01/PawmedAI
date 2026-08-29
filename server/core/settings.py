@@ -161,14 +161,12 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+    # One allowance for everything a model generates — CBC analyses, disease
+    # classifications, and breed identifications all spend from the same count.
+    # The `N/Xh` form is read by the custom parse_rate in core.throttles.
     'DEFAULT_THROTTLE_RATES': {
-        'disease_classify_user': '5/5h',
-        'disease_classify_anon': '2/10h',
-        # The CBC analyzer is professional-only, so this bounds Gemini spend on
-        # a misbehaving client rather than rationing clinical work. Uses DRF's
-        # stock rate syntax — the `N/Xh` form only works with the custom
-        # parse_rate in classify_dss.throttles.
-        'cbc_analyze_user': '30/hour',
+        'ai_run_user': '5/5h',
+        'ai_run_anon': '2/10h',
     }
     ,
     'NUM_PROXIES': 1,

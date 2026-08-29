@@ -3,7 +3,7 @@ import logging
 
 from rest_framework import status
 from rest_framework.parsers import FormParser, MultiPartParser
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -13,7 +13,8 @@ from classify_dss.serializers import (
     FurParentClassificationResponseSerializer,
 )
 from classify_dss.services.disease_classifier import DiseaseClassifier
-from classify_dss.throttles import DiseaseClassificationIPThrottle
+from core.quotas import read_quota
+from core.throttles import AIRunThrottle
 
 logger = logging.getLogger(__name__)
 
@@ -145,9 +146,32 @@ def _serialize_and_respond(result: dict, mode: str):
     return Response(response_serializer.data, status=status.HTTP_200_OK)
 
 
+class ClassificationQuotaAPIView(APIView):
+    """How many AI runs the caller has left in the current window.
+
+    One figure for the whole app: CBC analyses, disease classifications, and
+    breed identifications all spend from the same allowance. Read-only and
+    unthrottled — checking must not cost a run.
+    """
+
+    permission_classes = [AllowAny]
+    throttle_classes = []
+
+    def get(self, request):
+        quota = read_quota(AIRunThrottle(), request) or {}
+        user = getattr(request, "user", None)
+        return Response(
+            {
+                "authenticated": bool(user and user.is_authenticated),
+                **quota,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+
 class DiseaseClassificationAPIView(APIView):
     parser_classes = [MultiPartParser, FormParser]
-    throttle_classes = [DiseaseClassificationIPThrottle]
+    throttle_classes = [AIRunThrottle]
     permission_classes = [IsAuthenticated]
 
     def post(self, request):

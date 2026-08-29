@@ -27,7 +27,7 @@ from cbc_analyzer.serializers import (
     PetSerializer,
 )
 from cbc_analyzer.services.cbc_analyzer import CBCAnalyzer
-from cbc_analyzer.throttles import CBCAnalyzeThrottle
+from core.throttles import AIRunThrottle
 
 logger = logging.getLogger(__name__)
 
@@ -167,7 +167,7 @@ class CBCAnalyzeAPIView(APIView):
 
     parser_classes = [MultiPartParser, FormParser, JSONParser]
     permission_classes = [IsVeterinaryProfessional]
-    throttle_classes = [CBCAnalyzeThrottle]
+    throttle_classes = [AIRunThrottle]
 
     def post(self, request):
         serializer = CBCAnalyzeRequestSerializer(data=request.data)

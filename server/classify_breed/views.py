@@ -12,14 +12,14 @@ from classify_breed.serializers import (
     BreedClassificationResponseSerializer,
 )
 from classify_breed.services.breed_classifier import BreedClassifier
-from classify_dss.throttles import DiseaseClassificationIPThrottle
+from core.throttles import AIRunThrottle
 
 logger = logging.getLogger(__name__)
 
 
 class BreedClassificationAPIView(APIView):
     parser_classes = [MultiPartParser, FormParser]
-    throttle_classes = [DiseaseClassificationIPThrottle]
+    throttle_classes = [AIRunThrottle]
     permission_classes = [AllowAny]
 
     def _is_unauthenticated_image_request(self, request) -> bool:
