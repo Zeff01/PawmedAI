@@ -9,6 +9,7 @@ import {
 import { PawIcon } from './custom/custom-icons'
 import { useState, useEffect } from 'react'
 import { AuthModal } from './AuthModal'
+import { QuotaBadge } from './QuotaBadge'
 import { useMe, useLogout } from '@/hooks/useAuth'
 
 const navLinks = [
@@ -130,6 +131,10 @@ export function Header() {
 
             {/* Right side */}
             <div className="flex items-center gap-2.5">
+              {/* Same allowance, whoever is looking — the endpoint answers with
+                  the signed-in rate or the free one for this visitor. */}
+              <QuotaBadge withContext className="hidden sm:inline-block" />
+
               {isClassify ? (
                 me ? (
                   <>
@@ -288,6 +293,9 @@ export function Header() {
 
         {/* Drawer Footer CTA */}
         <div className="border-t border-slate-100 px-4 py-5">
+          <div className="mb-3 flex justify-center">
+            <QuotaBadge withContext />
+          </div>
           {me ? (
             <Button
               asChild

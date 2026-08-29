@@ -15,6 +15,7 @@ import {
 } from '../api/medicalLogs'
 import { createPet, fetchPets } from '../api/pets'
 import { useMe, useSupabaseSession } from '@/hooks/useAuth'
+import { useRefreshQuota } from '@/hooks/useQuota'
 import type { AnalyzeCbcPayload } from '../api/analyzeCbc'
 import type {
   MedicalLogAmendment,
@@ -54,8 +55,13 @@ export function useIsVeterinaryProfessional() {
 }
 
 export function useAnalyzeCbc() {
+  const refreshQuota = useRefreshQuota()
   return useMutation<CbcAnalysis, Error, AnalyzeCbcPayload>({
     mutationFn: analyzeCbc,
+    // A run spends from the shared AI allowance whether it succeeds or comes
+    // back throttled. Refreshing here rather than at the call site means a new
+    // caller cannot forget to.
+    onSettled: () => refreshQuota(),
   })
 }
 
