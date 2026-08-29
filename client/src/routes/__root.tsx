@@ -6,15 +6,19 @@ import '../styles.css'
 import { AnalyticsTracker } from '@/components/AnalyticsTracker'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { ProfessionalShell } from '@/components/ProfessionalShell'
 import { NotificationPermissionPrompt } from '@/components/NotificationPermissionPrompt'
 import { SiteStructuredData } from '@/components/SiteStructuredData'
 import { BugReportWidget } from '@/features/bug-report/components/BugReportWidget'
+import { useUserType } from '@/hooks/useUserType'
 
 export const Route = createRootRoute({
   component: RootComponent,
 })
 
 function RootComponent() {
+  const { isProfessional } = useUserType()
+
   return (
     <>
       <SiteStructuredData />
@@ -25,13 +29,22 @@ function RootComponent() {
       >
         Skip to content
       </a>
-      <Header />
 
-      <main id="main-content" className="min-h-[calc(100vh-120px)]">
-        <Outlet />
-      </main>
-      
-      <Footer />
+      {isProfessional ? (
+        <ProfessionalShell>
+          <Outlet />
+        </ProfessionalShell>
+      ) : (
+        <>
+          <Header />
+
+          <main id="main-content" className="min-h-[calc(100vh-120px)]">
+            <Outlet />
+          </main>
+
+          <Footer />
+        </>
+      )}
 
       <NotificationPermissionPrompt />
       <BugReportWidget />
