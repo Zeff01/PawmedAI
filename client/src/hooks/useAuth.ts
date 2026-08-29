@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import type { Session } from '@supabase/supabase-js'
 import { supabase } from '../lib/supabase'
 import apiClient from '../lib/apiClient'
+import { forgetUserType } from '../lib/userTypeCache'
 import type {
   OAuthCallbackPayload,
   OAuthProvider,
@@ -107,7 +108,10 @@ export function useGoogleSignIn() {
   const queryClient = useQueryClient()
 
   return useMutation<UserProfile, Error, GoogleCodePayload>({
-    mutationFn: async ({ code, redirectUri }: GoogleCodePayload): Promise<UserProfile> => {
+    mutationFn: async ({
+      code,
+      redirectUri,
+    }: GoogleCodePayload): Promise<UserProfile> => {
       // 1. Send auth code to Django backend to exchange for id_token
       const exchangeResp = await fetch(
         `${import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8000'}/api/user/auth/google/exchange/`,
@@ -156,6 +160,7 @@ export function useLogout() {
     onSuccess: () => {
       queryClient.setQueryData(authKeys.me, undefined)
       queryClient.removeQueries({ queryKey: authKeys.me })
+      forgetUserType()
     },
   })
 }

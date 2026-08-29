@@ -6,6 +6,7 @@ import { registerSW } from 'virtual:pwa-register'
 import { useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 import { authKeys } from '@/hooks/useAuth'
+import { forgetUserType } from '@/lib/userTypeCache'
 import { UserTypeDialog } from '@/features/classify-dss/components/UserTypeDialog'
 import { RoutePending } from '@/components/RoutePending'
 
@@ -33,6 +34,7 @@ function AuthSync() {
         if (!session) {
           queryClient.setQueryData(authKeys.me, null)
           queryClient.removeQueries({ queryKey: authKeys.me })
+          forgetUserType()
           return
         }
         queryClient.invalidateQueries({ queryKey: authKeys.me })
@@ -57,6 +59,6 @@ if (!rootElement.innerHTML) {
       <AuthSync />
       <UserTypeDialog />
       <RouterProvider router={router} />
-    </QueryClientProvider>
+    </QueryClientProvider>,
   )
 }
