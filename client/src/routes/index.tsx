@@ -2,8 +2,10 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 
 import HomeView from '@/features/home/HomeView'
+import { DashboardView } from '@/features/dashboard/DashboardView'
 import { Seo } from '@/components/Seo'
 import { AuthModal } from '@/components/AuthModal'
+import { useUserType } from '@/hooks/useUserType'
 import {
   buildSoftwareApplicationSchema,
   buildBreadcrumbSchema,
@@ -23,6 +25,24 @@ function LandingPage() {
   const navigate = useNavigate()
   const { signin } = Route.useSearch()
   const [gateOpen, setGateOpen] = useState(signin === 'required')
+  const { isProfessional } = useUserType()
+
+  // Veterinary Professionals get their workspace here instead of the marketing
+  // page. Crawlers and the prerenderer have no session, so `/` still renders
+  // the landing page — and with it the marketing SEO — for them.
+  if (isProfessional) {
+    return (
+      <>
+        <Seo
+          title="Dashboard | Pawmed AI"
+          description="Your Pawmed AI professional workspace: recent CBC analyses, result mix, and patients."
+          canonicalPath="/"
+          noIndex
+        />
+        <DashboardView />
+      </>
+    )
+  }
 
   const closeGate = (next: boolean) => {
     setGateOpen(next)
