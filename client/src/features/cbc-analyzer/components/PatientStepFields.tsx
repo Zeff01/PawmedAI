@@ -55,7 +55,7 @@ export function PatientStepFields({
         render={({ field }) => {
           const chosen = field.value as PatientFormValues['species'] | undefined
           return (
-            <FormItem className="gap-2 rounded-xl border border-slate-200 bg-slate-50/70 px-3.5 py-3">
+            <FormItem className="gap-2 rounded-xl py-3">
               <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
                 <FormLabel className="text-[11px] font-bold uppercase tracking-wide text-slate-600">
                   Species

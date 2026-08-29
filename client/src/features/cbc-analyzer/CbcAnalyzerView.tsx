@@ -12,7 +12,6 @@ import {
   PencilSquareIcon,
   PlayIcon,
   QuestionMarkCircleIcon,
-  ShieldCheckIcon,
 } from '@heroicons/react/24/solid'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -426,10 +425,6 @@ export function CbcAnalyzerView() {
               <h1 className="text-[26px] font-extrabold leading-tight text-slate-950 sm:text-[30px]">
                 CBC Analyzer
               </h1>
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-widest text-blue-700">
-                <ShieldCheckIcon className="h-3 w-3" />
-                Veterinary professional
-              </span>
             </div>
             <p className="mt-2 max-w-xl text-[13.5px] leading-relaxed text-slate-500">
               Upload a complete blood count and get a structured diagnostic
@@ -515,7 +510,7 @@ export function CbcAnalyzerView() {
                     </p>
                   </div>
                 </div>
-                {analysis ? (
+                {analysis && (
                   <button
                     type="button"
                     onClick={() => {
@@ -526,10 +521,6 @@ export function CbcAnalyzerView() {
                   >
                     View last result
                   </button>
-                ) : (
-                  <span className="rounded-full bg-blue-100 px-2.5 py-1 text-[10.5px] font-bold text-blue-700">
-                    CBC panel
-                  </span>
                 )}
               </header>
 

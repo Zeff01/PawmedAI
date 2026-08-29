@@ -594,7 +594,7 @@ export default function NearbyVetsGeoMap() {
   return (
     <div className="flex flex-col gap-10">
       {!geoFailure && (
-        <div className="space-y-3 rounded-xl border border-blue-100 bg-blue-50/50 p-4">
+        <div className="space-y-3 rounded-xl">
           <div className="flex items-center gap-3">
             <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#185FA5] shadow-sm">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
@@ -629,13 +629,11 @@ export default function NearbyVetsGeoMap() {
             </button>
           </div>
 
-          <div className="border-t border-blue-100 pt-3">
-            <LocationSearch
-              onPick={handlePickPlace}
-              placeholder="Search another area — city, barangay, or address"
-              overlayResults
-            />
-          </div>
+          <LocationSearch
+            onPick={handlePickPlace}
+            placeholder="Search another area — city, barangay, or address"
+            overlayResults
+          />
         </div>
       )}
 
