@@ -17,7 +17,9 @@ import {
 import { Button } from '@/components/ui/button'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { AuthModal } from '@/components/AuthModal'
-import { useMe, useSupabaseSession } from '@/hooks/useAuth'
+import { useSupabaseSession } from '@/hooks/useAuth'
+import { useUserType } from '@/hooks/useUserType'
+import { QuotaBadge } from '@/components/QuotaBadge'
 import PawMedLoader from '@/features/classify-dss/components/ResultSkeletonLoader'
 import { AnimalBreedSidebar } from './components/AnimalBreedSidebar'
 import { BreedUploadZone } from './components/BreedUploadZone'
@@ -136,7 +138,7 @@ export function ClassifyBreedView() {
   const resultsRef = React.useRef<HTMLDivElement | null>(null)
 
   const { session, isLoading: isSessionLoading } = useSupabaseSession()
-  const { data: me } = useMe({ enabled: Boolean(session) })
+  const { isProfessional } = useUserType()
   const classifyMutation = useClassifyBreed()
 
   React.useEffect(() => {
@@ -272,31 +274,35 @@ export function ClassifyBreedView() {
     <section className="relative z-10 min-h-screen px-5 pb-20 pt-7 md:px-10">
       <div className="mx-auto max-w-6xl">
         {/* ── Page header ───────────────────────────────────────────────── */}
-        <FadeIn trigger="mount" className="mx-auto mb-7 max-w-3xl text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-blue-700">
-            <SparklesIcon className="h-3.5 w-3.5" />
-            AI Breed Identifier
-          </span>
-          <h1 className="mt-4 text-[30px] font-extrabold leading-tight text-slate-950 sm:text-[40px]">
-            What breed is your pet?
-          </h1>
-          <p className="mx-auto mt-3 max-w-xl text-[14.5px] leading-relaxed text-slate-500">
-            Upload a clear photo or just describe your pet in your own words —
-            you only need one of the two.
-          </p>
-          <ul className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12px] font-semibold text-slate-500">
-            {[
-              { icon: BoltIcon, label: 'Answer in about 10 seconds' },
-              { icon: PencilSquareIcon, label: 'Photo or description' },
-              { icon: ShieldCheckIcon, label: 'Never stored or shared' },
-            ].map(({ icon: Icon, label }) => (
-              <li key={label} className="inline-flex items-center gap-1.5">
-                <Icon className="h-4 w-4 text-blue-500" />
-                {label}
-              </li>
-            ))}
-          </ul>
-        </FadeIn>
+        {/* Reassurance aimed at owners. Professionals get the page title from
+            the shell chrome and do not need the pitch. */}
+        {!isProfessional && (
+          <FadeIn trigger="mount" className="mx-auto mb-7 max-w-3xl text-center">
+            <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-blue-700">
+              <SparklesIcon className="h-3.5 w-3.5" />
+              AI Breed Identifier
+            </span>
+            <h1 className="mt-4 text-[30px] font-extrabold leading-tight text-slate-950 sm:text-[40px]">
+              What breed is your pet?
+            </h1>
+            <p className="mx-auto mt-3 max-w-xl text-[14.5px] leading-relaxed text-slate-500">
+              Upload a clear photo or just describe your pet in your own words —
+              you only need one of the two.
+            </p>
+            <ul className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12px] font-semibold text-slate-500">
+              {[
+                { icon: BoltIcon, label: 'Answer in about 10 seconds' },
+                { icon: PencilSquareIcon, label: 'Photo or description' },
+                { icon: ShieldCheckIcon, label: 'Never stored or shared' },
+              ].map(({ icon: Icon, label }) => (
+                <li key={label} className="inline-flex items-center gap-1.5">
+                  <Icon className="h-4 w-4 text-blue-500" />
+                  {label}
+                </li>
+              ))}
+            </ul>
+          </FadeIn>
+        )}
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_340px] xl:grid-cols-[minmax(0,1fr)_370px]">
           {/* ── Main column ─────────────────────────────────────────────── */}
@@ -321,16 +327,7 @@ export function ClassifyBreedView() {
                       </p>
                     </div>
                   </div>
-                  <span
-                    className="rounded-full bg-blue-100 px-2.5 py-1 text-[11px] font-bold text-blue-700"
-                    title={
-                      me
-                        ? 'Signed in: 5 identifications every 5 hours.'
-                        : 'Signed out: 2 free description-based identifications.'
-                    }
-                  >
-                    {me ? '5 per 5 hrs' : '2 free tries'}
-                  </span>
+                  <QuotaBadge />
                 </header>
 
                 <div className="p-4 sm:p-5">
