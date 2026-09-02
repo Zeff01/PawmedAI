@@ -35,6 +35,68 @@ const SPECIES_SOURCE_LABELS: Record<SpeciesSource, string> = {
   report: 'read from the report',
 }
 
+/** Section heading inside the panel — the hairlines do the framing. */
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-[10px] font-extrabold uppercase tracking-widest text-slate-500">
+      {children}
+    </p>
+  )
+}
+
+function OutcomeStrip({
+  flagged,
+  normal,
+  notAssessed,
+  submitted,
+}: {
+  flagged: number
+  normal: number
+  notAssessed: number
+  submitted: number
+}) {
+  const cells = [
+    { label: 'Flagged', value: flagged, dot: 'bg-amber-500' },
+    { label: 'Within limits', value: normal, dot: 'bg-emerald-500' },
+    ...(notAssessed > 0
+      ? [
+          {
+            label: 'Not assessed',
+            value: notAssessed,
+            dot: 'bg-slate-300',
+          },
+        ]
+      : []),
+    { label: 'Submitted', value: submitted, dot: 'bg-blue-500' },
+  ]
+
+  return (
+    <div className="grid grid-cols-2 overflow-hidden rounded-lg border border-slate-200 sm:grid-cols-4">
+      {cells.map((cell, i) => (
+        <div
+          key={cell.label}
+          className={`px-4 py-3 ${i % 2 === 1 ? 'border-l border-slate-200' : ''} ${
+            i >= 2 ? 'border-t border-slate-200 sm:border-t-0' : ''
+          } ${i > 0 ? 'sm:border-l sm:border-slate-200' : ''}`}
+        >
+          <div className="flex items-center gap-1.5">
+            <span
+              aria-hidden="true"
+              className={`h-1.5 w-1.5 shrink-0 rounded-full ${cell.dot}`}
+            />
+            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+              {cell.label}
+            </p>
+          </div>
+          <p className="mt-1 text-[18px] font-extrabold leading-none tabular-nums text-slate-900">
+            {cell.value}
+          </p>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 function SpeciesBar({
   species,
   speciesDisplay,
@@ -53,68 +115,67 @@ function SpeciesBar({
   const [open, setOpen] = React.useState(false)
 
   return (
-    <div className="space-y-2">
-      <div className="rounded-xl border border-slate-200 bg-slate-50/70 px-3.5 py-2.5">
-        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5">
-          <p className="min-w-0 text-[11.5px] leading-relaxed text-slate-600">
-            <span className="font-extrabold text-slate-900">
-              {speciesDisplay}
-            </span>{' '}
-            reference intervals
-            <span className="text-slate-400">
-              {' '}
-              · {SPECIES_SOURCE_LABELS[source]}
-            </span>
-          </p>
-          <button
-            type="button"
-            onClick={() => setOpen((current) => !current)}
-            aria-expanded={open}
-            className="shrink-0 text-[11.5px] font-bold text-blue-600 underline-offset-2 transition hover:underline"
-          >
-            {open ? 'Never mind' : 'Not right?'}
-          </button>
-        </div>
-
-        {open ? (
-          <div className="mt-2.5 space-y-1.5 border-t border-slate-200/70 pt-2.5">
-            <p className="text-[11px] text-slate-500">
-              Re-flag this panel against:
-            </p>
-            <Select
-              value={species}
-              onValueChange={(next) => {
-                setOpen(false)
-                onChange(next as Species)
-              }}
-            >
-              <SelectTrigger
-                aria-label="Re-flag against a different species"
-                className="h-9 w-full rounded-lg bg-white text-[12.5px]"
-              >
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {SPECIES_GROUPS.map((group) => (
-                  <SelectGroup key={group.label}>
-                    <SelectLabel className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">
-                      {group.label}
-                    </SelectLabel>
-                    {group.options.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        ) : null}
+    <div>
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5">
+        <p className="min-w-0 text-[11.5px] leading-relaxed text-slate-600">
+          Flagged against{' '}
+          <span className="font-extrabold text-slate-900">
+            {speciesDisplay}
+          </span>{' '}
+          reference intervals
+          <span className="text-slate-400">
+            {' '}
+            · {SPECIES_SOURCE_LABELS[source]}
+          </span>
+        </p>
+        <button
+          type="button"
+          onClick={() => setOpen((current) => !current)}
+          aria-expanded={open}
+          className="shrink-0 text-[11.5px] font-bold text-blue-600 underline-offset-2 transition hover:underline"
+        >
+          {open ? 'Never mind' : 'Not right?'}
+        </button>
       </div>
 
+      {open ? (
+        <div className="mt-2.5 max-w-xs space-y-1.5">
+          <p className="text-[11px] text-slate-500">
+            Re-flag this panel against:
+          </p>
+          <Select
+            value={species}
+            onValueChange={(next) => {
+              setOpen(false)
+              onChange(next as Species)
+            }}
+          >
+            <SelectTrigger
+              aria-label="Re-flag against a different species"
+              className="h-9 w-full rounded-lg bg-white text-[12.5px]"
+            >
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {SPECIES_GROUPS.map((group) => (
+                <SelectGroup key={group.label}>
+                  <SelectLabel className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">
+                    {group.label}
+                  </SelectLabel>
+                  {group.options.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      ) : null}
+
       {caveat ? (
-        <p className="flex items-start gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-[11px] leading-relaxed text-slate-600">
+        <p className="mt-2 flex items-start gap-2 text-[11px] leading-relaxed text-slate-500">
           <InformationCircleIcon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-slate-400" />
           <span>
             {caveat}
@@ -140,11 +201,20 @@ export function CbcResultPanel({
 }: CbcResultPanelProps) {
   const { patient, flag_count: flagCount } = analysis
   const hasFlags = flagCount > 0
+  const [onlyFlagged, setOnlyFlagged] = React.useState(false)
+
+  const normalCount = analysis.results.filter(
+    (row) => row.status === 'normal',
+  ).length
+  const notAssessedCount = analysis.results.filter(
+    (row) => row.status === 'not_assessed',
+  ).length
 
   const subtitleParts = [
     patient.breed,
     patient.age_years !== null ? formatAge(patient.age_years) : null,
-    'CBC panel',
+    describeSexAndStatus(patient.sex, patient.neuter_status),
+    patient.owner_name ? `Owner: ${patient.owner_name}` : null,
   ].filter(Boolean)
 
   const qualityLabels = analysis.sample_quality
@@ -155,17 +225,17 @@ export function CbcResultPanel({
     )
     .join(' · ')
 
+  const hasContext =
+    analysis.sample_quality.length > 0 || Boolean(analysis.smear_morphology)
+
   return (
-    <section
-      aria-labelledby="cbc-result-title"
-      className="overflow-hidden rounded-2xl border border-slate-200 bg-white"
-    >
+    <section aria-labelledby="cbc-result-title" className="bg-white">
       {/* ── Patient header ─────────────────────────────────────────────── */}
-      <header className="flex flex-wrap items-start justify-between gap-3 border-b border-slate-100 bg-slate-50/70 px-4 py-3.5 sm:px-5">
+      <header className="flex flex-wrap items-start justify-between gap-3 border-b border-slate-100 pb-4">
         <div className="flex min-w-0 items-center gap-3">
           <div
             aria-hidden="true"
-            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-white ${
+            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-white ${
               hasFlags ? 'bg-amber-500' : 'bg-emerald-500'
             }`}
           >
@@ -178,11 +248,13 @@ export function CbcResultPanel({
           <div className="min-w-0">
             <h2
               id="cbc-result-title"
-              className="truncate text-[15px] font-extrabold text-slate-900"
+              className="truncate text-[17px] font-extrabold leading-tight text-slate-900"
             >
               {patient.pet_name || 'Unnamed patient'}
             </h2>
-            <p className="truncate text-[11.5px] text-slate-500">
+            {/* Identity in one line under the name, rather than a recap block
+                stranded below the actions. */}
+            <p className="text-[11.5px] leading-relaxed text-slate-500">
               {subtitleParts.join(' · ')}
             </p>
           </div>
@@ -196,7 +268,7 @@ export function CbcResultPanel({
           >
             {hasFlags ? 'Attention' : 'Within limits'}
           </p>
-          <p className="text-[12.5px] font-bold text-slate-800">
+          <p className="text-[13px] font-bold text-slate-800">
             {hasFlags
               ? `${flagCount} ${flagCount === 1 ? 'flag' : 'flags'}`
               : 'No flags'}
@@ -204,20 +276,28 @@ export function CbcResultPanel({
         </div>
       </header>
 
-      <div className="space-y-5 p-4 sm:p-5">
-        {/* ── Which reference table was used, and how it was chosen ────── */}
-        <SpeciesBar
-          species={patient.species}
-          speciesDisplay={patient.species_display}
-          source={analysis.species_source}
-          caveat={analysis.species_caveat}
-          notAssessedCount={analysis.not_assessed.length}
-          onChange={onSpeciesChange}
-        />
+      <div className="flex flex-col divide-y divide-slate-100">
+        {/* ── Outcome in counts, then which table produced them ────────── */}
+        <div className="space-y-4 py-5">
+          <OutcomeStrip
+            flagged={flagCount}
+            normal={normalCount}
+            notAssessed={notAssessedCount}
+            submitted={analysis.results.length}
+          />
+          <SpeciesBar
+            species={patient.species}
+            speciesDisplay={patient.species_display}
+            source={analysis.species_source}
+            caveat={analysis.species_caveat}
+            notAssessedCount={analysis.not_assessed.length}
+            onChange={onSpeciesChange}
+          />
+        </div>
 
         {/* ── Run notice ───────────────────────────────────────────────── */}
         {analysis.notice ? (
-          <div className="flex items-start gap-2 rounded-xl border border-amber-200 bg-amber-50 px-3.5 py-2.5">
+          <div className="flex items-start gap-2 border-y border-amber-200 bg-amber-50 px-4 py-3">
             <InformationCircleIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />
             <p className="text-[11.5px] leading-relaxed text-amber-900">
               {analysis.notice}
@@ -227,116 +307,111 @@ export function CbcResultPanel({
 
         {/* ── Diagnostic brief ─────────────────────────────────────────── */}
         {analysis.diagnostic_brief ? (
-          <div>
-            <p className="mb-1.5 flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-widest text-blue-700">
-              <BookmarkIcon className="h-3 w-3" />
-              Diagnostic brief
-            </p>
-            <p className="text-[12.5px] leading-relaxed text-slate-700">
+          <div className="py-5">
+            <SectionLabel>Diagnostic brief</SectionLabel>
+            {/* Capped measure: a full-width clinical paragraph is a wall. */}
+            <p className="mt-2 max-w-prose text-[13.5px] leading-relaxed text-slate-700">
               {analysis.diagnostic_brief}
             </p>
           </div>
         ) : null}
 
         {/* ── Panel tables ─────────────────────────────────────────────── */}
-        <CbcResultTable results={analysis.results} />
+        <div className="py-5">
+          <div className="mb-1 flex flex-wrap items-center justify-between gap-3">
+            <SectionLabel>Panel results</SectionLabel>
+            {/* Finding 12 flags among 15 rows should not need a scan. */}
+            {hasFlags ? (
+              <label className="inline-flex cursor-pointer items-center gap-2 text-[11.5px] font-bold text-slate-600">
+                <input
+                  type="checkbox"
+                  checked={onlyFlagged}
+                  onChange={(event) => setOnlyFlagged(event.target.checked)}
+                  className="h-3.5 w-3.5 rounded border-slate-300 text-blue-600 focus:ring-blue-200"
+                />
+                Flagged only
+              </label>
+            ) : null}
+          </div>
+          <CbcResultTable
+            results={analysis.results}
+            onlyFlagged={onlyFlagged}
+          />
+        </div>
 
         {/* ── Supporting context ───────────────────────────────────────── */}
-        {analysis.sample_quality.length > 0 || analysis.smear_morphology ? (
-          <div className="space-y-2 rounded-xl border border-slate-200 bg-slate-50/60 px-3.5 py-3">
+        {hasContext ? (
+          <div className="space-y-2 py-5">
+            <SectionLabel>Sample and smear</SectionLabel>
             {analysis.sample_quality.length > 0 ? (
-              <p className="text-[11.5px] text-slate-600">
-                <span className="font-extrabold uppercase tracking-wide text-slate-400">
-                  Sample quality ·{' '}
-                </span>
+              <p className="text-[12px] text-slate-600">
+                <span className="font-bold text-slate-400">Quality · </span>
                 <span className="font-bold text-amber-700">
                   {qualityLabels}
                 </span>
               </p>
             ) : null}
             {analysis.smear_morphology ? (
-              <p className="text-[11.5px] leading-relaxed text-slate-600">
-                <span className="font-extrabold uppercase tracking-wide text-slate-400">
-                  Smear ·{' '}
-                </span>
+              <p className="max-w-prose text-[12px] leading-relaxed text-slate-600">
+                <span className="font-bold text-slate-400">Smear · </span>
                 {analysis.smear_morphology}
               </p>
             ) : null}
           </div>
         ) : null}
 
-        {/* ── Clinical notes ───────────────────────────────────────────── */}
+        {/* ── Clinical notes — the "so what", so it opens by default ───── */}
         {analysis.clinical_notes ? (
-          <details className="group rounded-xl border border-slate-200 bg-white">
-            <summary className="cursor-pointer list-none px-3.5 py-2.5 text-[11.5px] font-extrabold text-slate-700 transition hover:bg-slate-50">
-              Interpretation &amp; next steps
-              <span className="ml-1.5 font-semibold text-slate-400 group-open:hidden">
-                — show
+          <details open className="group py-5">
+            <summary className="flex cursor-pointer list-none items-center gap-2">
+              <SectionLabel>Interpretation &amp; next steps</SectionLabel>
+              <span className="text-[11px] font-bold text-blue-600 group-open:hidden">
+                show
+              </span>
+              <span className="hidden text-[11px] font-bold text-slate-400 group-open:inline">
+                hide
               </span>
             </summary>
-            <p className="border-t border-slate-100 px-3.5 py-3 text-[12px] leading-relaxed text-slate-600">
+            <p className="mt-2 max-w-prose text-[13px] leading-relaxed text-slate-600">
               {analysis.clinical_notes}
             </p>
           </details>
         ) : null}
 
-        {/* ── Patient recap ────────────────────────────────────────────── */}
-        <dl className="grid grid-cols-2 gap-x-4 gap-y-2 border-t border-slate-100 pt-4 text-[11.5px] sm:grid-cols-3">
-          {[
-            { label: 'Owner', value: patient.owner_name || 'Not recorded' },
-            {
-              label: 'Sex',
-              value: describeSexAndStatus(patient.sex, patient.neuter_status),
-            },
-            {
-              label: 'Parameters',
-              value: `${analysis.results.length} submitted`,
-            },
-          ].map((item) => (
-            <div key={item.label}>
-              <dt className="text-[9.5px] font-extrabold uppercase tracking-widest text-slate-400">
-                {item.label}
-              </dt>
-              <dd className="mt-0.5 truncate font-semibold text-slate-700">
-                {item.value}
-              </dd>
-            </div>
-          ))}
-        </dl>
-
         {/* ── Actions ──────────────────────────────────────────────────── */}
-        <div className="flex flex-col gap-2 border-t border-slate-100 pt-4 sm:flex-row sm:items-center">
-          <Button
-            type="button"
-            onClick={onSave}
-            className="h-11 flex-1 rounded-xl bg-blue-600 text-[13px] font-bold text-white transition-all duration-150 hover:-translate-y-px hover:bg-blue-700 active:translate-y-0"
-          >
-            <BookmarkIcon className="h-4 w-4" />
-            {saved ? 'Save another copy' : 'Save or correct result'}
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={onDownload}
-            aria-label="Download this result as a PDF"
-            className="h-11 rounded-xl border-slate-200 px-4 text-[12.5px] font-bold text-slate-600 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
-          >
-            <ArrowDownTrayIcon className="h-4 w-4" />
-            <span className="sm:hidden">Download PDF</span>
-          </Button>
-        </div>
+        <div className="py-5">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+            <Button
+              type="button"
+              onClick={onSave}
+              className="h-11 rounded-lg bg-blue-600 px-6 text-[13px] font-bold text-white transition hover:bg-blue-700 sm:flex-none"
+            >
+              <BookmarkIcon className="h-4 w-4" />
+              {saved ? 'Save another copy' : 'Save or correct result'}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onDownload}
+              className="h-11 rounded-lg border-slate-200 px-4 text-[12.5px] font-bold text-slate-600 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
+            >
+              <ArrowDownTrayIcon className="h-4 w-4" />
+              Download PDF
+            </Button>
+          </div>
 
-        {saved && savedRecordId ? (
-          <p className="flex items-center gap-1.5 text-[11.5px] font-semibold text-emerald-700">
-            <CheckCircleIcon className="h-4 w-4" />
-            Saved to your medical log as {savedRecordId}.
-          </p>
-        ) : (
-          <p className="text-center text-[10.5px] leading-relaxed text-slate-400">
-            Decision support only — correlate with the patient in front of you
-            before acting on this brief.
-          </p>
-        )}
+          {saved && savedRecordId ? (
+            <p className="mt-3 flex items-center gap-1.5 text-[11.5px] font-semibold text-emerald-700">
+              <CheckCircleIcon className="h-4 w-4" />
+              Saved to your medical log as {savedRecordId}.
+            </p>
+          ) : (
+            <p className="mt-3 text-[11px] leading-relaxed text-slate-400">
+              Decision support only — correlate with the patient in front of you
+              before acting on this brief.
+            </p>
+          )}
+        </div>
       </div>
     </section>
   )
