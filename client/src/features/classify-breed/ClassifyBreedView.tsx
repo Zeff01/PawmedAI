@@ -19,7 +19,6 @@ import { FadeIn } from '@/components/motion/FadeIn'
 import { AuthModal } from '@/components/AuthModal'
 import { useSupabaseSession } from '@/hooks/useAuth'
 import { useUserType } from '@/hooks/useUserType'
-import { QuotaBadge } from '@/components/QuotaBadge'
 import PawMedLoader from '@/features/classify-dss/components/ResultSkeletonLoader'
 import { AnimalBreedSidebar } from './components/AnimalBreedSidebar'
 import { BreedUploadZone } from './components/BreedUploadZone'
@@ -28,6 +27,7 @@ import {
   BreedDescriptionInput,
   MIN_DESCRIPTION_LENGTH,
 } from './components/BreedDescriptionInput'
+import { CatIcon } from 'lucide-react'
 
 type InputMode = 'photo' | 'text'
 
@@ -96,11 +96,8 @@ function EmptyBreedResult() {
     'Care tips and a fun fact',
   ]
   return (
-    <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50/60 px-6 py-8 sm:px-8">
+    <div className="rounded-xl border border-dashed space-y-8 border-slate-200 bg-slate-50/60 px-6 py-8 sm:px-8">
       <div className="flex flex-col items-center text-center">
-        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-blue-600 shadow-sm">
-          <SparklesIcon className="h-5 w-5" />
-        </div>
         <p className="mt-3 text-[15px] font-bold text-slate-800">
           Your breed profile shows up here
         </p>
@@ -108,11 +105,11 @@ function EmptyBreedResult() {
           Add a photo or a description above, then run the identifier.
         </p>
       </div>
-      <ul className="mx-auto mt-5 grid max-w-xl gap-2 sm:grid-cols-2">
+      <ul className="mx-auto grid max-w-xl gap-2 sm:grid-cols-2">
         {lines.map((line) => (
           <li
             key={line}
-            className="flex items-start gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-[12px] text-slate-600"
+            className="flex items-start gap-2 text-[12px] text-slate-600"
           >
             <CheckCircleIcon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-blue-500" />
             {line}
@@ -271,25 +268,28 @@ export function ClassifyBreedView() {
   const activeStep = result ? 3 : classifyMutation.isPending ? 2 : 1
 
   return (
-    <section className="relative z-10 min-h-screen px-5 pb-20 pt-7 md:px-10">
+    <section className="relative z-10 min-h-screen px-5 pb-20 md:px-10">
       <div className="mx-auto max-w-6xl">
         {/* ── Page header ───────────────────────────────────────────────── */}
         {/* Reassurance aimed at owners. Professionals get the page title from
             the shell chrome and do not need the pitch. */}
         {!isProfessional && (
-          <FadeIn trigger="mount" className="mx-auto mb-7 max-w-3xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-blue-700">
-              <SparklesIcon className="h-3.5 w-3.5" />
+          <FadeIn
+            trigger="mount"
+            className="mx-auto max-w-6xl flex flex-col items-center gap-3 py-12 text-center"
+          >
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold uppercase tracking-normal text-blue-600">
+              <MagnifyingGlassIcon className="h-3.5 w-3.5" />
               AI Breed Identifier
             </span>
-            <h1 className="mt-4 text-[30px] font-extrabold leading-tight text-slate-950 sm:text-[40px]">
+            <h1 className="text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
               What breed is your pet?
             </h1>
-            <p className="mx-auto mt-3 max-w-xl text-[14.5px] leading-relaxed text-slate-500">
+            <p className="max-w-xl text-sm leading-relaxed text-slate-500 md:text-base">
               Upload a clear photo or just describe your pet in your own words —
               you only need one of the two.
             </p>
-            <ul className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12px] font-semibold text-slate-500">
+            <ul className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12px] font-semibold text-slate-500">
               {[
                 { icon: BoltIcon, label: 'Answer in about 10 seconds' },
                 { icon: PencilSquareIcon, label: 'Photo or description' },
@@ -310,7 +310,7 @@ export function ClassifyBreedView() {
             <FadeIn trigger="mount" delay={0.08}>
               <section
                 aria-labelledby="breed-input-title"
-                className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_2px_20px_rgba(15,28,63,0.06)]"
+                className="overflow-hidden rounded-xl border border-slate-200 bg-white"
               >
                 <header className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 bg-slate-50/70 px-4 py-3.5 sm:px-5">
                   <div className="flex items-center gap-2.5">
@@ -327,7 +327,6 @@ export function ClassifyBreedView() {
                       </p>
                     </div>
                   </div>
-                  <QuotaBadge />
                 </header>
 
                 <div className="p-4 sm:p-5">
@@ -436,35 +435,9 @@ export function ClassifyBreedView() {
                     </div>
                   </div>
 
-                  {/* What will be sent */}
-                  {hasInput && (
-                    <div className="mt-4 flex flex-wrap items-center gap-2 rounded-xl border border-blue-100 bg-blue-50/70 px-3 py-2.5">
-                      <span className="text-[10.5px] font-extrabold uppercase tracking-wider text-blue-700">
-                        Sending
-                      </span>
-                      {imageFile && (
-                        <InputChip
-                          icon={PhotoIcon}
-                          label={imageFile.name}
-                          onRemove={handleRemoveImage}
-                          removeLabel="Remove the photo"
-                        />
-                      )}
-                      {trimmedText.length > 0 && (
-                        <InputChip
-                          icon={PencilSquareIcon}
-                          label={`Description · ${trimmedText.length} chars`}
-                          onRemove={() => setTextInput('')}
-                          removeLabel="Clear the description"
-                        />
-                      )}
-                    </div>
-                  )}
-
                   {/* Sign-in requirement surfaced before the user commits */}
                   {needsAuthForImage && !errorMessage && (
-                    <div className="mt-3 flex flex-wrap items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
-                      <LockClosedIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />
+                    <div className="mt-3 flex flex-wrap items-center gap-3 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3">
                       <div className="min-w-0 flex-1">
                         <p className="text-[12.5px] font-bold text-amber-900">
                           Photo identification needs an account

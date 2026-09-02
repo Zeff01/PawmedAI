@@ -11,7 +11,11 @@ import { useMe } from '@/hooks/useAuth'
 import { useUserType } from '@/hooks/useUserType'
 import { AuthModal } from '@/components/AuthModal'
 import { Button } from '@/components/ui/button'
-import { ArrowRightIcon, ClipboardListIcon, FlaskConicalIcon } from 'lucide-react'
+import {
+  ArrowRightIcon,
+  ClipboardListIcon,
+  FlaskConicalIcon,
+} from 'lucide-react'
 import { buildBreadcrumbSchema } from '@/utils/seo-schema'
 
 export const Route = createFileRoute('/nearby-vets/')({
@@ -27,7 +31,7 @@ const tips = [
   {
     icon: <MagnifyingGlassIcon className="h-5 w-5 text-amber-500" />,
     title: 'Search any area',
-    body: 'Type a city, barangay, or address to find clinics somewhere other than where you are.',
+    body: 'Type a city, barangay, or address to find clinics somewhere.',
   },
   {
     icon: <PhoneIcon className="h-5 w-5 text-emerald-500" />,

@@ -82,7 +82,7 @@ export function BreedUploadZone({
       <>
         {camera}
         {hiddenInput}
-        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+        <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
           <div className="relative bg-slate-100">
             <img
               src={previewUrl}

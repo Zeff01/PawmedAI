@@ -5,6 +5,7 @@ import {
   ChevronRightIcon,
   MagnifyingGlassIcon,
   Squares2X2Icon,
+  SwatchIcon,
   XMarkIcon,
 } from '@heroicons/react/24/solid'
 
@@ -69,7 +70,7 @@ function AnimalRow({ animal }: { animal: Animal }) {
     <Link
       to="/animals/$slug"
       params={{ slug: toSlug(animal.name) }}
-      className="group flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-2.5 transition hover:border-blue-300 hover:bg-blue-50/60 focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:outline-none"
+      className="group flex items-center gap-3 rounded-lg border border-slate-200 bg-white p-2.5 transition hover:border-blue-300 hover:bg-blue-50/60 focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:outline-none"
     >
       {animal.image ? (
         <img
@@ -164,7 +165,7 @@ export function AnimalBreedSidebar() {
   const hasFilters = Boolean(query.trim()) || category !== null
 
   return (
-    <aside className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_2px_20px_rgba(15,28,63,0.06)]">
+    <aside className="overflow-hidden rounded-xl border border-slate-200 bg-white">
       {/* Header — doubles as the disclosure toggle on small screens */}
       <div className="border-b border-slate-100 bg-slate-50/70">
         <button
@@ -172,14 +173,12 @@ export function AnimalBreedSidebar() {
           onClick={() => setExpanded((prev) => !prev)}
           aria-expanded={expanded}
           aria-controls="breed-library-body"
-          className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left lg:cursor-default"
+          className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left"
         >
           <span className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-blue-700">
-              <Squares2X2Icon className="h-4 w-4" />
-            </span>
             <span>
-              <span className="block text-[13.5px] font-extrabold text-slate-900">
+              <span className="flex gap-1 text-[13.5px] font-extrabold text-slate-900">
+                <SwatchIcon className="h-4 w-4" />
                 Breed library
               </span>
               <span className="block text-[11.5px] text-slate-500">
@@ -210,7 +209,7 @@ export function AnimalBreedSidebar() {
               placeholder="Search a breed or species"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              className="h-11 w-full rounded-xl border border-slate-200 bg-white pl-9 pr-9 text-[13px] text-slate-700 placeholder-slate-400 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+              className="h-11 w-full rounded-lg border border-slate-200 bg-white pl-9 pr-9 text-[13px] text-slate-700 placeholder-slate-400 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
             />
             {query && (
               <button
@@ -227,7 +226,7 @@ export function AnimalBreedSidebar() {
           {/* Category filter — replaces ten separately collapsible groups */}
           <div className="relative">
             <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-linear-to-l from-white to-transparent" />
-            <div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 pb-1">
+            <div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 py-3">
               <button
                 type="button"
                 onClick={() => setCategory(null)}
@@ -330,7 +329,7 @@ export function AnimalBreedSidebar() {
                 <button
                   type="button"
                   onClick={() => setVisible((prev) => prev + PAGE_SIZE)}
-                  className="mt-2.5 w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 text-[12px] font-bold text-slate-600 transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
+                  className="mt-2.5 w-full rounded-md border border-slate-200 bg-slate-50 py-2.5 text-[12px] font-bold text-slate-600 transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
                 >
                   Show {Math.min(PAGE_SIZE, filtered.length - visible)} more
                 </button>
