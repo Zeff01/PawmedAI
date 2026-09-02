@@ -296,6 +296,7 @@ export default function NearbyVetsGeoMap() {
   const map = useRef<mapboxgl.Map | null>(null);
   const userMarker = useRef<mapboxgl.Marker | null>(null);
   const vetMarkers = useRef<mapboxgl.Marker[]>([]);
+  const resizeObserver = useRef<ResizeObserver | null>(null);
   const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const [vets, setVets] = useState<VetClinic[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -346,6 +347,8 @@ export default function NearbyVetsGeoMap() {
 
     return () => {
       if (readyTimeout.current) clearTimeout(readyTimeout.current);
+      resizeObserver.current?.disconnect();
+      resizeObserver.current = null;
       map.current?.remove();
       map.current = null;
     };
@@ -406,6 +409,11 @@ export default function NearbyVetsGeoMap() {
     });
 
     readyTimeout.current = setTimeout(() => setMapReady(true), 8000);
+
+    if (typeof ResizeObserver !== 'undefined') {
+      resizeObserver.current = new ResizeObserver(() => map.current?.resize());
+      resizeObserver.current.observe(mapContainer.current);
+    }
 
     map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
@@ -640,12 +648,13 @@ export default function NearbyVetsGeoMap() {
       {!geoFailure && (
         <div className="relative h-96">
           <div
-            ref={mapContainer}
             className={cn(
               'h-96 shrink-0 overflow-hidden rounded-2xl transition-opacity duration-500',
               mapReady ? 'opacity-100' : 'opacity-0'
             )}
-          />
+          >
+            <div ref={mapContainer} className="h-full w-full" />
+          </div>
 
           {!mapReady && <MapSkeleton />}
 
