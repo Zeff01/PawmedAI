@@ -1,16 +1,15 @@
+import type { ReactNode } from 'react'
 import type { BreedClassificationResult, BreedSize } from '../types'
 import {
   ExclamationCircleIcon,
-  SparklesIcon,
   MapPinIcon,
   HeartIcon,
   LightBulbIcon,
+  PresentationChartLineIcon,
+  SwatchIcon,
+  FaceSmileIcon,
 } from '@heroicons/react/24/solid'
 import { BreedReferenceCompare } from './BreedReferenceCompare'
-
-function Divider() {
-  return <hr className="h-px border-0 bg-slate-200" />
-}
 
 const SIZE_LABELS: Record<BreedSize, string> = {
   small: 'Small breed',
@@ -23,38 +22,58 @@ function confidenceTone(value: number) {
   if (value >= 80)
     return {
       label: 'Strong match',
-      bar: 'bg-emerald-400',
-      text: 'text-emerald-100',
+      bar: 'bg-emerald-500',
+      text: 'text-emerald-600',
     }
   if (value >= 50)
     return {
       label: 'Likely match',
-      bar: 'bg-amber-300',
-      text: 'text-amber-100',
+      bar: 'bg-amber-400',
+      text: 'text-amber-600',
     }
-  return { label: 'Rough guess', bar: 'bg-orange-300', text: 'text-orange-100' }
+  return { label: 'Rough guess', bar: 'bg-orange-400', text: 'text-orange-600' }
+}
+
+/** Small uppercase label used for every field in the card. */
+function FieldLabel({
+  children,
+  icon,
+}: {
+  children: ReactNode
+  icon?: ReactNode
+}) {
+  return (
+    <div className="flex items-center gap-1.5 text-slate-400">
+      {icon}
+      <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+        {children}
+      </p>
+    </div>
+  )
 }
 
 /** A number alone reads as precision it does not have — show the scale too. */
 function ConfidenceMeter({ value }: { value: number }) {
   const tone = confidenceTone(value)
   return (
-    <div className="w-full max-w-52 rounded-xl border border-white/25 bg-white/10 px-3 py-2">
-      <div className="flex items-baseline justify-between gap-2">
-        <span className="text-[11px] font-bold uppercase tracking-wider text-blue-100">
-          Confidence
+    <div>
+      <FieldLabel icon={<PresentationChartLineIcon className="h-3.5 w-3.5" />}>
+        Confidence
+      </FieldLabel>
+      <div className="mt-1.5 flex items-baseline gap-2">
+        <span className="text-[18px] font-extrabold leading-none text-slate-900">
+          {value}%
         </span>
-        <span className="text-[15px] font-extrabold text-white">{value}%</span>
+        <span className={`text-[11.5px] font-bold ${tone.text}`}>
+          {tone.label}
+        </span>
       </div>
-      <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-white/25">
+      <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-100">
         <div
           className={`h-full rounded-full ${tone.bar}`}
           style={{ width: `${Math.min(100, Math.max(0, value))}%` }}
         />
       </div>
-      <p className={`mt-1 text-[11px] font-semibold ${tone.text}`}>
-        {tone.label}
-      </p>
     </div>
   )
 }
@@ -64,20 +83,18 @@ function TagList({
   color = 'blue',
 }: {
   items: string[]
-  color?: string
+  color?: 'blue' | 'slate'
 }) {
   const cls =
     color === 'blue'
-      ? 'bg-blue-50 text-blue-700 border-blue-200'
-      : color === 'emerald'
-        ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-        : 'bg-slate-50 text-slate-600 border-slate-200'
+      ? 'border-blue-200 bg-blue-50 text-blue-700'
+      : 'border-slate-200 bg-white text-slate-600'
   return (
     <div className="flex flex-wrap gap-1.5">
       {items.map((item) => (
         <span
           key={item}
-          className={`rounded-full border px-2.5 py-0.5 text-[11.5px] font-medium ${cls}`}
+          className={`rounded-full border px-2.5 py-1 text-[11.5px] font-semibold ${cls}`}
         >
           {item}
         </span>
@@ -90,14 +107,41 @@ function NumberedList({ items }: { items: string[] }) {
   return (
     <ol className="flex flex-col gap-2.5">
       {items.map((item, i) => (
-        <li key={item} className="flex gap-3 text-[13px] text-slate-700">
-          <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-100 text-[10px] font-bold text-blue-700">
+        <li
+          key={item}
+          className="flex gap-3 text-[13px] leading-relaxed text-slate-700"
+        >
+          <span className="mt-px flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-100 text-[10px] font-bold text-blue-700">
             {i + 1}
           </span>
           {item}
         </li>
       ))}
     </ol>
+  )
+}
+
+/**
+ * One row of the profile. The body stacks these with hairline dividers, so a
+ * hidden field cannot leave a dangling separator behind it.
+ */
+function Field({
+  label,
+  hint,
+  icon,
+  children,
+}: {
+  label: string
+  hint?: string
+  icon?: ReactNode
+  children: ReactNode
+}) {
+  return (
+    <div className="py-5">
+      <FieldLabel icon={icon}>{label}</FieldLabel>
+      {hint && <p className="mt-1 text-[12px] text-slate-400">{hint}</p>}
+      <div className="mt-2.5">{children}</div>
+    </div>
   )
 }
 
@@ -110,33 +154,38 @@ export function BreedResults({
 }) {
   if (result.not_identified) {
     return (
-      <div className="overflow-hidden rounded-2xl border border-blue-200 bg-white">
-        <div className="flex items-start gap-3 border-b border-blue-200/60 bg-blue-600 px-6 py-5 text-white">
-          <ExclamationCircleIcon className="mt-0.5 h-6 w-6 shrink-0" />
+      <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
+        <div className="flex items-start gap-3 border-b border-slate-100 bg-slate-50/70 px-6 py-5">
+          <ExclamationCircleIcon className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" />
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-blue-100">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
               Unable to identify
             </p>
-            <h2 className="mt-1 text-xl font-semibold">
+            <h2 className="mt-1 text-[18px] font-extrabold leading-snug text-slate-900">
               We could not pin down a breed this time.
             </h2>
-            <p className="mt-2 text-sm text-blue-100/90">
+            <p className="mt-1.5 text-[13px] leading-relaxed text-slate-500">
               Nothing is wrong on your end — the identifier just needs a clearer
               signal to work from.
             </p>
           </div>
         </div>
-        <div className="space-y-3 px-6 py-5 text-sm text-slate-700">
-          <p className="font-semibold text-slate-900">What usually helps:</p>
-          <ul className="space-y-2">
+        <div className="px-6 py-5">
+          <p className="text-[13px] font-bold text-slate-900">
+            What usually helps
+          </p>
+          <ul className="mt-2.5 flex flex-col gap-2">
             {[
               'One animal in frame, facing the camera.',
               'Even lighting — no harsh shadows or flash glare.',
               'A sharp, full-size photo rather than a crop of a crop.',
               'Add a written description too: size, coat, colour, and ears.',
             ].map((tip) => (
-              <li key={tip} className="flex gap-2.5 text-[13px]">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500" />
+              <li
+                key={tip}
+                className="flex gap-2.5 text-[13px] leading-relaxed text-slate-600"
+              >
+                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-400" />
                 {tip}
               </li>
             ))}
@@ -147,44 +196,58 @@ export function BreedResults({
   }
 
   return (
-    <div className="animate-rise-in overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_2px_20px_rgba(15,28,63,0.06)]">
-      {/* Header */}
-      <div className="relative overflow-hidden bg-blue-700 px-6 py-7 sm:px-7 sm:py-8">
-        <div className="absolute inset-x-0 bottom-0 h-px bg-white/20" />
-        <div className="relative z-10 flex flex-col gap-6 sm:flex-row sm:items-start">
-          {previewUrl && (
-            <div className="shrink-0">
-              <img
-                src={previewUrl}
-                alt="Identified pet"
-                className="h-28 w-28 rounded-2xl border-2 border-white/30 object-cover sm:h-32 sm:w-32"
-              />
-            </div>
-          )}
-          <div className="flex-1 space-y-2.5">
-            <div className="flex flex-wrap gap-2">
-              <span className="rounded-full border border-white/25 bg-white/12 px-2.5 py-0.5 text-[11px] font-semibold capitalize text-white">
-                {result.animal_type}
-              </span>
-              <span className="rounded-full border border-white/25 bg-white/12 px-2.5 py-0.5 text-[11px] font-semibold text-white">
+    <div className="animate-rise-in overflow-hidden rounded-lg border border-slate-200 bg-white">
+      {/* Header — the same flat hero treatment as an animal profile, so a
+          result and a library entry read as the same kind of page. */}
+      <div className="flex flex-col gap-5 border-b border-slate-100 px-6 py-6 sm:flex-row sm:px-7 sm:py-7">
+        {previewUrl && (
+          <img
+            src={previewUrl}
+            alt="Identified pet"
+            className="h-24 w-24 shrink-0 rounded-lg border border-slate-200 object-cover sm:h-28 sm:w-28"
+          />
+        )}
+
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-[12px] font-bold capitalize text-blue-700">
+              {result.animal_type}
+            </span>
+            {/* Guarded: an off-spec size from the model would otherwise render
+                an empty pill. */}
+            {SIZE_LABELS[result.size] && (
+              <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[12px] font-bold text-slate-600">
                 {SIZE_LABELS[result.size]}
               </span>
-            </div>
-            <h2 className="text-[30px] font-extrabold leading-tight text-white">
-              {result.breed_name}
-            </h2>
-            <p className="max-w-2xl text-[14px] leading-relaxed text-blue-100">
+            )}
+          </div>
+
+          <h2 className="mt-3 text-[30px] font-extrabold leading-[1.1] tracking-tight text-slate-950 sm:text-[36px]">
+            {result.breed_name}
+          </h2>
+
+          {result.description && (
+            <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-slate-600">
               {result.description}
             </p>
-            <div className="flex flex-wrap items-end gap-3 pt-1">
+          )}
+
+          {/* One bordered frame with hairline cells rather than boxes floating
+              inside the card. */}
+          <div className="mt-5 grid overflow-hidden rounded-lg border border-slate-200 sm:grid-cols-2">
+            <div className="px-4 py-3.5">
               <ConfidenceMeter value={result.confidence} />
-              {result.origin && (
-                <div className="inline-flex items-center gap-1.5 rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-[12px] font-medium text-white">
-                  <MapPinIcon className="h-3.5 w-3.5 shrink-0 text-blue-200" />
-                  {result.origin}
-                </div>
-              )}
             </div>
+            {result.origin && (
+              <div className="border-t border-slate-200 px-4 py-3.5 sm:border-t-0 sm:border-l">
+                <FieldLabel icon={<MapPinIcon className="h-3.5 w-3.5" />}>
+                  Origin
+                </FieldLabel>
+                <p className="mt-1.5 text-[14px] font-extrabold leading-snug text-slate-900">
+                  {result.origin}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -208,84 +271,59 @@ export function BreedResults({
       />
 
       {/* Body */}
-      <div className="space-y-6 px-6 py-7 sm:px-7">
-        {/* Temperament */}
+      <div className="flex flex-col divide-y divide-slate-100 px-6 sm:px-7">
         {result.temperament.length > 0 && (
-          <>
-            <div>
-              <div className="mb-2.5">
-                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
-                  Temperament
-                </p>
-                <span className="text-xs text-muted-foreground">
-                  Animal’s typical behavior and reaction style.
-                </span>
-              </div>
-              <TagList items={result.temperament} color="blue" />
-            </div>
-            <Divider />
-          </>
+          <Field
+            label="Temperament"
+            hint="How this breed usually behaves and reacts."
+            icon={<FaceSmileIcon className="h-3.5 w-3.5" />}
+          >
+            <TagList items={result.temperament} color="blue" />
+          </Field>
         )}
 
-        {/* Common traits */}
         {result.common_traits.length > 0 && (
-          <>
-            <div>
-              <div className="mb-2.5">
-                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
-                  Common Traits
-                </p>
-
-                <span className="text-xs text-muted-foreground">
-                  Usual behavioral patterns and response tendencies of an
-                  animal.
-                </span>
-              </div>
-              <TagList items={result.common_traits} color="slate" />
-            </div>
-            <Divider />
-          </>
+          <Field
+            label="Common traits"
+            hint="Features that tend to show up in this breed."
+            icon={<SwatchIcon className="h-3.5 w-3.5" />}
+          >
+            <TagList items={result.common_traits} color="slate" />
+          </Field>
         )}
 
-        {/* Care tips */}
         {result.care_tips.length > 0 && (
-          <>
-            <div>
-              <div className="mb-3 flex items-center gap-2">
-                <HeartIcon className="h-4 w-4 text-rose-500" />
-                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
-                  Care Tips
-                </p>
-              </div>
-              <NumberedList items={result.care_tips} />
-            </div>
-            <Divider />
-          </>
+          <Field
+            label="Care tips"
+            icon={<HeartIcon className="h-3.5 w-3.5 text-rose-400" />}
+          >
+            <NumberedList items={result.care_tips} />
+          </Field>
         )}
 
-        {/* Fun fact */}
         {result.fun_fact && (
-          <div className="flex gap-3 rounded-xl border border-amber-200 bg-amber-50 px-5 py-4">
-            <LightBulbIcon className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" />
-            <div>
-              <p className="mb-1 text-[10.5px] font-bold uppercase tracking-wider text-amber-600">
-                Fun Fact
-              </p>
-              <p className="text-[13px] leading-relaxed text-slate-700">
-                {result.fun_fact}
-              </p>
+          <div className="py-5">
+            {/* The one deliberate highlight in the body — it stays a tinted
+                panel because nothing around it is boxed any more. */}
+            <div className="flex gap-3 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3.5">
+              <LightBulbIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-amber-700">
+                  Fun fact
+                </p>
+                <p className="mt-1 text-[13px] leading-relaxed text-amber-950">
+                  {result.fun_fact}
+                </p>
+              </div>
             </div>
           </div>
         )}
 
-        {/* Disclaimer */}
-        <div className="flex items-start gap-2 rounded-lg border border-slate-100 bg-slate-50 px-4 py-3">
-          <SparklesIcon className="mt-0.5 h-4 w-4 shrink-0 text-slate-400" />
-          <p className="text-[11px] leading-relaxed text-slate-500">
-            This is an AI-powered breed suggestion based on visual features. For
-            a confirmed pedigree, consult a certified breeder or veterinarian.
-          </p>
-        </div>
+        {/* Disclaimer — a footnote, not a third stacked panel */}
+        <p className="py-4 text-[11.5px] leading-relaxed text-slate-400">
+          This is an AI-powered breed suggestion based on visual features. For a
+          confirmed pedigree, consult a certified breeder or veterinarian.
+        </p>
       </div>
     </div>
   )

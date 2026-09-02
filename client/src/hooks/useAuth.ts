@@ -1,9 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import type { QueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import type { Session } from '@supabase/supabase-js'
 import { supabase } from '../lib/supabase'
 import apiClient from '../lib/apiClient'
 import { forgetUserType } from '../lib/userTypeCache'
+import { QUOTA_KEY } from './useQuota'
 import type {
   OAuthCallbackPayload,
   OAuthProvider,
@@ -15,6 +17,19 @@ import type {
 
 export const authKeys = {
   me: ['auth', 'me'] as const,
+}
+
+/**
+ * Drop the caches that belong to whoever was signed in a moment ago.
+ *
+ * The remaining-analyses count is keyed on nothing identity-related, so
+ * without this an anonymous visitor's "1 of 2 left" survives into the
+ * professional session they just signed into — and an authenticated "5 of 5"
+ * survives a sign-out. The count lives in the server's throttle cache, so
+ * re-reading it is the only way to learn the new caller's allowance.
+ */
+function resetIdentityScopedQueries(queryClient: QueryClient) {
+  void queryClient.invalidateQueries({ queryKey: QUOTA_KEY })
 }
 
 // ─── Fetch current Django user ────────────────────────────────────────────────
@@ -93,6 +108,7 @@ export function useOAuthCallback() {
     mutationFn: postOAuthCallback,
     onSuccess: (user: UserProfile) => {
       queryClient.setQueryData<UserProfile>(authKeys.me, user)
+      resetIdentityScopedQueries(queryClient)
     },
   })
 }
@@ -143,6 +159,7 @@ export function useGoogleSignIn() {
     },
     onSuccess: (user: UserProfile) => {
       queryClient.setQueryData<UserProfile>(authKeys.me, user)
+      resetIdentityScopedQueries(queryClient)
     },
   })
 }
@@ -160,6 +177,7 @@ export function useLogout() {
     onSuccess: () => {
       queryClient.setQueryData(authKeys.me, undefined)
       queryClient.removeQueries({ queryKey: authKeys.me })
+      resetIdentityScopedQueries(queryClient)
       forgetUserType()
     },
   })

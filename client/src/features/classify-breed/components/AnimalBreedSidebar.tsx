@@ -106,7 +106,12 @@ function AnimalRow({ animal }: { animal: Animal }) {
   )
 }
 
-export function AnimalBreedSidebar() {
+export function AnimalBreedSidebar({
+  /** Drops the panel frame — the professional shell already provides one. */
+  flush = false,
+}: {
+  flush?: boolean
+} = {}) {
   const [animals, setAnimals] = React.useState<Animal[]>([])
   const [query, setQuery] = React.useState('')
   const [category, setCategory] = React.useState<string | null>(null)
@@ -165,15 +170,25 @@ export function AnimalBreedSidebar() {
   const hasFilters = Boolean(query.trim()) || category !== null
 
   return (
-    <aside className="overflow-hidden rounded-xl border border-slate-200 bg-white">
+    <aside
+      className={
+        flush
+          ? 'bg-white'
+          : 'overflow-hidden rounded-xl border border-slate-200 bg-white'
+      }
+    >
       {/* Header — doubles as the disclosure toggle on small screens */}
-      <div className="border-b border-slate-100 bg-slate-50/70">
+      <div
+        className={`border-b border-slate-100 ${flush ? '' : 'bg-slate-50/70'}`}
+      >
         <button
           type="button"
           onClick={() => setExpanded((prev) => !prev)}
           aria-expanded={expanded}
           aria-controls="breed-library-body"
-          className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left"
+          className={`flex w-full items-center justify-between gap-3 py-3.5 text-left ${
+            flush ? '' : 'px-4'
+          }`}
         >
           <span className="flex items-center gap-2.5">
             <span>
@@ -200,7 +215,7 @@ export function AnimalBreedSidebar() {
         id="breed-library-body"
         className={expanded ? 'block' : 'hidden lg:block'}
       >
-        <div className="space-y-3 px-4 pb-3 pt-4">
+        <div className={`space-y-3 pb-3 pt-4 ${flush ? '' : 'px-4'}`}>
           <div className="relative">
             <MagnifyingGlassIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
             <input
@@ -292,7 +307,11 @@ export function AnimalBreedSidebar() {
           </div>
         </div>
 
-        <div className="max-h-104 overflow-y-auto px-4 pb-4 lg:max-h-[60vh]">
+        <div
+          className={`max-h-104 overflow-y-auto pb-4 lg:max-h-[60vh] ${
+            flush ? '' : 'px-4'
+          }`}
+        >
           {loading ? (
             <div className="flex flex-col gap-2">
               {Array.from({ length: 4 }).map((_, index) => (

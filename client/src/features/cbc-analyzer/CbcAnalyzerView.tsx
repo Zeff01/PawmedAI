@@ -418,19 +418,12 @@ export function CbcAnalyzerView() {
         {/* ── Page header ─────────────────────────────────────────────── */}
         <FadeIn
           trigger="mount"
-          className="mb-6 flex flex-wrap items-end justify-between gap-4"
+          className="mb-5 flex flex-wrap items-center justify-between gap-3"
         >
-          <div>
-            <div className="flex flex-wrap items-center gap-2.5">
-              <h1 className="text-[26px] font-extrabold leading-tight text-slate-950 sm:text-[30px]">
-                CBC Analyzer
-              </h1>
-            </div>
-            <p className="mt-2 max-w-xl text-[13.5px] leading-relaxed text-slate-500">
-              Upload a complete blood count and get a structured diagnostic
-              brief in seconds.
-            </p>
-          </div>
+          <p className="max-w-xl text-[13px] leading-relaxed text-slate-500">
+            Upload a complete blood count and get a structured diagnostic brief
+            in seconds.
+          </p>
           <Button
             asChild
             variant="outline"
@@ -486,11 +479,8 @@ export function CbcAnalyzerView() {
         ) : (
           /* ── The form ─────────────────────────────────────────────── */
           <FadeIn trigger="mount" delay={0.04}>
-            <section
-              aria-labelledby="cbc-input-title"
-              className="overflow-hidden rounded-2xl border border-slate-200 bg-white"
-            >
-              <header className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 bg-slate-50/70 px-4 py-3.5 sm:px-6">
+            <section aria-labelledby="cbc-input-title" className="bg-white">
+              <header className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3.5">
                 <div className="flex items-center gap-2.5">
                   <span
                     aria-hidden="true"
@@ -524,7 +514,7 @@ export function CbcAnalyzerView() {
                 )}
               </header>
 
-              <div className="space-y-5 p-5 sm:p-6">
+              <div className="space-y-5 py-5">
                 {/* ── Step 1 · Patient ──────────────────────────────── */}
                 {step === STEP_PATIENT ? (
                   <div className="space-y-5">

@@ -268,7 +268,14 @@ export function ClassifyBreedView() {
   const activeStep = result ? 3 : classifyMutation.isPending ? 2 : 1
 
   return (
-    <section className="relative z-10 min-h-screen px-5 pb-20 md:px-10">
+    <section
+      /* Owners get their top gap from the hero's py-12. Professionals skip the
+         hero, so the page needs its own padding or step 1 runs under the
+         sticky shell header. */
+      className={`relative z-10 min-h-screen px-5 pb-20 md:px-10 ${
+        isProfessional ? 'pt-7' : ''
+      }`}
+    >
       <div className="mx-auto max-w-6xl">
         {/* ── Page header ───────────────────────────────────────────────── */}
         {/* Reassurance aimed at owners. Professionals get the page title from
@@ -308,11 +315,24 @@ export function ClassifyBreedView() {
           {/* ── Main column ─────────────────────────────────────────────── */}
           <div className="min-w-0">
             <FadeIn trigger="mount" delay={0.08}>
+              {/* The professional shell already frames this space, so the
+                  card border would be a box inside a box — the hairlines alone
+                  carry the structure. */}
               <section
                 aria-labelledby="breed-input-title"
-                className="overflow-hidden rounded-xl border border-slate-200 bg-white"
+                className={
+                  isProfessional
+                    ? 'bg-white'
+                    : 'overflow-hidden rounded-xl border border-slate-200 bg-white'
+                }
               >
-                <header className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 bg-slate-50/70 px-4 py-3.5 sm:px-5">
+                <header
+                  className={`flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 ${
+                    isProfessional
+                      ? 'pb-3.5'
+                      : 'bg-slate-50/70 px-4 py-3.5 sm:px-5'
+                  }`}
+                >
                   <div className="flex items-center gap-2.5">
                     <StepBadge n={1} active={activeStep === 1} />
                     <div>
@@ -329,7 +349,7 @@ export function ClassifyBreedView() {
                   </div>
                 </header>
 
-                <div className="p-4 sm:p-5">
+                <div className={isProfessional ? 'py-4 sm:py-5' : 'p-4 sm:p-5'}>
                   {/* Input method switcher */}
                   <div
                     role="tablist"
@@ -607,8 +627,12 @@ export function ClassifyBreedView() {
 
           {/* ── Sidebar ─────────────────────────────────────────────────── */}
           <FadeIn trigger="mount" delay={0.14} className="min-w-0">
-            <div className="lg:sticky lg:top-20">
-              <AnimalBreedSidebar />
+            <div
+              className={`lg:sticky lg:top-20 ${
+                isProfessional ? 'lg:border-l lg:border-slate-100 lg:pl-6' : ''
+              }`}
+            >
+              <AnimalBreedSidebar flush={isProfessional} />
             </div>
           </FadeIn>
         </div>

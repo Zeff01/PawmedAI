@@ -25,7 +25,7 @@ export function UploadProgress({
   onRemove,
 }: UploadProgressProps) {
   return (
-    <div className="mt-4 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_1px_6px_rgba(15,28,63,0.06)]">
+    <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
       <div className="flex items-start gap-3 px-4 py-3.5">
         <div
           className={`mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${
@@ -105,6 +105,8 @@ interface ImageUploadProps {
   maxSizeMb?: number
   onValidationError?: (message: string) => void
   onRequestOpen?: (open: () => void) => void
+  /** Extra classes for the zone itself — used to fill a column. */
+  className?: string
 }
 
 export function ImageUpload({
@@ -113,6 +115,7 @@ export function ImageUpload({
   maxSizeMb = 5,
   onValidationError,
   onRequestOpen,
+  className = '',
 }: ImageUploadProps) {
   const [dragActive, setDragActive] = React.useState(false)
   const [cameraOpen, setCameraOpen] = React.useState(false)
@@ -178,13 +181,13 @@ export function ImageUpload({
       )}
 
       <div
-        className={`relative flex cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-dashed transition-all duration-200 ${
+        className={`relative flex cursor-pointer flex-col items-center justify-center overflow-hidden rounded-lg border border-dashed transition ${
           previewUrl
-            ? 'border-transparent bg-transparent shadow-none'
+            ? 'border-transparent bg-transparent'
             : dragActive
-              ? 'border-blue-500 bg-blue-50/60 shadow-[0_0_0_4px_rgba(37,99,235,0.1)]'
-              : 'border-slate-200 bg-linear-to-br from-slate-50 to-blue-50/30 hover:border-blue-400 hover:bg-blue-50/40 hover:shadow-[0_4px_20px_rgba(37,99,235,0.08)]'
-        }`}
+              ? 'border-blue-400 bg-blue-50/60'
+              : 'border-slate-300 bg-slate-50/60 hover:border-blue-300 hover:bg-blue-50/40'
+        } ${className}`}
         onClick={() => fileInputRef.current?.click()}
         onDragOver={(e) => {
           e.preventDefault()
@@ -202,45 +205,41 @@ export function ImageUpload({
         />
 
         {previewUrl ? (
-          <div className="w-full space-y-3">
-            <div className="group relative h-80 w-full overflow-hidden rounded-xl">
-              <img
-                src={previewUrl}
-                alt="Preview"
-                className="h-full w-full object-cover transition-opacity duration-200 group-hover:opacity-70"
-              />
-              <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                <div className="flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-xs font-semibold text-blue-700 shadow-[0_8px_20px_rgba(15,28,63,0.12)]">
-                  <ArrowUpTrayIcon className="h-4 w-4" />
-                  Click to upload new photo
-                </div>
+          <div className="group relative h-80 w-full overflow-hidden rounded-lg border border-slate-200">
+            <img
+              src={previewUrl}
+              alt="Preview"
+              className="h-full w-full object-cover transition-opacity duration-200 group-hover:opacity-70"
+            />
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+              <div className="flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-[12px] font-bold text-blue-700">
+                <ArrowUpTrayIcon className="h-4 w-4" />
+                Click to upload a new photo
               </div>
             </div>
           </div>
         ) : (
-          <div className="flex min-h-57.5 flex-col items-center justify-center gap-3 px-8 py-10 text-center">
-            <div
-              className={`flex p-3 items-center justify-center rounded-lg bg-linear-to-br from-blue-500 to-blue-700 text-white transition-transform duration-200 ${
-                dragActive ? 'scale-110' : ''
+          <div className="flex h-full min-h-52 flex-col items-center justify-center gap-3 px-8 py-10 text-center">
+            <ArrowUpTrayIcon
+              className={`h-6 w-6 transition-transform duration-200 ${
+                dragActive ? 'scale-110 text-blue-500' : 'text-slate-300'
               }`}
-            >
-              <ArrowUpTrayIcon className="w-5" />
-            </div>
+            />
 
             <div>
-              <p className="text-[13px] font-bold text-slate-700">
+              <p className="text-[13.5px] font-bold text-slate-800">
                 {dragActive ? 'Release to upload' : 'Drop an image here'}
               </p>
-              <p className="mt-0.5 text-[11px] text-slate-400">
-                PNG, JPG, or WEBP · Max 5 MB
+              <p className="mt-0.5 text-[11.5px] text-slate-400">
+                PNG, JPG, or WEBP · Max {maxSizeMb} MB
               </p>
             </div>
 
-            <div className="mt-1 flex flex-col md:flex-row items-center gap-2">
+            <div className="mt-1 flex flex-col items-center gap-2 sm:flex-row">
               <button
                 type="button"
                 onClick={handleOpenBrowse}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-blue-200 bg-white px-3.5 py-1.5 text-[11.5px] font-semibold text-blue-600 shadow-sm transition hover:border-blue-400 hover:bg-blue-50"
+                className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-blue-200 bg-white px-3.5 text-[12px] font-bold text-blue-600 transition hover:border-blue-300 hover:bg-blue-50"
               >
                 <DocumentIcon className="h-3.5 w-3.5" />
                 Browse files
@@ -249,7 +248,7 @@ export function ImageUpload({
               <button
                 type="button"
                 onClick={handleOpenCamera}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3.5 py-1.5 text-[11.5px] font-semibold text-slate-600 shadow-sm transition hover:border-slate-400 hover:bg-slate-50"
+                className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3.5 text-[12px] font-bold text-slate-600 transition hover:border-slate-300 hover:bg-slate-50"
               >
                 <CameraIcon className="h-3.5 w-3.5" />
                 Use camera
