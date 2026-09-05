@@ -3,6 +3,7 @@ import { useState } from 'react'
 
 import HomeView from '@/features/home/HomeView'
 import { DashboardView } from '@/features/dashboard/DashboardView'
+import { FurParentDashboard } from '@/features/fur-parent/FurParentDashboard'
 import { Seo } from '@/components/Seo'
 import { AuthModal } from '@/components/AuthModal'
 import { useUserType } from '@/hooks/useUserType'
@@ -25,7 +26,7 @@ function LandingPage() {
   const navigate = useNavigate()
   const { signin } = Route.useSearch()
   const [gateOpen, setGateOpen] = useState(signin === 'required')
-  const { isProfessional } = useUserType()
+  const { isProfessional, isFurParent } = useUserType()
 
   // Veterinary Professionals get their workspace here instead of the marketing
   // page. Crawlers and the prerenderer have no session, so `/` still renders
@@ -40,6 +41,20 @@ function LandingPage() {
           noIndex
         />
         <DashboardView />
+      </>
+    )
+  }
+
+  if (isFurParent) {
+    return (
+      <>
+        <Seo
+          title="My pets | Pawmed AI"
+          description="Your Pawmed AI fur parent dashboard: pet profiles, vaccinations, medications, appointments, and AI checkups."
+          canonicalPath="/"
+          noIndex
+        />
+        <FurParentDashboard />
       </>
     )
   }

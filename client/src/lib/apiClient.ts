@@ -53,6 +53,11 @@ const apiClient = {
       method: 'POST',
       body: JSON.stringify(body),
     }),
+  patch: <T>(path: string, body: unknown) =>
+    requestJson<T>(path, {
+      method: 'PATCH',
+      body: JSON.stringify(body),
+    }),
 }
 
 export default apiClient

@@ -183,6 +183,27 @@ export function useLogout() {
   })
 }
 
+export function useUpdateProfile() {
+  const queryClient = useQueryClient()
+
+  return useMutation<
+    UserProfile,
+    Error,
+    { firstName: string; lastName?: string }
+  >({
+    mutationFn: async ({ firstName, lastName }): Promise<UserProfile> => {
+      const { data } = await apiClient.patch<UserProfile>('/auth/me/', {
+        first_name: firstName,
+        ...(lastName === undefined ? {} : { last_name: lastName }),
+      })
+      return data
+    },
+    onSuccess: (user) => {
+      queryClient.setQueryData<UserProfile>(authKeys.me, user)
+    },
+  })
+}
+
 export function useSetUserType() {
   const queryClient = useQueryClient()
 

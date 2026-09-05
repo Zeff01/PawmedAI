@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { buildSiteSchemas } from '#/utils/seo-schema'
+import { buildSiteSchemas } from '@/utils/seo-schema'
 
 function upsertJsonLd(data: Array<Record<string, unknown>>) {
   const id = 'site-jsonld'
