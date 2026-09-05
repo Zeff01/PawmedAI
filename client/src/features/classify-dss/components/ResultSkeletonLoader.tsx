@@ -17,12 +17,14 @@ function PawIcon({ filled }: { filled: boolean }) {
       width="16"
       height="16"
       viewBox="0 0 24 24"
-      fill={filled ? '#2563eb' : 'none'}
-      stroke={filled ? '#2563eb' : '#bfdbfe'}
+      fill={filled ? 'var(--color-blue-600)' : 'none'}
+      stroke={filled ? 'var(--color-blue-600)' : 'var(--color-blue-200)'}
       strokeWidth="1.5"
       className="transition-all duration-500"
       style={{
-        filter: filled ? 'drop-shadow(0 0 4px rgba(37,99,235,0.5))' : 'none',
+        filter: filled
+          ? 'drop-shadow(0 0 4px color-mix(in oklab, var(--color-blue-600) 50%, transparent))'
+          : 'none',
       }}
     >
       <ellipse cx="12" cy="17" rx="5" ry="4" />
@@ -79,7 +81,12 @@ function PawMedLoader() {
         .msg-in     { animation: msgIn  0.35s ease forwards; }
         .msg-out    { animation: msgOut 0.3s  ease forwards; }
         .shimmer-text {
-          background: linear-gradient(90deg, #2563eb, #38bdf8, #2563eb);
+          background: linear-gradient(
+            90deg,
+            var(--color-blue-600),
+            var(--color-sky-400),
+            var(--color-blue-600)
+          );
           background-size: 200% auto;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -87,7 +94,7 @@ function PawMedLoader() {
         }
       `}</style>
 
-      <div className="relative overflow-hidden w-full rounded-3xl border border-blue-100 bg-linear-to-br from-blue-50 via-sky-100 to-blue-50 px-10 py-12 flex flex-col items-center shadow-[0_8px_32px_rgba(59,130,246,0.08),0_2px_8px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,0.9)]">
+      <div className="relative overflow-hidden w-full rounded-3xl border border-blue-100 bg-linear-to-br from-blue-50 via-sky-100 to-blue-50 px-10 py-12 flex flex-col items-center shadow-[0_8px_32px_color-mix(in_oklab,var(--color-blue-500)_8%,transparent),0_2px_8px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,0.9)]">
         {/* Background blobs */}
         <div className="pointer-events-none absolute -top-10 -right-10 w-44 h-44 rounded-full bg-blue-300/20 blur-2xl" />
         <div className="pointer-events-none absolute -bottom-8 -left-8 w-36 h-36 rounded-full bg-sky-300/20 blur-2xl" />
