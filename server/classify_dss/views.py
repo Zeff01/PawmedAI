@@ -152,17 +152,37 @@ class ClassificationQuotaAPIView(APIView):
     One figure for the whole app: CBC analyses, disease classifications, and
     breed identifications all spend from the same allowance. Read-only and
     unthrottled — checking must not cost a run.
+
+    Open to visitors so the UI can say *why* the run button will not fire: an
+    allowance belongs to an account, so someone signed out has none rather than
+    an unknown one, and a zero limit is the honest way to say so.
     """
 
     permission_classes = [AllowAny]
     throttle_classes = []
 
     def get(self, request):
-        quota = read_quota(AIRunThrottle(), request) or {}
         user = getattr(request, "user", None)
+        authenticated = bool(user and user.is_authenticated)
+
+        if not authenticated:
+            return Response(
+                {
+                    "authenticated": False,
+                    "scope": "anonymous",
+                    "limit": 0,
+                    "used": 0,
+                    "remaining": 0,
+                    "window_hours": 0,
+                    "resets_at": None,
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        quota = read_quota(AIRunThrottle(), request) or {}
         return Response(
             {
-                "authenticated": bool(user and user.is_authenticated),
+                "authenticated": True,
                 **quota,
             },
             status=status.HTTP_200_OK,

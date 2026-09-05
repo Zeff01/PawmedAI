@@ -3,7 +3,7 @@ import logging
 
 from rest_framework import status
 from rest_framework.parsers import FormParser, MultiPartParser
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -18,31 +18,19 @@ logger = logging.getLogger(__name__)
 
 
 class BreedClassificationAPIView(APIView):
+    """Breed identification — photo or written description.
+
+    Signed in only. Every run spends from the caller's shared AI allowance, and
+    an allowance needs an account to belong to, so there is no anonymous path
+    here: an unauthenticated caller is turned away with a 401 the client turns
+    into a sign-in prompt.
+    """
+
     parser_classes = [MultiPartParser, FormParser]
     throttle_classes = [AIRunThrottle]
-    permission_classes = [AllowAny]
-
-    def _is_unauthenticated_image_request(self, request) -> bool:
-        return bool(request.FILES.get("image")) and not request.user.is_authenticated
-
-    def check_throttles(self, request):
-        if self._is_unauthenticated_image_request(request):
-            return
-        super().check_throttles(request)
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        if self._is_unauthenticated_image_request(request):
-            return Response(
-                {
-                    "detail": (
-                        "Sign in to identify a breed from a photo. You can still "
-                        "identify your pet by describing it, without an account."
-                    ),
-                    "code": "image_requires_auth",
-                },
-                status=status.HTTP_401_UNAUTHORIZED,
-            )
-
         request_serializer = BreedClassificationRequestSerializer(data=request.data)
         if not request_serializer.is_valid():
             return Response(

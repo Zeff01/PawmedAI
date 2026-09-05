@@ -42,11 +42,17 @@ export async function classifyBreed(
   }
 
   const { data } = await supabase.auth.getSession()
-  const isAuthed = Boolean(data.session?.access_token)
-  const headers: HeadersInit = {}
-  if (data.session?.access_token) {
-    headers['Authorization'] = `Bearer ${data.session.access_token}`
+  const accessToken = data.session?.access_token
+  if (!accessToken) {
+    // The endpoint refuses this anyway; failing here keeps a photo off the
+    // wire when we already know it will be turned away.
+    const err = new Error(
+      'Sign in to identify a breed — each identification comes out of your account allowance.',
+    ) as Error & { code?: string }
+    err.code = 'UNAUTHENTICATED'
+    throw err
   }
+  const headers: HeadersInit = { Authorization: `Bearer ${accessToken}` }
 
   const response = await fetch(`${baseUrl}/api/breed-classify/`, {
     method: 'POST',
@@ -58,9 +64,11 @@ export async function classifyBreed(
     const errorPayload = await response.json().catch(() => null)
     let message: string
     if (response.status === 429) {
-      message = isAuthed
-        ? 'You have reached the classification limit. Please try again after 5 hours.'
-        : 'You have reached the classification limit. Sign in to get more free classifications.'
+      message =
+        'You have reached the classification limit. Please try again after 5 hours.'
+    } else if (response.status === 401 || response.status === 403) {
+      message =
+        'Your session has expired. Please sign in again to identify a breed.'
     } else if (typeof errorPayload?.detail === 'string') {
       message = errorPayload.detail
     } else {
@@ -72,16 +80,12 @@ export async function classifyBreed(
         'Breed classification failed. Please try again.'
     }
 
-    const err = new Error(message) as Error & {
-      code?: string
-      isAuthed?: boolean
-    }
+    const err = new Error(message) as Error & { code?: string }
     if (response.status === 429) {
       err.code = 'THROTTLE'
-      err.isAuthed = isAuthed
     }
-    if (errorPayload?.code === 'image_requires_auth') {
-      err.code = 'IMAGE_REQUIRES_AUTH'
+    if (response.status === 401 || response.status === 403) {
+      err.code = 'UNAUTHENTICATED'
     }
     throw err
   }

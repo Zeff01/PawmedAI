@@ -30,11 +30,17 @@ export async function classifyDisease(
   formData.append('mode', mode)
 
   const { data } = await supabase.auth.getSession()
-  const isAuthed = Boolean(data.session?.access_token)
-  const headers: HeadersInit = {}
-  if (data.session?.access_token) {
-    headers['Authorization'] = `Bearer ${data.session.access_token}`
+  const accessToken = data.session?.access_token
+  if (!accessToken) {
+    // The endpoint refuses this anyway; failing here keeps the image off the
+    // wire when we already know it will be turned away.
+    const err = new Error(
+      'Sign in to classify — each classification comes out of your account allowance.',
+    ) as Error & { code?: string }
+    err.code = 'UNAUTHENTICATED'
+    throw err
   }
+  const headers: HeadersInit = { Authorization: `Bearer ${accessToken}` }
 
   const response = await fetch(`${baseUrl}/api/disease-classify/`, {
     method: 'POST',
@@ -56,13 +62,9 @@ export async function classifyDisease(
       message = 'Classification failed. Please try again.'
     }
 
-    const err = new Error(message) as Error & {
-      code?: string
-      isAuthed?: boolean
-    }
+    const err = new Error(message) as Error & { code?: string }
     if (response.status === 429) {
       err.code = 'THROTTLE'
-      err.isAuthed = isAuthed
     }
     if (response.status === 401 || response.status === 403) {
       err.code = 'UNAUTHENTICATED'

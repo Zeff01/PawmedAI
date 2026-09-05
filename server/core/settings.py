@@ -167,10 +167,11 @@ REST_FRAMEWORK = {
     ],
     # One allowance for everything a model generates — CBC analyses, disease
     # classifications, and breed identifications all spend from the same count.
-    # The `N/Xh` form is read by the custom parse_rate in core.throttles.
+    # Only signed-in callers can generate, so there is one rate and it belongs
+    # to a user. The `N/Xh` form is read by the custom parse_rate in
+    # core.throttles.
     'DEFAULT_THROTTLE_RATES': {
         'ai_run_user': '5/5h',
-        'ai_run_anon': '2/10h',
     }
     ,
     'NUM_PROXIES': 1,

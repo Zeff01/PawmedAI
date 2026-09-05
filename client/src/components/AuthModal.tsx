@@ -91,7 +91,8 @@ export function AuthModal({
           />
         </div>
         <p className="mt-3 text-center text-[12px] text-slate-500">
-          Signing in lets you classify disease up to 5 times every 5 hours.
+          Analyses need an account. Signing in gives you 5 every 5 hours, shared
+          across CBC Analyzer, Classify Disease, and Classify Breed.
         </p>
         <div className="mt-4 flex items-center gap-3 text-[11px] text-slate-400">
           <span className="h-px flex-1 bg-slate-100" />

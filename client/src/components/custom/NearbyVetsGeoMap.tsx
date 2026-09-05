@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import type {
@@ -13,9 +13,20 @@ import {
   MapPin,
   LocateFixed,
   Loader2,
+  Lock,
   Search,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { AuthModal } from '@/components/AuthModal'
+import { useSupabaseSession } from '@/hooks/useAuth'
+
+/**
+ * How many clinics a signed-out visitor sees.
+ *
+ * Enough to prove the locator works and to help someone with an emergency on
+ * their hands, but the full list is what an account is for.
+ */
+const PREVIEW_LIMIT = 2
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN as string
 
@@ -359,6 +370,17 @@ export default function NearbyVetsGeoMap() {
   const [manualLocation, setManualLocation] = useState(false)
   const readyTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
 
+  const { session } = useSupabaseSession()
+  // Locked until a session proves otherwise, not the other way round — the
+  // check is asynchronous, and briefly showing the full list before pulling it
+  // back would give away exactly what the lock is holding.
+  const isLocked = !session
+  const visibleVets = useMemo(
+    () => (isLocked ? vets.slice(0, PREVIEW_LIMIT) : vets),
+    [isLocked, vets],
+  )
+  const hiddenCount = vets.length - visibleVets.length
+
   const locate = useCallback(() => {
     const geolocation = getGeolocation()
     if (!geolocation) {
@@ -575,7 +597,9 @@ export default function NearbyVetsGeoMap() {
         .sort((a: VetClinic, b: VetClinic) => a.distance - b.distance)
 
       setVets(results)
-      addVetMarkers(results)
+      // Markers are placed by the effect below, which also re-runs when the
+      // list unlocks — a pin the card list is withholding would give the
+      // clinic away just as well.
     } catch (e: unknown) {
       const message =
         e instanceof Error ? e.message : 'Failed to load nearby clinics.'
@@ -584,6 +608,13 @@ export default function NearbyVetsGeoMap() {
       setLoading(false)
     }
   }
+
+  useEffect(() => {
+    if (!map.current) return
+    addVetMarkers(visibleVets)
+    // `addVetMarkers` only touches refs and setState, so what it is called
+    // with — and whether the map exists to place pins on — is the whole story.
+  }, [visibleVets, mapReady])
 
   function addVetMarkers(results: VetClinic[]): void {
     if (!map.current) return
@@ -767,8 +798,17 @@ export default function NearbyVetsGeoMap() {
             </p>
           </div>
           {!loading && !geoFailure && !error && vets.length > 0 && (
-            <span className="rounded-full bg-blue-50 border border-blue-100 px-3 py-1 text-xs font-semibold text-blue-600">
-              {vets.length} found
+            <span
+              className={cn(
+                'rounded-full border px-3 py-1 text-xs font-semibold',
+                hiddenCount > 0
+                  ? 'border-slate-200 bg-slate-50 text-slate-600'
+                  : 'border-blue-100 bg-blue-50 text-blue-600',
+              )}
+            >
+              {hiddenCount > 0
+                ? `${visibleVets.length} of ${vets.length} shown`
+                : `${vets.length} found`}
             </span>
           )}
         </div>
@@ -801,7 +841,7 @@ export default function NearbyVetsGeoMap() {
         {/* Clinic cards */}
         {!loading && vets.length > 0 && (
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
-            {vets.map((vet, index) => (
+            {visibleVets.map((vet, index) => (
               <Card
                 key={vet.id}
                 ref={(el) => {
@@ -873,6 +913,47 @@ export default function NearbyVetsGeoMap() {
                 </div>
               </Card>
             ))}
+
+            {/* Built on the clinic card's own skeleton — avatar row, three
+                lines, one action — so it sits flush in the grid instead of
+                stretching the row and leaving the real cards half empty. */}
+            {hiddenCount > 0 && (
+              <Card className="rounded-xl border border-dashed border-blue-200 bg-blue-50/40 p-4 shadow-none">
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-blue-600 shadow-sm">
+                      <Lock className="size-4" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-semibold leading-tight text-slate-800">
+                        {hiddenCount} more{' '}
+                        {hiddenCount === 1 ? 'clinic' : 'clinics'} nearby
+                      </p>
+                      <p className="text-muted-foreground mt-0.5 truncate text-xs">
+                        Phone numbers and directions included.
+                      </p>
+                      <span className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-500">
+                        <MapPin className="size-2.5" />
+                        {vets.length} found in this area
+                      </span>
+                    </div>
+                  </div>
+
+                  <AuthModal
+                    notice={`Seeing every clinic nearby needs an account. Sign in to unlock the other ${hiddenCount} on this map.`}
+                    trigger={
+                      <button
+                        type="button"
+                        className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-blue-700"
+                      >
+                        <Lock className="size-3.5" />
+                        Sign in to see all
+                      </button>
+                    }
+                  />
+                </div>
+              </Card>
+            )}
           </div>
         )}
       </div>

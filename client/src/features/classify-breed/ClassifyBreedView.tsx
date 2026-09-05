@@ -17,7 +17,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { AuthModal } from '@/components/AuthModal'
-import { useSupabaseSession } from '@/hooks/useAuth'
+import { useAuthGate } from '@/hooks/useAuthGate'
 import { useUserType } from '@/hooks/useUserType'
 import PawMedLoader from '@/features/classify-dss/components/ResultSkeletonLoader'
 import { AnimalBreedSidebar } from './components/AnimalBreedSidebar'
@@ -128,13 +128,19 @@ export function ClassifyBreedView() {
   const [previewUrl, setPreviewUrl] = React.useState<string | null>(null)
   const [textInput, setTextInput] = React.useState('')
   const [localError, setLocalError] = React.useState<string | null>(null)
-  const [imageAuthOpen, setImageAuthOpen] = React.useState(false)
   const [uploadProgress, setUploadProgress] = React.useState(0)
   const [uploadStatus, setUploadStatus] = React.useState<UploadStatus>('idle')
   const timerRef = React.useRef<ReturnType<typeof setInterval> | null>(null)
   const resultsRef = React.useRef<HTMLDivElement | null>(null)
 
-  const { session, isLoading: isSessionLoading } = useSupabaseSession()
+  const {
+    isAuthenticated,
+    isSessionLoading,
+    isAuthPromptOpen,
+    setAuthPromptOpen,
+    handleAuthenticated,
+    runWhenSignedIn,
+  } = useAuthGate()
   const { isProfessional } = useUserType()
   const classifyMutation = useClassifyBreed()
 
@@ -210,7 +216,9 @@ export function ClassifyBreedView() {
   const trimmedText = textInput.trim()
   const hasInput = Boolean(imageFile) || trimmedText.length > 0
   const descriptionReady = trimmedText.length >= MIN_DESCRIPTION_LENGTH
-  const needsAuthForImage = !isSessionLoading && !session && imageFile !== null
+  // An identification spends from an account's allowance, so there is nothing
+  // to spend without one — photo or description alike.
+  const needsAuth = !isSessionLoading && !isAuthenticated
   const isReady = imageFile ? true : descriptionReady
 
   const runClassification = React.useCallback(() => {
@@ -240,21 +248,15 @@ export function ClassifyBreedView() {
       setMode('text')
       return
     }
-    if (needsAuthForImage) {
-      setLocalError(null)
-      setImageAuthOpen(true)
-      return
-    }
-    runClassification()
+    setLocalError(null)
+    runWhenSignedIn(runClassification)
   }
 
   const errorMessage = localError ?? classifyMutation.error?.message ?? null
-  const throttleError = classifyMutation.error as
-    | (Error & { code?: string; isAuthed?: boolean })
+  const classifyError = classifyMutation.error as
+    | (Error & { code?: string })
     | null
-  const showThrottleSignIn =
-    (throttleError?.code === 'THROTTLE' && !throttleError.isAuthed) ||
-    throttleError?.code === 'IMAGE_REQUIRES_AUTH'
+  const showErrorSignIn = classifyError?.code === 'UNAUTHENTICATED'
 
   const result = classifyMutation.data
   const statusText = classifyMutation.isPending
@@ -456,26 +458,21 @@ export function ClassifyBreedView() {
                   </div>
 
                   {/* Sign-in requirement surfaced before the user commits */}
-                  {needsAuthForImage && !errorMessage && (
+                  {needsAuth && !errorMessage && (
                     <div className="mt-3 flex flex-wrap items-center gap-3 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3">
                       <div className="min-w-0 flex-1">
                         <p className="text-[12.5px] font-bold text-amber-900">
-                          Photo identification needs an account
+                          Identifying a breed needs an account
                         </p>
                         <p className="mt-0.5 text-[11.5px] leading-relaxed text-amber-800">
-                          Sign in to identify from a photo — or switch to{' '}
-                          <button
-                            type="button"
-                            onClick={() => setMode('text')}
-                            className="font-bold underline underline-offset-2"
-                          >
-                            a written description
-                          </button>
-                          , which is free.
+                          Every identification comes out of your allowance — 5
+                          analyses every 5 hours, shared across every AI
+                          feature. Sign in and your photo or description is
+                          still here.
                         </p>
                       </div>
                       <AuthModal
-                        onAuthenticated={runClassification}
+                        onAuthenticated={handleAuthenticated}
                         trigger={
                           <Button
                             type="button"
@@ -499,18 +496,16 @@ export function ClassifyBreedView() {
                         <ExclamationCircleIcon className="mt-0.5 h-4 w-4 shrink-0" />
                         <span>{errorMessage}</span>
                       </div>
-                      {showThrottleSignIn && (
+                      {showErrorSignIn && (
                         <AuthModal
-                          onAuthenticated={runClassification}
+                          onAuthenticated={handleAuthenticated}
                           trigger={
                             <Button
                               type="button"
                               size="sm"
                               className="w-fit rounded-md bg-blue-600 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-blue-700"
                             >
-                              {throttleError.code === 'IMAGE_REQUIRES_AUTH'
-                                ? 'Sign in to use a photo'
-                                : 'Sign in for more free identifications'}
+                              Sign in to identify
                             </Button>
                           }
                         />
@@ -519,13 +514,10 @@ export function ClassifyBreedView() {
                   )}
 
                   <AuthModal
-                    open={imageAuthOpen}
-                    onOpenChange={setImageAuthOpen}
-                    notice="Identifying a breed from a photo needs an account. Sign in to continue — or remove the photo and describe your pet instead, which is free."
-                    onAuthenticated={() => {
-                      setImageAuthOpen(false)
-                      runClassification()
-                    }}
+                    open={isAuthPromptOpen}
+                    onOpenChange={setAuthPromptOpen}
+                    notice="Identifying a breed needs an account — each run spends from your analyses allowance. Sign in to continue."
+                    onAuthenticated={handleAuthenticated}
                   />
 
                   {/* Actions */}

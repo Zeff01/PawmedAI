@@ -72,7 +72,7 @@ export function AiCompanion({
 
       <div className="mt-4 rounded-lg border border-slate-200/70 bg-white p-3 shadow-fp-subtle">
         <div className="mb-1.5 flex justify-between gap-2 text-xs font-semibold">
-          <span className="text-slate-600">Daily free analyses</span>
+          <span className="text-slate-600">Analyses left</span>
           <span className="text-fp-brand-800">
             {remaining !== null && limit !== null
               ? `${remaining} of ${limit} left`

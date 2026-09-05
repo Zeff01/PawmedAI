@@ -78,21 +78,34 @@ describe('QuotaBadge', () => {
     expect(screen.getByText('1 of 5 analysis left')).toBeTruthy()
   })
 
-  it('shows the signed-out allowance for a visitor with no session', () => {
+  it('tells a visitor to sign in rather than counting an allowance they lack', () => {
+    // Generating requires an account, so there is no anonymous allowance to
+    // count down — "0 of 0 left" would read as an exhausted one.
     sessionState.session = null
     quotaState.data = quota({
       authenticated: false,
-      scope: 'ai_run_anon',
-      limit: 2,
+      scope: 'anonymous',
+      limit: 0,
       used: 0,
-      remaining: 2,
-      window_hours: 10,
+      remaining: 0,
+      window_hours: 0,
+      resets_at: null,
     })
     quotaState.isError = false
 
     render(<QuotaBadge withContext />)
 
-    expect(screen.getByText('2 of 2 analyses left')).toBeTruthy()
+    expect(screen.getByText('Sign in to run an analysis')).toBeTruthy()
+  })
+
+  it('does not fall back to a rate a signed-out visitor cannot use', () => {
+    sessionState.session = null
+    quotaState.data = undefined
+    quotaState.isError = true
+
+    render(<QuotaBadge />)
+
+    expect(screen.getByText('Sign in to analyse')).toBeTruthy()
   })
 
   it('falls back to the plain rate while the count is unknown', () => {
@@ -101,7 +114,7 @@ describe('QuotaBadge', () => {
 
     render(<QuotaBadge />)
 
-    // A signed-in user must not be told they have 2 free tries mid-load.
+    // A signed-in user must not be told to sign in mid-load.
     expect(screen.getByText('5 per 5 hrs')).toBeTruthy()
   })
 

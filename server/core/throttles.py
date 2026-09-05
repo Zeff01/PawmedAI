@@ -16,9 +16,13 @@ class AIRunThrottle(SimpleRateThrottle):
     the same bucket: a run is a run, whichever feature spends it. Applied by
     every view that calls a model, so "3 of 5 left" means the same thing
     everywhere in the app.
+
+    The allowance belongs to a user. Generating requires an account, so an
+    anonymous caller is refused by the permission layer before this meter is
+    ever consulted — there is no IP-keyed bucket to fall back to.
     """
 
-    scope = "ai_run_anon"
+    scope = "ai_run_user"
     _bucket_hours: int | None = None
     _ident: str | None = None
     _user_first_name: str | None = None
@@ -36,7 +40,11 @@ class AIRunThrottle(SimpleRateThrottle):
         if user and user.is_authenticated:
             self._user_first_name = user.first_name or ""
             return "ai_run_user", f"user:{user.pk}", 5
-        return "ai_run_anon", self.get_ident(request), 10
+        # No account, nothing to meter. Views that call a model require
+        # authentication, so this is only reached by the read-only quota
+        # endpoint asking what a visitor has — the answer is "sign in first".
+        self._user_first_name = None
+        return "ai_run_user", None, 5
 
     def get_cache_key(self, request, view):
         scope, ident, bucket_hours = self._resolve_scope_and_ident(request)

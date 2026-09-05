@@ -21,7 +21,7 @@ import { FadeIn } from '@/components/motion/FadeIn'
 import { useUserTypeStore } from '@/stores/userTypeStore'
 import type { UserType } from '@/types/auth'
 import { showLocalNotification } from '@/pwa/push'
-import { useSupabaseSession } from '@/hooks/useAuth'
+import { useAuthGate } from '@/hooks/useAuthGate'
 import { useUserType } from '@/hooks/useUserType'
 import { AuthModal } from '@/components/AuthModal'
 
@@ -110,7 +110,14 @@ export function ClassifyDiseaseView() {
   const setUserType = useUserTypeStore((state) => state.setUserType)
   const setLockSelection = useUserTypeStore((state) => state.setLockSelection)
   const prevUserTypeRef = React.useRef<UserType | null>(null)
-  const { session, isLoading: isSessionLoading } = useSupabaseSession()
+  const {
+    isAuthenticated,
+    isSessionLoading,
+    isAuthPromptOpen,
+    setAuthPromptOpen,
+    handleAuthenticated,
+    runWhenSignedIn,
+  } = useAuthGate()
   // Professionals get a denser, single-card layout: the owner-facing rail
   // explains a clinical brief to people who write them for a living.
   const { isProfessional } = useUserType()
@@ -127,14 +134,14 @@ export function ClassifyDiseaseView() {
 
   React.useEffect(() => {
     if (isSessionLoading) return
-    if (!session) {
+    if (!isAuthenticated) {
       setLockSelection(true)
       setUserType('fur_parent')
       return () => {
         setLockSelection(false)
       }
     }
-  }, [isSessionLoading, session, setLockSelection, setUserType])
+  }, [isSessionLoading, isAuthenticated, setLockSelection, setUserType])
 
   React.useEffect(() => {
     if (!imageFile) {
@@ -213,13 +220,20 @@ export function ClassifyDiseaseView() {
       return
     }
     setLocalError(null)
-    classifyMutation.mutate({
-      imageFile,
-      textInput: trimmedText,
-    })
+    // A classification spends from an account's allowance, so a visitor gets
+    // the sign-in dialog here rather than a refusal from the API.
+    runWhenSignedIn(() =>
+      classifyMutation.mutate({
+        imageFile,
+        textInput: trimmedText,
+      }),
+    )
   }
 
   const errorMessage = localError ?? classifyMutation.error?.message ?? null
+  // A classification spends from an account's allowance, so there is nothing
+  // to spend without one.
+  const needsAuth = !isSessionLoading && !isAuthenticated
   const trimmedText = textInput.trim()
   const hasAnyInput = Boolean(imageFile) || trimmedText.length > 0
   const canSubmit =
@@ -282,7 +296,7 @@ export function ClassifyDiseaseView() {
                         : 'Select profile'}
                     </span>
                   )}
-                  {session && !lockSelection ? (
+                  {isAuthenticated && !lockSelection ? (
                     <Button
                       type="button"
                       variant="outline"
@@ -414,6 +428,45 @@ export function ClassifyDiseaseView() {
                   </InputStep>
                 </div>
 
+                {/* Sign-in requirement surfaced before the user commits */}
+                {needsAuth && !errorMessage ? (
+                  <div
+                    className={`flex flex-wrap items-center gap-3 border-t border-amber-200 bg-amber-50 text-[12.5px] ${
+                      isProfessional ? 'px-4 py-3' : 'px-5 py-3 sm:px-6'
+                    }`}
+                  >
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[12.5px] font-bold text-amber-900">
+                        Classifying needs an account
+                      </p>
+                      <p className="mt-0.5 text-[11.5px] leading-relaxed text-amber-800">
+                        Every classification comes out of your allowance — 5
+                        analyses every 5 hours, shared across every AI feature.
+                        Sign in and your photo and notes are still here.
+                      </p>
+                    </div>
+                    <AuthModal
+                      onAuthenticated={handleAuthenticated}
+                      trigger={
+                        <Button
+                          type="button"
+                          size="sm"
+                          className="h-8 rounded-lg bg-amber-600 px-3 text-[11.5px] font-bold text-white hover:bg-amber-700"
+                        >
+                          Sign in
+                        </Button>
+                      }
+                    />
+                  </div>
+                ) : null}
+
+                <AuthModal
+                  open={isAuthPromptOpen}
+                  onOpenChange={setAuthPromptOpen}
+                  notice="Classifying needs an account — each run spends from your analyses allowance. Sign in to continue."
+                  onAuthenticated={handleAuthenticated}
+                />
+
                 {errorMessage ? (
                   <div
                     role="alert"
@@ -427,21 +480,19 @@ export function ClassifyDiseaseView() {
                     </div>
                     {(() => {
                       const err = classifyMutation.error as
-                        | (Error & {
-                            code?: string
-                            isAuthed?: boolean
-                          })
+                        | (Error & { code?: string })
                         | null
                       if (err?.code === 'UNAUTHENTICATED') {
                         return (
                           <AuthModal
+                            onAuthenticated={handleAuthenticated}
                             trigger={
                               <Button
                                 type="button"
                                 size="sm"
                                 className="w-fit rounded-md bg-blue-600 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-blue-700"
                               >
-                                Sign in again
+                                Sign in to classify
                               </Button>
                             }
                           />
