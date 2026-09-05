@@ -103,13 +103,8 @@ export function Header() {
                 alt="PawMed AI"
                 width={1344}
                 height={257}
-                className="h-7 w-auto"
+                className="h-6 w-auto"
               />
-              <div className="hidden leading-tight sm:block">
-                <p className="text-[10.5px] font-medium tracking-wide text-slate-400">
-                  Veterinary diagnostics
-                </p>
-              </div>
             </Link>
 
             {/* Desktop Nav */}
@@ -255,11 +250,6 @@ export function Header() {
               height={257}
               className="h-6 w-auto"
             />
-            <div className="leading-tight">
-              <p className="text-[10px] font-medium tracking-wide text-slate-400">
-                Veterinary diagnostics
-              </p>
-            </div>
           </div>
           <button
             className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
