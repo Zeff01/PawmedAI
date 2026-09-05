@@ -19,6 +19,7 @@ import type { UserType } from '@/types/auth'
 export function useUserType(): {
   userType: UserType | null
   isProfessional: boolean
+  isFurParent: boolean
 } {
   const { data: me, isError } = useMe()
   const remembered = React.useSyncExternalStore(
@@ -36,5 +37,9 @@ export function useUserType(): {
   // remember. Until either happens, last visit's answer is the best guess.
   const userType = me ? me.user_type : isError ? null : remembered
 
-  return { userType, isProfessional: userType === 'professional' }
+  return {
+    userType,
+    isProfessional: userType === 'professional',
+    isFurParent: userType === 'fur_parent',
+  }
 }

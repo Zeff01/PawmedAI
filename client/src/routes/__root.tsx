@@ -7,7 +7,9 @@ import { AnalyticsTracker } from '@/components/AnalyticsTracker'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { ProfessionalShell } from '@/components/ProfessionalShell'
+import { FurParentShell } from '@/components/FurParentShell'
 import { NotificationPermissionPrompt } from '@/components/NotificationPermissionPrompt'
+import { Toaster } from '@/components/ui/sonner'
 import { SiteStructuredData } from '@/components/SiteStructuredData'
 import { BugReportWidget } from '@/features/bug-report/components/BugReportWidget'
 import { useUserType } from '@/hooks/useUserType'
@@ -17,7 +19,7 @@ export const Route = createRootRoute({
 })
 
 function RootComponent() {
-  const { isProfessional } = useUserType()
+  const { isProfessional, isFurParent } = useUserType()
 
   return (
     <>
@@ -34,6 +36,10 @@ function RootComponent() {
         <ProfessionalShell>
           <Outlet />
         </ProfessionalShell>
+      ) : isFurParent ? (
+        <FurParentShell>
+          <Outlet />
+        </FurParentShell>
       ) : (
         <>
           <Header />
@@ -48,6 +54,7 @@ function RootComponent() {
 
       <NotificationPermissionPrompt />
       <BugReportWidget />
+      <Toaster />
       {import.meta.env.DEV && (
         <TanStackDevtools
           config={{ position: 'bottom-left' }}
