@@ -6,7 +6,6 @@ import {
   XMarkIcon,
   ArrowLongRightIcon,
 } from '@heroicons/react/24/solid'
-import { PawIcon } from './custom/custom-icons'
 import { useState, useEffect } from 'react'
 import { AuthModal } from './AuthModal'
 import { QuotaBadge } from './QuotaBadge'
@@ -99,15 +98,14 @@ export function Header() {
               className="flex items-center gap-3"
               aria-label="Pawmed AI home"
             >
-              <div className="relative flex h-9 w-9 items-center justify-center rounded-md bg-linear-to-br from-blue-500 to-blue-700 text-white shadow-sm">
-                <div className="rotate-20">
-                  <PawIcon />
-                </div>
-              </div>
-              <div className="leading-tight">
-                <p className="text-[14px] font-bold tracking-tight text-slate-900">
-                  Pawmed AI
-                </p>
+              <img
+                src="/images/pawmed-logo-blue.png"
+                alt="PawMed AI"
+                width={1344}
+                height={257}
+                className="h-7 w-auto"
+              />
+              <div className="hidden leading-tight sm:block">
                 <p className="text-[10.5px] font-medium tracking-wide text-slate-400">
                   Veterinary diagnostics
                 </p>
@@ -250,15 +248,14 @@ export function Header() {
         {/* Drawer Header */}
         <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-linear-to-br from-blue-500 to-blue-700 text-white">
-              <div className="rotate-20 scale-90">
-                <PawIcon />
-              </div>
-            </div>
+            <img
+              src="/images/pawmed-logo-blue.png"
+              alt="PawMed AI"
+              width={1344}
+              height={257}
+              className="h-6 w-auto"
+            />
             <div className="leading-tight">
-              <p className="text-[13px] font-bold tracking-tight text-slate-900">
-                Pawmed AI
-              </p>
               <p className="text-[10px] font-medium tracking-wide text-slate-400">
                 Veterinary diagnostics
               </p>

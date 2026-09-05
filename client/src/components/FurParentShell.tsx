@@ -163,17 +163,13 @@ export function FurParentShell({ children }: { children: React.ReactNode }) {
                 className="group flex shrink-0 items-center gap-2.5"
                 aria-label="Pawmed AI home"
               >
-                <span className="flex size-10 items-center justify-center rounded-xl bg-fp-brand-800 text-white shadow-fp-subtle transition group-hover:scale-105">
-                  <PawPrint className="size-5" />
-                </span>
-                <span className="hidden leading-tight sm:block">
-                  <span className="block text-xl font-bold tracking-tight text-slate-900">
-                    Pawmed<span className="text-fp-brand-600">.ai</span>
-                  </span>
-                  <span className="block text-[11px] font-medium tracking-wide text-slate-500 uppercase">
-                    Caregiver Health OS
-                  </span>
-                </span>
+                <img
+                  src="/images/pawmed-logo-green.png"
+                  alt="PawMed AI"
+                  width={1344}
+                  height={257}
+                  className="h-5 w-auto"
+                />
               </Link>
 
               <nav

@@ -102,16 +102,23 @@ export function ProfessionalSidebar({
           className="flex items-center gap-3 rounded-lg px-1 py-1 transition-colors hover:bg-slate-50"
           aria-label="Pawmed AI home"
         >
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-linear-to-br from-blue-500 to-blue-700 text-white shadow-sm">
+          {/* The mark survives for the collapsed rail, where a wordmark
+              has nowhere to go. */}
+          <div className="hidden h-9 w-9 shrink-0 items-center justify-center rounded-md bg-linear-to-br from-blue-500 to-blue-700 text-white shadow-sm group-data-[collapsible=icon]:flex">
             <div className="rotate-20">
               <PawIcon />
             </div>
           </div>
+
           <div className="leading-tight group-data-[collapsible=icon]:hidden">
-            <p className="text-[13.5px] font-bold tracking-tight text-slate-900">
-              Pawmed AI
-            </p>
-            <p className="text-[10.5px] font-medium tracking-wide text-slate-400">
+            <img
+              src="/images/pawmed-logo-blue.png"
+              alt="PawMed AI"
+              width={1344}
+              height={257}
+              className="h-6 w-auto"
+            />
+            <p className="mt-0.5 text-[10.5px] font-medium tracking-wide text-slate-400">
               Professional workspace
             </p>
           </div>
