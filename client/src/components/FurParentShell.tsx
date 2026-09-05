@@ -145,7 +145,7 @@ export function FurParentShell({ children }: { children: React.ReactNode }) {
   }, [])
 
   const isActive = (to: NavItem['to']) =>
-    to === '/' ? location.pathname === '/' : location.pathname.startsWith(to)
+    location.pathname === to || location.pathname.startsWith(`${to}/`)
 
   return (
     <FurParentActionsContext.Provider value={actions}>
@@ -322,7 +322,7 @@ export function FurParentShell({ children }: { children: React.ReactNode }) {
         </main>
 
         <nav
-          className="fixed right-20 bottom-3 left-3 z-40 flex items-center justify-around gap-1 rounded-full border border-fp-border bg-white/95 p-1.5 shadow-fp-elevated backdrop-blur-md lg:hidden"
+          className="fixed right-3 bottom-3 left-3 z-40 flex items-center justify-around gap-1 rounded-full border border-fp-border bg-white/95 p-1.5 shadow-fp-elevated backdrop-blur-md lg:hidden"
           aria-label="Primary"
         >
           {NAV.map((item) => (

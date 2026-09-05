@@ -62,19 +62,19 @@ export function RecordDialog({
             </Alert>
           ) : null}
 
-          <DialogFooter className="mt-1 flex items-end justify-end">
+          <DialogFooter className="mt-1 flex-col-reverse items-stretch gap-2 sm:flex-row sm:items-center sm:justify-end">
             <Button
               type="button"
               variant="ghost"
               onClick={() => onOpenChange(false)}
-              className="h-auto px-4 py-2.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-slate-900"
+              className="h-auto w-full px-4 py-2.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 sm:w-auto"
             >
               Cancel
             </Button>
             <Button
               type="submit"
               disabled={pending}
-              className="h-auto bg-fp-brand-800 px-4 py-2.5 text-xs font-semibold text-white shadow-fp-subtle transition hover:bg-fp-brand-700 focus-visible:ring-2 focus-visible:ring-fp-brand-500/40"
+              className="h-auto w-full bg-fp-brand-800 px-4 py-2.5 text-xs font-semibold text-white shadow-fp-subtle transition hover:bg-fp-brand-700 focus-visible:ring-2 focus-visible:ring-fp-brand-500/40 sm:w-auto"
             >
               {pending ? pendingLabel : submitLabel}
             </Button>

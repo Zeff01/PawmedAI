@@ -53,7 +53,7 @@ function RootComponent() {
       )}
 
       <NotificationPermissionPrompt />
-      <BugReportWidget />
+      {isFurParent ? null : <BugReportWidget />}
       <Toaster />
       {import.meta.env.DEV && (
         <TanStackDevtools
