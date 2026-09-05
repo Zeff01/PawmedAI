@@ -14,6 +14,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from core.health import cache_health_check, health_check, throttle_health_check
@@ -23,6 +25,7 @@ urlpatterns = [
     path("api/", include("classify_dss.urls")),
     path("api/", include("classify_breed.urls")),
     path("api/", include("cbc_analyzer.urls")),
+    path("api/pets/", include("pet_profiles.urls")),
     path("api/push/", include("notifications.urls")),
     path("api/user/", include("users.urls")),
     path("api/bug/", include("bug_report.urls")),
@@ -30,3 +33,6 @@ urlpatterns = [
     path("health/cache/", cache_health_check, name="cache_health_check"),
     path("health/throttle/", throttle_health_check, name="throttle_health_check"),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'classify_dss',
     'classify_breed',
     'cbc_analyzer',
+    'pet_profiles',
     'notifications',
     'corsheaders',
     'django.contrib.admin',
@@ -127,6 +128,9 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = Path(os.environ.get('MEDIA_ROOT', BASE_DIR / 'media'))
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = DJANGO_SECURE_SSL_REDIRECT
