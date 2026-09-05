@@ -15,6 +15,25 @@ class UserSerializer(serializers.ModelSerializer):
         read_only_fields = ["id", "username", "email", "first_name", "last_name", "user_type"]
 
 
+class DisplayNameSerializer(serializers.ModelSerializer):
+    """
+    The two fields an owner may change about themselves.
+    """
+
+    class Meta:
+        model = User
+        fields = ["first_name", "last_name"]
+
+    def validate_first_name(self, value):
+        name = value.strip()
+        if not name:
+            raise serializers.ValidationError("Tell us what to call you.")
+        return name
+
+    def validate_last_name(self, value):
+        return value.strip()
+
+
 class OAuthCallbackSerializer(serializers.Serializer):
     """Validates the Supabase access_token POSTed from the frontend."""
     access_token = serializers.CharField(

@@ -11,6 +11,7 @@ from django.conf import settings
 from .authentication import SupabaseJWTAuthentication
 from .models import UserProfile
 from .serializers import (
+    DisplayNameSerializer,
     GoogleCodeExchangeSerializer,
     OAuthCallbackSerializer,
     UserSerializer,
@@ -103,10 +104,19 @@ class GoogleCodeExchangeView(APIView):
 
 
 class MeView(APIView):
-    """Returns the profile of the currently authenticated user."""
+    """Reads the current user's profile, and renames them."""
     permission_classes = [IsAuthenticated]
 
     def get(self, request: Request) -> Response:
+        return Response(UserSerializer(request.user).data)
+
+    def patch(self, request: Request) -> Response:
+        serializer = DisplayNameSerializer(
+            request.user, data=request.data, partial=True
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
         return Response(UserSerializer(request.user).data)
 
 
