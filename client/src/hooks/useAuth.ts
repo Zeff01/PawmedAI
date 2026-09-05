@@ -19,15 +19,6 @@ export const authKeys = {
   me: ['auth', 'me'] as const,
 }
 
-/**
- * Drop the caches that belong to whoever was signed in a moment ago.
- *
- * The remaining-analyses count is keyed on nothing identity-related, so
- * without this an anonymous visitor's "1 of 2 left" survives into the
- * professional session they just signed into — and an authenticated "5 of 5"
- * survives a sign-out. The count lives in the server's throttle cache, so
- * re-reading it is the only way to learn the new caller's allowance.
- */
 function resetIdentityScopedQueries(queryClient: QueryClient) {
   void queryClient.invalidateQueries({ queryKey: QUOTA_KEY })
 }

@@ -9,11 +9,9 @@ import { AttentionPanel } from './components/AttentionPanel'
 import { CareTimeline } from './components/CareTimeline'
 import { DashboardError } from './components/DashboardError'
 import { DashboardSkeleton } from './components/DashboardSkeleton'
-import { EditProfileDialog } from './components/EditProfileDialog'
 import { EmptyHousehold } from './components/EmptyHousehold'
 import { FurryFamily } from './components/FurryFamily'
 import { LogWeightDialog } from './components/LogWeightDialog'
-import { ShareRecordsDialog } from './components/ShareRecordsDialog'
 import { UploadDocumentDialog } from './components/UploadDocumentDialog'
 import { WelcomeBanner } from './components/WelcomeBanner'
 import { WellnessGrid } from './components/WellnessGrid'
@@ -21,7 +19,7 @@ import { summariseHighlights, summariseHousehold } from './care-priorities'
 import { useFurParentDashboard, useUpdatePet } from './hooks/usePetProfiles'
 import { COMPANION_PROMPTS } from './companion-prompts'
 import { FadeIn } from '@/components/motion/FadeIn'
-import { FP_CONTAINER } from '@/components/FurParentShell'
+import { FP_CONTAINER, useFurParentActions } from '@/components/FurParentShell'
 import { cn } from '@/lib/utils'
 import { toast } from '@/components/ui/sonner'
 import { useMe } from '@/hooks/useAuth'
@@ -38,8 +36,6 @@ export function FurParentDashboard() {
   const [uploading, setUploading] = React.useState(false)
   const [addingMedication, setAddingMedication] = React.useState(false)
   const [addingVaccination, setAddingVaccination] = React.useState(false)
-  const [editingProfile, setEditingProfile] = React.useState(false)
-  const [sharing, setSharing] = React.useState(false)
 
   const reportSuccess = (message: string) => toast.success(message)
 
@@ -54,6 +50,10 @@ export function FurParentDashboard() {
     })
 
   const { mutate: patchPet } = useUpdatePet()
+
+  // Held by the shell, because a phone reaches them from the account drawer
+  // instead of the banner — see `useFurParentActions`.
+  const { editProfile, shareRecords } = useFurParentActions()
 
   const firstName = me?.first_name.trim() || me?.username || 'there'
   const pets = data?.pets ?? []
@@ -104,8 +104,8 @@ export function FurParentDashboard() {
             firstName={firstName}
             petCount={pets.length}
             highlights={highlights}
-            onEditProfile={() => setEditingProfile(true)}
-            onShareRecords={() => setSharing(true)}
+            onEditProfile={editProfile}
+            onShareRecords={shareRecords}
           />
 
           {activePet && (
@@ -174,24 +174,6 @@ export function FurParentDashboard() {
           </>
         )}
       </div>
-
-      <EditProfileDialog
-        open={editingProfile}
-        onOpenChange={setEditingProfile}
-        firstName={me?.first_name ?? ''}
-        lastName={me?.last_name ?? ''}
-        onSaved={() => reportSuccess('Your profile was updated')}
-      />
-
-      <ShareRecordsDialog
-        open={sharing}
-        onOpenChange={setSharing}
-        ownerName={firstName}
-        pets={pets}
-        wellnessByPet={data?.wellness ?? {}}
-        onShared={reportSuccess}
-        onError={reportError}
-      />
 
       <AddPetDialog
         open={addingPet}
