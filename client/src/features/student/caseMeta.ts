@@ -328,6 +328,39 @@ export const DIFFICULTY_TONE: Record<CaseDifficulty, string> = {
   advanced: 'bg-slate-100 text-slate-600',
 }
 
+export const DIFFICULTY_ORDER: Array<CaseDifficulty> = [
+  'beginner',
+  'intermediate',
+  'advanced',
+]
+
+export const DIFFICULTY_LABEL: Record<CaseDifficulty, string> = {
+  beginner: 'Beginner',
+  intermediate: 'Intermediate',
+  advanced: 'Advanced',
+}
+
+export type DifficultyChoice = {
+  id: CaseDifficulty
+  label: string
+  count: number
+}
+
+export function difficultyChoices(
+  cases: Array<{ difficulty: CaseDifficulty }>,
+): Array<DifficultyChoice> {
+  const counts = new Map<CaseDifficulty, number>()
+  for (const item of cases) {
+    counts.set(item.difficulty, (counts.get(item.difficulty) ?? 0) + 1)
+  }
+
+  return DIFFICULTY_ORDER.filter((level) => counts.has(level)).map((level) => ({
+    id: level,
+    label: DIFFICULTY_LABEL[level],
+    count: counts.get(level) ?? 0,
+  }))
+}
+
 export const SPECIES_GROUP_LABEL: Record<SpeciesGroup, string> = {
   companion: 'Companion',
   farm: 'Farm & equine',

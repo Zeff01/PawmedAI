@@ -1,36 +1,44 @@
 import * as React from 'react'
-import { Loader2 } from 'lucide-react'
+import { ChevronDown, Loader2 } from 'lucide-react'
 
 import { FadeIn } from '@/components/motion/FadeIn'
 import { STUDENT_CONTAINER } from '@/components/StudentShell'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { CaseCard } from './components/CaseCard'
 import { StudentHero } from './components/StudentHero'
 import { StudentMetrics } from './components/StudentMetrics'
 import { DiagnosticToolkitCard } from './components/DiagnosticToolkitCard'
 import { ContinueCasesCard } from './components/ContinueCasesCard'
+import { SpeciesFilter } from './components/SpeciesFilter'
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
 import {
-  SPECIES_GROUP_LABEL,
+  DIFFICULTY_LABEL,
+  difficultyChoices,
   groupFilters,
   speciesChoices,
   speciesMeta,
 } from './caseMeta'
 import { useCases } from './hooks/useAcademy'
-import type { CaseSpecies } from './api/academy'
+import type { CaseDifficulty, CaseSpecies } from './api/academy'
 import type { SpeciesGroup } from './caseMeta'
+
+/** Cases revealed at a time — the first render, and each "Show more". */
+const PAGE_SIZE = 5
 
 export function StudentDashboard() {
   const [group, setGroup] = React.useState<SpeciesGroup | 'all'>('all')
   const [species, setSpecies] = React.useState<CaseSpecies | 'all'>('all')
+  const [difficulty, setDifficulty] = React.useState<CaseDifficulty | 'all'>(
+    'all',
+  )
+  const [shown, setShown] = React.useState(PAGE_SIZE)
   const { data: cases, isLoading, isError, error } = useCases()
 
   const groups = React.useMemo(() => groupFilters(cases ?? []), [cases])
@@ -60,13 +68,44 @@ export function StudentDashboard() {
     }
   }, [speciesInGroup, species])
 
-  const visible = React.useMemo(() => {
+  // Species narrows first: difficulty is counted over what that leaves, so the
+  // number beside a level is what picking it would return.
+  const inSpecies = React.useMemo(() => {
     const all = cases ?? []
     if (species !== 'all') return all.filter((item) => item.species === species)
     if (group !== 'all')
       return all.filter((item) => speciesMeta(item.species).group === group)
     return all
   }, [cases, group, species])
+
+  const difficulties = React.useMemo(
+    () => difficultyChoices(inSpecies),
+    [inSpecies],
+  )
+
+  React.useEffect(() => {
+    if (
+      difficulty !== 'all' &&
+      !difficulties.some((option) => option.id === difficulty)
+    ) {
+      setDifficulty('all')
+    }
+  }, [difficulties, difficulty])
+
+  const visible = React.useMemo(
+    () =>
+      difficulty === 'all'
+        ? inSpecies
+        : inSpecies.filter((item) => item.difficulty === difficulty),
+    [inSpecies, difficulty],
+  )
+
+  React.useEffect(() => {
+    setShown(PAGE_SIZE)
+  }, [group, species, difficulty])
+
+  const page = visible.slice(0, shown)
+  const remaining = visible.length - page.length
 
   return (
     <section className="min-h-full bg-slate-50 pt-6 pb-16">
@@ -79,91 +118,102 @@ export function StudentDashboard() {
 
         <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-12">
           {/* ── Case library ───────────────────────────────────────────── */}
-          <section className="space-y-4 lg:col-span-8">
-            <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
-              <div className="flex flex-col gap-3">
-                <div className="min-w-0">
-                  <h2 className="text-[18px] font-bold tracking-tight text-slate-900">
-                    Case library
-                  </h2>
-                  <p className="text-[12px] text-slate-500">
-                    Step through differential diagnosis, lab orders, and
-                    treatment staging. Every stage you clear earns points.
-                  </p>
-                </div>
+          <section className="space-y-5 lg:col-span-8">
+            <div className="space-y-1">
+              <h2 className="text-[18px] font-bold tracking-tight text-slate-900">
+                Case library
+              </h2>
+              <p className="max-w-xl text-[12.5px] leading-relaxed text-slate-500">
+                Step through differential diagnosis, lab orders, and treatment
+                staging. Every stage you clear earns points.
+              </p>
+            </div>
 
-                {/* <div className="flex shrink-0 flex-col gap-2 self-start sm:flex-row sm:items-center sm:self-auto">
-                  <div
-                    role="tablist"
-                    aria-label="Filter cases by species group"
-                    className="inline-flex items-center gap-1 overflow-x-auto rounded-full bg-slate-100 p-1"
-                  >
-                    {groups.map((option) => {
-                      const active = group === option.id
-                      return (
-                        <button
-                          key={option.id}
-                          type="button"
-                          role="tab"
-                          aria-selected={active}
-                          title={option.title}
-                          onClick={() => {
-                            setGroup(option.id)
-                            setSpecies('all')
-                          }}
-                          className={cn(
-                            'shrink-0 rounded-full px-3.5 py-1.5 text-[12px] font-semibold transition-colors',
-                            active
-                              ? 'bg-white text-blue-600 shadow-sm'
-                              : 'text-slate-500 hover:text-slate-900',
-                          )}
-                        >
-                          {option.label}
-                          <span className="ml-1.5 text-[10.5px] font-bold text-slate-400">
-                            {option.count}
-                          </span>
-                        </button>
-                      )
-                    })}
-                  </div>
-                </div> */}
-              </div>
-
-              <div className="flex shrink-0 flex-col gap-2 self-center sm:flex-row sm:items-center sm:self-auto">
+            {/* Filter bar */}
+            <div className="flex flex-col gap-3 border-t border-slate-200 pt-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                 <Select
-                  value={species}
+                  value={difficulty}
                   onValueChange={(value) =>
-                    setSpecies(value as CaseSpecies | 'all')
+                    setDifficulty(value as CaseDifficulty | 'all')
                   }
                 >
                   <SelectTrigger
-                    aria-label="Filter cases by species"
-                    className="h-9 w-full shrink-0 rounded-full border-slate-200 bg-white text-[12px] font-semibold text-slate-600 shadow-none sm:w-52.5"
+                    aria-label="Filter cases by difficulty"
+                    className="h-9 w-full shrink-0 rounded-full border-slate-200 bg-white text-[12px] font-semibold text-slate-600 shadow-none sm:w-40"
                   >
-                    <SelectValue />
+                    <SelectValue>
+                      {difficulty === 'all'
+                        ? 'Any difficulty'
+                        : DIFFICULTY_LABEL[difficulty]}
+                    </SelectValue>
                   </SelectTrigger>
-                  <SelectContent className="max-h-80">
+                  <SelectContent>
                     <SelectItem value="all">
-                      {group === 'all'
-                        ? `Any species (${speciesInGroup.length})`
-                        : `Any ${SPECIES_GROUP_LABEL[group].toLowerCase()} species (${speciesInGroup.length})`}
+                      Any difficulty ({inSpecies.length})
                     </SelectItem>
-                    {speciesGroupsInList.map(([groupId, choices]) => (
-                      <SelectGroup key={groupId}>
-                        <SelectLabel>
-                          {SPECIES_GROUP_LABEL[groupId]}
-                        </SelectLabel>
-                        {choices.map((option) => (
-                          <SelectItem key={option.id} value={option.id}>
-                            {option.label} ({option.count})
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
+                    {difficulties.map((option) => (
+                      <SelectItem key={option.id} value={option.id}>
+                        {option.label} ({option.count})
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
+
+                <SpeciesFilter
+                  value={species}
+                  onChange={setSpecies}
+                  groups={speciesGroupsInList}
+                  total={speciesInGroup.length}
+                />
               </div>
+
+              {!isLoading && !isError && visible.length > 0 ? (
+                <p
+                  aria-live="polite"
+                  className="text-[11.5px] text-slate-400 tabular-nums"
+                >
+                  Showing {page.length} of {visible.length} case
+                  {visible.length === 1 ? '' : 's'}
+                </p>
+              ) : null}
             </div>
+
+            {/* <div className="flex shrink-0 flex-col gap-2 self-start sm:flex-row sm:items-center sm:self-auto">
+                <div
+                  role="tablist"
+                  aria-label="Filter cases by species group"
+                  className="inline-flex items-center gap-1 overflow-x-auto rounded-full bg-slate-100 p-1"
+                >
+                  {groups.map((option) => {
+                    const active = group === option.id
+                    return (
+                      <button
+                        key={option.id}
+                        type="button"
+                        role="tab"
+                        aria-selected={active}
+                        title={option.title}
+                        onClick={() => {
+                          setGroup(option.id)
+                          setSpecies('all')
+                        }}
+                        className={cn(
+                          'shrink-0 rounded-full px-3.5 py-1.5 text-[12px] font-semibold transition-colors',
+                          active
+                            ? 'bg-white text-blue-600 shadow-sm'
+                            : 'text-slate-500 hover:text-slate-900',
+                        )}
+                      >
+                        {option.label}
+                        <span className="ml-1.5 text-[10.5px] font-bold text-slate-400">
+                          {option.count}
+                        </span>
+                      </button>
+                    )
+                  })}
+                </div>
+              </div> */}
 
             {isLoading ? (
               <div className="flex items-center justify-center rounded-2xl border border-slate-200 bg-white py-16">
@@ -183,18 +233,31 @@ export function StudentDashboard() {
               </div>
             ) : visible.length > 0 ? (
               <div className="space-y-4">
-                {visible.map((summary) => (
+                {page.map((summary) => (
                   <CaseCard key={summary.slug} summary={summary} />
                 ))}
+
+                {remaining > 0 ? (
+                  <div className="flex justify-center pt-1">
+                    <Button
+                      variant="outline"
+                      onClick={() => setShown((count) => count + PAGE_SIZE)}
+                      className="h-10 rounded-full border-slate-200 px-6 text-[13px] font-bold text-slate-700"
+                    >
+                      Show {Math.min(PAGE_SIZE, remaining)} more
+                      <ChevronDown className="size-4 text-slate-400" />
+                    </Button>
+                  </div>
+                ) : null}
               </div>
             ) : (
               <div className="rounded-2xl border border-dashed border-slate-200 bg-white px-6 py-12 text-center">
                 <p className="text-[13.5px] font-semibold text-slate-800">
-                  No cases in this species yet
+                  No cases match these filters
                 </p>
                 <p className="mx-auto mt-1 max-w-sm text-[12px] leading-relaxed text-slate-500">
-                  More are added each block. Try another species, or pick up one
-                  already in progress.
+                  More are added each block. Try another species or difficulty,
+                  or pick up one already in progress.
                 </p>
               </div>
             )}
