@@ -20,6 +20,7 @@ export function useUserType(): {
   userType: UserType | null
   isProfessional: boolean
   isFurParent: boolean
+  isStudent: boolean
 } {
   const { data: me, isError } = useMe()
   const remembered = React.useSyncExternalStore(
@@ -41,5 +42,6 @@ export function useUserType(): {
     userType,
     isProfessional: userType === 'professional',
     isFurParent: userType === 'fur_parent',
+    isStudent: userType === 'student',
   }
 }

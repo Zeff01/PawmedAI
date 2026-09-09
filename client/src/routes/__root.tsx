@@ -8,6 +8,7 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { ProfessionalShell } from '@/components/ProfessionalShell'
 import { FurParentShell } from '@/components/FurParentShell'
+import { StudentShell } from '@/components/StudentShell'
 import { NotificationPermissionPrompt } from '@/components/NotificationPermissionPrompt'
 import { Toaster } from '@/components/ui/sonner'
 import { SiteStructuredData } from '@/components/SiteStructuredData'
@@ -19,7 +20,7 @@ export const Route = createRootRoute({
 })
 
 function RootComponent() {
-  const { isProfessional, isFurParent } = useUserType()
+  const { isProfessional, isFurParent, isStudent } = useUserType()
 
   return (
     <>
@@ -40,6 +41,10 @@ function RootComponent() {
         <FurParentShell>
           <Outlet />
         </FurParentShell>
+      ) : isStudent ? (
+        <StudentShell>
+          <Outlet />
+        </StudentShell>
       ) : (
         <>
           <Header />
