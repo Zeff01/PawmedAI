@@ -1,0 +1,172 @@
+{
+  "slug": "frog-collection-skin-shedding",
+  "title": "Amphibian room — White’s tree frogs: excessive shedding and sudden deaths",
+  "species": "amphibian",
+  "discipline": "Exotic Animal Medicine",
+  "difficulty": "advanced",
+  "body_system": "Integumentary",
+  "presentation": "A private collection of twenty amphibians. Five White’s tree frogs are shedding excessively, sitting with limbs splayed and reddened ventral skin, and three have died within a week of new frogs arriving from an online seller.",
+  "completion_bonus": 30,
+  "order": 45,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Assess the collection",
+      "briefing": "Affected frogs: excessive skin sloughing, ventral and thigh erythema, abnormal posture with hind limbs splayed, loss of righting reflex in two, inappetence. Three deaths in a week. New arrivals introduced without quarantine ten days before signs began. Room temperature 24°C, water dechlorinated, enclosures cleaned with a shared sponge and shared water containers.",
+      "prompt": "Which findings point to a transmissible skin disease?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Excessive sloughing with ventral erythema across several frogs",
+          "detail": "Skin as the primary organ affected",
+          "correct": true
+        },
+        {
+          "label": "Loss of righting reflex before death",
+          "detail": "Electrolyte failure across damaged skin",
+          "correct": true
+        },
+        {
+          "label": "Signs beginning ten days after unquarantined arrivals",
+          "detail": "Introduction of an agent",
+          "correct": true
+        },
+        {
+          "label": "Shared sponge and water containers",
+          "detail": "The route between enclosures — husbandry, not a clinical sign",
+          "correct": false
+        },
+        {
+          "label": "Room temperature 24°C",
+          "detail": "Within a tolerable range for the species",
+          "correct": false
+        }
+      ],
+      "explanation": "Amphibian skin is a respiratory and osmoregulatory organ, so a disease that damages it kills by electrolyte failure — which is exactly what the lost righting reflex represents. Sloughing with ventral erythema across several animals ten days after unquarantined arrivals is chytridiomycosis until excluded, and the shared cleaning equipment explains how it moved."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "You can swab live frogs and submit the dead ones.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Skin swabs of ventral surfaces and toe webbing for Batrachochytrium qPCR",
+          "detail": "The reference test, and it distinguishes Bd from Bsal",
+          "correct": true
+        },
+        {
+          "label": "Wet mount of shed skin for zoosporangia",
+          "detail": "Immediate, if you know what to look for",
+          "correct": true
+        },
+        {
+          "label": "Post-mortem with histopathology of skin",
+          "detail": "Intracellular zoosporangia within hyperkeratotic epidermis",
+          "correct": true
+        },
+        {
+          "label": "Ranavirus PCR on tissues",
+          "detail": "The other cause of mass amphibian mortality",
+          "correct": true
+        },
+        {
+          "label": "Bacterial culture from skin and coelom",
+          "detail": "Secondary sepsis, common and treatable",
+          "correct": true
+        },
+        {
+          "label": "Serum biochemistry on affected frogs",
+          "detail": "Sample volume is prohibitive and it will not change the diagnosis",
+          "correct": false
+        },
+        {
+          "label": "Faecal flotation as the primary test",
+          "detail": "Endoparasites do not cause epidermal sloughing and death",
+          "correct": false
+        }
+      ],
+      "explanation": "The swab qPCR is what makes this diagnosis, and swabbing the right places — ventrum and toe webbing, where the fungus concentrates — is the technique that decides whether it works. Running ranavirus in parallel is standard practice because the two present identically and only one is treatable, and treating the wrong one costs a collection."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Batrachochytrium dendrobatidis qPCR strongly positive in four of five affected frogs and in two of the new arrivals with no clinical signs; Bsal negative. Wet mount: zoosporangia visible in shed skin. Histopathology: epidermal hyperkeratosis with intracellular zoosporangia. Ranavirus PCR negative. Skin culture: mixed Gram-negatives including Aeromonas. Electrolytes on one frog: sodium and potassium both low.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Chytridiomycosis from Batrachochytrium dendrobatidis",
+          "detail": "qPCR, wet mount and histology all agree",
+          "correct": true
+        },
+        {
+          "label": "The new arrivals introduced it and are subclinical carriers",
+          "detail": "Two positive frogs with no signs",
+          "correct": true
+        },
+        {
+          "label": "Electrolyte loss across damaged skin is the mechanism of death",
+          "detail": "Low sodium and potassium with loss of righting reflex",
+          "correct": true
+        },
+        {
+          "label": "Secondary bacterial infection is present",
+          "detail": "Aeromonas cultured from damaged skin",
+          "correct": true
+        },
+        {
+          "label": "Ranavirus is the cause of the deaths",
+          "detail": "PCR negative",
+          "correct": false
+        },
+        {
+          "label": "Bsal is present and the collection is a Bsal risk",
+          "detail": "Bsal specifically negative",
+          "correct": false
+        }
+      ],
+      "explanation": "Distinguishing Bd from Bsal and from ranavirus is the whole point of the panel: Bd is treatable with itraconazole baths and temperature management, ranavirus is not, and Bsal carries different legal and biosecurity obligations. The low electrolytes explain the deaths mechanistically, which is why supportive electrolyte therapy sits alongside the antifungal."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Bd qPCR positive in affected frogs and in two symptom-free new arrivals, zoosporangia on wet mount and histology, Bsal and ranavirus negative, secondary Aeromonas, low sodium and potassium.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Chytridiomycosis (B. dendrobatidis) introduced by unquarantined arrivals, with secondary bacterial infection",
+          "detail": "Confirmed agent, route of entry and complication",
+          "correct": true
+        },
+        {
+          "label": "Ranavirus infection",
+          "detail": "PCR negative",
+          "correct": false
+        },
+        {
+          "label": "Bsal infection",
+          "detail": "Specifically negative",
+          "correct": false
+        },
+        {
+          "label": "Primary bacterial dermatosepticaemia",
+          "detail": "Secondary to the fungal skin damage",
+          "correct": false
+        },
+        {
+          "label": "Husbandry-related dysecdysis",
+          "detail": "Does not explain positive qPCR, zoosporangia or three deaths",
+          "correct": false
+        }
+      ],
+      "explanation": "This diagnosis is as much a biosecurity finding as a clinical one: itraconazole bathing with electrolyte support and raised temperature for affected frogs, treatment of the subclinical carriers, disinfection that kills zoospores, an end to shared sponges, and a real quarantine protocol. Bd released into native amphibian populations is a conservation problem, so the advice extends beyond the collection."
+    }
+  ]
+}

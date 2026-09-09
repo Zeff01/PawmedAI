@@ -1,0 +1,167 @@
+{
+  "slug": "pepper-guinea-pig-haematuria",
+  "title": "Pepper — 3yo guinea pig: straining to urinate with blood in the bedding",
+  "species": "caviine",
+  "discipline": "Exotic Animal Medicine",
+  "difficulty": "beginner",
+  "body_system": "Urinary",
+  "presentation": "3-year-old female guinea pig, hunched and vocalising when passing urine for four days. The owner has found pink staining on the bedding and she is eating less hay than usual.",
+  "completion_bonus": 30,
+  "order": 14,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Separate urinary from reproductive bleeding",
+      "briefing": "Weight 890 g, down 60 g. Hunched posture, vocalises on caudal abdominal palpation, a firm 8 mm structure palpable in the caudal abdomen. Perineum stained pink, vulva closed with no discharge. Temperature 38.6°C. Teeth and cheek teeth normal on oral examination under sedation. Gut sounds present.",
+      "prompt": "Which findings point to the lower urinary tract?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Vocalising while passing urine",
+          "detail": "Pain at the moment of micturition",
+          "correct": true
+        },
+        {
+          "label": "Firm palpable structure in the caudal abdomen",
+          "detail": "A distended, painful bladder or a calculus",
+          "correct": true
+        },
+        {
+          "label": "Pink staining that appears at urination",
+          "detail": "Timing ties the blood to urine, not to the vulva",
+          "correct": true
+        },
+        {
+          "label": "Weight loss of 60 g",
+          "detail": "A consequence of four days of pain",
+          "correct": false
+        },
+        {
+          "label": "Reduced hay intake",
+          "detail": "True of any painful guinea pig",
+          "correct": false
+        }
+      ],
+      "explanation": "Guinea pigs bleed from the urinary tract and from the uterus, and the history separates them: blood that appears with a painful urination is urinary. A firm caudal abdominal structure in this species means a calculus until imaged otherwise. Anorexia and weight loss follow the pain and tell you how urgent this is, not where it is."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "She is stable, well hydrated, and you have one sedation to work with.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Urinalysis with sediment examination",
+          "detail": "Crystals, blood, casts and pH",
+          "correct": true
+        },
+        {
+          "label": "Whole-body radiographs",
+          "detail": "Calcium-rich guinea pig stones are radio-opaque",
+          "correct": true
+        },
+        {
+          "label": "Urine culture and sensitivity by cystocentesis",
+          "detail": "Sterile technique, before antibiotics",
+          "correct": true
+        },
+        {
+          "label": "Biochemistry with calcium, phosphorus, urea and creatinine",
+          "detail": "Renal function and calcium balance",
+          "correct": true
+        },
+        {
+          "label": "Abdominal ultrasound",
+          "detail": "Bladder wall, ureters and the reproductive tract",
+          "correct": true
+        },
+        {
+          "label": "Faecal parasitology",
+          "detail": "No bearing on haematuria",
+          "correct": false
+        },
+        {
+          "label": "Dietary vitamin C assay",
+          "detail": "Scurvy is diagnosed on history and clinical signs, not a serum assay",
+          "correct": false
+        }
+      ],
+      "explanation": "Sediment plus a radiograph answers most guinea pig haematuria: the stones are calcium carbonate and show up well, and the sediment tells you what is forming them. Culture matters because ascending infection and calculi travel together, and calcium with renal values shapes both the diet advice and the anaesthetic risk. A vitamin C assay is the tempting wrong turn — scurvy is a clinical diagnosis in this species."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Urine: pH 8.5, 4+ blood, 2+ protein, no glucose. Sediment: sheets of calcium carbonate crystals, many red cells, no bacteria seen. Radiographs: a single 7 mm radio-opaque calculus in the bladder, no ureteral or renal opacities. Ultrasound: thickened bladder wall, uterus and ovaries normal. Calcium 2.9 mmol/L, phosphorus 1.6 mmol/L, urea 7.2 mmol/L, creatinine 62 µmol/L. Culture: no growth at 48 hours. Diet: alfalfa-based pellets ad libitum with limited grass hay.",
+      "prompt": "Which conclusions do the results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Cystic calculus with secondary cystitis",
+          "detail": "One stone, a thick bladder wall, blood in the urine",
+          "correct": true
+        },
+        {
+          "label": "The diet is driving stone formation",
+          "detail": "Alfalfa ad libitum in an adult is a calcium load",
+          "correct": true
+        },
+        {
+          "label": "Kidney function is currently preserved",
+          "detail": "Urea and creatinine within reference",
+          "correct": true
+        },
+        {
+          "label": "Bacterial urinary tract infection needs antibiotic cover",
+          "detail": "Culture negative and no bacteria on sediment",
+          "correct": false
+        },
+        {
+          "label": "Ovarian cysts are contributing to the bleeding",
+          "detail": "Reproductive tract normal on ultrasound",
+          "correct": false
+        }
+      ],
+      "explanation": "A negative culture in the face of an inflamed bladder is a real result, not a failed one: it means the cystitis is mechanical and antibiotics would treat nothing. The alkaline pH and carbonate crystals are expected for the species, but alfalfa ad libitum in an adult is the part you can change, and saying so is half of the treatment plan."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "A 7 mm radio-opaque cystic calculus, calcium carbonate crystalluria at pH 8.5, sterile urine, thickened bladder wall, normal renal values, alfalfa-based diet.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Cystic calculus with sterile secondary cystitis, diet-related",
+          "detail": "The stone, its consequence and its cause",
+          "correct": true
+        },
+        {
+          "label": "Bacterial cystitis",
+          "detail": "Culture negative with no bacteria on sediment",
+          "correct": false
+        },
+        {
+          "label": "Pyelonephritis",
+          "detail": "No renal opacities, no azotaemia, no fever",
+          "correct": false
+        },
+        {
+          "label": "Uterine haemorrhage from ovarian cysts",
+          "detail": "Reproductive tract normal on ultrasound",
+          "correct": false
+        },
+        {
+          "label": "Hypovitaminosis C",
+          "detail": "Causes gingival and joint disease, not a radio-opaque bladder stone",
+          "correct": false
+        }
+      ],
+      "explanation": "Naming the diet in the diagnosis is what makes the discharge advice stick: a cystotomy removes today’s stone, and moving her onto grass hay with a timothy-based pellet and free water is what stops the next one. Sterile means analgesia and surgery, not a fortnight of antibiotics."
+    }
+  ]
+}

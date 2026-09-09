@@ -1,0 +1,172 @@
+{
+  "slug": "racing-pigeon-canker",
+  "title": "Loft 4 — racing pigeons: young birds with cheesy throat lesions",
+  "species": "columbine",
+  "discipline": "Avian Medicine",
+  "difficulty": "beginner",
+  "body_system": "Gastrointestinal",
+  "presentation": "A racing loft of sixty birds. Eight youngsters are losing weight, standing fluffed with wet beaks, and one has a yellow cheesy mass visible at the back of the throat. Two squabs have died in the nest.",
+  "completion_bonus": 30,
+  "order": 35,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Examine the birds and the loft",
+      "briefing": "Affected youngsters: BCS 2/5, wet beaks with ropy saliva, reluctant to swallow, one with a yellow caseous plaque at the oropharynx and another with a swelling under the mandible. Crops slow to empty. Two nestling deaths. Loft: communal water trough refilled every other day, adults feeding young by crop milk, birds recently returned from a race and mixed with residents.",
+      "prompt": "Which findings point to trichomoniasis rather than a respiratory disease?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Yellow caseous oropharyngeal plaques",
+          "detail": "The classic canker lesion",
+          "correct": true
+        },
+        {
+          "label": "Ropy saliva with reluctance to swallow",
+          "detail": "Oesophageal and crop involvement",
+          "correct": true
+        },
+        {
+          "label": "Nestlings dying while being fed crop milk by adults",
+          "detail": "Vertical transmission from carrier parents",
+          "correct": true
+        },
+        {
+          "label": "Communal water trough refilled every other day",
+          "detail": "The transmission route — history, not a clinical sign",
+          "correct": false
+        },
+        {
+          "label": "Fluffed posture and weight loss",
+          "detail": "Non-specific illness in any pigeon",
+          "correct": false
+        }
+      ],
+      "explanation": "Caseous plaques in the throat with ropy saliva is canker, and the nestling deaths are the same disease arriving by crop milk from apparently healthy adults. That last point is what makes it a loft problem: the adults look well and are the reservoir. The shared water is the other route and it is the easiest thing on the list to fix."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "You are at the loft with a microscope, warm saline and slides.",
+      "prompt": "Which tests do you do?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Warm saline wet mount from a crop or oropharyngeal swab, examined immediately",
+          "detail": "Motile trophozoites, seen live",
+          "correct": true
+        },
+        {
+          "label": "Sample several birds including apparently healthy adults",
+          "detail": "Finds the carriers driving the outbreak",
+          "correct": true
+        },
+        {
+          "label": "Crop swab cytology stained for yeasts and bacteria",
+          "detail": "Candida and Gram-negative co-infection",
+          "correct": true
+        },
+        {
+          "label": "Faecal examination for coccidia and worms",
+          "detail": "The usual concurrent burdens in a loft",
+          "correct": true
+        },
+        {
+          "label": "Post-mortem of the dead squabs including liver",
+          "detail": "Systemic spread shows in the liver",
+          "correct": true
+        },
+        {
+          "label": "Paramyxovirus serology as the primary test",
+          "detail": "A vaccination question for the loft, not the cause of throat plaques",
+          "correct": false
+        },
+        {
+          "label": "Blood culture from affected youngsters",
+          "detail": "Not how this diagnosis is made, and impractical at the loft",
+          "correct": false
+        }
+      ],
+      "explanation": "This diagnosis is made in ninety seconds with warm saline and a microscope, and it fails if the slide cools or if you wait — the trophozoites stop moving and become invisible. Swabbing healthy adults is what turns the diagnosis into a control plan, and looking for concurrent coccidia and worms reflects how these lofts actually present."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Warm saline wet mounts: numerous motile, pear-shaped flagellated protozoa in six of eight sick youngsters and in four of ten clinically-healthy adults. Cytology: mixed bacteria, no significant yeast. Faecal: light coccidial oocyst load, no strongyle eggs. Post-mortem of squabs: caseous oesophageal plaques with pale hepatic foci. Water trough biofilm heavy on inspection.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Trichomonas gallinae infection in the loft",
+          "detail": "Motile trophozoites in sick birds",
+          "correct": true
+        },
+        {
+          "label": "Healthy adults are carriers and the source for the squabs",
+          "detail": "Positive wet mounts in birds with no signs",
+          "correct": true
+        },
+        {
+          "label": "Systemic spread in the squabs that died",
+          "detail": "Hepatic foci with oesophageal plaques",
+          "correct": true
+        },
+        {
+          "label": "The communal water trough is maintaining transmission",
+          "detail": "Heavy biofilm in a trough refilled every other day",
+          "correct": true
+        },
+        {
+          "label": "Coccidiosis is the primary problem",
+          "detail": "A light oocyst load does not explain caseous throat plaques",
+          "correct": false
+        },
+        {
+          "label": "Candidiasis is the primary problem",
+          "detail": "No significant yeast on cytology",
+          "correct": false
+        }
+      ],
+      "explanation": "Positive slides from birds with no clinical signs is the finding that shapes everything: treat only the sick youngsters and the carriers will re-infect them and the next round of squabs. The hepatic lesions in the squabs show why nestlings die rather than merely fail to thrive, and the biofilm explains why the loft cannot clear it between races."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Motile trophozoites in sick youngsters and in symptom-free adults, caseous oesophageal plaques with hepatic foci in dead squabs, light coccidial load, no yeast, heavy trough biofilm.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Trichomoniasis (canker) with carrier adults maintaining loft infection",
+          "detail": "The organism, the reservoir and the route",
+          "correct": true
+        },
+        {
+          "label": "Candidiasis of the crop",
+          "detail": "No significant yeast on cytology",
+          "correct": false
+        },
+        {
+          "label": "Coccidiosis",
+          "detail": "A light load, and the wrong lesions",
+          "correct": false
+        },
+        {
+          "label": "Wet pox (avian pox, diphtheritic form)",
+          "detail": "Produces similar plaques, but motile protozoa identify the cause here",
+          "correct": false
+        },
+        {
+          "label": "Bacterial ingluvitis",
+          "detail": "Mixed bacteria are secondary to the protozoal lesions",
+          "correct": false
+        }
+      ],
+      "explanation": "Because the carriers are the problem, the treatment is loft-wide — carnidazole or ronidazole for every bird, not just the eight that look ill — with the trough cleaned and refilled daily, and treatment timed before breeding and after races. A diagnosis that stops at \"canker in eight youngsters\" produces a relapse within a month."
+    }
+  ]
+}

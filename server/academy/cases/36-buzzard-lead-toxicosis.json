@@ -1,0 +1,172 @@
+{
+  "slug": "buzzard-lead-toxicosis",
+  "title": "Wild casualty — adult buzzard: found unable to fly, weak and green-staining",
+  "species": "raptor",
+  "discipline": "Zoo & Wildlife Medicine",
+  "difficulty": "advanced",
+  "body_system": "Neurological & Haematology",
+  "presentation": "Adult common buzzard brought in by a member of the public after being found grounded beside a game estate. Weak, unable to fly, bright green urates, and markedly thin.",
+  "completion_bonus": 30,
+  "order": 36,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Assess the casualty",
+      "briefing": "Weight 620 g against an expected 800–1,000 g, keel sharp. Weak grip bilaterally, wings droop, unable to stand for long. No fractures on palpation, no wounds. Urates bright green. Crop empty. Pupils responsive, mild head tremor. Found near a game estate at the end of the shooting season.",
+      "prompt": "Which findings point to a toxic rather than a traumatic cause?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Weakness with no fractures or wounds on examination",
+          "detail": "A grounded raptor without injury needs another explanation",
+          "correct": true
+        },
+        {
+          "label": "Bright green urates",
+          "detail": "Biliverdinuria from haemolysis and hepatic insult",
+          "correct": true
+        },
+        {
+          "label": "Head tremor with bilateral weak grip",
+          "detail": "A symmetrical neurological deficit, not a one-sided injury",
+          "correct": true
+        },
+        {
+          "label": "Marked emaciation",
+          "detail": "Tells you how long, not what caused it",
+          "correct": false
+        },
+        {
+          "label": "Empty crop",
+          "detail": "Expected in any bird that has not hunted",
+          "correct": false
+        }
+      ],
+      "explanation": "A grounded bird of prey with no injuries and symmetrical neurological signs has been poisoned or starved, and green urates point at haemolysis with hepatic involvement. The location is the clue that makes lead top of the list: raptors ingest shotgun pellets and bullet fragments in the carcasses they scavenge. Emaciation is the consequence of days of not hunting."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "The bird is stabilised in a warm, dark box with fluids. Diagnostic imaging and laboratory work are available.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Whole-body radiographs",
+          "detail": "Metallic fragments in the ventriculus or gut",
+          "correct": true
+        },
+        {
+          "label": "Blood lead concentration",
+          "detail": "The confirmatory measurement",
+          "correct": true
+        },
+        {
+          "label": "Packed cell volume with a blood smear",
+          "detail": "Anaemia and basophilic stippling of red cells",
+          "correct": true
+        },
+        {
+          "label": "Biochemistry with uric acid, AST and bile acids",
+          "detail": "Renal and hepatic effect of the toxin and of starvation",
+          "correct": true
+        },
+        {
+          "label": "Faecal parasitology and a crop wash",
+          "detail": "Concurrent trichomoniasis and parasitism are common in casualties",
+          "correct": true
+        },
+        {
+          "label": "Organophosphate cholinesterase assay as the first-line test",
+          "detail": "A reasonable differential for a poisoned raptor, but the green urates and setting point at lead",
+          "correct": false
+        },
+        {
+          "label": "Post-release satellite tagging arrangements",
+          "detail": "Not a diagnostic test",
+          "correct": false
+        }
+      ],
+      "explanation": "Radiographs and a blood lead run together because either alone misleads: lead can have passed through the gizzard and left no metal to see, while a metal density in a grit-eating bird is not proof of toxicosis. The smear adds supportive evidence for free, and the parasitology reflects the reality that wildlife casualties usually have more than one problem."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Radiographs: two small metallic densities in the ventriculus. Blood lead 2.9 ppm (toxic above 0.6 ppm in raptors). PCV 26% (ref 37–53); smear shows basophilic stippling with mild anisocytosis. Uric acid 820 µmol/L (raised), AST raised, bile acids mildly raised. Crop wash: no Trichomonas. Faecal: light Capillaria burden. Cholinesterase not measured.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Lead toxicosis with anaemia",
+          "detail": "Blood lead 2.9 ppm with stippling and a PCV of 26%",
+          "correct": true
+        },
+        {
+          "label": "Retained metallic fragments are an ongoing source",
+          "detail": "Two densities still in the ventriculus",
+          "correct": true
+        },
+        {
+          "label": "Dehydration and starvation are compounding the azotaemia",
+          "detail": "Raised uric acid in an emaciated bird with an empty crop",
+          "correct": true
+        },
+        {
+          "label": "A light Capillaria burden needs treating, but it is not the reason it was grounded",
+          "detail": "Incidental in the context of a lead of 2.9 ppm",
+          "correct": true
+        },
+        {
+          "label": "The metal densities alone prove toxicosis",
+          "detail": "Grit and shot fragments occur in well birds; the blood lead is what proves it",
+          "correct": false
+        },
+        {
+          "label": "Organophosphate poisoning remains the leading diagnosis",
+          "detail": "Unmeasured and unnecessary — lead is confirmed at a toxic concentration",
+          "correct": false
+        }
+      ],
+      "explanation": "The blood lead is what converts two specks on a radiograph into a diagnosis, and the distinction matters because raptors swallow grit and inert debris routinely. Basophilic stippling and the anaemia show the toxin has been at work for a while, and the raised uric acid is starvation and dehydration rather than a second disease — which changes how you fluid-load before chelating."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Blood lead 2.9 ppm, metallic densities in the ventriculus, PCV 26% with basophilic stippling, raised uric acid from starvation and dehydration, no Trichomonas, light Capillaria burden.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Lead toxicosis from ingested ammunition fragments, with anaemia and starvation",
+          "detail": "Confirmed toxic lead with its source and consequences",
+          "correct": true
+        },
+        {
+          "label": "Trauma from a collision",
+          "detail": "No fractures, no wounds, and symmetrical deficits",
+          "correct": false
+        },
+        {
+          "label": "Trichomoniasis",
+          "detail": "Crop wash negative",
+          "correct": false
+        },
+        {
+          "label": "Organophosphate toxicosis",
+          "detail": "Lead is confirmed at a toxic level and explains every finding",
+          "correct": false
+        },
+        {
+          "label": "Starvation alone",
+          "detail": "Does not produce stippling, green urates or a lead of 2.9 ppm",
+          "correct": false
+        }
+      ],
+      "explanation": "The diagnosis sets a sequence: rehydrate and feed before chelation, remove or allow passage of the fragments, chelate with sodium calcium edetate, then reassess the lead before considering release. It also generates a report — lead in a scavenging raptor beside a shoot is a population issue, and casualty records are how that evidence is built."
+    }
+  ]
+}

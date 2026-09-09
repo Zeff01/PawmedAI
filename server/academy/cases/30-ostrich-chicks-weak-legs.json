@@ -1,0 +1,167 @@
+{
+  "slug": "ostrich-chicks-weak-legs",
+  "title": "Rearing group — 6wk ostrich chicks: weakness and reluctance to stand",
+  "species": "avian",
+  "discipline": "Avian Medicine",
+  "difficulty": "advanced",
+  "body_system": "Musculoskeletal",
+  "presentation": "Twelve of forty six-week-old ostrich chicks are reluctant to stand, tremble when lifted, and two have died. Reared indoors on a home-mixed ration with no access to pasture.",
+  "completion_bonus": 30,
+  "order": 30,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Assess the group",
+      "briefing": "Affected chicks: sternal recumbency, tremors on handling, stiff gait when they do rise, no joint swelling and no rotational limb deformity. Growth rate normal until week four. Two deaths, both in good flesh. Diet: home-mixed ration using grain stored since last season, no premix added for the last three weeks, no pasture, indoor rearing under heat lamps.",
+      "prompt": "Which findings point to a nutritional myopathy rather than a leg deformity?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Tremors and weakness without joint swelling or limb rotation",
+          "detail": "Muscle rather than skeleton",
+          "correct": true
+        },
+        {
+          "label": "Good body condition in the two that died",
+          "detail": "Not a starvation or wasting problem",
+          "correct": true
+        },
+        {
+          "label": "Premix omitted from a home-mixed ration for three weeks",
+          "detail": "The exposure that fits the timing",
+          "correct": true
+        },
+        {
+          "label": "Indoor rearing under heat lamps",
+          "detail": "Relevant to rickets, but these birds have no bone deformity",
+          "correct": false
+        },
+        {
+          "label": "Normal growth to week four",
+          "detail": "Background, not a discriminating sign",
+          "correct": false
+        }
+      ],
+      "explanation": "Ratite leg problems divide into skeletal and muscular, and the examination separates them: no swollen joints and no rotated tibiotarsus takes rickets and tibiotarsal rotation off the top of the list, leaving muscle. Chicks that die in good flesh have not starved. The missing premix is the exposure, and its three-week timeline matches the onset."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "You can bleed affected and unaffected chicks and submit the two dead birds.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Plasma creatine kinase and AST in affected and unaffected chicks",
+          "detail": "Muscle damage, with in-house controls",
+          "correct": true
+        },
+        {
+          "label": "Whole-blood glutathione peroxidase or plasma selenium",
+          "detail": "Selenium status, the classic ratite deficiency",
+          "correct": true
+        },
+        {
+          "label": "Plasma vitamin E (alpha-tocopherol)",
+          "detail": "The other half of the same deficiency",
+          "correct": true
+        },
+        {
+          "label": "Post-mortem with histopathology of skeletal and cardiac muscle",
+          "detail": "Pale muscle and hyaline degeneration confirm it",
+          "correct": true
+        },
+        {
+          "label": "Feed analysis of the home-mixed ration",
+          "detail": "Proves the ration is deficient, not just suspected",
+          "correct": true
+        },
+        {
+          "label": "Calcium, phosphorus and vitamin D3 as the only mineral testing",
+          "detail": "Right panel for rickets, wrong for a myopathy with no bone lesions",
+          "correct": false
+        },
+        {
+          "label": "Serology for Newcastle disease",
+          "detail": "Not a cause of isolated hind-limb weakness in this pattern",
+          "correct": false
+        }
+      ],
+      "explanation": "Sampling unaffected chicks alongside affected ones is what makes the CK result interpretable in a species with wide reference ranges. Selenium and vitamin E are measured together because they fail together, and the feed analysis is what turns a clinical suspicion into a finding the farm cannot argue with. Histopathology of heart as well as leg muscle matters because the cardiac form is what kills."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Affected chicks: CK 12,400 U/L and 9,800 U/L; unaffected chicks 480 and 520 U/L. AST raised in affected birds. Whole-blood glutathione peroxidase low; plasma vitamin E 1.1 mg/L (low). Post-mortem: pale streaking of the gastrocnemius and of the ventricular myocardium; histology shows hyaline degeneration and mineralisation of myofibres. Feed analysis: selenium 0.04 mg/kg (target 0.2–0.3), vitamin E 9 IU/kg (target 50–100). Calcium and phosphorus adequate, Ca:P 1.9:1.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Nutritional myodegeneration from selenium and vitamin E deficiency",
+          "detail": "Deficient feed, low status, degenerate muscle and high CK",
+          "correct": true
+        },
+        {
+          "label": "Cardiac muscle is involved as well as skeletal",
+          "detail": "Pale myocardium with the same histology",
+          "correct": true
+        },
+        {
+          "label": "The ration itself is the source",
+          "detail": "Feed selenium at a fifth of target and vitamin E far below",
+          "correct": true
+        },
+        {
+          "label": "Rickets is contributing",
+          "detail": "Calcium and phosphorus adequate with a normal Ca:P and no bone lesions",
+          "correct": false
+        },
+        {
+          "label": "The high CK is an artefact of handling and restraint",
+          "detail": "Unaffected controls handled the same way had CK near 500 U/L",
+          "correct": false
+        }
+      ],
+      "explanation": "Sampled controls are what defeat the standard objection that CK rises with restraint: same handling, same day, twenty-fold difference. Feed analysis closes the loop from lesion to cause. Finding the myocardium involved changes the prognosis for chicks that look mildly affected, because sudden death follows exercise in birds whose hearts are already damaged."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "CK 12,400 U/L against control 480 U/L, low glutathione peroxidase and vitamin E, degenerate skeletal and cardiac myofibres, feed selenium 0.04 mg/kg with vitamin E 9 IU/kg, normal calcium and phosphorus.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Nutritional myodegeneration (selenium and vitamin E deficiency) from a deficient home-mixed ration",
+          "detail": "Lesion, biochemistry and cause together",
+          "correct": true
+        },
+        {
+          "label": "Rickets from vitamin D3 deficiency",
+          "detail": "No bone lesions and adequate calcium and phosphorus",
+          "correct": false
+        },
+        {
+          "label": "Tibiotarsal rotation from rapid growth",
+          "detail": "A skeletal deformity, absent on examination",
+          "correct": false
+        },
+        {
+          "label": "Capture myopathy",
+          "detail": "Would not affect twelve housed chicks progressively over three weeks",
+          "correct": false
+        },
+        {
+          "label": "Bacterial myositis",
+          "detail": "Histology shows degeneration and mineralisation, not suppuration",
+          "correct": false
+        }
+      ],
+      "explanation": "The diagnosis names the ration because that is what has to change: parenteral vitamin E and selenium for the affected chicks, immediate correction of the mix with a proper premix, and a warning that apparently mild cases should not be driven or exercised until they have recovered. Dosing selenium is narrow-margin work, so the correction is calculated rather than estimated."
+    }
+  ]
+}

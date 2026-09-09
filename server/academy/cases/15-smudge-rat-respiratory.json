@@ -1,0 +1,167 @@
+{
+  "slug": "smudge-rat-respiratory",
+  "title": "Smudge — 18mo fancy rat: chattering breathing and red-stained eyes",
+  "species": "murine",
+  "discipline": "Exotic Animal Medicine",
+  "difficulty": "intermediate",
+  "body_system": "Respiratory",
+  "presentation": "18-month-old male fancy rat, six weeks of noisy breathing that the owner describes as chattering. Red-brown staining around both eyes and nose. One cage mate has started sneezing.",
+  "completion_bonus": 30,
+  "order": 15,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Read the presentation",
+      "briefing": "Weight 480 g, BCS 4/9. Audible upper-airway rattle, RR 100/min with mild abdominal effort. Red-brown crusting at both medial canthi and the nares. Lung auscultation: harsh sounds bilaterally, no clear crackles. No cyanosis. Kept on wood-shaving bedding in a room where the household smokes. Temperature 37.9°C.",
+      "prompt": "Which findings are meaningful here?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Red-brown staining at the canthi and nares",
+          "detail": "Porphyrin, not blood — a stress and illness marker in rats",
+          "correct": true
+        },
+        {
+          "label": "Six weeks of progressive upper-airway noise",
+          "detail": "A chronic course, not an acute event",
+          "correct": true
+        },
+        {
+          "label": "A cage mate with the same signs",
+          "detail": "Points to something transmissible in the colony",
+          "correct": true
+        },
+        {
+          "label": "Wood-shaving bedding and household smoke",
+          "detail": "Genuine irritants, but they do not spread between cages",
+          "correct": false
+        },
+        {
+          "label": "Temperature 37.9°C",
+          "detail": "Within the normal range for a rat",
+          "correct": false
+        }
+      ],
+      "explanation": "Porphyrin staining is the sign most often misread as blood, and it reliably marks a rat that is unwell rather than injured. Two rats in one cage with the same six-week course puts an infectious agent at the top of the list, while the irritants stay on it as aggravating factors. Recognising which findings travel between animals is how a single-patient consultation becomes a colony plan."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the diagnostics",
+      "briefing": "The owner has four rats and wants to know what is wrong and what to do about the others.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Deep nasal or tracheal swab for Mycoplasma pulmonis PCR",
+          "detail": "Names the agent the colony is sharing",
+          "correct": true
+        },
+        {
+          "label": "Bacterial culture and sensitivity from the same site",
+          "detail": "Secondary invaders decide the antibiotic",
+          "correct": true
+        },
+        {
+          "label": "Thoracic radiographs under light sedation",
+          "detail": "Grades the lower-airway damage",
+          "correct": true
+        },
+        {
+          "label": "Cytology of the airway sample",
+          "detail": "Neutrophils, bacteria, ciliated cell damage",
+          "correct": true
+        },
+        {
+          "label": "Full haematology and biochemistry",
+          "detail": "Chronic disease and organ screening before treatment",
+          "correct": true
+        },
+        {
+          "label": "Blood culture",
+          "detail": "Septicaemia is not the picture in a rat that has been eating for six weeks",
+          "correct": false
+        },
+        {
+          "label": "Allergen-specific IgE serology",
+          "detail": "Not a validated approach in rats, and it would not change the plan",
+          "correct": false
+        }
+      ],
+      "explanation": "The point of the PCR is that it changes what you tell the owner about the other three rats — M. pulmonis is endemic in pet rats and eradication is not on the table, so the conversation becomes control, husbandry and expectations. Culture with sensitivity is what gets the antibiotic right, because the secondary bacteria, not the mycoplasma, are what respond quickly."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "M. pulmonis PCR positive on tracheal swab. Culture: Pasteurella pneumotropica, sensitive to doxycycline and enrofloxacin. Cytology: neutrophilic inflammation with intracellular bacteria. Radiographs: peribronchial cuffing with patchy alveolar pattern in the caudodorsal lung fields, no consolidated abscess. Haematology: mild neutrophilia. Biochemistry unremarkable.",
+      "prompt": "Which conclusions do the results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Chronic mycoplasmal respiratory disease with secondary bacterial infection",
+          "detail": "PCR positive plus a cultured invader and neutrophils",
+          "correct": true
+        },
+        {
+          "label": "The cage mates are already exposed and should be managed as a group",
+          "detail": "M. pulmonis spreads readily and is usually colony-wide",
+          "correct": true
+        },
+        {
+          "label": "Antibiotic choice should follow the sensitivity result",
+          "detail": "Doxycycline covers both the mycoplasma and the isolate",
+          "correct": true
+        },
+        {
+          "label": "Radiographs show a pulmonary abscess needing surgery",
+          "detail": "Cuffing and patchy alveolar change, no discrete abscess",
+          "correct": false
+        },
+        {
+          "label": "The bedding and smoke are the primary cause",
+          "detail": "They aggravate; the PCR names the primary agent",
+          "correct": false
+        }
+      ],
+      "explanation": "This is a two-agent disease: the mycoplasma strips the ciliated defences and the opportunist does the visible damage, which is why the treatment has to cover both and why the response is partial rather than curative. Reading the radiographs as an abscess would send the rat to surgery for a lesion that is diffuse inflammation. The irritants are still worth removing — they are just not the reason two rats are ill."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "M. pulmonis PCR positive, Pasteurella pneumotropica cultured, neutrophilic airway cytology, peribronchial cuffing on radiographs, one affected cage mate.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Chronic respiratory disease of rats — M. pulmonis with secondary bacterial bronchopneumonia",
+          "detail": "Both agents, and the chronicity, in one line",
+          "correct": true
+        },
+        {
+          "label": "Primary bacterial pneumonia",
+          "detail": "Understates the mycoplasma that made it possible",
+          "correct": false
+        },
+        {
+          "label": "Allergic airway disease from bedding and smoke",
+          "detail": "Does not explain a positive PCR shared with a cage mate",
+          "correct": false
+        },
+        {
+          "label": "Pulmonary neoplasia",
+          "detail": "Wrong age, wrong radiographic pattern, and it would not spread",
+          "correct": false
+        },
+        {
+          "label": "Aspiration pneumonia",
+          "detail": "No history of a dysphagic or regurgitating rat",
+          "correct": false
+        }
+      ],
+      "explanation": "Calling it chronic respiratory disease sets honest expectations: doxycycline with an anti-inflammatory will improve this rat, dust-free bedding and a smoke-free room will help all four, and none of it eliminates the organism. Owners who are told this at the start manage relapses far better than owners promised a cure."
+    }
+  ]
+}

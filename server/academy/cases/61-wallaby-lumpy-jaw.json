@@ -1,0 +1,172 @@
+{
+  "slug": "wallaby-lumpy-jaw",
+  "title": "Wallaby — 5yo Bennett’s: facial swelling and drooling",
+  "species": "marsupial",
+  "discipline": "Zoo & Wildlife Medicine",
+  "difficulty": "intermediate",
+  "body_system": "Dental & Musculoskeletal",
+  "presentation": "5-year-old male Bennett’s wallaby in a wildlife park, firm swelling along the left mandible for three weeks, drooling, dropping partly chewed food, and losing condition.",
+  "completion_bonus": 30,
+  "order": 61,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Assess the animal and the enclosure",
+      "briefing": "BCS 2/5. Firm, warm, painful swelling over the left mandibular body with a draining tract at the gum margin. Ptyalism, quidding, foul oral odour. Left mandibular lymph node enlarged. Enclosure: fed on the ground on damp, trampled grass; concentrate pellets scattered on soil; several animals in the group, one with mild ptyalism.",
+      "prompt": "Which findings point to mandibular osteomyelitis?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Firm swelling of the mandibular body with a draining tract",
+          "detail": "Bone infection reaching the surface",
+          "correct": true
+        },
+        {
+          "label": "Quidding with a foul oral odour",
+          "detail": "Necrotic oral tissue and impaired mastication",
+          "correct": true
+        },
+        {
+          "label": "A second animal in the group with early ptyalism",
+          "detail": "Shared risk in the same environment",
+          "correct": true
+        },
+        {
+          "label": "Enlarged mandibular lymph node",
+          "detail": "Expected drainage response to local infection",
+          "correct": false
+        },
+        {
+          "label": "Ground feeding on damp trampled grass",
+          "detail": "The husbandry driver, not a clinical finding",
+          "correct": false
+        }
+      ],
+      "explanation": "Macropods develop necrobacillosis — \"lumpy jaw\" — when oral mucosa is abraded and Fusobacterium gets into bone, and the physical findings here are that disease. A second affected animal is the sign that this is an enclosure problem rather than one wallaby’s bad luck. The lymph node is a normal response, so it adds little to the localisation."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "The wallaby is anaesthetised, which is the only opportunity for a full oral and imaging assessment.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Skull radiographs or CT of the mandible",
+          "detail": "Extent of lysis, sequestra, tooth involvement",
+          "correct": true
+        },
+        {
+          "label": "Deep anaerobic and aerobic culture with sensitivity from the tract",
+          "detail": "Fusobacterium is anaerobic and easily missed on routine culture",
+          "correct": true
+        },
+        {
+          "label": "Cytology of the discharge",
+          "detail": "Confirms suppuration and the organism type",
+          "correct": true
+        },
+        {
+          "label": "Full oral examination with dental probing under anaesthesia",
+          "detail": "Finds the entry point and any loose teeth",
+          "correct": true
+        },
+        {
+          "label": "Haematology with total protein",
+          "detail": "Systemic inflammatory burden and nutritional state",
+          "correct": true
+        },
+        {
+          "label": "Mycobacterial culture as the primary investigation",
+          "detail": "Granulomatous disease is worth excluding, but this is a classic necrobacillosis presentation",
+          "correct": false
+        },
+        {
+          "label": "Faecal culture",
+          "detail": "No relevance to mandibular osteomyelitis",
+          "correct": false
+        }
+      ],
+      "explanation": "Anaerobic culture has to be requested specifically or Fusobacterium will not be found, and the sensitivity guides a long antibiotic course. Imaging decides whether this is treatable at all — extensive lysis with sequestra in a macropod carries a poor prognosis, and knowing that before you commit the animal to weeks of handling is kinder."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "CT: osteolysis of the left mandibular body with a 12 mm sequestrum, periosteal new bone, and involvement of two molar roots; no involvement of the temporomandibular joint. Culture: Fusobacterium necrophorum with Bacteroides species, sensitive to penicillin and metronidazole. Cytology: heavy suppuration with mixed bacteria. Oral examination: ulcerated gingiva around the affected molars with grass seed impaction. Haematology: neutrophilia, total protein 48 g/L with albumin 20 g/L. Mycobacterial culture negative.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Mandibular necrobacillosis with a bone sequestrum",
+          "detail": "Fusobacterium with osteolysis and a sequestrum on CT",
+          "correct": true
+        },
+        {
+          "label": "Grass seed impaction and gingival ulceration provided the entry point",
+          "detail": "Ulcerated gingiva with impacted material at the affected teeth",
+          "correct": true
+        },
+        {
+          "label": "Surgical debridement will be needed alongside antibiotics",
+          "detail": "A sequestrum will not resolve on antibiotics alone",
+          "correct": true
+        },
+        {
+          "label": "Ground feeding on contaminated soil is an enclosure-level risk",
+          "detail": "A second animal affected, with the same feeding practice",
+          "correct": true
+        },
+        {
+          "label": "Mycobacterial osteomyelitis is the diagnosis",
+          "detail": "Culture negative",
+          "correct": false
+        },
+        {
+          "label": "The temporomandibular joint is involved and the prognosis is hopeless",
+          "detail": "CT shows the joint spared",
+          "correct": false
+        }
+      ],
+      "explanation": "The sequestrum is the finding that determines the treatment plan: dead bone is a reservoir no antibiotic will reach, so this becomes a surgical case with medical support rather than a course of penicillin. A spared temporomandibular joint is genuinely good news and worth stating, because joint involvement is what usually decides euthanasia."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Fusobacterium necrophorum with Bacteroides from a mandibular tract, osteolysis with a 12 mm sequestrum and two involved molar roots, spared temporomandibular joint, gingival ulceration with grass seed impaction, albumin 20 g/L, one further affected animal.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Mandibular necrobacillosis (lumpy jaw) with sequestrum, on an enclosure-level husbandry risk",
+          "detail": "Organism, lesion and the reason it happened",
+          "correct": true
+        },
+        {
+          "label": "Mycobacterial osteomyelitis",
+          "detail": "Culture negative",
+          "correct": false
+        },
+        {
+          "label": "Dental root abscess without osteomyelitis",
+          "detail": "Understates the lysis and the sequestrum",
+          "correct": false
+        },
+        {
+          "label": "Oral squamous cell carcinoma",
+          "detail": "Cytology and culture show suppuration and bacteria, not neoplasia",
+          "correct": false
+        },
+        {
+          "label": "Traumatic mandibular fracture",
+          "detail": "No fracture on CT; the lysis is infective",
+          "correct": false
+        }
+      ],
+      "explanation": "The diagnosis commits to debridement of the sequestrum, extraction of the affected molars, a long penicillin or metronidazole course, and nutritional support for an animal with an albumin of 20 g/L. It also commits the park to raised feeders and drier feeding areas, because the second wallaby with ptyalism is the next case unless the enclosure changes."
+    }
+  ]
+}

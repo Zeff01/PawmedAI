@@ -1,0 +1,172 @@
+{
+  "slug": "flock-ewe-pale-anaemic",
+  "title": "Ewe 78 — 3yo Suffolk: bottle jaw and pale membranes at grass",
+  "species": "ovine",
+  "discipline": "Farm Animal Practice",
+  "difficulty": "beginner",
+  "body_system": "Haematology & Parasitology",
+  "presentation": "Three-year-old Suffolk ewe from a group of forty grazing a permanent pasture in a warm, wet August. Lagging behind the group, swelling under the jaw, and two other ewes look similar. No diarrhoea reported.",
+  "completion_bonus": 30,
+  "order": 23,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Examine the ewe and the group",
+      "briefing": "BCS 1.5/5. Conjunctivae very pale (FAMACHA 5). Soft, pitting submandibular oedema. HR 96 bpm, RR 36/min, temperature 39.0°C. Faeces formed. Fleece dull, no rise. Group history: last treated with a benzimidazole eight weeks ago, set-stocked on the same field all season, two more ewes with pale membranes.",
+      "prompt": "Which findings point to a blood-sucking parasite rather than diarrhoeal disease?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Very pale conjunctivae with a FAMACHA score of 5",
+          "detail": "Severe anaemia scored objectively",
+          "correct": true
+        },
+        {
+          "label": "Soft pitting submandibular oedema",
+          "detail": "Bottle jaw from hypoproteinaemia",
+          "correct": true
+        },
+        {
+          "label": "Formed faeces despite severe illness",
+          "detail": "Haemonchus sucks blood without causing scour",
+          "correct": true
+        },
+        {
+          "label": "Warm, wet August on set-stocked permanent pasture",
+          "detail": "The conditions for a Haemonchus challenge, not a finding in the ewe",
+          "correct": false
+        },
+        {
+          "label": "Dull fleece with no wool rise",
+          "detail": "Non-specific ill-thrift",
+          "correct": false
+        }
+      ],
+      "explanation": "Anaemia with bottle jaw and normal faeces is the signature of Haemonchus contortus, and it is the absence of scour that separates it from the other parasitic gastroenteritis syndromes. FAMACHA turns \"she looks pale\" into a number you can act on and repeat. The grazing history is what explains the outbreak and drives the plan, but it is epidemiology rather than clinical evidence."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "You are on farm with the flock gathered and can sample individuals or the group.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Faecal egg count on this ewe and a group pooled sample",
+          "detail": "Quantifies the burden in the individual and the flock",
+          "correct": true
+        },
+        {
+          "label": "Packed cell volume and total protein",
+          "detail": "Grades the anaemia and the protein loss",
+          "correct": true
+        },
+        {
+          "label": "Faecal egg count reduction test",
+          "detail": "Anthelmintic resistance is the question behind the outbreak",
+          "correct": true
+        },
+        {
+          "label": "Larval culture or PCR speciation of the eggs",
+          "detail": "Confirms Haemonchus rather than another strongyle",
+          "correct": true
+        },
+        {
+          "label": "FAMACHA scoring of the whole group",
+          "detail": "Finds the others before they collapse",
+          "correct": true
+        },
+        {
+          "label": "Liver fluke coproantigen or serology alone as the answer",
+          "detail": "Worth checking on wet ground, but fluke does not usually give this picture in August",
+          "correct": false
+        },
+        {
+          "label": "Blood culture",
+          "detail": "Nothing here suggests septicaemia",
+          "correct": false
+        }
+      ],
+      "explanation": "Two levels of question are being answered at once: what is wrong with this ewe, and why is it happening in this flock. The PCV grades her risk, the counts and speciation name the parasite, and the reduction test asks whether the wormer used eight weeks ago still works — which is the answer that changes next season rather than next week."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "PCV 12% (ref 27–45), total protein 42 g/L (ref 60–79), albumin 18 g/L. Faecal egg count 3,800 epg strongyle-type; pooled group count 1,900 epg. Larval speciation: 92% Haemonchus contortus. Faecal egg count reduction after benzimidazole 41% (resistance if <95%). Liver fluke coproantigen negative. Faeces formed throughout.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Haemonchosis with severe anaemia and protein loss",
+          "detail": "PCV 12%, low albumin, 3,800 epg Haemonchus",
+          "correct": true
+        },
+        {
+          "label": "Benzimidazole resistance on this farm",
+          "detail": "A 41% reduction, far below the 95% threshold",
+          "correct": true
+        },
+        {
+          "label": "The whole group is carrying a high burden",
+          "detail": "Pooled count 1,900 epg",
+          "correct": true
+        },
+        {
+          "label": "Liver fluke is excluded as the main cause",
+          "detail": "Coproantigen negative",
+          "correct": true
+        },
+        {
+          "label": "Nutritional anaemia from copper or cobalt deficiency",
+          "detail": "Would not produce a count of 3,800 epg or bottle jaw",
+          "correct": false
+        },
+        {
+          "label": "Coccidiosis is the flock problem",
+          "detail": "Wrong age group, and the faeces are formed",
+          "correct": false
+        }
+      ],
+      "explanation": "The clinical diagnosis and the farm diagnosis both land here. A 41% reduction means the wormer that was used did almost nothing, so the group has effectively been untreated for eight weeks on contaminated ground — and prescribing the same product again would repeat that. Excluding fluke matters because the two are treated with entirely different drugs."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "PCV 12%, total protein 42 g/L, 3,800 epg of which 92% Haemonchus, group count 1,900 epg, benzimidazole reduction 41%, fluke negative.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Haemonchosis on a farm with benzimidazole-resistant worms",
+          "detail": "The parasite and the reason it is uncontrolled",
+          "correct": true
+        },
+        {
+          "label": "Chronic fasciolosis",
+          "detail": "Coproantigen negative and the season does not fit",
+          "correct": false
+        },
+        {
+          "label": "Copper deficiency",
+          "detail": "Does not cause bottle jaw or a high egg count",
+          "correct": false
+        },
+        {
+          "label": "Coccidiosis",
+          "detail": "A disease of lambs, with scour",
+          "correct": false
+        },
+        {
+          "label": "Johne’s disease",
+          "detail": "Chronic wasting with diarrhoea and normal PCV, not acute anaemia",
+          "correct": false
+        }
+      ],
+      "explanation": "The resistance finding is what makes this diagnosis useful: this ewe needs an effective anthelmintic from a different group plus supportive care, the group needs FAMACHA screening and targeted treatment, and the farm needs a grazing and quarantine plan. A diagnosis of \"worms\" without the resistance half of the sentence would leave the flock exactly where it started."
+    }
+  ]
+}

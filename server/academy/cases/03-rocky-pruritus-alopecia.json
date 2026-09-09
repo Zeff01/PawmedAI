@@ -1,0 +1,157 @@
+{
+  "slug": "rocky-pruritus-alopecia",
+  "title": "Rocky — 2yo French Bulldog: severe pruritus & alopecia",
+  "species": "canine",
+  "discipline": "Dermatology & Immunology",
+  "difficulty": "beginner",
+  "body_system": "Integumentary",
+  "presentation": "2-year-old male entire French Bulldog with a twelve-month history of itching that worsens each spring. Owner reports constant paw licking and recurrent ear infections.",
+  "completion_bonus": 30,
+  "order": 3,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Characterise the itch",
+      "briefing": "Erythema and lichenification of the interdigital spaces on all four paws. Periocular and perioral alopecia. Bilateral erythematous otitis externa with brown waxy discharge. Ventral abdomen spared of papules. In-contact humans are not itchy. Signs began at 11 months of age and are seasonal, worsening March to September.",
+      "prompt": "Which features fit an allergic dermatitis?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Onset between 6 months and 3 years of age",
+          "detail": "The classic window for atopy",
+          "correct": true
+        },
+        {
+          "label": "Seasonal worsening",
+          "detail": "Points to environmental allergens",
+          "correct": true
+        },
+        {
+          "label": "Distribution: paws, face, ears",
+          "detail": "The atopic pattern",
+          "correct": true
+        },
+        {
+          "label": "Recurrent otitis externa",
+          "detail": "Often the first and only sign",
+          "correct": true
+        },
+        {
+          "label": "In-contact humans are not itchy",
+          "detail": "Argues against sarcoptic mange",
+          "correct": false
+        }
+      ],
+      "explanation": "Atopic dermatitis announces itself through where it itches, not how hard: face, paws, ventrum and ears, starting in a young adult dog, often seasonal at first. Recurrent otitis in a young dog with no other cause is atopy until proven otherwise. The unaffected owners are a genuine clue but a negative one — they argue against scabies rather than for atopy."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Rule out the mimics",
+      "briefing": "Before you can call this allergic, the differentials that look identical must go.",
+      "prompt": "Which tests do you run before diagnosing atopic dermatitis?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Deep skin scrapes",
+          "detail": "Demodex and Sarcoptes",
+          "correct": true
+        },
+        {
+          "label": "Tape-strip cytology of skin and ear",
+          "detail": "Malassezia and cocci",
+          "correct": true
+        },
+        {
+          "label": "Flea comb with a strict flea-control trial",
+          "detail": "Flea allergy is the great mimic",
+          "correct": true
+        },
+        {
+          "label": "An eight-week elimination diet trial",
+          "detail": "Separates food-responsive from environmental",
+          "correct": true
+        },
+        {
+          "label": "Serum allergy testing to reach the diagnosis",
+          "detail": "Selects immunotherapy allergens; it does not diagnose",
+          "correct": false
+        },
+        {
+          "label": "Thyroid panel",
+          "detail": "Endocrine alopecia is not usually pruritic",
+          "correct": false
+        }
+      ],
+      "explanation": "Atopic dermatitis is a diagnosis of exclusion, and this is the order it is excluded in: parasites, infection, fleas, food — then, and only then, atopy. The trap is serum allergy testing. It does not diagnose atopic dermatitis: healthy dogs test positive to plenty of allergens. Its job is choosing what goes into an immunotherapy vaccine once the clinical diagnosis is already made."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the workup",
+      "briefing": "Deep scrapes negative ×3. Ear cytology: numerous Malassezia pachydermatis, moderate neutrophils. Interdigital cytology: Malassezia and cocci. Eight weeks of strict flea control gave no improvement. An eight-week hydrolysed elimination diet gave no improvement; signs recurred with the spring pollen season.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Environmental atopic dermatitis",
+          "detail": "Mimics excluded, seasonality retained",
+          "correct": true
+        },
+        {
+          "label": "Secondary Malassezia dermatitis and otitis",
+          "detail": "Confirmed on cytology",
+          "correct": true
+        },
+        {
+          "label": "Secondary superficial bacterial pyoderma",
+          "detail": "Cocci on interdigital cytology",
+          "correct": true
+        },
+        {
+          "label": "Cutaneous adverse food reaction",
+          "detail": "A strict diet trial failed to help",
+          "correct": false
+        },
+        {
+          "label": "Sarcoptic mange",
+          "detail": "Negative scrapes, no in-contact itch, no response pattern",
+          "correct": false
+        }
+      ],
+      "explanation": "The secondary infections are not a side note — they are why the dog is as uncomfortable as it is, and clearing them is what reveals how much itch the allergy alone actually causes. Treat the Malassezia and the pyoderma first, then reassess. A student who diagnoses atopy and reaches straight for a long-term immunomodulator, leaving a yeast-laden ear untreated, has an owner back in the consulting room within a fortnight."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Infections have been cleared with topical and systemic therapy; residual pruritus persists at 5/10.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Canine atopic dermatitis with secondary Malassezia and bacterial infection",
+          "detail": "",
+          "correct": true
+        },
+        {
+          "label": "Cutaneous adverse food reaction",
+          "detail": "",
+          "correct": false
+        },
+        {
+          "label": "Sarcoptic mange",
+          "detail": "",
+          "correct": false
+        },
+        {
+          "label": "Primary seborrhoea",
+          "detail": "",
+          "correct": false
+        }
+      ],
+      "explanation": "Residual itch after every infection has been cleared is the allergy itself, and it is what long-term management is aimed at. Name the secondary infections in the diagnosis rather than leaving them implied: they recur, and the record needs to say they were there so the next clinician looks for them."
+    }
+  ]
+}

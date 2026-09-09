@@ -1,0 +1,172 @@
+{
+  "slug": "holstein-fresh-cow-off-feed",
+  "title": "Cow 412 — Holstein, 12 days fresh: off feed with a drop in yield",
+  "species": "bovine",
+  "discipline": "Farm Animal Practice",
+  "difficulty": "intermediate",
+  "body_system": "Metabolic",
+  "presentation": "Second-lactation Holstein, calved twelve days ago. Milk yield down from 34 to 21 litres in three days, eating about half her ration, and the herdsman says her breath smells sweet.",
+  "completion_bonus": 30,
+  "order": 22,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Examine the fresh cow",
+      "briefing": "BCS 3.5/5 at calving, now 3.0/5. HR 84 bpm, RR 30/min, temperature 38.5°C. Rumen contractions 1 per minute and weak. Faeces firm and scant. Uterine discharge non-odorous. No ping on left-side auscultation and percussion. Ketone smell on the breath. Milk 21 L, previously 34 L.",
+      "prompt": "Which findings point to a metabolic problem in the transition period?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Sweet ketone smell on the breath",
+          "detail": "Acetone on expired air",
+          "correct": true
+        },
+        {
+          "label": "Loss of half a body condition score in 12 days",
+          "detail": "Rapid mobilisation of body fat",
+          "correct": true
+        },
+        {
+          "label": "Reduced dry matter intake with a falling yield 12 days fresh",
+          "detail": "The classic window for negative energy balance",
+          "correct": true
+        },
+        {
+          "label": "No ping on left-side percussion",
+          "detail": "Useful — it argues against a displaced abomasum",
+          "correct": false
+        },
+        {
+          "label": "Non-odorous uterine discharge",
+          "detail": "Makes metritis unlikely, but does not point to metabolism",
+          "correct": false
+        }
+      ],
+      "explanation": "Twelve days fresh, dropping yield, eating half a ration and smelling of acetone is negative energy balance until proven otherwise. The absence of a ping and of a stinking discharge are worth recording because they take the two common concurrent diseases off the list — but they exclude rather than diagnose, and a cow can have ketosis and a displaced abomasum on the same day."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the cow-side tests",
+      "briefing": "You are on the farm with a hand-held meter, urine dipsticks and the option of sending blood away.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Blood beta-hydroxybutyrate by hand-held meter",
+          "detail": "The reference test for ketosis, cow-side",
+          "correct": true
+        },
+        {
+          "label": "Urine ketone dipstick",
+          "detail": "A quick screen, less specific than blood BHB",
+          "correct": true
+        },
+        {
+          "label": "Serum calcium",
+          "detail": "Subclinical hypocalcaemia travels with this",
+          "correct": true
+        },
+        {
+          "label": "Liver enzymes — GGT and AST — with albumin",
+          "detail": "Hepatic lipidosis grades the severity",
+          "correct": true
+        },
+        {
+          "label": "Non-esterified fatty acids",
+          "detail": "Quantifies the fat being mobilised",
+          "correct": true
+        },
+        {
+          "label": "Bulk milk PCR for BVD",
+          "detail": "A herd question, not an answer for this cow today",
+          "correct": false
+        },
+        {
+          "label": "Abdominocentesis",
+          "detail": "Not indicated with no evidence of peritonitis",
+          "correct": false
+        }
+      ],
+      "explanation": "Blood BHB is the test that matters and it takes thirty seconds on a meter; the urine strip is a screen you use when you have no meter, because it lags and over-reads. Adding calcium and NEFA turns a single answer into a transition-period picture, and the liver panel tells you whether this cow is heading for fatty liver — which changes the prognosis, not just the treatment."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Blood BHB 3.4 mmol/L (ketosis >1.2). Urine ketones 3+. Calcium 1.9 mmol/L (ref 2.1–2.6). NEFA 1.1 mmol/L (raised). GGT 48 U/L, AST 160 U/L (both mildly raised), albumin 28 g/L (low). Glucose 2.1 mmol/L (low). Rumen fluid pH 6.8, protozoa sluggish. Herd data: eight of thirty-two fresh cows over the last month have had BHB above 1.2 mmol/L.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Clinical ketosis with hypoglycaemia",
+          "detail": "BHB 3.4 mmol/L with glucose 2.1 mmol/L",
+          "correct": true
+        },
+        {
+          "label": "Concurrent subclinical hypocalcaemia",
+          "detail": "Calcium 1.9 mmol/L in a fresh cow",
+          "correct": true
+        },
+        {
+          "label": "Early hepatic lipidosis",
+          "detail": "Mildly raised liver enzymes with a low albumin",
+          "correct": true
+        },
+        {
+          "label": "A herd-level transition problem, not one sick cow",
+          "detail": "A quarter of fresh cows above the BHB threshold",
+          "correct": true
+        },
+        {
+          "label": "Subacute ruminal acidosis is the primary problem",
+          "detail": "Rumen pH 6.8 is normal",
+          "correct": false
+        },
+        {
+          "label": "Left displaced abomasum is confirmed",
+          "detail": "No ping, and nothing here images or implies it",
+          "correct": false
+        }
+      ],
+      "explanation": "The individual diagnosis is straightforward; the herd number is the finding that earns the visit. Eight of thirty-two fresh cows over threshold means the dry-cow ration, feed space or body condition at drying-off is wrong, and treating this cow without saying so guarantees a return visit. The normal rumen pH is what stops you blaming acidosis, which is the reflex answer on a high-yielding unit."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "BHB 3.4 mmol/L, glucose 2.1 mmol/L, calcium 1.9 mmol/L, raised NEFA, mildly raised liver enzymes with low albumin, and a quarter of the fresh cows over the ketosis threshold.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Clinical type II ketosis with subclinical hypocalcaemia, on a herd transition problem",
+          "detail": "The cow and the herd in one diagnosis",
+          "correct": true
+        },
+        {
+          "label": "Subacute ruminal acidosis",
+          "detail": "Rumen pH is normal",
+          "correct": false
+        },
+        {
+          "label": "Left displaced abomasum",
+          "detail": "No ping and no supporting finding",
+          "correct": false
+        },
+        {
+          "label": "Metritis",
+          "detail": "Non-odorous discharge, no fever",
+          "correct": false
+        },
+        {
+          "label": "Simple hypocalcaemia (milk fever)",
+          "detail": "Real but secondary; it does not explain a BHB of 3.4 mmol/L",
+          "correct": false
+        }
+      ],
+      "explanation": "Type II ketosis — the fat-cow version arising from over-conditioning at calving — is treated with propylene glycol, glucose and calcium, and prevented by fixing the dry period. Naming the herd problem in the same sentence as the cow is what turns a treatment into a piece of veterinary work the farm actually benefits from."
+    }
+  ]
+}

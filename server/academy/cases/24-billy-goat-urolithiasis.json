@@ -1,0 +1,172 @@
+{
+  "slug": "billy-goat-urolithiasis",
+  "title": "Billy — 18mo pygmy wether: straining with a swollen prepuce",
+  "species": "caprine",
+  "discipline": "Farm Animal Practice",
+  "difficulty": "advanced",
+  "body_system": "Urinary",
+  "presentation": "18-month-old castrated pygmy goat, straining and vocalising since yesterday, tail flagging, dribbling small amounts of blood-tinged urine. Fed a grain-based pellet ad libitum since weaning and castrated at two weeks old.",
+  "completion_bonus": 30,
+  "order": 24,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Recognise the obstruction",
+      "briefing": "Depressed, grinding teeth, standing with a hunched back and stretched stance. HR 96 bpm, RR 36/min, temperature 38.2°C. Prepuce swollen and pulsating on palpation, crystals on the preputial hair. Bladder palpable and turgid on abdominal palpation. Rumen contractions reduced. Castrated at two weeks; diet high-grain, low-calcium.",
+      "prompt": "Which findings tell you this is obstructive rather than infectious?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Turgid, palpable bladder with a stretched stance",
+          "detail": "Urine that cannot get out",
+          "correct": true
+        },
+        {
+          "label": "Pulsating prepuce with crystals on the hair",
+          "detail": "Obstruction at the urethral process",
+          "correct": true
+        },
+        {
+          "label": "Early castration on a high-grain, low-calcium diet",
+          "detail": "The two risk factors for caprine urolithiasis",
+          "correct": true
+        },
+        {
+          "label": "Teeth grinding and depression",
+          "detail": "Pain, from any cause",
+          "correct": false
+        },
+        {
+          "label": "Temperature 38.2°C",
+          "detail": "Normal, and it does not distinguish the two",
+          "correct": false
+        }
+      ],
+      "explanation": "A turgid bladder and a stretched stance in a wether is a surgical clock starting: the pressure damages kidney and bladder wall within hours. Early castration leaves a narrow urethra and a grain ration inverts the calcium-to-phosphorus ratio, so the risk factors are in the history before you touch the goat. Pain and a normal temperature tell you nothing about the cause."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "The goat is bright enough to stand. You have blood tubes, ultrasound and radiography available, and surgery is an option.",
+      "prompt": "Which tests do you run before anaesthesia?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Serum potassium and sodium",
+          "detail": "Hyperkalaemia is what stops the heart under anaesthesia",
+          "correct": true
+        },
+        {
+          "label": "Urea and creatinine",
+          "detail": "Grades the post-renal azotaemia",
+          "correct": true
+        },
+        {
+          "label": "Blood gas or total carbon dioxide for acid-base status",
+          "detail": "Metabolic acidosis needs correcting first",
+          "correct": true
+        },
+        {
+          "label": "Abdominal and perineal ultrasound",
+          "detail": "Bladder integrity, free fluid, hydronephrosis",
+          "correct": true
+        },
+        {
+          "label": "Radiography of the urethra and bladder",
+          "detail": "Locates and counts the calculi",
+          "correct": true
+        },
+        {
+          "label": "Urine culture as the first priority",
+          "detail": "Useful later; it does not change the next hour",
+          "correct": false
+        },
+        {
+          "label": "Faecal egg count",
+          "detail": "Irrelevant to an obstructed urethra",
+          "correct": false
+        }
+      ],
+      "explanation": "The tests before anaesthesia are the ones that keep the goat alive through it: potassium, azotaemia and acid-base status decide whether you induce now or spend two hours correcting first. Imaging then tells you what operation you are doing. Culture is a reasonable afterthought and the wrong first move."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Potassium 7.2 mmol/L (ref 3.5–5.5), sodium 138 mmol/L, chloride 98 mmol/L. Urea 34 mmol/L (ref 3.5–9.0), creatinine 620 µmol/L (ref 60–130). Total CO₂ 14 mmol/L (metabolic acidosis). Ultrasound: distended bladder with a thickened wall, bilateral mild hydronephrosis, no free abdominal fluid. Radiography: multiple small calculi in the urethra with the largest at the sigmoid flexure. Urinalysis from dribbled urine: pH 8.0, struvite crystals, blood 3+.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Complete or near-complete urethral obstruction with post-renal azotaemia",
+          "detail": "Urea 34 mmol/L with a distended bladder",
+          "correct": true
+        },
+        {
+          "label": "Life-threatening hyperkalaemia that must be treated before anaesthesia",
+          "detail": "Potassium 7.2 mmol/L",
+          "correct": true
+        },
+        {
+          "label": "Struvite calculi consistent with the grain-based diet",
+          "detail": "Alkaline urine with struvite crystals",
+          "correct": true
+        },
+        {
+          "label": "The bladder has not ruptured",
+          "detail": "No free abdominal fluid on ultrasound",
+          "correct": true
+        },
+        {
+          "label": "Primary kidney disease is the cause of the azotaemia",
+          "detail": "The azotaemia is post-renal, from obstruction",
+          "correct": false
+        },
+        {
+          "label": "Pyelonephritis is the leading diagnosis",
+          "detail": "No fever, and the obstruction explains everything",
+          "correct": false
+        }
+      ],
+      "explanation": "The hierarchy of these results is the lesson: the potassium is what kills in the next hour, the azotaemia is what determines the prognosis, and the calculi are what you operate on. Confirming an intact bladder changes the surgery you plan. Reading the azotaemia as kidney disease rather than obstruction would send you down a medical route while the bladder is still under pressure."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Potassium 7.2 mmol/L, urea 34 mmol/L, creatinine 620 µmol/L, metabolic acidosis, multiple urethral struvite calculi, intact distended bladder, bilateral hydronephrosis, early-castrated wether on a grain ration.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Obstructive struvite urolithiasis with post-renal azotaemia and hyperkalaemia",
+          "detail": "Obstruction, its metabolic consequences, and the stone type",
+          "correct": true
+        },
+        {
+          "label": "Ruptured bladder with uroperitoneum",
+          "detail": "No free fluid on ultrasound",
+          "correct": false
+        },
+        {
+          "label": "Acute kidney injury from a nephrotoxin",
+          "detail": "Does not explain urethral calculi or a turgid bladder",
+          "correct": false
+        },
+        {
+          "label": "Pyelonephritis",
+          "detail": "No fever, and obstruction accounts for the findings",
+          "correct": false
+        },
+        {
+          "label": "Balanoposthitis with dysuria",
+          "detail": "A swollen prepuce is a consequence here, not the disease",
+          "correct": false
+        }
+      ],
+      "explanation": "Every clause of the diagnosis maps onto an action: correct the potassium and acidosis, decompress the bladder, then a tube cystostomy or perineal urethrostomy depending on the calculus load — and afterwards, ammonium chloride with a forage-based, correctly balanced ration, plus advice to delay castration in the next kids. The stone type is what makes the dietary advice specific rather than generic."
+    }
+  ]
+}

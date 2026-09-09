@@ -1,0 +1,167 @@
+{
+  "slug": "nursery-pigs-scour",
+  "title": "Pen 6 — weaned pigs: watery scour five days after weaning",
+  "species": "porcine",
+  "discipline": "Farm Animal Practice",
+  "difficulty": "intermediate",
+  "body_system": "Gastrointestinal",
+  "presentation": "A batch of 240 pigs weaned at 26 days. Five days after weaning, twelve pigs in pen 6 have watery yellow-grey scour, three are gaunt and sunken-eyed, and two have died overnight.",
+  "completion_bonus": 30,
+  "order": 25,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Assess the batch",
+      "briefing": "Affected pigs: gaunt, sunken eyes, tacky skin, some with a purple discolouration of the ears. Scour watery, yellow-grey, no blood, no mucus. Temperature in affected pigs 39.2–39.8°C. Morbidity 12 of 30 in the pen, two deaths. Weaner diet changed to a cheaper starter at weaning; house temperature 24°C with a draught at floor level; water nipples flowing at 0.3 L/min.",
+      "prompt": "Which findings shape the differential list?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Watery yellow-grey scour without blood or mucus",
+          "detail": "Secretory small-intestinal diarrhoea",
+          "correct": true
+        },
+        {
+          "label": "Onset five days post-weaning across a pen",
+          "detail": "The window for post-weaning enteric disease",
+          "correct": true
+        },
+        {
+          "label": "Dehydration with cyanotic ear tips in the worst pigs",
+          "detail": "Endotoxaemia and hypovolaemia",
+          "correct": true
+        },
+        {
+          "label": "House temperature 24°C",
+          "detail": "On the low side for weaners but not itself diagnostic",
+          "correct": false
+        },
+        {
+          "label": "Water flow 0.3 L/min at the nipples",
+          "detail": "A real husbandry fault worth fixing, not a diagnosis",
+          "correct": false
+        }
+      ],
+      "explanation": "Blood and mucus are what you are looking for and not finding: their absence points to a secretory small-intestinal process rather than the colitis of swine dysentery. The timing after weaning narrows it further. The husbandry faults will make everything worse and belong in the report, but a draught does not kill two pigs overnight on its own."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the samples",
+      "briefing": "You can take samples on farm and submit two of the dead pigs for post-mortem.",
+      "prompt": "Which samples do you take?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Fresh faeces from untreated affected pigs for culture and E. coli serotyping",
+          "detail": "Names the pathogen and its virulence genes",
+          "correct": true
+        },
+        {
+          "label": "PCR panel on faeces — ETEC, rotavirus, Salmonella, Lawsonia, Brachyspira",
+          "detail": "Sorts the common weaner agents in one submission",
+          "correct": true
+        },
+        {
+          "label": "Post-mortem on the two dead pigs with fresh intestinal loops",
+          "detail": "Lesion distribution and histology",
+          "correct": true
+        },
+        {
+          "label": "Antibiotic sensitivity testing on the isolate",
+          "detail": "Resistance is common and it decides the treatment",
+          "correct": true
+        },
+        {
+          "label": "Water sample for flow rate, hygiene and mineral content",
+          "detail": "A batch-level intake problem is part of the diagnosis",
+          "correct": true
+        },
+        {
+          "label": "Serology for PRRS as the primary test",
+          "detail": "A useful herd screen, but it will not explain a five-day scour outbreak",
+          "correct": false
+        },
+        {
+          "label": "Skin scrape for mange",
+          "detail": "No pruritus, and it does not cause scour",
+          "correct": false
+        }
+      ],
+      "explanation": "Weaner scour is a differential list, not a diagnosis, and one good submission settles it: culture with serotyping and sensitivity for the treatment decision, PCR to catch the viral and spirochaetal agents, and post-mortem for lesion distribution. Sampling untreated pigs is what makes the culture worth doing."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Culture: heavy growth of haemolytic Escherichia coli, serotype O149, F4 (K88) fimbriae positive, enterotoxin genes present. Sensitivity: resistant to amoxicillin and tetracycline, sensitive to trimethoprim-sulfonamide and apramycin. PCR: rotavirus negative, Salmonella negative, Lawsonia negative, Brachyspira negative. Post-mortem: flaccid, fluid-filled small intestine with no mucosal thickening; histology shows bacteria adherent to intact villi. Water: flow 0.3 L/min, high total viable count.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Enterotoxigenic E. coli (F4) post-weaning diarrhoea",
+          "detail": "F4 fimbriae with enterotoxin genes and adherent bacteria on intact villi",
+          "correct": true
+        },
+        {
+          "label": "Treatment must follow the sensitivity, not the farm’s usual antibiotic",
+          "detail": "Resistant to amoxicillin and tetracycline",
+          "correct": true
+        },
+        {
+          "label": "Restricted, contaminated water supply is worsening the outbreak",
+          "detail": "Low flow rate and a high total viable count",
+          "correct": true
+        },
+        {
+          "label": "Villous atrophy from rotavirus is contributing",
+          "detail": "Villi intact on histology and rotavirus PCR negative",
+          "correct": false
+        },
+        {
+          "label": "Swine dysentery must be treated in parallel",
+          "detail": "Brachyspira negative, and there is no mucohaemorrhagic colitis",
+          "correct": false
+        }
+      ],
+      "explanation": "Adherent bacteria on intact villi is the histological signature that separates ETEC from the viral enteritides, where the villi are stripped. The negative PCRs are as valuable as the positive culture, because they stop a scattergun treatment plan. The water findings are why the pen and not just the pigs need treating — and why the outbreak will recur if only antibiotics are used."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Haemolytic E. coli O149 F4 with enterotoxin genes, resistant to amoxicillin and tetracycline, intact villi with adherent bacteria, all other PCRs negative, restricted and contaminated water.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Post-weaning enterotoxigenic E. coli diarrhoea, aggravated by water supply and diet change",
+          "detail": "The agent and the management faults driving it",
+          "correct": true
+        },
+        {
+          "label": "Rotavirus enteritis",
+          "detail": "PCR negative and the villi are intact",
+          "correct": false
+        },
+        {
+          "label": "Salmonellosis",
+          "detail": "Not isolated, and the lesions do not fit",
+          "correct": false
+        },
+        {
+          "label": "Swine dysentery",
+          "detail": "Brachyspira negative, no colitis",
+          "correct": false
+        },
+        {
+          "label": "Post-weaning growth check with no infectious component",
+          "detail": "Ignores a virulent isolate and two deaths",
+          "correct": false
+        }
+      ],
+      "explanation": "The diagnosis names the pathogen and the two things that let it in. That produces a plan with three parts: the right antibiotic and oral rehydration for the affected pigs, water flow and hygiene corrected for the batch, and a staged diet change with zinc and acidification considered for the next weaning group. Antibiotics alone would treat the symptom of a management problem."
+    }
+  ]
+}

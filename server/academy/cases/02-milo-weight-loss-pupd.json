@@ -1,0 +1,157 @@
+{
+  "slug": "milo-weight-loss-pupd",
+  "title": "Milo — 4yo DSH: progressive weight loss with polyuria & polydipsia",
+  "species": "feline",
+  "discipline": "Internal Medicine",
+  "difficulty": "advanced",
+  "body_system": "Endocrine & Renal",
+  "presentation": "4-year-old male neutered domestic shorthair. Owner reports 1.2 kg of weight loss over six weeks despite a noticeably increased appetite, and a water bowl that needs refilling twice a day.",
+  "completion_bonus": 30,
+  "order": 2,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Read the signalment",
+      "briefing": "Body condition score 3/9, down from 5/9 at last year's vaccination. Unkempt coat. HR 190 bpm. No palpable cervical goitre. Plantigrade stance noted when walking across the consulting table. Indoor-only, fed dry food ad libitum.",
+      "prompt": "Which features point towards an endocrinopathy rather than simple undernutrition?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Weight loss despite polyphagia",
+          "detail": "Calories are going in and not being used",
+          "correct": true
+        },
+        {
+          "label": "Polyuria and polydipsia",
+          "detail": "An osmotic or renal driver",
+          "correct": true
+        },
+        {
+          "label": "Plantigrade hindlimb stance",
+          "detail": "Diabetic neuropathy in the cat",
+          "correct": true
+        },
+        {
+          "label": "Indoor-only lifestyle",
+          "detail": "Not discriminating",
+          "correct": false
+        },
+        {
+          "label": "Absent cervical goitre",
+          "detail": "An absence, and a clue against one diagnosis",
+          "correct": false
+        }
+      ],
+      "explanation": "Losing weight while eating more is the finding that separates an endocrine cause from a cat who simply is not being fed enough. The plantigrade stance is worth memorising: distal polyneuropathy dropping the hocks to the ground is close to pathognomonic for diabetes mellitus in the cat. The absent goitre is evidence, but of the negative sort — it argues against a diagnosis rather than for one."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the workup",
+      "briefing": "The cat is bright, hydrated, and stable enough for an outpatient workup.",
+      "prompt": "Which tests will actually discriminate between your leading differentials?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Blood glucose with urine glucose and ketones",
+          "detail": "Persistent glucosuria separates diabetes from stress hyperglycaemia",
+          "correct": true
+        },
+        {
+          "label": "Serum fructosamine",
+          "detail": "Two to three weeks of glycaemia, unaffected by the car journey",
+          "correct": true
+        },
+        {
+          "label": "Total T4",
+          "detail": "Cheap, and hyperthyroidism must be excluded",
+          "correct": true
+        },
+        {
+          "label": "Urine specific gravity with culture",
+          "detail": "Dilute urine, and diabetics get silent UTIs",
+          "correct": true
+        },
+        {
+          "label": "Abdominal radiographs",
+          "detail": "Unlikely to change the answer here",
+          "correct": false
+        },
+        {
+          "label": "Coagulation profile",
+          "detail": "No bleeding tendency to investigate",
+          "correct": false
+        }
+      ],
+      "explanation": "Fructosamine is the test that earns its place in a feline workup: cats mount a stress hyperglycaemia on the journey to the practice, so a single high glucose proves very little, while fructosamine reports the previous fortnight and cannot be spooked. Run the T4 anyway — it is inexpensive, and the two diseases look alike from across the room."
+    },
+    {
+      "kind": "differential",
+      "title": "Narrow it down",
+      "briefing": "Blood glucose 24.6 mmol/L (441 mg/dL). Urine: glucose 4+, ketones negative, USG 1.021, culture pending. Fructosamine 512 µmol/L (reference 190–365). Total T4 26 nmol/L (reference 10–55). Renal values within reference intervals.",
+      "prompt": "Which differentials survive these results?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Diabetes mellitus",
+          "detail": "Marked persistent hyperglycaemia with glucosuria and a high fructosamine",
+          "correct": true
+        },
+        {
+          "label": "Concurrent urinary tract infection",
+          "detail": "Glucosuric cats are prone to it; culture is still pending",
+          "correct": true
+        },
+        {
+          "label": "Stress hyperglycaemia",
+          "detail": "The fructosamine excludes it",
+          "correct": false
+        },
+        {
+          "label": "Hyperthyroidism",
+          "detail": "T4 is mid-reference and there is no goitre",
+          "correct": false
+        },
+        {
+          "label": "Chronic kidney disease",
+          "detail": "Renal values normal, and USG is not fixed at isosthenuria",
+          "correct": false
+        }
+      ],
+      "explanation": "The fructosamine is what closes the case: stress can raise a glucose reading, but it cannot raise a fortnight's average. Note what age did here — hyperthyroidism is the classic mimic of this exact presentation, but it is uncommon under eight years and usually brings a palpable goitre and a normal-to-high T4. A 4-year-old cat with no goitre and a mid-reference T4 is not hyperthyroid."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Urine culture returns no growth. The cat remains bright and is eating well.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Diabetes mellitus, non-ketotic",
+          "detail": "Ketones negative, patient systemically well",
+          "correct": true
+        },
+        {
+          "label": "Diabetic ketoacidosis",
+          "detail": "",
+          "correct": false
+        },
+        {
+          "label": "Hyperthyroidism",
+          "detail": "",
+          "correct": false
+        },
+        {
+          "label": "Exocrine pancreatic insufficiency",
+          "detail": "",
+          "correct": false
+        }
+      ],
+      "explanation": "Non-ketotic is not a hedge — it is the word that decides where this cat sleeps tonight. Negative urine ketones in a bright, hydrated, eating cat means outpatient stabilisation on a long-acting insulin and a low-carbohydrate diet. Had those ketones been positive with lethargy or vomiting, this would be DKA: an inpatient emergency needing fluids, electrolyte correction and soluble insulin. One dipstick pad separates the two."
+    }
+  ]
+}

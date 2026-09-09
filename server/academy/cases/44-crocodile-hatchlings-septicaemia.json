@@ -1,0 +1,172 @@
+{
+  "slug": "crocodile-hatchlings-septicaemia",
+  "title": "Hatchling pens — Nile crocodiles: sudden deaths with swollen joints",
+  "species": "crocodilian",
+  "discipline": "Zoo & Wildlife Medicine",
+  "difficulty": "advanced",
+  "body_system": "Multisystemic",
+  "presentation": "A crocodile farm reports fourteen deaths among 400 hatchlings over ten days. Affected animals are lethargic, float oddly, and several have swollen limb joints. Water quality has been unstable since a filter failure.",
+  "completion_bonus": 30,
+  "order": 44,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Assess the group and the environment",
+      "briefing": "Affected hatchlings: lethargic, buoyant and listing in the water, reluctant to feed, several with swollen carpal and tarsal joints, some with pale gum margins and petechiae on the ventral scales. Water: temperature 26°C (target 30–32°C), ammonia 0.8 mg/L, nitrite 0.4 mg/L, heavy organic load, filter failed eleven days ago. Stocking density recently increased.",
+      "prompt": "Which findings suggest systemic bacterial disease?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Swollen joints in several animals with ventral petechiae",
+          "detail": "Haematogenous spread with vasculitis",
+          "correct": true
+        },
+        {
+          "label": "Fourteen deaths in ten days after a filter failure",
+          "detail": "An environmental insult followed by an outbreak",
+          "correct": true
+        },
+        {
+          "label": "Abnormal buoyancy with listing",
+          "detail": "Coelomic or pulmonary involvement",
+          "correct": true
+        },
+        {
+          "label": "Water temperature 26°C",
+          "detail": "Immunosuppressive, and the reason rather than the sign",
+          "correct": false
+        },
+        {
+          "label": "Reluctance to feed",
+          "detail": "Universal in sick reptiles",
+          "correct": false
+        }
+      ],
+      "explanation": "Polyarthritis with petechiae across a group is septicaemia, not an injury, and the timeline pins it to the filter failure eleven days ago. Cold, ammonia-laden water suppresses reptile immunity within days, which is why the environmental readings are part of the diagnosis rather than background detail."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the samples",
+      "briefing": "Fresh carcasses are available and you can sample live animals and the water.",
+      "prompt": "Which do you take?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Post-mortem with bacterial culture of liver, joint fluid and blood",
+          "detail": "Confirms septicaemia and names the organism",
+          "correct": true
+        },
+        {
+          "label": "Antibiotic sensitivity testing on the isolates",
+          "detail": "Aquatic Gram-negatives are frequently resistant",
+          "correct": true
+        },
+        {
+          "label": "Joint fluid cytology from affected hatchlings",
+          "detail": "Septic versus non-septic arthritis",
+          "correct": true
+        },
+        {
+          "label": "Full water quality analysis — ammonia, nitrite, nitrate, temperature, organic load",
+          "detail": "The driver, measured properly",
+          "correct": true
+        },
+        {
+          "label": "Histopathology of liver, lung, kidney and joints",
+          "detail": "Distribution of lesions and chronicity",
+          "correct": true
+        },
+        {
+          "label": "Serology for West Nile virus as the primary test",
+          "detail": "A real crocodilian pathogen, but not what a filter failure and polyarthritis point to first",
+          "correct": false
+        },
+        {
+          "label": "Skin scrapes for ectoparasites",
+          "detail": "Will not explain deaths with swollen joints",
+          "correct": false
+        }
+      ],
+      "explanation": "Culture from more than one site is what separates a true septicaemia from post-mortem contamination — liver, joint and blood agreeing is convincing. Sensitivity testing matters because these are Aeromonas and Salmonella-type organisms with unpredictable resistance. Water analysis is a diagnostic test here, not a compliance exercise."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Culture: Aeromonas hydrophila from liver, blood and joint fluid in four of five hatchlings; Salmonella species also isolated from two intestines. Sensitivity: resistant to amoxicillin, sensitive to trimethoprim-sulfonamide and to ceftazidime. Joint fluid cytology: heterophilic inflammation with intracellular bacteria. Histopathology: multifocal hepatic necrosis, fibrinous arthritis, renal tubular necrosis. Water: ammonia 0.8 mg/L, nitrite 0.4 mg/L, temperature 26°C. West Nile virus not tested.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Aeromonas hydrophila septicaemia with fibrinous polyarthritis",
+          "detail": "The same organism from three sites with matching lesions",
+          "correct": true
+        },
+        {
+          "label": "Poor water quality and low temperature precipitated the outbreak",
+          "detail": "Ammonia and nitrite raised, water 4–6°C below target",
+          "correct": true
+        },
+        {
+          "label": "Treatment must follow sensitivity results",
+          "detail": "Resistant to amoxicillin",
+          "correct": true
+        },
+        {
+          "label": "Salmonella carriage is a zoonotic risk for staff",
+          "detail": "Isolated from intestines — a handling and hygiene issue",
+          "correct": true
+        },
+        {
+          "label": "West Nile virus has been excluded",
+          "detail": "It was not tested; it is unlikely, not excluded",
+          "correct": false
+        },
+        {
+          "label": "Trauma from increased stocking density is the primary cause",
+          "detail": "Density is a stressor; the lesions are infectious",
+          "correct": false
+        }
+      ],
+      "explanation": "One organism from liver, blood and joint fluid, with fibrin in the joints on histology, is as clean a septicaemia diagnosis as farm material allows. Being precise about the untested virus matters: \"unlikely\" and \"excluded\" are different claims, and only one of them is honest here. The Salmonella finding changes what staff are told about gloves and hand hygiene."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Aeromonas hydrophila from liver, blood and joint fluid, heterophilic joint inflammation with intracellular bacteria, hepatic and renal necrosis, ammonia 0.8 mg/L with nitrite 0.4 mg/L at 26°C, incidental Salmonella carriage.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Aeromonas septicaemia with polyarthritis, precipitated by water quality failure and low temperature",
+          "detail": "Agent, lesions and the environmental cause",
+          "correct": true
+        },
+        {
+          "label": "Primary salmonellosis",
+          "detail": "Isolated from gut only, not from the systemic sites",
+          "correct": false
+        },
+        {
+          "label": "West Nile virus infection",
+          "detail": "Not tested and not supported by these lesions",
+          "correct": false
+        },
+        {
+          "label": "Nutritional myopathy",
+          "detail": "Would not produce fibrinous arthritis or positive blood cultures",
+          "correct": false
+        },
+        {
+          "label": "Traumatic joint injury from overstocking",
+          "detail": "Cytology and culture show sepsis",
+          "correct": false
+        }
+      ],
+      "explanation": "The diagnosis has to name the water, because that is what stops the outbreak: filtration restored, temperature back to 30–32°C, stocking density reduced and the organic load cleared, alongside a sensitivity-guided antibiotic for affected hatchlings. Treating crocodiles in bad water is how a farm loses a whole cohort."
+    }
+  ]
+}

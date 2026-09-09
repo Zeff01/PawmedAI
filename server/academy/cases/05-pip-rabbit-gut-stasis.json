@@ -1,0 +1,157 @@
+{
+  "slug": "pip-rabbit-gut-stasis",
+  "title": "Pip — 3yo Netherland Dwarf rabbit: anorexia & no faecal pellets",
+  "species": "lapine",
+  "discipline": "Exotic Animal Medicine",
+  "difficulty": "intermediate",
+  "body_system": "Gastrointestinal",
+  "presentation": "3-year-old female neutered Netherland Dwarf rabbit. Has not eaten since yesterday morning and has passed no faecal pellets overnight. Diet is largely muesli mix with occasional hay.",
+  "completion_bonus": 30,
+  "order": 5,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Recognise the emergency",
+      "briefing": "Hunched, pressing the abdomen to the floor, grinding teeth. Temperature 37.1°C (reference 38.5–40.0). Stomach palpates doughy and enlarged. Caecum gas-filled. No pellets in the litter tray for 18 hours. Molar spurs palpable on the buccal aspect of the upper arcade.",
+      "prompt": "Which findings make this an emergency rather than a routine appointment?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Anorexia for over 12 hours in a rabbit",
+          "detail": "Hepatic lipidosis follows fast",
+          "correct": true
+        },
+        {
+          "label": "No faecal output for 18 hours",
+          "detail": "The gut has stopped",
+          "correct": true
+        },
+        {
+          "label": "Hypothermia at 37.1°C",
+          "detail": "Below reference; a decompensating rabbit",
+          "correct": true
+        },
+        {
+          "label": "Tooth grinding and a hunched posture",
+          "detail": "Rabbit pain behaviour",
+          "correct": true
+        },
+        {
+          "label": "Molar spurs",
+          "detail": "Very likely the cause, but not the emergency",
+          "correct": false
+        }
+      ],
+      "explanation": "A rabbit that has not eaten for twelve hours is an emergency, full stop — they are obligate hindgut fermenters that cannot vomit, and hepatic lipidosis follows anorexia quickly. Hypothermia in a small mammal means decompensation and must be corrected before anything else you plan to do. The molar spurs are almost certainly the reason this started, but they are a cause to address once the rabbit is stable, not the crisis in front of you."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Decide what to do first",
+      "briefing": "The rabbit is collapsed in the corner of the carrier and resents handling.",
+      "prompt": "What are your immediate priorities?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Active warming to normothermia",
+          "detail": "Nothing else works until this is done",
+          "correct": true
+        },
+        {
+          "label": "Analgesia with an opioid and an NSAID",
+          "detail": "Pain is itself a cause of ileus",
+          "correct": true
+        },
+        {
+          "label": "Fluid therapy",
+          "detail": "Rehydrates impacted stomach contents",
+          "correct": true
+        },
+        {
+          "label": "Whole-body radiographs",
+          "detail": "Gas patterns; excludes true obstruction",
+          "correct": true
+        },
+        {
+          "label": "Immediate exploratory laparotomy",
+          "detail": "Not before stabilisation and imaging",
+          "correct": false
+        },
+        {
+          "label": "Oral prokinetics before imaging",
+          "detail": "Dangerous if this is an obstruction",
+          "correct": false
+        }
+      ],
+      "explanation": "The order here is the whole lesson: warm, then analgese, then rehydrate, then image. Prokinetics before imaging is the genuinely dangerous choice — if the gut is truly obstructed, driving motility against the obstruction can rupture it. Stasis and obstruction present almost identically in a rabbit, and radiography is what separates them."
+    },
+    {
+      "kind": "differential",
+      "title": "Stasis or obstruction?",
+      "briefing": "Radiographs: stomach distended with a mixed food-and-gas opacity, gas throughout the caecum and colon, faecal pellets visible in the distal colon. No single focal gas-capped dilation. Glucose 9.2 mmol/L (reference 4.2–8.9). The rabbit is now normothermic and taking a little syringe-fed critical care formula.",
+      "prompt": "What do these findings support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Gastrointestinal stasis (ileus)",
+          "detail": "Gas distributed throughout, pellets still in the distal colon",
+          "correct": true
+        },
+        {
+          "label": "Dental disease as the underlying trigger",
+          "detail": "Molar spurs make eating hurt",
+          "correct": true
+        },
+        {
+          "label": "Complete small intestinal obstruction",
+          "detail": "Gas is distributed, not focally trapped; distal pellets present",
+          "correct": false
+        },
+        {
+          "label": "Mucoid enteropathy",
+          "detail": "No gelatinous mucus passed",
+          "correct": false
+        },
+        {
+          "label": "Hepatic lipidosis already established",
+          "detail": "Possible sequel; not shown by these findings",
+          "correct": false
+        }
+      ],
+      "explanation": "Distributed gas with faecal pellets still present distally is stasis; a true obstruction gives you a focal gas-capped dilation and an empty distal colon. That glucose is worth a note — a markedly high blood glucose in a rabbit (above roughly 20 mmol/L) has been associated with obstruction rather than stasis, so a mildly raised figure like this one fits the picture the radiographs already showed you."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "By 36 hours the rabbit is eating hay voluntarily and passing normal pellets.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Gastrointestinal stasis secondary to dental disease and a low-fibre diet",
+          "detail": "",
+          "correct": true
+        },
+        {
+          "label": "Small intestinal foreign body obstruction",
+          "detail": "",
+          "correct": false
+        },
+        {
+          "label": "Mucoid enteropathy",
+          "detail": "",
+          "correct": false
+        },
+        {
+          "label": "Primary hepatic lipidosis",
+          "detail": "",
+          "correct": false
+        }
+      ],
+      "explanation": "Name the trigger in the diagnosis, not just the stasis. This rabbit stopped eating because its molars hurt and its muesli diet gave it nothing to grind — dental treatment and a hay-based diet are the actual treatment. Discharge it on prokinetics alone and it will be back, because the ileus was the symptom and the mouth was the disease."
+    }
+  ]
+}

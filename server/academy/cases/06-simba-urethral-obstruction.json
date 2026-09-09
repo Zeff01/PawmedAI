@@ -1,0 +1,157 @@
+{
+  "slug": "simba-urethral-obstruction",
+  "title": "Simba — 6yo DSH: repeated straining in the litter tray",
+  "species": "feline",
+  "discipline": "Emergency & Critical Care",
+  "difficulty": "intermediate",
+  "body_system": "Urinary",
+  "presentation": "6-year-old male neutered domestic shorthair, indoor-only and overweight. Owner has seen him in and out of the litter tray all morning, crying, producing nothing. She wonders if he is constipated.",
+  "completion_bonus": 30,
+  "order": 6,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Triage the call",
+      "briefing": "On presentation: quiet, vocalising on handling. HR 120 bpm (low for a stressed cat). Temperature 36.9°C. A firm, painful, turgid bladder the size of a satsuma is palpable and does not express. Perineum is licked raw.",
+      "prompt": "Which findings identify this as an obstruction rather than constipation?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Large, firm, non-expressible bladder",
+          "detail": "The definitive finding",
+          "correct": true
+        },
+        {
+          "label": "Male neutered cat straining unproductively",
+          "detail": "The classic signalment",
+          "correct": true
+        },
+        {
+          "label": "Bradycardia at 120 bpm in a stressed cat",
+          "detail": "Suggests hyperkalaemia",
+          "correct": true
+        },
+        {
+          "label": "Overweight and indoor-only",
+          "detail": "Risk factors, not diagnostic",
+          "correct": false
+        },
+        {
+          "label": "Licked perineum",
+          "detail": "Non-specific sign of discomfort",
+          "correct": false
+        }
+      ],
+      "explanation": "Palpate the bladder on every straining cat before you accept 'constipation' from the phone call — the two look identical to an owner, and one of them kills the cat within a day. Then read that heart rate properly: 120 bpm is bradycardia for a cat in a consulting room, and a bradycardic blocked cat is hyperkalaemic until an ECG and a potassium say otherwise."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Stabilise and confirm",
+      "briefing": "The cat is dull and cold. You have one shot at getting the order of this right.",
+      "prompt": "What do you do in the first fifteen minutes?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Blood potassium and an ECG",
+          "detail": "Hyperkalaemia is what stops the heart",
+          "correct": true
+        },
+        {
+          "label": "Intravenous access and fluid resuscitation",
+          "detail": "Perfusion and potassium both improve",
+          "correct": true
+        },
+        {
+          "label": "Analgesia",
+          "detail": "The obstruction is agonising",
+          "correct": true
+        },
+        {
+          "label": "Urethral catheterisation to relieve the obstruction",
+          "detail": "The definitive treatment",
+          "correct": true
+        },
+        {
+          "label": "Send urine for culture before doing anything else",
+          "detail": "Useful later; not now",
+          "correct": false
+        },
+        {
+          "label": "Oral potassium binder",
+          "detail": "No role in an acute obstruction",
+          "correct": false
+        }
+      ],
+      "explanation": "Learn the ECG progression, because it tells you how much time you have: tall tented T waves, then a flattened or absent P wave, then a widening QRS sliding towards a sine wave and arrest. Calcium gluconate does not lower potassium — it protects the myocardium while dextrose, insulin and fluids do the lowering. Culture matters, but it matters after the cat can urinate."
+    },
+    {
+      "kind": "differential",
+      "title": "Find the cause",
+      "briefing": "Potassium 7.8 mmol/L with absent P waves on ECG, corrected over four hours. Catheterisation relieved a gritty plug at the distal urethra. Urinalysis: struvite crystals, no bacteria on sediment, USG 1.048. Culture: no growth. Imaging shows no cystoliths and no mass.",
+      "prompt": "Which conclusions do these findings support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Urethral obstruction by a matrix-crystalline plug",
+          "detail": "Gritty plug retrieved at the distal urethra",
+          "correct": true
+        },
+        {
+          "label": "Underlying feline idiopathic cystitis",
+          "detail": "Sterile, no stones, no mass — the usual driver",
+          "correct": true
+        },
+        {
+          "label": "Life-threatening hyperkalaemia, now corrected",
+          "detail": "K 7.8 with absent P waves",
+          "correct": true
+        },
+        {
+          "label": "Bacterial urinary tract infection",
+          "detail": "Sterile sediment and no growth on culture",
+          "correct": false
+        },
+        {
+          "label": "Obstructive urolithiasis",
+          "detail": "No cystoliths on imaging",
+          "correct": false
+        }
+      ],
+      "explanation": "Sterile urine with no stones and no mass leaves feline idiopathic cystitis as the driver, and that reframes the whole discharge conversation. Struvite crystals in concentrated urine are a finding, not a diagnosis — plenty of healthy cats have them. Bacterial UTI is genuinely uncommon in young to middle-aged cats, so antibiotics here would treat nothing and cost the cat its gut flora."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "The catheter is removed at 48 hours and the cat urinates voluntarily before discharge.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Urethral obstruction secondary to feline idiopathic cystitis, with hyperkalaemia",
+          "detail": "",
+          "correct": true
+        },
+        {
+          "label": "Obstructive urolithiasis",
+          "detail": "",
+          "correct": false
+        },
+        {
+          "label": "Bacterial cystitis with secondary obstruction",
+          "detail": "",
+          "correct": false
+        },
+        {
+          "label": "Constipation with tenesmus",
+          "detail": "",
+          "correct": false
+        }
+      ],
+      "explanation": "The diagnosis has to name all three parts — the obstruction, its idiopathic driver, and the hyperkalaemia — because each changes the aftercare. Roughly a fifth to a quarter of these cats reobstruct, and what lowers that risk is not another course of antibiotics: it is wet food, more water, more litter trays, and less stress at home. That conversation at discharge is the most valuable thing you do for this cat."
+    }
+  ]
+}

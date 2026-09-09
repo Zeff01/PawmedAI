@@ -1,0 +1,172 @@
+{
+  "slug": "dolphin-inappetence",
+  "title": "Dolphin 3 — adult bottlenose in managed care: two days off fish",
+  "species": "cetacean",
+  "discipline": "Zoo & Wildlife Medicine",
+  "difficulty": "advanced",
+  "body_system": "Multisystemic",
+  "presentation": "Adult female bottlenose dolphin under managed care has refused about half her fish for two days, is slower on behavioural sessions, and trainers report a change in the sound of her breathing.",
+  "completion_bonus": 30,
+  "order": 51,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Assess the animal",
+      "briefing": "Reduced voluntary intake for 48 hours, lethargy on sessions, respiratory rate 4 per minute with an audible rattle on exhalation. Skin: two raised rhomboid plaques on the flank. Temperature not assessed. Water quality within parameters. Fish batch changed five days ago. Voluntary blood sample and gastric sample both trained behaviours.",
+      "prompt": "Which findings direct the work-up?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Rhomboid raised skin plaques",
+          "detail": "The classic cutaneous form of erysipelas",
+          "correct": true
+        },
+        {
+          "label": "Change in respiratory sound with a rattle on exhalation",
+          "detail": "Airway or pulmonary involvement",
+          "correct": true
+        },
+        {
+          "label": "A 50% drop in voluntary intake over 48 hours",
+          "detail": "Measured decline in a monitored animal",
+          "correct": true
+        },
+        {
+          "label": "Fish batch changed five days ago",
+          "detail": "A plausible source, but history rather than a finding",
+          "correct": false
+        },
+        {
+          "label": "Respiratory rate 4 per minute",
+          "detail": "Within the normal range for a resting bottlenose",
+          "correct": false
+        }
+      ],
+      "explanation": "Managed-care cetacean medicine runs on trends, and a measured 50% drop in intake is a real clinical sign rather than an impression. The rhomboid plaques are close to pathognomonic for Erysipelothrix and they raise the stakes immediately, because the septicaemic form of that disease kills dolphins in under a day."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "She will present for voluntary blood sampling, gastric lavage and blowhole sampling.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Haematology with erythrocyte sedimentation rate and fibrinogen",
+          "detail": "The cetacean inflammatory markers that move first",
+          "correct": true
+        },
+        {
+          "label": "Serum amyloid A",
+          "detail": "A sensitive acute-phase marker in this species",
+          "correct": true
+        },
+        {
+          "label": "Blowhole cytology and culture with sensitivity",
+          "detail": "Respiratory pathogens, named",
+          "correct": true
+        },
+        {
+          "label": "Blood culture",
+          "detail": "Erysipelothrix septicaemia must be caught early",
+          "correct": true
+        },
+        {
+          "label": "Gastric fluid cytology, pH and culture",
+          "detail": "Foreign material, ulceration, secondary infection",
+          "correct": true
+        },
+        {
+          "label": "Fish batch analysis for histamine and thiamine",
+          "detail": "Worth doing for the collection, but it will not diagnose today’s illness",
+          "correct": false
+        },
+        {
+          "label": "Whole-body computed tomography as the first step",
+          "detail": "Not practicable for a routine work-up in this species",
+          "correct": false
+        }
+      ],
+      "explanation": "Cetaceans hide illness, so the panel leans on acute-phase markers — sedimentation rate, fibrinogen and serum amyloid A — that shift before behaviour does. Blood culture is on the list because of those skin plaques: erysipelas has a cutaneous form you can treat and a septicaemic form that kills within hours, and you want the diagnosis before the second one arrives."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Haematology: white cell count raised with a neutrophilia and a left shift; sedimentation rate raised; fibrinogen 5.8 g/L (raised). Serum amyloid A markedly raised. Blowhole cytology: neutrophils with intracellular Gram-positive rods; culture grows Erysipelothrix rhusiopathiae, sensitive to penicillin and ampicillin. Blood culture: Erysipelothrix rhusiopathiae isolated. Gastric fluid: no foreign material, mild neutrophilic inflammation. Vaccination status: last erysipelas vaccine 18 months ago.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Erysipelothrix rhusiopathiae infection with septicaemia",
+          "detail": "The organism from blood as well as the airway",
+          "correct": true
+        },
+        {
+          "label": "A strong systemic inflammatory response",
+          "detail": "Raised serum amyloid A, fibrinogen and a left shift",
+          "correct": true
+        },
+        {
+          "label": "Penicillin is the appropriate treatment",
+          "detail": "Sensitive on culture, and the drug of choice for this organism",
+          "correct": true
+        },
+        {
+          "label": "Vaccination cover has lapsed and needs reviewing collection-wide",
+          "detail": "Last dose 18 months ago against a 6–12 month interval",
+          "correct": true
+        },
+        {
+          "label": "Gastric foreign body explains the inappetence",
+          "detail": "No foreign material found",
+          "correct": false
+        },
+        {
+          "label": "This can be managed by monitoring alone",
+          "detail": "A positive blood culture demands immediate treatment",
+          "correct": false
+        }
+      ],
+      "explanation": "A positive blood culture converts a skin lesion into an emergency: the acute septicaemic form of erysipelas can kill a dolphin in twelve to twenty-four hours, and it responds to penicillin given immediately. The vaccine interval is the finding that protects the rest of the collection and the staff, since this organism is also a zoonosis."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Erysipelothrix rhusiopathiae from blowhole and blood, rhomboid skin plaques, raised serum amyloid A and fibrinogen with a left shift, no gastric foreign body, vaccination 18 months ago.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Erysipelothrix rhusiopathiae septicaemia with the cutaneous form, on lapsed vaccination",
+          "detail": "Confirmed organism in blood with its skin lesions",
+          "correct": true
+        },
+        {
+          "label": "Aspiration pneumonia",
+          "detail": "The organism is systemic and the lesions are erysipelas",
+          "correct": false
+        },
+        {
+          "label": "Gastric ulceration with foreign body",
+          "detail": "Nothing found on gastric sampling",
+          "correct": false
+        },
+        {
+          "label": "Fish-borne histamine toxicity",
+          "detail": "Would not culture Erysipelothrix from blood",
+          "correct": false
+        },
+        {
+          "label": "Idiopathic inappetence",
+          "detail": "Ignores a positive blood culture",
+          "correct": false
+        }
+      ],
+      "explanation": "Naming the septicaemia sets the urgency: penicillin now rather than after further testing, intensive monitoring, and a review of the erysipelas vaccination schedule across the collection along with fish handling hygiene. Staff need telling too — this organism causes erysipeloid infections in people handling fish and cetaceans."
+    }
+  ]
+}

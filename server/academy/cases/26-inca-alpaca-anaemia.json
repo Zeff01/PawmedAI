@@ -1,0 +1,167 @@
+{
+  "slug": "inca-alpaca-anaemia",
+  "title": "Inca — 5yo alpaca: weakness and very pale gums two weeks after arriving",
+  "species": "camelid",
+  "discipline": "Farm Animal Practice",
+  "difficulty": "advanced",
+  "body_system": "Haematology",
+  "presentation": "5-year-old female alpaca, bought in a fortnight ago from a dispersal sale. Lagging behind the herd, weak, gums almost white, and she has lost condition since arrival.",
+  "completion_bonus": 30,
+  "order": 26,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Examine the alpaca",
+      "briefing": "BCS 2/5. Mucous membranes almost white, HR 96 bpm, RR 40/min, temperature 39.3°C. Weak, reluctant to rise. No bottle jaw, no external bleeding, faeces normal. Fleece dull. Bought at a dispersal sale two weeks ago, transported 200 miles, mixed into a group of twelve, mild shearing wound on the flank now healed.",
+      "prompt": "Which findings guide the work-up?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Severe pallor with tachycardia and tachypnoea",
+          "detail": "Anaemia sufficient to compromise oxygen delivery",
+          "correct": true
+        },
+        {
+          "label": "Recent purchase, transport and mixing",
+          "detail": "Stress that unmasks latent infection in camelids",
+          "correct": true
+        },
+        {
+          "label": "Fever of 39.3°C with the anaemia",
+          "detail": "Points to an infectious or immune cause rather than blood loss",
+          "correct": true
+        },
+        {
+          "label": "Absence of bottle jaw",
+          "detail": "Useful — it argues against heavy Haemonchus — but it is a negative",
+          "correct": false
+        },
+        {
+          "label": "Healed shearing wound",
+          "detail": "No longer a source of blood loss",
+          "correct": false
+        }
+      ],
+      "explanation": "Anaemia with fever and no evidence of blood loss puts destruction ahead of haemorrhage, and in a recently purchased, transported camelid the organism at the top of that list is Mycoplasma haemolamae, which lives latently and flares under stress. The absent bottle jaw is worth noting because Haemonchus is the other great camelid anaemia and is treated entirely differently."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "You can take blood in the field and submit samples to a laboratory that offers camelid PCR.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Packed cell volume and total protein",
+          "detail": "Grades the anaemia and separates protein loss",
+          "correct": true
+        },
+        {
+          "label": "Blood smear examined for organisms on the red cell surface",
+          "detail": "M. haemolamae is seen, if you look before treatment",
+          "correct": true
+        },
+        {
+          "label": "Mycoplasma haemolamae PCR",
+          "detail": "More sensitive than the smear, which is often negative",
+          "correct": true
+        },
+        {
+          "label": "Faecal egg count",
+          "detail": "Haemonchus is the other cause of camelid anaemia",
+          "correct": true
+        },
+        {
+          "label": "Reticulocyte or new methylene blue stain for regeneration",
+          "detail": "Regenerative or not shapes the prognosis",
+          "correct": true
+        },
+        {
+          "label": "Coombs test as the first-line test",
+          "detail": "Poorly validated in camelids and it would not change today",
+          "correct": false
+        },
+        {
+          "label": "Bone marrow aspirate before simpler tests",
+          "detail": "Invasive, and unnecessary if the PCR is positive",
+          "correct": false
+        }
+      ],
+      "explanation": "A blood smear costs nothing and can be diagnostic, but M. haemolamae is famously intermittent on smears, so the PCR is what confirms it — and both need taking before any oxytetracycline is given. A faecal count runs in parallel because the two diseases coexist, and in a thin alpaca you want to know about both before you decide the anaemia is explained."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "PCV 11% (ref 27–45), total protein 62 g/L (ref 55–75), albumin 32 g/L. Blood smear: occasional small basophilic organisms on the red cell margins; marked anisocytosis. M. haemolamae PCR strongly positive. Faecal egg count 200 epg strongyle-type, no Haemonchus predominance on speciation. New methylene blue: reticulocytosis present. Total bilirubin mildly raised. Two herd mates: PCV 26% and 31%, both PCR positive, clinically well.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Regenerative haemolytic anaemia from Mycoplasma haemolamae",
+          "detail": "PCR positive with organisms on the smear and reticulocytosis",
+          "correct": true
+        },
+        {
+          "label": "The herd carries the organism subclinically",
+          "detail": "Two well herd mates PCR positive",
+          "correct": true
+        },
+        {
+          "label": "Parasitism is not the main cause of this anaemia",
+          "detail": "A count of 200 epg with normal protein",
+          "correct": true
+        },
+        {
+          "label": "Haemonchosis is the primary diagnosis",
+          "detail": "Low count, no Haemonchus predominance, and protein is normal",
+          "correct": false
+        },
+        {
+          "label": "Non-regenerative anaemia of chronic disease",
+          "detail": "Reticulocytosis says the marrow is responding",
+          "correct": false
+        }
+      ],
+      "explanation": "Normal total protein is what takes Haemonchus off the top of the list — a parasite that sucks blood takes albumin with it. The positive PCRs in two healthy herd mates are the finding that reframes the case: this is a latent herd infection in which one stressed animal has decompensated, so the plan covers the individual and the management of the group, not mass treatment of well animals."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "PCV 11% with normal protein, regenerative response, organisms on the smear, M. haemolamae PCR strongly positive, low strongyle count, two PCR-positive healthy herd mates.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Mycoplasma haemolamae anaemia, flared by the stress of purchase and transport",
+          "detail": "Confirmed organism, regenerative anaemia, recognised trigger",
+          "correct": true
+        },
+        {
+          "label": "Haemonchosis",
+          "detail": "Normal protein and a low egg count",
+          "correct": false
+        },
+        {
+          "label": "Immune-mediated haemolytic anaemia",
+          "detail": "Possible in camelids, but the PCR names an infectious cause",
+          "correct": false
+        },
+        {
+          "label": "Copper deficiency",
+          "detail": "Would not give a fever or a positive PCR",
+          "correct": false
+        },
+        {
+          "label": "Blood loss from the shearing wound",
+          "detail": "Healed, and blood loss would lower the protein",
+          "correct": false
+        }
+      ],
+      "explanation": "Naming the stress trigger is what makes the herd advice concrete: oxytetracycline and supportive care for this alpaca, and for the group, quarantine and minimising stress at purchase rather than blanket treatment. Camelids carry this organism for life, so the goal is preventing the next flare, not clearing the herd."
+    }
+  ]
+}

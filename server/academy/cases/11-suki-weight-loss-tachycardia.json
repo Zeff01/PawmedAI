@@ -1,0 +1,167 @@
+{
+  "slug": "suki-weight-loss-tachycardia",
+  "title": "Suki — 13yo DSH: weight loss with a good appetite",
+  "species": "feline",
+  "discipline": "Clinical Pathology",
+  "difficulty": "beginner",
+  "body_system": "Endocrine",
+  "presentation": "13-year-old female neutered domestic shorthair, 800 g of weight loss over four months despite eating more than usual. The owner reports restlessness at night and occasional vomiting.",
+  "completion_bonus": 30,
+  "order": 11,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Work the signalment",
+      "briefing": "Weight 3.4 kg, down from 4.2 kg. BCS 3/9. HR 220 bpm with a gallop rhythm, thyroid slip palpable on the left. Coat unkempt. Temperature 38.9°C. Blood pressure 175 mmHg systolic. No polyuria reported, water intake described as normal.",
+      "prompt": "Which findings steer you towards an endocrine cause rather than gut disease?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Weight loss with an increased appetite",
+          "detail": "Catabolism outrunning intake",
+          "correct": true
+        },
+        {
+          "label": "Palpable thyroid slip",
+          "detail": "An enlarged thyroid lobe in the neck",
+          "correct": true
+        },
+        {
+          "label": "Heart rate 220 bpm with a gallop rhythm",
+          "detail": "Thyrotoxic cardiac effect",
+          "correct": true
+        },
+        {
+          "label": "Occasional vomiting",
+          "detail": "Common in both, discriminates nothing",
+          "correct": false
+        },
+        {
+          "label": "Unkempt coat",
+          "detail": "Non-specific in any chronic illness",
+          "correct": false
+        }
+      ],
+      "explanation": "Weight loss on a good appetite narrows the field hard: the calories are going in, so they are being burned or lost. A palpable goitre with tachycardia and hypertension is hyperthyroidism until proven otherwise. Vomiting and a poor coat are true but useless here — they belong to every chronic feline illness on the differential list."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the panel",
+      "briefing": "The owner has agreed to bloods and a urine sample today.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Total T4",
+          "detail": "The first-line test for the suspicion you have",
+          "correct": true
+        },
+        {
+          "label": "Full biochemistry with urea and creatinine",
+          "detail": "Hyperthyroidism masks concurrent kidney disease",
+          "correct": true
+        },
+        {
+          "label": "Urinalysis with specific gravity",
+          "detail": "Concentrating ability, protein, glucose",
+          "correct": true
+        },
+        {
+          "label": "Haematology",
+          "detail": "Baseline before methimazole",
+          "correct": true
+        },
+        {
+          "label": "Blood pressure and fundic examination",
+          "detail": "Hypertensive target-organ damage",
+          "correct": true
+        },
+        {
+          "label": "Faecal parasitology as the first-line test",
+          "detail": "Reasonable in a young cat with diarrhoea, not here",
+          "correct": false
+        },
+        {
+          "label": "Insulin concentration",
+          "detail": "No role in the work-up of feline weight loss",
+          "correct": false
+        }
+      ],
+      "explanation": "A total T4 answers the question in most cats, but the panel around it matters as much: thyrotoxicosis raises GFR and hides chronic kidney disease that will surface the moment you treat it, so urea, creatinine and urine specific gravity have to be recorded before treatment, not after. Faecal work and insulin belong to other presentations."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Total T4 96 nmol/L (ref 10–50). Urea 9.8 mmol/L (ref 5.7–12.9), creatinine 118 µmol/L (ref 71–212), USG 1.024, no glucosuria, UPC 0.3. Glucose 6.1 mmol/L. PCV 44%. Systolic blood pressure 175 mmHg, no retinal lesions.",
+      "prompt": "What do these results establish?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Hyperthyroidism is confirmed biochemically",
+          "detail": "T4 well above the reference interval",
+          "correct": true
+        },
+        {
+          "label": "Kidney function needs rechecking after treatment",
+          "detail": "A USG of 1.024 with a high GFR is not reassuring",
+          "correct": true
+        },
+        {
+          "label": "Diabetes mellitus is excluded",
+          "detail": "Normoglycaemia with no glucosuria",
+          "correct": true
+        },
+        {
+          "label": "Hypertension needs treating in its own right",
+          "detail": "No target-organ damage yet, but 175 mmHg with a high T4 will often fall on treatment alone",
+          "correct": false
+        },
+        {
+          "label": "Protein-losing nephropathy is present",
+          "detail": "A UPC of 0.3 is not proteinuria",
+          "correct": false
+        }
+      ],
+      "explanation": "A T4 of 96 nmol/L in a cat with a goitre and a heart rate of 220 needs no confirmatory test. The subtle finding is the urine: a specific gravity of 1.024 in a cat with thyrotoxic hyperfiltration can hide stage 2 kidney disease, so the creatinine you act on is the one measured four weeks into treatment. Treating this blood pressure before the thyroid, on this reading, would be treating a number rather than a cat."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "T4 96 nmol/L, palpable goitre, HR 220 bpm, normoglycaemic, non-azotaemic on today’s sample.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Hyperthyroidism, with kidney disease to be re-assessed on treatment",
+          "detail": "The whole of what these results support",
+          "correct": true
+        },
+        {
+          "label": "Hyperthyroidism alone, kidneys normal",
+          "detail": "Overstates what a single USG of 1.024 proves",
+          "correct": false
+        },
+        {
+          "label": "Diabetes mellitus",
+          "detail": "Excluded by normoglycaemia and no glucosuria",
+          "correct": false
+        },
+        {
+          "label": "Chronic kidney disease as the primary problem",
+          "detail": "Would not raise T4 or the appetite",
+          "correct": false
+        },
+        {
+          "label": "Gastrointestinal lymphoma",
+          "detail": "Possible in this age group, but it does not explain the goitre or the T4",
+          "correct": false
+        }
+      ],
+      "explanation": "The diagnosis is hyperthyroidism, and the sentence has a second half: kidney function is unproven while GFR is being driven by thyroid hormone. Writing the diagnosis that way is what makes you recheck creatinine after four weeks of methimazole rather than discharging a cat whose azotaemia was hidden on the day you met it."
+    }
+  ]
+}

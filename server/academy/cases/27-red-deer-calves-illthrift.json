@@ -1,0 +1,172 @@
+{
+  "slug": "red-deer-calves-illthrift",
+  "title": "Weaner group — farmed red deer: ill-thrift and scour after weaning",
+  "species": "cervine",
+  "discipline": "Farm Animal Practice",
+  "difficulty": "advanced",
+  "body_system": "Gastrointestinal & Parasitology",
+  "presentation": "Forty farmed red deer calves weaned six weeks ago onto a wet lowland paddock. A third are scouring intermittently, growth rates have stalled, and one calf was found dead this morning.",
+  "completion_bonus": 30,
+  "order": 27,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Assess the group",
+      "briefing": "Affected calves: rough coats, dirty hindquarters, BCS 2/5, weight gain 0.1 kg/day against a target of 0.35. Some coughing when moved. Temperature 38.9–39.4°C in three sampled calves. Paddock: wet lowland, grazed by the same weaner group every autumn for six years, no rotation. Dead calf: thin, with a soiled perineum.",
+      "prompt": "Which findings shape the differential list?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Ill-thrift with intermittent scour in weaners on repeatedly grazed ground",
+          "detail": "Parasitic gastroenteritis in the classic setting",
+          "correct": true
+        },
+        {
+          "label": "Coughing when the group is moved",
+          "detail": "Lungworm alongside the gut parasites",
+          "correct": true
+        },
+        {
+          "label": "Growth rate a third of target",
+          "detail": "Production loss that quantifies the problem",
+          "correct": true
+        },
+        {
+          "label": "Temperatures up to 39.4°C",
+          "detail": "Within the range excitement produces in deer",
+          "correct": false
+        },
+        {
+          "label": "Rough coats",
+          "detail": "A consequence of ill-thrift, not a pointer",
+          "correct": false
+        }
+      ],
+      "explanation": "Weaners on ground that has carried weaners every autumn for six years is the epidemiology of parasitic gastroenteritis, and the cough adds lungworm to the same picture. Growth rate is the finding that gives the farm a number to act on. Deer run hot when handled, so temperature at yarding is one of the least useful measurements you will take."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the samples",
+      "briefing": "The group is yarded and the dead calf is fresh enough to submit.",
+      "prompt": "Which samples do you take?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Individual faecal egg counts across ten calves",
+          "detail": "Burden and its spread through the group",
+          "correct": true
+        },
+        {
+          "label": "Faecal larval culture and Baermann for lungworm",
+          "detail": "Speciation, and Dictyocaulus larvae",
+          "correct": true
+        },
+        {
+          "label": "Post-mortem with total worm counts and abomasal pH",
+          "detail": "The reference standard for deer parasitism",
+          "correct": true
+        },
+        {
+          "label": "Serum pepsinogen with albumin and total protein",
+          "detail": "Abomasal damage and protein loss",
+          "correct": true
+        },
+        {
+          "label": "Trace element status — copper, cobalt and selenium",
+          "detail": "Deficiency rides alongside ill-thrift in deer",
+          "correct": true
+        },
+        {
+          "label": "Johne’s disease PCR on faeces as the primary test",
+          "detail": "Worth screening later; it does not explain a six-week group problem",
+          "correct": false
+        },
+        {
+          "label": "Bulk milk antibody testing",
+          "detail": "These are weaned calves",
+          "correct": false
+        }
+      ],
+      "explanation": "Deer parasitism is under-read on egg counts alone, because immature and inhibited stages produce no eggs, so the post-mortem worm count and abomasal pH are what confirm the burden. Pepsinogen and protein grade the abomasal damage, and the trace element panel is not padding in this species — copper and cobalt deficiency commonly compound the picture and change what you prescribe."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Faecal egg counts 250–1,400 epg (mean 620). Larval culture: Ostertagia-type predominant with Trichostrongylus; Baermann positive for Dictyocaulus. Post-mortem: 42,000 abomasal worms with a morocco-leather mucosa, abomasal pH 5.8 (normal 2–3), Dictyocaulus in the caudal lung lobes. Albumin 21 g/L (low), total protein 48 g/L (low), serum pepsinogen raised. Plasma copper 5.1 µmol/L (low), cobalt marginal, selenium adequate. No Johne’s lesions.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Severe parasitic gastroenteritis with abomasal damage",
+          "detail": "42,000 worms with an abomasal pH of 5.8 and raised pepsinogen",
+          "correct": true
+        },
+        {
+          "label": "Concurrent lungworm infection",
+          "detail": "Dictyocaulus on Baermann and at post-mortem",
+          "correct": true
+        },
+        {
+          "label": "Protein-losing enteropathy from the abomasal lesions",
+          "detail": "Albumin 21 g/L with low total protein",
+          "correct": true
+        },
+        {
+          "label": "Copper deficiency is compounding the ill-thrift",
+          "detail": "Plasma copper 5.1 µmol/L",
+          "correct": true
+        },
+        {
+          "label": "Egg counts alone reflected the true burden",
+          "detail": "A mean of 620 epg against 42,000 worms",
+          "correct": false
+        },
+        {
+          "label": "Johne’s disease is the primary cause",
+          "detail": "No lesions and it does not explain the worm count",
+          "correct": false
+        }
+      ],
+      "explanation": "The gap between a mean count of 620 epg and 42,000 worms at post-mortem is the single most useful thing this submission teaches: a clinician who triaged this group on egg counts would have called the burden moderate and been badly wrong. The raised abomasal pH explains the protein loss mechanically, and the low copper is a second, separate deficit to correct."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "42,000 abomasal worms, abomasal pH 5.8, raised pepsinogen, albumin 21 g/L, Dictyocaulus present, plasma copper 5.1 µmol/L, six years of continuous weaner grazing.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Parasitic gastroenteritis with lungworm and concurrent copper deficiency, on contaminated ground",
+          "detail": "Both parasites, the deficiency and the reason",
+          "correct": true
+        },
+        {
+          "label": "Johne’s disease",
+          "detail": "No lesions, and parasitism explains the group picture",
+          "correct": false
+        },
+        {
+          "label": "Primary copper deficiency",
+          "detail": "Real, but secondary to a 42,000-worm burden",
+          "correct": false
+        },
+        {
+          "label": "Yersiniosis",
+          "detail": "An acute weaner scour, not a six-week ill-thrift with this worm count",
+          "correct": false
+        },
+        {
+          "label": "Nutritional ill-thrift from poor pasture quality",
+          "detail": "Does not account for the worm count or the lungworm",
+          "correct": false
+        }
+      ],
+      "explanation": "A three-part diagnosis produces a three-part plan: an effective anthelmintic with lungworm activity now, copper supplementation checked against liver stores rather than given blindly, and a grazing rotation that stops weaners inheriting their own contamination every autumn. Naming the ground is what changes next year."
+    }
+  ]
+}

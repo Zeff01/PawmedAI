@@ -1,0 +1,172 @@
+{
+  "slug": "fox-severe-mange",
+  "title": "Wildlife casualty — adult fox: near-total hair loss and thickened skin",
+  "species": "wildlife",
+  "discipline": "Zoo & Wildlife Medicine",
+  "difficulty": "beginner",
+  "body_system": "Integumentary",
+  "presentation": "Adult male red fox caught by a wildlife rescue after being seen in daylight in a garden, emaciated, with almost no coat, thickened crusted skin and constant scratching.",
+  "completion_bonus": 30,
+  "order": 63,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Assess the casualty",
+      "briefing": "Emaciated, BCS 1/5. Alopecia over 80% of the body with thickened, lichenified, crusted skin, worst on the tail base, hocks and ears. Excoriations from self-trauma, secondary pyoderma with a rancid odour. Active in daylight, poor flight response. Temperature 39.4°C. Other foxes in the area reported similarly affected by the rescue.",
+      "prompt": "Which findings point to sarcoptic mange?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Crusted, lichenified alopecia worst at tail base, hocks and ears",
+          "detail": "The distribution sarcoptic mange favours in foxes",
+          "correct": true
+        },
+        {
+          "label": "Intense self-trauma from pruritus",
+          "detail": "Sarcoptes is severely pruritic",
+          "correct": true
+        },
+        {
+          "label": "Other foxes in the same area affected",
+          "detail": "A contagious, population-level parasite",
+          "correct": true
+        },
+        {
+          "label": "Daylight activity with a poor flight response",
+          "detail": "Marks debility, not a specific disease",
+          "correct": false
+        },
+        {
+          "label": "Temperature 39.4°C",
+          "detail": "Consistent with secondary infection, non-specific",
+          "correct": false
+        }
+      ],
+      "explanation": "Distribution is the diagnosis in mange: tail base, hocks and ears, with crusting and lichenification, is sarcoptic mange in a fox, and the pruritus separates it from the demodicosis and dermatophytosis that also cause alopecia. Daylight activity in a fox tells you it is debilitated and unafraid, which matters for handling and for prognosis rather than for diagnosis."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "The fox is sedated for handling and sampling.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Deep skin scrapes from multiple sites in mineral oil",
+          "detail": "Sarcoptes mites, eggs and faecal pellets",
+          "correct": true
+        },
+        {
+          "label": "Skin cytology from crusted and excoriated areas",
+          "detail": "Grades the secondary bacterial and yeast infection",
+          "correct": true
+        },
+        {
+          "label": "Fungal culture or dermatophyte PCR",
+          "detail": "Dermatophytosis is the differential and a zoonosis",
+          "correct": true
+        },
+        {
+          "label": "Haematology and biochemistry with total protein",
+          "detail": "Anaemia, protein loss and organ function before treatment",
+          "correct": true
+        },
+        {
+          "label": "Faecal parasitology",
+          "detail": "Concurrent endoparasites are near-universal in casualties",
+          "correct": true
+        },
+        {
+          "label": "Allergen-specific IgE serology",
+          "detail": "No role in a wildlife casualty with this distribution",
+          "correct": false
+        },
+        {
+          "label": "Skin biopsy as the first-line test",
+          "detail": "Scrapes are quicker, cheaper and usually diagnostic",
+          "correct": false
+        }
+      ],
+      "explanation": "Deep scrapes from several sites are what find Sarcoptes, and taking them from more than one place matters because mite numbers are patchy even in severe disease. Cytology decides whether an antibiotic is needed, and the dermatophyte test is run partly for the people handling the animal. Bloods matter before treating an emaciated casualty."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Deep scrapes: numerous Sarcoptes scabiei mites, eggs and faecal pellets at three of five sites. Cytology: cocci with neutrophils, moderate Malassezia. Dermatophyte PCR negative. Haematology: mild non-regenerative anaemia, neutrophilia. Biochemistry: total protein 44 g/L with albumin 18 g/L, urea and creatinine normal. Faecal: Toxocara and Uncinaria eggs. Body weight 4.1 kg against an expected 6.5–7.5 kg.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Severe sarcoptic mange",
+          "detail": "Mites, eggs and faecal pellets on scrapes",
+          "correct": true
+        },
+        {
+          "label": "Secondary bacterial and Malassezia infection",
+          "detail": "Cocci, neutrophils and yeast on cytology",
+          "correct": true
+        },
+        {
+          "label": "Protein loss and emaciation are life-limiting",
+          "detail": "Albumin 18 g/L at 4.1 kg",
+          "correct": true
+        },
+        {
+          "label": "Concurrent endoparasitism needs treating",
+          "detail": "Toxocara and Uncinaria eggs",
+          "correct": true
+        },
+        {
+          "label": "Dermatophytosis is contributing",
+          "detail": "PCR negative",
+          "correct": false
+        },
+        {
+          "label": "Renal disease explains the low albumin",
+          "detail": "Urea and creatinine are normal",
+          "correct": false
+        }
+      ],
+      "explanation": "The mites confirm the diagnosis, but the albumin of 18 g/L is what determines whether this fox survives treatment: protein has been lost through damaged skin for weeks, and an acaricide alone does not fix that. Ruling out dermatophytosis matters for the volunteers handling him, and the worm eggs are a treatable extra drain on a starving animal."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Numerous Sarcoptes scabiei on deep scrapes, secondary bacterial and Malassezia infection, albumin 18 g/L with total protein 44 g/L, emaciation at 4.1 kg, concurrent Toxocara and Uncinaria, dermatophyte PCR negative.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Severe sarcoptic mange with secondary infection, protein loss and emaciation",
+          "detail": "The parasite and the systemic state it has produced",
+          "correct": true
+        },
+        {
+          "label": "Dermatophytosis",
+          "detail": "PCR negative",
+          "correct": false
+        },
+        {
+          "label": "Demodicosis",
+          "detail": "Scrapes identified Sarcoptes, and the distribution and pruritus fit mange",
+          "correct": false
+        },
+        {
+          "label": "Nutritional alopecia from starvation",
+          "detail": "Starvation does not produce crusted pruritic lesions full of mites",
+          "correct": false
+        },
+        {
+          "label": "Allergic dermatitis",
+          "detail": "Not a meaningful diagnosis in a wild fox with confirmed mites",
+          "correct": false
+        }
+      ],
+      "explanation": "The full diagnosis is what makes the rehabilitation plan realistic: acaricidal treatment, antibacterial and antifungal therapy for the skin, anthelmintics, and above all weeks of nutritional support before release is even discussed. It also raises the local picture — mange spreading through an urban fox population is a public and wildlife health observation worth recording."
+    }
+  ]
+}

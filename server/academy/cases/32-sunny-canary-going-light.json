@@ -1,0 +1,172 @@
+{
+  "slug": "sunny-canary-going-light",
+  "title": "Sunny — 3yo canary: eating well but wasting away",
+  "species": "passerine",
+  "discipline": "Avian Medicine",
+  "difficulty": "intermediate",
+  "body_system": "Gastrointestinal",
+  "presentation": "3-year-old male canary, losing weight over six weeks despite a good appetite, with a prominent keel and undigested seed in the droppings. Two other birds in the aviary have died in the same period.",
+  "completion_bonus": 30,
+  "order": 32,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Examine the bird and the aviary",
+      "briefing": "Weight 16 g, down from 22 g. Keel prominent (BCS 1/5), pectoral muscle wasted. Fluffed up, sitting low on the perch. Droppings: loose, with whole seed visible. Vent slightly soiled. Aviary: mixed finches and canaries, seed and softfood, communal feeders, two deaths in six weeks, new birds added two months ago without quarantine.",
+      "prompt": "Which findings shape the differential list?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Weight loss with a good appetite and undigested seed in the droppings",
+          "detail": "Maldigestion — the \"going light\" syndrome",
+          "correct": true
+        },
+        {
+          "label": "Two other deaths in six weeks in the same aviary",
+          "detail": "A transmissible process in the collection",
+          "correct": true
+        },
+        {
+          "label": "New birds added without quarantine",
+          "detail": "The likely route of introduction",
+          "correct": true
+        },
+        {
+          "label": "Fluffed posture on a low perch",
+          "detail": "Non-specific sign of illness in any bird",
+          "correct": false
+        },
+        {
+          "label": "Soiled vent",
+          "detail": "Follows the loose droppings",
+          "correct": false
+        }
+      ],
+      "explanation": "Passerine keepers call this \"going light\" and it is a syndrome, not a diagnosis: weight loss on a good appetite with undigested food points at the proventriculus and gizzard. What turns it into an aviary problem is the mortality pattern and the unquarantined introductions — the plan will be about the collection as much as this bird."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "The canary weighs 16 g, so sampling has to be chosen carefully. Two carcasses are in the freezer and one bird died this morning.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Wet-mount and Gram-stained faecal or crop cytology",
+          "detail": "Macrorhabdus and yeasts are seen on a stained smear",
+          "correct": true
+        },
+        {
+          "label": "Post-mortem of the fresh carcass with proventricular histopathology",
+          "detail": "The organism sits at the isthmus, visible on histology",
+          "correct": true
+        },
+        {
+          "label": "Faecal parasitology for coccidia and Atoxoplasma",
+          "detail": "The other going-light agents in passerines",
+          "correct": true
+        },
+        {
+          "label": "Faecal culture for Gram-negative overgrowth",
+          "detail": "Secondary invaders and a treatment target",
+          "correct": true
+        },
+        {
+          "label": "Crop swab microscopy for Trichomonas and Candida",
+          "detail": "Cheap, immediate differentials",
+          "correct": true
+        },
+        {
+          "label": "Serum biochemistry panel on this bird",
+          "detail": "The blood volume is not justifiable in a 16 g patient",
+          "correct": false
+        },
+        {
+          "label": "Whole-body radiographs as the first-line test",
+          "detail": "Little to see in a maldigestion syndrome, and restraint carries risk",
+          "correct": false
+        }
+      ],
+      "explanation": "In a 16 g bird the sample plan is the clinical skill: microscopy on droppings and crop, and a proper post-mortem on the bird that has already died, rather than bleeding the patient you are trying to save. Macrorhabdus needs looking for specifically — it is missed on a wet mount and shows up on a Gram stain as large rods at the isthmus."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Gram-stained faecal smear: numerous large Gram-positive rods, 2 × 40 µm, consistent with Macrorhabdus ornithogaster. Crop wet mount: no Trichomonas, no Candida. Faecal parasitology: no coccidian oocysts, no Atoxoplasma. Culture: mixed Gram-negative overgrowth, Escherichia coli predominant. Post-mortem of the fresh bird: thickened proventricular-ventricular isthmus, histology shows the same organisms within the mucus layer with mucosal hyperplasia. Body condition emaciated with no fat stores.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Macrorhabdiosis (megabacteriosis) of the proventriculus",
+          "detail": "Organism on smear and in the isthmus on histology",
+          "correct": true
+        },
+        {
+          "label": "The aviary is affected, not just this bird",
+          "detail": "The same lesion in a second bird that died",
+          "correct": true
+        },
+        {
+          "label": "Gram-negative overgrowth is secondary",
+          "detail": "Predictable on a damaged, hypochlorhydric gut",
+          "correct": true
+        },
+        {
+          "label": "Coccidiosis and atoxoplasmosis are excluded",
+          "detail": "No oocysts and no parasites on cytology",
+          "correct": true
+        },
+        {
+          "label": "Trichomoniasis explains the weight loss",
+          "detail": "Crop wet mount negative",
+          "correct": false
+        },
+        {
+          "label": "This is simple seed-based malnutrition",
+          "detail": "It does not produce a thickened isthmus full of organisms",
+          "correct": false
+        }
+      ],
+      "explanation": "Seeing the organism is not enough on its own — Macrorhabdus can be carried by well birds — so the histology showing mucosal hyperplasia at the isthmus is what makes it the disease rather than a passenger. The negative results are what stop the aviary being treated for coccidiosis, which is the reflex diagnosis for going light."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Large Gram-positive rods on faecal smear, the same organism with mucosal hyperplasia at the isthmus on histology, negative for Trichomonas, Candida, coccidia and Atoxoplasma, secondary Gram-negative overgrowth, two aviary deaths.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Macrorhabdiosis with secondary bacterial overgrowth, affecting the aviary",
+          "detail": "The organism, its lesion and its spread",
+          "correct": true
+        },
+        {
+          "label": "Coccidiosis",
+          "detail": "No oocysts found",
+          "correct": false
+        },
+        {
+          "label": "Trichomoniasis",
+          "detail": "Crop microscopy negative",
+          "correct": false
+        },
+        {
+          "label": "Avian gastric yeast carriage without disease",
+          "detail": "Contradicted by the mucosal hyperplasia and the deaths",
+          "correct": false
+        },
+        {
+          "label": "Seed-based malnutrition",
+          "detail": "Does not explain the proventricular lesion or the mortality",
+          "correct": false
+        }
+      ],
+      "explanation": "Because the diagnosis is aviary-wide, so is the treatment: amphotericin B for affected birds, whole-collection management, hygiene of communal feeders, and a quarantine policy for new arrivals — which is the fault that let it in. Treating one canary and returning it to the same aviary is a guaranteed relapse."
+    }
+  ]
+}

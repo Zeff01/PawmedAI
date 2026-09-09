@@ -1,0 +1,172 @@
+{
+  "slug": "apiary-brood-disease",
+  "title": "Hive 7 — honeybee colony: sunken brood cappings and a foul smell",
+  "species": "apian",
+  "discipline": "Farm Animal Practice",
+  "difficulty": "advanced",
+  "body_system": "Colony Health",
+  "presentation": "A twelve-hive apiary. Hive 7 has a dwindling adult population, patchy brood, sunken and perforated cappings, and a distinctly foul smell on opening. Two neighbouring hives were combined with it last month.",
+  "completion_bonus": 30,
+  "order": 62,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Inspect the colony",
+      "briefing": "Brood pattern patchy with a pepperpot appearance. Cappings sunken, darkened and perforated. Affected larvae in the cells are coffee-brown and slumped. Strong foul odour on opening. Adult population declining, queen present and laying. Hive records: frames and hive tool shared between hives without disinfection; two colonies combined into hive 7 last month; no treatment history for brood disease.",
+      "prompt": "Which findings point to a brood bacterial disease?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Sunken, perforated cappings over a pepperpot brood pattern",
+          "detail": "Larvae dying after capping",
+          "correct": true
+        },
+        {
+          "label": "Coffee-brown slumped larvae in the cells",
+          "detail": "Colour and position typical of American foulbrood",
+          "correct": true
+        },
+        {
+          "label": "Foul odour on opening the hive",
+          "detail": "The smell the disease is named for",
+          "correct": true
+        },
+        {
+          "label": "Shared frames and hive tool between colonies",
+          "detail": "The transmission route — management, not a clinical sign",
+          "correct": false
+        },
+        {
+          "label": "Queen present and laying",
+          "detail": "Rules out a queen failure, but does not identify the disease",
+          "correct": false
+        }
+      ],
+      "explanation": "Larvae dying after capping, with sunken perforated cappings and a foul smell, is American foulbrood; larvae dying before capping in twisted positions would be European foulbrood. Getting this distinction right matters more here than in almost any other case in the library, because one of them is notifiable and ends with the colony destroyed."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "You are at the apiary with a matchstick, a lateral flow kit and the ability to submit samples to the national bee laboratory.",
+      "prompt": "Which do you do?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Ropiness (matchstick) test on an affected larva",
+          "detail": "A field test that strongly suggests American foulbrood",
+          "correct": true
+        },
+        {
+          "label": "Lateral flow device for Paenibacillus larvae",
+          "detail": "Rapid presumptive confirmation on site",
+          "correct": true
+        },
+        {
+          "label": "Submit brood comb to the national reference laboratory for culture and confirmation",
+          "detail": "Statutory confirmation, and it distinguishes the foulbroods",
+          "correct": true
+        },
+        {
+          "label": "Inspect and sample all remaining hives in the apiary",
+          "detail": "Defines the extent before anything is moved",
+          "correct": true
+        },
+        {
+          "label": "Microscopy of larval smears for spores",
+          "detail": "Spore morphology supports the diagnosis",
+          "correct": true
+        },
+        {
+          "label": "Varroa mite count as the primary investigation",
+          "detail": "Essential routine monitoring, but it does not explain foul-smelling capped brood",
+          "correct": false
+        },
+        {
+          "label": "Nosema spore count as the diagnostic test",
+          "detail": "An adult bee disease, not a brood disease",
+          "correct": false
+        }
+      ],
+      "explanation": "The matchstick test costs nothing and points the way in seconds, but the diagnosis that carries legal consequences has to be confirmed by the reference laboratory. Inspecting the whole apiary before equipment moves again is part of the diagnostic work, because spores travel on frames and tools and the combination last month may already have spread it."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Matchstick test: larval remains draw out in a fine thread 3 cm long (ropy). Lateral flow for Paenibacillus larvae: strong positive. Reference laboratory: Paenibacillus larvae confirmed by culture; Melissococcus plutonius not detected. Larval smears: numerous spore-forming rods. Apiary inspection: hive 9 has two cells with sunken cappings and a weak positive lateral flow; the other ten hives are clear. Varroa count low. Nosema not detected.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "American foulbrood confirmed in hive 7",
+          "detail": "Ropy larvae with Paenibacillus larvae cultured",
+          "correct": true
+        },
+        {
+          "label": "Hive 9 is affected early and must be treated as infected",
+          "detail": "Sunken cappings with a weak positive test",
+          "correct": true
+        },
+        {
+          "label": "European foulbrood is excluded",
+          "detail": "Melissococcus plutonius not detected",
+          "correct": true
+        },
+        {
+          "label": "Shared equipment plausibly spread spores between hives",
+          "detail": "Frames and tools moved without disinfection, plus a colony combination",
+          "correct": true
+        },
+        {
+          "label": "Varroa infestation is the primary problem",
+          "detail": "Counts are low and it does not cause ropy capped brood",
+          "correct": false
+        },
+        {
+          "label": "Nosema explains the population decline",
+          "detail": "Not detected, and it is a disease of adults",
+          "correct": false
+        }
+      ],
+      "explanation": "Ropiness plus a cultured organism is the confirmation, and the distinction from European foulbrood is what determines the legal response. Finding hive 9 early is the most valuable outcome of the visit — it is the difference between losing two colonies and losing the apiary. Excluding varroa and nosema stops a beekeeper treating the wrong disease while spores spread."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Ropy larval remains, strong positive lateral flow, Paenibacillus larvae confirmed on culture, Melissococcus plutonius not detected, hive 9 early-positive, shared equipment between hives.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "American foulbrood (Paenibacillus larvae) in hives 7 and 9, spread by shared equipment",
+          "detail": "Confirmed notifiable disease with its extent and route",
+          "correct": true
+        },
+        {
+          "label": "European foulbrood",
+          "detail": "Melissococcus plutonius not detected",
+          "correct": false
+        },
+        {
+          "label": "Sacbrood virus infection",
+          "detail": "Larvae would be sac-like and not ropy, and the culture is positive for P. larvae",
+          "correct": false
+        },
+        {
+          "label": "Varroosis with secondary viral disease",
+          "detail": "Low mite counts and the wrong brood lesions",
+          "correct": false
+        },
+        {
+          "label": "Chalkbrood",
+          "detail": "A fungal disease producing hard mummies, not ropy remains",
+          "correct": false
+        }
+      ],
+      "explanation": "American foulbrood is notifiable in most jurisdictions, and naming it triggers a statutory process rather than a treatment plan: the bee inspector is informed, affected colonies and their frames are destroyed by burning, equipment is sterilised or destroyed, and the apiary is placed under a standstill. Recording the shared-equipment route is what changes the beekeeper’s practice afterwards."
+    }
+  ]
+}

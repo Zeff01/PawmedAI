@@ -1,0 +1,172 @@
+{
+  "slug": "koi-pond-ulcers",
+  "title": "Koi pond — 12 fish: skin ulcers and flashing after a pond top-up",
+  "species": "piscine",
+  "discipline": "Aquatic Animal Health",
+  "difficulty": "intermediate",
+  "body_system": "Integumentary",
+  "presentation": "A garden pond of twelve koi. Four fish have raised red ulcers on the flank, all are rubbing against the pond walls, two sit apart with clamped fins, and one has died. The pond was topped up from the mains a fortnight ago and two new fish were added.",
+  "completion_bonus": 30,
+  "order": 50,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Assess the pond and the fish",
+      "briefing": "Affected fish: focal raised ulcers with reddened margins on the flanks, scale loss, one with a frayed caudal fin. All fish flashing and rubbing. Two lethargic with clamped fins at the surface. One death. Pond: 3,000 litres, no biological filter maturation after a filter clean three weeks ago, topped up 30% from the mains without dechlorination, two new koi added without quarantine, water temperature 14°C and rising.",
+      "prompt": "Which findings direct the investigation?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Flashing and rubbing in every fish, not only the ulcerated ones",
+          "detail": "Whole-pond irritation — parasites or water quality",
+          "correct": true
+        },
+        {
+          "label": "A 30% mains top-up with no dechlorination after a filter clean",
+          "detail": "Two insults to gill and skin at once",
+          "correct": true
+        },
+        {
+          "label": "Focal ulcers with reddened margins in four fish",
+          "detail": "Bacterial invasion of damaged skin",
+          "correct": true
+        },
+        {
+          "label": "Rising water temperature from 14°C",
+          "detail": "Relevant to disease dynamics, but not a clinical finding",
+          "correct": false
+        },
+        {
+          "label": "Frayed caudal fin in one fish",
+          "detail": "Non-specific damage",
+          "correct": false
+        }
+      ],
+      "explanation": "The distinction that matters is between what affects every fish and what affects four: whole-pond flashing points at water quality or an ectoparasite, while focal ulcers are where bacteria have got into damaged skin. A filter clean followed by an undechlorinated top-up is a classic double insult — the biology gets killed twice."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "You are at the pond with a microscope, water test kit and the ability to net and sample fish.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Full water chemistry — ammonia, nitrite, nitrate, pH, chlorine, oxygen, temperature",
+          "detail": "In fish medicine the water is the patient",
+          "correct": true
+        },
+        {
+          "label": "Skin and mucus scrape wet mounts examined immediately",
+          "detail": "Motile ectoparasites die and disappear on a stored slide",
+          "correct": true
+        },
+        {
+          "label": "Gill biopsy wet mount",
+          "detail": "The organ that shows both parasites and water damage",
+          "correct": true
+        },
+        {
+          "label": "Bacterial culture and sensitivity from the leading edge of an ulcer",
+          "detail": "Names the invader and picks the drug",
+          "correct": true
+        },
+        {
+          "label": "Post-mortem of the dead fish including kidney and spleen",
+          "detail": "Systemic spread, and a second sampling opportunity",
+          "correct": true
+        },
+        {
+          "label": "Koi herpesvirus PCR as the only investigation",
+          "detail": "A notifiable consideration at rising temperatures, but it will not explain flashing and ulcers alone",
+          "correct": false
+        },
+        {
+          "label": "Faecal parasitology as a priority",
+          "detail": "Not how skin and gill disease is diagnosed",
+          "correct": false
+        }
+      ],
+      "explanation": "Water chemistry comes first because in aquatic medicine the environment is part of the patient, and chlorine from an undechlorinated top-up would explain the gill damage that let everything else in. Scrapes and gill biopsies have to be read within minutes — the organisms you are looking for stop moving and become invisible."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Water: ammonia 0.6 mg/L, nitrite 0.35 mg/L, nitrate 10 mg/L, pH 8.1, free chlorine 0.1 mg/L, dissolved oxygen 8 mg/L, temperature 15°C. Skin scrape: numerous Ichthyobodo and moderate Trichodina; no Argulus or Lernaea. Gill biopsy: epithelial hyperplasia with the same protozoa. Ulcer culture: Aeromonas salmonicida, sensitive to trimethoprim-sulfonamide and florfenicol, resistant to oxytetracycline. Post-mortem: pale kidney and spleen with the same organism cultured. Koi herpesvirus PCR negative.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Ectoparasitic infestation on gill and skin",
+          "detail": "Ichthyobodo and Trichodina on both sites",
+          "correct": true
+        },
+        {
+          "label": "Immature filtration is producing ammonia and nitrite toxicity",
+          "detail": "Ammonia 0.6 mg/L with nitrite 0.35 mg/L after a filter clean",
+          "correct": true
+        },
+        {
+          "label": "Secondary Aeromonas salmonicida ulcer disease with systemic spread",
+          "detail": "Same organism from ulcer, kidney and spleen",
+          "correct": true
+        },
+        {
+          "label": "Oxytetracycline would be the wrong antibiotic",
+          "detail": "The isolate is resistant to it",
+          "correct": true
+        },
+        {
+          "label": "Koi herpesvirus is the primary problem",
+          "detail": "PCR negative",
+          "correct": false
+        },
+        {
+          "label": "Low dissolved oxygen is driving the outbreak",
+          "detail": "Oxygen at 8 mg/L is adequate",
+          "correct": false
+        }
+      ],
+      "explanation": "This is a three-layer problem and the layers have to be treated in order: the water is toxic, the parasites are stripping the skin and gills, and the bacteria are exploiting the damage. Treating the bacterium alone in bad water fails; killing the parasites in ammoniated water stresses the fish further. Excluding koi herpesvirus also settles a notification question at a rising water temperature."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Ammonia 0.6 mg/L and nitrite 0.35 mg/L after a filter clean, Ichthyobodo and Trichodina on skin and gill, Aeromonas salmonicida from ulcer, kidney and spleen, resistant to oxytetracycline, KHV negative.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Ectoparasitism with secondary Aeromonas ulcer disease on a background of ammonia and nitrite toxicity",
+          "detail": "All three layers, in the order they must be fixed",
+          "correct": true
+        },
+        {
+          "label": "Koi herpesvirus infection",
+          "detail": "PCR negative",
+          "correct": false
+        },
+        {
+          "label": "Primary bacterial ulcer disease alone",
+          "detail": "Ignores the parasites and the water chemistry that caused it",
+          "correct": false
+        },
+        {
+          "label": "Chlorine gill burn as the sole diagnosis",
+          "detail": "A contributing insult, but it does not explain the parasites or the ulcers",
+          "correct": false
+        },
+        {
+          "label": "Spring viraemia of carp",
+          "detail": "Not supported by any result here",
+          "correct": false
+        }
+      ],
+      "explanation": "Writing all three layers into the diagnosis produces the right sequence: partial water changes with dechlorination and filter recovery first, an appropriate antiparasitic second, and a sensitivity-guided antibiotic for the ulcerated fish — plus quarantine for future arrivals, which is how the parasites arrived."
+    }
+  ]
+}

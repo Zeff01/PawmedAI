@@ -1,0 +1,172 @@
+{
+  "slug": "monty-python-open-mouth",
+  "title": "Monty — 6yo royal python: open-mouth breathing with sticky mucus",
+  "species": "ophidian",
+  "discipline": "Exotic Animal Medicine",
+  "difficulty": "intermediate",
+  "body_system": "Respiratory",
+  "presentation": "6-year-old male royal python, open-mouth breathing for two weeks with bubbling mucus at the glottis, holding the head raised, and refusing food for a month.",
+  "completion_bonus": 30,
+  "order": 42,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Assess the snake and the vivarium",
+      "briefing": "Weight 1.3 kg, BCS 3/5 with visible dorsal spine. Open-mouth breathing with tenacious white mucus at the glottis, audible clicking on expiration, head held raised. Stomatitis with petechiae on the palatal mucosa. Vivarium: cool end 22°C, warm end 26°C (target 28–32°C), humidity 45% (target 55–65%), substrate damp newspaper, no separate quarantine from two recent arrivals.",
+      "prompt": "Which findings point to lower respiratory disease?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Open-mouth breathing with mucus at the glottis and expiratory clicks",
+          "detail": "Airway secretions in a snake",
+          "correct": true
+        },
+        {
+          "label": "Head held raised for two weeks",
+          "detail": "The posture snakes adopt to clear airway fluid",
+          "correct": true
+        },
+        {
+          "label": "Stomatitis with palatal petechiae",
+          "detail": "Infectious stomatitis extending caudally",
+          "correct": true
+        },
+        {
+          "label": "Cool vivarium at 22–26°C",
+          "detail": "The immunosuppressive cause — history, not a sign",
+          "correct": false
+        },
+        {
+          "label": "Anorexia for a month",
+          "detail": "Common to almost every reptile presentation",
+          "correct": false
+        }
+      ],
+      "explanation": "Snakes have no diaphragm and no effective cough, so mucus pools and the animal lifts its head to drain it: that posture with glottal mucus is lower respiratory disease. The stomatitis matters because in snakes the mouth and the airway are one continuous problem. The temperature deficit is the reason the infection took hold, and it belongs in the plan."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "You can sample the airway under sedation and image the coelom.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Tracheal wash with cytology",
+          "detail": "Cell type and intracellular bacteria",
+          "correct": true
+        },
+        {
+          "label": "Aerobic culture and sensitivity of the wash",
+          "detail": "Gram-negatives dominate and resistance is common",
+          "correct": true
+        },
+        {
+          "label": "Dorsoventral and horizontal-beam radiographs of the lung field",
+          "detail": "Extent and consolidation",
+          "correct": true
+        },
+        {
+          "label": "Haematology with a differential",
+          "detail": "Inflammatory response and its severity",
+          "correct": true
+        },
+        {
+          "label": "Oral swab cytology and culture from the stomatitis",
+          "detail": "The same organisms, and the local lesion",
+          "correct": true
+        },
+        {
+          "label": "Inclusion body disease testing as the only investigation",
+          "detail": "Considered in boids with neurological signs; this is a pneumonia",
+          "correct": false
+        },
+        {
+          "label": "Faecal parasitology as the priority test",
+          "detail": "Snake lungworm exists, but the wash answers this case",
+          "correct": false
+        }
+      ],
+      "explanation": "A tracheal wash with cytology and culture is the whole diagnosis in reptile respiratory disease: cytology proves inflammation rather than colonisation, and the sensitivity chooses the drug, because empirical antibiotics fail often against these isolates. Radiographs grade the damage and give you something to compare with in a fortnight."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Tracheal wash cytology: heavy neutrophilic inflammation with intracellular Gram-negative rods. Culture: Pseudomonas aeruginosa, resistant to amoxicillin-clavulanate and to enrofloxacin, sensitive to ceftazidime and amikacin. Radiographs: patchy increased opacity through the caudal lung field, no mass. Haematology: white cell count raised with a marked heterophilia and toxic change. Oral swab: same organism. Vivarium temperature log confirms a maximum of 26°C for three months.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Bacterial pneumonia with infectious stomatitis, the same organism at both sites",
+          "detail": "Neutrophils with intracellular bacteria, and matching cultures",
+          "correct": true
+        },
+        {
+          "label": "The isolate is resistant to the usual first-choice antibiotics",
+          "detail": "Resistant to amoxicillin-clavulanate and enrofloxacin",
+          "correct": true
+        },
+        {
+          "label": "Chronic under-heating allowed the infection to establish",
+          "detail": "Three months at a maximum of 26°C",
+          "correct": true
+        },
+        {
+          "label": "Empirical antibiotic choice would probably have failed",
+          "detail": "The sensitivity pattern rules out both common empirical drugs",
+          "correct": true
+        },
+        {
+          "label": "Inclusion body disease is the likely underlying cause",
+          "detail": "Untested here and unsupported — no neurological signs",
+          "correct": false
+        },
+        {
+          "label": "Lungworm is the primary cause",
+          "detail": "Cytology shows bacteria and neutrophils, not parasites",
+          "correct": false
+        }
+      ],
+      "explanation": "This case is an argument for culture and sensitivity in reptile medicine: the two drugs most clinicians reach for would both have failed. Matching isolates from mouth and airway confirm one disease rather than two. The temperature log is what makes the husbandry correction non-negotiable — antibiotics at 26°C will not clear this."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Neutrophilic tracheal wash with intracellular Gram-negatives, Pseudomonas aeruginosa resistant to amoxicillin-clavulanate and enrofloxacin, caudal lung opacity, matching oral isolate, three months at a maximum of 26°C.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Pseudomonas bacterial pneumonia with infectious stomatitis, secondary to chronic under-heating",
+          "detail": "Organism, sites and the husbandry cause",
+          "correct": true
+        },
+        {
+          "label": "Inclusion body disease",
+          "detail": "No neurological signs and not supported by any result",
+          "correct": false
+        },
+        {
+          "label": "Pentastomid or lungworm infection",
+          "detail": "Cytology identifies bacteria, not parasites",
+          "correct": false
+        },
+        {
+          "label": "Mycotic pneumonia",
+          "detail": "No fungal elements on cytology and a bacterium was cultured",
+          "correct": false
+        },
+        {
+          "label": "Regurgitation-associated aspiration",
+          "detail": "No history of regurgitation, and the stomatitis fits an ascending infection",
+          "correct": false
+        }
+      ],
+      "explanation": "Treatment is the sensitivity-guided antibiotic, nebulisation, fluids and assisted feeding — but the husbandry correction is what determines whether it works: a proper thermal gradient into the high twenties, correct humidity, dry substrate and quarantine for the recent arrivals. A cold snake cannot mount an immune response no matter what you prescribe."
+    }
+  ]
+}

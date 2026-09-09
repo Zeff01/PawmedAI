@@ -1,0 +1,66 @@
+{
+  "slug": "patient-name-presenting-complaint",
+  "title": "Patient — age/breed: presenting complaint",
+  "species": "canine",
+  "discipline": "Emergency & Critical Care",
+  "difficulty": "intermediate",
+  "body_system": "Cardiovascular / Haematology",
+  "presentation": "Signalment and presenting complaint, as it appears on the case card.",
+  "completion_bonus": 30,
+  "order": 7,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Triage the presentation",
+      "briefing": "Vitals and physical exam findings released at this stage.",
+      "prompt": "The question asked at this stage.",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        { "label": "A correct finding", "detail": "Why it counts", "correct": true },
+        { "label": "Another correct finding", "detail": "Why it counts", "correct": true },
+        { "label": "A plausible distractor", "detail": "What rules it out", "correct": false }
+      ],
+      "explanation": "The teaching point, shown once the stage is answered. Name the finding that rules each distractor out."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "First-line diagnostics",
+      "briefing": "What has been done so far, and how the patient responded.",
+      "prompt": "Which diagnostics do you run first?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        { "label": "A test that changes the next hour", "detail": "What it answers", "correct": true },
+        { "label": "A test that takes hours", "detail": "Not wrong in general, wrong now", "correct": false }
+      ],
+      "explanation": "Why this workup, in this order."
+    },
+    {
+      "kind": "differential",
+      "title": "Build the differential list",
+      "briefing": "Results of the diagnostics above.",
+      "prompt": "Which causes remain plausible?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        { "label": "Still on the list", "detail": "What keeps it there", "correct": true },
+        { "label": "Excluded", "detail": "The finding that excludes it", "correct": false }
+      ],
+      "explanation": "What the findings rule in and rule out."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "The confirmatory finding.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        { "label": "The diagnosis", "detail": "The finding that confirms it", "correct": true },
+        { "label": "The near miss", "detail": "Why it is not this", "correct": false }
+      ],
+      "explanation": "Why this diagnosis, and what it means for the patient."
+    }
+  ]
+}

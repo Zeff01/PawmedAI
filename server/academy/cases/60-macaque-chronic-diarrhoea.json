@@ -1,0 +1,172 @@
+{
+  "slug": "macaque-chronic-diarrhoea",
+  "title": "Macaque 217 — group-housed rhesus: chronic diarrhoea and weight loss",
+  "species": "primate",
+  "discipline": "Zoo & Wildlife Medicine",
+  "difficulty": "advanced",
+  "body_system": "Gastrointestinal",
+  "presentation": "Adult female rhesus macaque in a group of fourteen, three months of intermittent diarrhoea with 12% weight loss. Two other animals in the group have looser faeces than normal.",
+  "completion_bonus": 30,
+  "order": 60,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Assess the animal and the group",
+      "briefing": "Weight 6.2 kg, down from 7.0 kg. Reduced muscle mass over the hindquarters, coat in poor condition, mild peripheral oedema. Faeces loose to watery, intermittently with mucus, no frank blood. Appetite variable. Group: fourteen animals, two others with loose faeces, recent reshuffle of group membership after an aggression episode. Enclosure shared water sources; enrichment feeding on the ground.",
+      "prompt": "Which findings shape the investigation?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Chronic diarrhoea with 12% weight loss and peripheral oedema",
+          "detail": "Protein loss through the gut",
+          "correct": true
+        },
+        {
+          "label": "Two further animals in the group with loose faeces",
+          "detail": "Transmissible, or shared environmental exposure",
+          "correct": true
+        },
+        {
+          "label": "Recent group reshuffle with an aggression episode",
+          "detail": "Social stress precipitates enteric disease in macaques",
+          "correct": true
+        },
+        {
+          "label": "Ground feeding on shared enrichment",
+          "detail": "A plausible route — husbandry, not a clinical sign",
+          "correct": false
+        },
+        {
+          "label": "Poor coat condition",
+          "detail": "Follows chronic disease of any kind",
+          "correct": false
+        }
+      ],
+      "explanation": "Oedema alongside chronic diarrhoea is the finding that turns this from a nuisance into a protein-losing enteropathy, and the group pattern makes it a colony problem. Social stress after a reshuffle is a genuine precipitant in macaques rather than a soft explanation — it changes what you recommend about group management as well as what you prescribe."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "The macaque is anaesthetised for a full work-up, and group faecal sampling is possible.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Faecal culture for Campylobacter, Shigella, Salmonella and Yersinia",
+          "detail": "The bacterial causes of macaque colitis",
+          "correct": true
+        },
+        {
+          "label": "Faecal parasitology including Cryptosporidium and Giardia",
+          "detail": "Protozoa are common and treatable",
+          "correct": true
+        },
+        {
+          "label": "Serum albumin and total protein",
+          "detail": "Confirms and grades the protein loss",
+          "correct": true
+        },
+        {
+          "label": "Colonoscopy with mucosal biopsies for histopathology",
+          "detail": "Distinguishes chronic idiopathic colitis from infection",
+          "correct": true
+        },
+        {
+          "label": "Group faecal screening of all fourteen animals",
+          "detail": "Finds carriers and defines the outbreak",
+          "correct": true
+        },
+        {
+          "label": "Tuberculin skin testing as the only investigation",
+          "detail": "Essential colony surveillance, but it does not explain a protein-losing colitis",
+          "correct": false
+        },
+        {
+          "label": "Barium follow-through as the first-line test",
+          "detail": "Little added value when biopsies are available",
+          "correct": false
+        }
+      ],
+      "explanation": "Chronic macaque diarrhoea needs both an infectious search and biopsies, because chronic idiopathic colitis is a diagnosis of exclusion and histology is how you exclude. Screening the group is what turns an individual case into colony management. Tuberculosis surveillance matters enormously in primate collections and is a parallel programme rather than this diagnosis."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Faecal culture: Campylobacter jejuni isolated from this animal and from four of fourteen group members, two of them clinically normal; Shigella, Salmonella and Yersinia not isolated. Parasitology: no Cryptosporidium, no Giardia, light Trichuris burden. Albumin 21 g/L (low), total protein 48 g/L (low). Colonoscopy: diffusely granular, friable colonic mucosa; histopathology shows chronic lymphoplasmacytic colitis with crypt loss and no acid-fast organisms. Tuberculin test negative.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Chronic colitis with protein loss",
+          "detail": "Histology plus an albumin of 21 g/L",
+          "correct": true
+        },
+        {
+          "label": "Campylobacter jejuni is circulating in the group, including in carriers",
+          "detail": "Isolated from five animals, two without signs",
+          "correct": true
+        },
+        {
+          "label": "The mucosal damage is chronic rather than acute",
+          "detail": "Crypt loss with lymphoplasmacytic infiltrate",
+          "correct": true
+        },
+        {
+          "label": "Tuberculosis is excluded on current testing",
+          "detail": "Negative tuberculin test and no acid-fast organisms on biopsy",
+          "correct": true
+        },
+        {
+          "label": "Trichuris is the primary cause",
+          "detail": "A light burden does not produce crypt loss and hypoalbuminaemia",
+          "correct": false
+        },
+        {
+          "label": "Cryptosporidiosis explains the group picture",
+          "detail": "Not detected on parasitology",
+          "correct": false
+        }
+      ],
+      "explanation": "Campylobacter with chronic lymphoplasmacytic colitis is the typical macaque picture: the organism is part of the story and the chronic mucosal change is what keeps the animal thin. Carriers with no signs are why treating one animal fails. The negative tuberculosis results are worth stating explicitly in a primate colony record, because that question is asked of every case."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Campylobacter jejuni from five of fourteen animals including two carriers, chronic lymphoplasmacytic colitis with crypt loss, albumin 21 g/L, light Trichuris burden, tuberculosis negative.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Chronic colitis with protein-losing enteropathy, associated with group Campylobacter and social stress",
+          "detail": "The lesion, the protein loss, the organism and the trigger",
+          "correct": true
+        },
+        {
+          "label": "Acute campylobacteriosis",
+          "detail": "Understates three months of colitis with crypt loss",
+          "correct": false
+        },
+        {
+          "label": "Trichuriasis",
+          "detail": "A light burden with the wrong lesion",
+          "correct": false
+        },
+        {
+          "label": "Intestinal tuberculosis",
+          "detail": "Excluded on testing and histology",
+          "correct": false
+        },
+        {
+          "label": "Gastrointestinal lymphoma",
+          "detail": "Histology shows inflammation, not neoplasia",
+          "correct": false
+        }
+      ],
+      "explanation": "A diagnosis in four clauses gives a plan in four parts: treat this animal and the carriers, support the protein loss nutritionally, manage the mucosal inflammation, and address the social and feeding arrangements that drive both stress and faecal-oral spread. Colony medicine rewards diagnoses written at group level."
+    }
+  ]
+}

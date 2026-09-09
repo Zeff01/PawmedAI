@@ -1,0 +1,167 @@
+{
+  "slug": "clover-head-tilt",
+  "title": "Clover — 4yo Lop rabbit: acute head tilt and rolling",
+  "species": "lapine",
+  "discipline": "Exotic Animal Medicine",
+  "difficulty": "intermediate",
+  "body_system": "Neurological",
+  "presentation": "4-year-old male neutered Lop rabbit, sudden onset of a left head tilt yesterday evening, now rolling when startled. Housed indoors with one other rabbit, eating a little hay this morning.",
+  "completion_bonus": 30,
+  "order": 12,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Localise the lesion",
+      "briefing": "Left head tilt of about 40°, horizontal nystagmus with the fast phase to the right, ataxia with rolling to the left. No facial paresis, palpebral reflex intact. Menace present bilaterally. Both ears: clean canals, no discharge, tympanic membranes intact on otoscopy. Temperature 38.9°C. Caecotrophs present, teeth grossly normal on conscious examination.",
+      "prompt": "Which findings help you localise this vestibular disease?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Horizontal nystagmus with a constant fast phase",
+          "detail": "Typical of peripheral vestibular disease",
+          "correct": true
+        },
+        {
+          "label": "Head tilt with no facial nerve deficit",
+          "detail": "Argues against middle-ear disease tracking to the facial nerve",
+          "correct": true
+        },
+        {
+          "label": "Normal menace and no proprioceptive deficits",
+          "detail": "No evidence of a central lesion yet",
+          "correct": true
+        },
+        {
+          "label": "Clean external ear canals",
+          "detail": "A normal canal says nothing about the middle ear",
+          "correct": false
+        },
+        {
+          "label": "Caecotrophs present",
+          "detail": "Reassuring about gut function, irrelevant to the localisation",
+          "correct": false
+        }
+      ],
+      "explanation": "A constant horizontal nystagmus with normal mentation and no proprioceptive deficit points peripheral; a vertical or positional nystagmus, or a rabbit that cannot walk a straight line for reasons other than the tilt, would push you central. Clean canals are the trap: otitis media sits behind an intact tympanum and is invisible on otoscopy."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Build the work-up",
+      "briefing": "The owner will fund a proportionate work-up today and wants to know what each test will tell them.",
+      "prompt": "Which tests earn their place?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Encephalitozoon cuniculi serology — IgG and IgM",
+          "detail": "Paired titres separate exposure from active disease",
+          "correct": true
+        },
+        {
+          "label": "Skull radiographs or CT of the tympanic bullae",
+          "detail": "The only way to see middle-ear disease",
+          "correct": true
+        },
+        {
+          "label": "Haematology and biochemistry with urea and creatinine",
+          "detail": "E. cuniculi damages kidney as well as brain",
+          "correct": true
+        },
+        {
+          "label": "Urinalysis",
+          "detail": "Renal involvement, and it is cheap",
+          "correct": true
+        },
+        {
+          "label": "Otoscopy under sedation with a myringotomy if the bulla looks involved",
+          "detail": "Cytology and culture of what is actually in there",
+          "correct": true
+        },
+        {
+          "label": "Faecal parasitology",
+          "detail": "Coccidia do not cause a head tilt",
+          "correct": false
+        },
+        {
+          "label": "MRI as the first-line test",
+          "detail": "Best imaging, but it does not change today and the bullae come first",
+          "correct": false
+        }
+      ],
+      "explanation": "Two diagnoses account for most rabbit head tilts — E. cuniculi and otitis media, usually Pasteurella — and they are distinguished by serology plus imaging of the bullae, not by clinical signs. IgM matters: IgG alone tells you a rabbit met the parasite, which most have. The renal panel is not padding, because the same organism scars kidneys."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "E. cuniculi IgG strongly positive, IgM positive. CT: both tympanic bullae air-filled and normally shaped, no soft tissue, no bone lysis. Urea 9.1 mmol/L (ref 3.6–8.9), creatinine 168 µmol/L (ref 44–150), USG 1.012. Haematology: mild lymphocytosis, no neutrophilia. Blood glucose 7.9 mmol/L.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Active encephalitozoonosis, not just past exposure",
+          "detail": "A positive IgM alongside IgG",
+          "correct": true
+        },
+        {
+          "label": "Renal involvement by the same organism",
+          "detail": "Mild azotaemia with poorly concentrated urine",
+          "correct": true
+        },
+        {
+          "label": "Otitis media is excluded as the cause",
+          "detail": "Normal, air-filled bullae on CT",
+          "correct": true
+        },
+        {
+          "label": "Bacterial otitis interna is still likely",
+          "detail": "Contradicted by the imaging and the normal white cell count",
+          "correct": false
+        },
+        {
+          "label": "A cerebrovascular accident is now the leading diagnosis",
+          "detail": "Possible in theory, but nothing here supports it over a confirmed infection",
+          "correct": false
+        }
+      ],
+      "explanation": "IgM is what turns a serological curiosity into a diagnosis: most pet rabbits carry IgG, so a positive IgG alone would have left you where you started. Air-filled bullae on CT take otitis media off the list, which is exactly what the imaging was for. The azotaemia with dilute urine is the second organ the parasite has reached, and it changes the drug doses you choose."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "IgM and IgG positive, bullae normal on CT, mild azotaemia with USG 1.012, peripheral vestibular signs.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Encephalitozoon cuniculi infection with vestibular and renal involvement",
+          "detail": "Active infection, two organs affected",
+          "correct": true
+        },
+        {
+          "label": "Otitis media with secondary otitis interna",
+          "detail": "Excluded by normal bullae on CT",
+          "correct": false
+        },
+        {
+          "label": "Past E. cuniculi exposure with an unrelated head tilt",
+          "detail": "IgM positivity says the infection is active",
+          "correct": false
+        },
+        {
+          "label": "Cerebral toxoplasmosis",
+          "detail": "Rare in rabbits and unsupported by any result here",
+          "correct": false
+        },
+        {
+          "label": "Chronic kidney disease with uraemic encephalopathy",
+          "detail": "The azotaemia is far too mild to explain these signs",
+          "correct": false
+        }
+      ],
+      "explanation": "Naming the renal involvement in the diagnosis is what stops it being forgotten: fenbendazole for the parasite, but every subsequent NSAID and fluid decision is made for a rabbit with damaged kidneys. Prognosis follows the same logic — vestibular signs often improve, the nephropathy does not."
+    }
+  ]
+}

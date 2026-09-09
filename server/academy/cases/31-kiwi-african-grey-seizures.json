@@ -1,0 +1,167 @@
+{
+  "slug": "kiwi-african-grey-seizures",
+  "title": "Kiwi — 8yo African grey: collapse and twitching on the cage floor",
+  "species": "psittacine",
+  "discipline": "Avian Medicine",
+  "difficulty": "intermediate",
+  "body_system": "Neurological & Metabolic",
+  "presentation": "8-year-old female African grey parrot, found on the cage floor twitching this morning, and now weak and unable to perch. Fed a seed mix with fruit, kept indoors behind glass with no ultraviolet light.",
+  "completion_bonus": 30,
+  "order": 31,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Read the presentation",
+      "briefing": "Weight 402 g, BCS 3/5. Weak, unable to grip the perch, intermittent whole-body tremors, one witnessed seizure lasting 30 seconds. Mucous membranes pink. No head trauma, no toxin access reported, no metal ornaments or costume jewellery in the cage. Diet: sunflower-based seed mix with apple and grape, no pellets, no cuttlefish. Housed indoors behind window glass, no UV lamp. Droppings normal.",
+      "prompt": "Which findings direct you towards a metabolic cause?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Seizures with generalised weakness in an adult African grey",
+          "detail": "The species and syndrome that go together",
+          "correct": true
+        },
+        {
+          "label": "An all-seed diet with no mineral or pellet source",
+          "detail": "A calcium-poor ration",
+          "correct": true
+        },
+        {
+          "label": "Housed behind glass with no ultraviolet light",
+          "detail": "No route to vitamin D3 synthesis",
+          "correct": true
+        },
+        {
+          "label": "Normal droppings",
+          "detail": "Reassuring about the gut, silent on the brain",
+          "correct": false
+        },
+        {
+          "label": "No metal ornaments in the cage",
+          "detail": "Worth asking, but owners miss the source",
+          "correct": false
+        }
+      ],
+      "explanation": "African greys have a species-specific hypocalcaemic syndrome, and the history here supplies both halves of it: a seed diet with no calcium and no ultraviolet exposure to activate what little vitamin D there is. The owner’s confidence that there is no metal in the cage is worth recording and not relying on — heavy metal is the other differential and owners routinely overlook the source."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "The parrot is stabilised in an incubator with oxygen. You can take a small blood volume and radiograph.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Ionised calcium",
+          "detail": "The measurement that matters in this syndrome",
+          "correct": true
+        },
+        {
+          "label": "Total calcium with albumin and phosphorus",
+          "detail": "Interprets the total against protein binding",
+          "correct": true
+        },
+        {
+          "label": "Whole-body radiographs",
+          "detail": "Metal density in the gizzard, and bone quality",
+          "correct": true
+        },
+        {
+          "label": "Blood lead and zinc concentrations",
+          "detail": "The differential that must be excluded",
+          "correct": true
+        },
+        {
+          "label": "Haematology and biochemistry with uric acid",
+          "detail": "Renal and hepatic screening in a collapsed bird",
+          "correct": true
+        },
+        {
+          "label": "Cerebrospinal fluid collection",
+          "detail": "Not practicable or justifiable in a 400 g parrot",
+          "correct": false
+        },
+        {
+          "label": "Chlamydia psittaci PCR as the first-line test",
+          "detail": "A sensible screen in a sick parrot, but it does not explain seizures with this history",
+          "correct": false
+        }
+      ],
+      "explanation": "Ionised calcium is the test the diagnosis rests on: an African grey can seizure with a total calcium that reads borderline, and only the ionised fraction reflects what the neurones see. Radiographs and heavy metal concentrations are run in the same visit because lead and zinc produce the same neurological picture and demand entirely different treatment."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Ionised calcium 0.62 mmol/L (ref 1.0–1.4). Total calcium 1.68 mmol/L (ref 2.1–2.6), albumin 14 g/L, phosphorus 1.9 mmol/L. Radiographs: no metallic densities in the ventriculus; generalised reduced bone opacity with thin cortices. Blood lead <0.05 ppm, zinc within reference. Uric acid 380 µmol/L (normal), glucose 14 mmol/L (normal for a parrot). Haematology unremarkable. Vitamin D3 low.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Severe ionised hypocalcaemia explains the seizures",
+          "detail": "Ionised calcium 0.62 mmol/L",
+          "correct": true
+        },
+        {
+          "label": "Nutritional secondary hyperparathyroidism with poor bone mineralisation",
+          "detail": "Thin cortices and reduced bone opacity with low vitamin D3",
+          "correct": true
+        },
+        {
+          "label": "Heavy metal toxicosis is excluded",
+          "detail": "No metal on radiographs, lead and zinc within reference",
+          "correct": true
+        },
+        {
+          "label": "Hypoalbuminaemia alone accounts for the low total calcium",
+          "detail": "It lowers the total, but the ionised fraction is genuinely low too",
+          "correct": false
+        },
+        {
+          "label": "Renal disease is driving the calcium loss",
+          "detail": "Uric acid is normal",
+          "correct": false
+        }
+      ],
+      "explanation": "This is the case that teaches why ionised calcium exists: a total of 1.68 mmol/L in a bird with an albumin of 14 g/L could have been dismissed as a protein artefact, and the ionised value shows it is not. The radiographs do double duty — they exclude heavy metal and reveal the chronic bone disease behind an apparently acute collapse."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Ionised calcium 0.62 mmol/L, low vitamin D3, demineralised bone, no metal on radiographs, normal lead and zinc, all-seed diet with no ultraviolet exposure.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Hypocalcaemic syndrome of African greys from nutritional secondary hyperparathyroidism",
+          "detail": "Ionised hypocalcaemia with the diet and husbandry that caused it",
+          "correct": true
+        },
+        {
+          "label": "Lead toxicosis",
+          "detail": "Excluded by radiographs and blood lead",
+          "correct": false
+        },
+        {
+          "label": "Idiopathic epilepsy",
+          "detail": "Does not explain an ionised calcium of 0.62 mmol/L",
+          "correct": false
+        },
+        {
+          "label": "Hepatic encephalopathy",
+          "detail": "Liver markers and uric acid are normal",
+          "correct": false
+        },
+        {
+          "label": "Zinc toxicosis",
+          "detail": "Zinc within reference and no metal density",
+          "correct": false
+        }
+      ],
+      "explanation": "The immediate treatment is parenteral calcium, but the diagnosis is about the next twelve months: conversion to a formulated diet, a UV-emitting lamp, and vitamin D3 supplementation with rechecks, because the bones are already thin. Owners who hear only \"low calcium\" go back to the seed mix."
+    }
+  ]
+}

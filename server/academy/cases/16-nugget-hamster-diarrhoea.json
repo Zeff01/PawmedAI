@@ -1,0 +1,167 @@
+{
+  "slug": "nugget-hamster-diarrhoea",
+  "title": "Nugget — 8wk Syrian hamster: watery diarrhoea and a wet tail",
+  "species": "rodent",
+  "discipline": "Exotic Animal Medicine",
+  "difficulty": "beginner",
+  "body_system": "Gastrointestinal",
+  "presentation": "8-week-old male Syrian hamster, bought from a pet shop four days ago. Profuse watery diarrhoea since yesterday, matted wet fur around the tail, hunched and reluctant to move.",
+  "completion_bonus": 30,
+  "order": 16,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Triage the patient",
+      "briefing": "Weight 88 g. Hunched, eyes half closed, coat matted with liquid faeces from the perineum to the tail base. Skin tent prolonged, mucous membranes tacky. Temperature 36.4°C (low). Abdomen doughy and painful. Recently transported, rehomed and separated from littermates.",
+      "prompt": "Which findings make this an emergency rather than a husbandry problem?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Prolonged skin tent with tacky membranes",
+          "detail": "Clinically significant dehydration",
+          "correct": true
+        },
+        {
+          "label": "Temperature 36.4°C",
+          "detail": "Hypothermia in a collapsing small mammal",
+          "correct": true
+        },
+        {
+          "label": "Profuse watery diarrhoea in an eight-week-old",
+          "detail": "The age and volume that kill hamsters",
+          "correct": true
+        },
+        {
+          "label": "Recent transport and rehoming",
+          "detail": "The stressor behind the disease, not the emergency",
+          "correct": false
+        },
+        {
+          "label": "Matted perineal fur",
+          "detail": "The sign that names the syndrome, but not what threatens life",
+          "correct": false
+        }
+      ],
+      "explanation": "Wet tail kills by dehydration and hypothermia, not by the diarrhoea itself, so the findings that matter first are the skin tent and the temperature. The husbandry history explains why an eight-week-old hamster is ill four days after leaving the shop — stress and a diet change — and it belongs in the plan, but stabilisation comes before aetiology."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "Fluids are running subcutaneously and the hamster is on a heat source.",
+      "prompt": "Which tests are worth doing in a patient this size?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Faecal wet mount and direct smear",
+          "detail": "Protozoa, motile spirochaetes, cell debris",
+          "correct": true
+        },
+        {
+          "label": "Faecal Gram stain",
+          "detail": "Shifts in flora, spore-forming organisms",
+          "correct": true
+        },
+        {
+          "label": "Faecal culture including Lawsonia and Salmonella work-up",
+          "detail": "Names the agent and flags a zoonosis",
+          "correct": true
+        },
+        {
+          "label": "Blood glucose from a single drop",
+          "detail": "Hypoglycaemia in a small anorexic patient",
+          "correct": true
+        },
+        {
+          "label": "Faecal PCR panel for Lawsonia intracellularis",
+          "detail": "The organism behind proliferative ileitis",
+          "correct": true
+        },
+        {
+          "label": "Full biochemistry panel",
+          "detail": "The sample volume is not justifiable in an 88 g dehydrated hamster",
+          "correct": false
+        },
+        {
+          "label": "Abdominal radiographs before stabilisation",
+          "detail": "Restraint now costs more than the image is worth",
+          "correct": false
+        }
+      ],
+      "explanation": "Sample volume is a clinical decision in an 88 g patient: faeces and one drop of blood answer the useful questions, and a full biochemistry panel would take a volume you cannot spare. The Salmonella question is asked for the household as much as the hamster — a child-facing zoonosis changes the advice you give at the door."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Faecal wet mount: no protozoa, no motile organisms. Gram stain: mixed flora with an excess of Gram-negative rods. Culture: no Salmonella isolated; heavy Escherichia coli growth. Lawsonia intracellularis PCR positive. Blood glucose 3.1 mmol/L (low). Post-mortem of a littermate that died at the shop: thickened, corrugated ileum.",
+      "prompt": "Which conclusions do the results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Proliferative ileitis — Lawsonia intracellularis",
+          "detail": "PCR positive with the classic ileal lesion in a littermate",
+          "correct": true
+        },
+        {
+          "label": "Stress of transport and rehoming precipitated it",
+          "detail": "The recognised trigger in weanling hamsters",
+          "correct": true
+        },
+        {
+          "label": "Hypoglycaemia needs correcting alongside fluids",
+          "detail": "Glucose 3.1 mmol/L in an anorexic weanling",
+          "correct": true
+        },
+        {
+          "label": "Salmonellosis is the diagnosis and the household is at risk",
+          "detail": "No Salmonella isolated",
+          "correct": false
+        },
+        {
+          "label": "Giardiasis explains the diarrhoea",
+          "detail": "No protozoa on wet mount",
+          "correct": false
+        }
+      ],
+      "explanation": "Lawsonia with a corrugated ileum in a littermate is as close to confirmation as this species allows, and the E. coli overgrowth is a passenger on a damaged gut rather than the primary agent. Ruling Salmonella out is worth as much as ruling Lawsonia in, because it settles what you tell a family with young children. The low glucose is the finding that changes the next hour."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Lawsonia PCR positive, no Salmonella, heavy E. coli, hypoglycaemia, dehydration and hypothermia in a recently rehomed weanling.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Proliferative ileitis (wet tail) from Lawsonia intracellularis, stress-precipitated",
+          "detail": "Agent, lesion and trigger together",
+          "correct": true
+        },
+        {
+          "label": "Salmonellosis",
+          "detail": "Excluded by culture",
+          "correct": false
+        },
+        {
+          "label": "Primary E. coli enteritis",
+          "detail": "Overgrowth on an already damaged ileum, not the primary cause",
+          "correct": false
+        },
+        {
+          "label": "Antibiotic-associated dysbiosis",
+          "detail": "This hamster has had no antibiotics",
+          "correct": false
+        },
+        {
+          "label": "Dietary diarrhoea from a sudden food change",
+          "detail": "A contributor at most; it does not produce a corrugated ileum",
+          "correct": false
+        }
+      ],
+      "explanation": "The diagnosis carries the treatment: fluids, warmth, glucose and nutritional support are what save this hamster, with an antibiotic the ileum will tolerate. Naming the stress trigger is what stops the same thing happening to the next weanling the owner buys, and confirming the absence of Salmonella is what lets the family relax."
+    }
+  ]
+}

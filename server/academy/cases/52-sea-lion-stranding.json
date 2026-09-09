@@ -1,0 +1,172 @@
+{
+  "slug": "sea-lion-stranding",
+  "title": "Stranded juvenile sea lion: seizures, hunched posture and dark urine",
+  "species": "pinniped",
+  "discipline": "Zoo & Wildlife Medicine",
+  "difficulty": "advanced",
+  "body_system": "Urinary",
+  "presentation": "Juvenile male California sea lion stranded on a beach, brought into a rescue centre. Hunched, reluctant to move, drinking sea water at the pool edge, and he seizured briefly during admission.",
+  "completion_bonus": 30,
+  "order": 52,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Assess the casualty",
+      "briefing": "Thin, BCS 2/5, dehydrated with tacky gums. Hunched with a tucked abdomen, painful on lumbar palpation, stiff gait. One generalised seizure of 40 seconds on admission. Urine passed is dark and scant. Temperature 38.9°C. Mild conjunctivitis. Stranded during a season with several similar strandings reported along the coast.",
+      "prompt": "Which findings shape the differential list?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Hunched posture with lumbar pain and scant dark urine",
+          "detail": "Renal pain and impaired urine production",
+          "correct": true
+        },
+        {
+          "label": "Seizure activity in a dehydrated, azotaemic-looking animal",
+          "detail": "Uraemic or toxic encephalopathy",
+          "correct": true
+        },
+        {
+          "label": "A cluster of similar strandings along the coast",
+          "detail": "An outbreak or an environmental toxin",
+          "correct": true
+        },
+        {
+          "label": "Mild conjunctivitis",
+          "detail": "Common in stranded animals and non-specific",
+          "correct": false
+        },
+        {
+          "label": "Temperature 38.9°C",
+          "detail": "Within the expected range for the species",
+          "correct": false
+        }
+      ],
+      "explanation": "Two diagnoses dominate stranded Californian sea lions and this history contains both: leptospirosis, which gives renal pain and azotaemia, and domoic acid toxicosis, which gives seizures. The cluster along the coast fits either — an outbreak of one, or an algal bloom producing the other — so the work-up has to separate them rather than choose."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "The animal is sedated for handling and you can sample fully.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Urea, creatinine and electrolytes",
+          "detail": "Grades the azotaemia and guides fluids",
+          "correct": true
+        },
+        {
+          "label": "Leptospira microscopic agglutination test with urine PCR",
+          "detail": "Serology plus shedding status",
+          "correct": true
+        },
+        {
+          "label": "Urinalysis with sediment examination",
+          "detail": "Casts, protein, concentrating ability",
+          "correct": true
+        },
+        {
+          "label": "Haematology",
+          "detail": "Inflammatory response and anaemia",
+          "correct": true
+        },
+        {
+          "label": "Domoic acid assay on urine or serum where available, with hippocampal imaging if possible",
+          "detail": "The other cause of seizures in this species",
+          "correct": true
+        },
+        {
+          "label": "Canine distemper virus serology as the primary test",
+          "detail": "Morbillivirus matters in pinnipeds, but it does not explain renal pain with azotaemia first",
+          "correct": false
+        },
+        {
+          "label": "Faecal parasitology as a priority",
+          "detail": "Common findings, no bearing on seizures and renal failure",
+          "correct": false
+        }
+      ],
+      "explanation": "The plan is built to distinguish two diseases with one overlap: leptospirosis is confirmed by serology and urine PCR, domoic acid by assay and by the hippocampal changes it leaves. Both are zoonotic or public-health relevant in their own way, and Leptospira shedding changes how the centre handles this animal from admission onwards."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Urea 58 mmol/L (markedly raised), creatinine 780 µmol/L (markedly raised), potassium 5.9 mmol/L, sodium 152 mmol/L. Urinalysis: USG 1.012, protein 3+, granular casts, no glucose. Haematology: neutrophilia with a left shift, mild anaemia. Leptospira MAT titre 1:6,400 to serovar Pomona; urine PCR positive. Domoic acid not detected in urine. Hippocampal imaging not available. Liver enzymes mildly raised, bilirubin normal.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Acute kidney injury with severe azotaemia",
+          "detail": "Urea 58 mmol/L, creatinine 780 µmol/L, casts and isosthenuria",
+          "correct": true
+        },
+        {
+          "label": "Leptospirosis, serovar Pomona, with active shedding",
+          "detail": "A MAT titre of 1:6,400 with a positive urine PCR",
+          "correct": true
+        },
+        {
+          "label": "The seizure is most likely uraemic rather than toxic",
+          "detail": "Domoic acid not detected, with profound azotaemia present",
+          "correct": true
+        },
+        {
+          "label": "This animal is a zoonotic risk to staff",
+          "detail": "Shedding leptospires in urine",
+          "correct": true
+        },
+        {
+          "label": "Domoic acid toxicosis is confirmed",
+          "detail": "Not detected on assay",
+          "correct": false
+        },
+        {
+          "label": "Chronic kidney disease is the diagnosis",
+          "detail": "The picture is acute, with an inflammatory response and a high titre",
+          "correct": false
+        }
+      ],
+      "explanation": "Testing for both diseases is what allows a clean answer: the negative domoic acid assay lets you attribute the seizure to uraemia, which changes the treatment from anticonvulsant supportive care to aggressive fluid therapy and antibiotics. The positive urine PCR is the finding that protects the people working with him."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Urea 58 mmol/L, creatinine 780 µmol/L, isosthenuria with granular casts and proteinuria, Leptospira Pomona MAT 1:6,400 with positive urine PCR, domoic acid not detected.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Leptospirosis (serovar Pomona) with acute kidney injury and uraemic seizure",
+          "detail": "Confirmed infection with its renal and neurological consequences",
+          "correct": true
+        },
+        {
+          "label": "Domoic acid toxicosis",
+          "detail": "Assay negative",
+          "correct": false
+        },
+        {
+          "label": "Chronic kidney disease from an unrelated cause",
+          "detail": "The presentation and serology are acute",
+          "correct": false
+        },
+        {
+          "label": "Morbillivirus infection",
+          "detail": "Untested and unsupported by these findings",
+          "correct": false
+        },
+        {
+          "label": "Starvation-related metabolic collapse",
+          "detail": "Does not produce a MAT titre of 1:6,400 or granular casts",
+          "correct": false
+        }
+      ],
+      "explanation": "The diagnosis drives three separate actions: intravenous fluids with penicillin or doxycycline for the animal, barrier precautions and staff briefing for a shedding zoonosis, and a report into the stranding network — because a Pomona outbreak along a coastline is population-level information that individual centres are uniquely placed to detect."
+    }
+  ]
+}

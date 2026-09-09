@@ -1,0 +1,172 @@
+{
+  "slug": "shelly-tortoise-post-hibernation",
+  "title": "Shelly — 22yo Hermann’s tortoise: not eating six weeks after hibernation",
+  "species": "chelonian",
+  "discipline": "Exotic Animal Medicine",
+  "difficulty": "intermediate",
+  "body_system": "Urinary & Metabolic",
+  "presentation": "22-year-old female Hermann’s tortoise, hibernated for four months in a garage, brought out six weeks ago and has eaten almost nothing since. Sunken eyes, and the owner has seen no urine passed.",
+  "completion_bonus": 30,
+  "order": 41,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Assess the post-hibernation patient",
+      "briefing": "Weight 1.42 kg, down from 1.68 kg before hibernation. Eyes sunken, skin inelastic, mucous membranes tacky. Weak, minimal limb withdrawal. Mild periorbital swelling. Beak overgrown. No urine or urates passed in six weeks according to the owner. Hibernated at an unmonitored temperature in an unheated garage; no pre-hibernation health check.",
+      "prompt": "Which findings make this urgent?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "No urine or urates passed in six weeks",
+          "detail": "Renal failure or urate obstruction",
+          "correct": true
+        },
+        {
+          "label": "Clinical dehydration with a 15% weight loss",
+          "detail": "Fluid deficit that has to be corrected before anything else",
+          "correct": true
+        },
+        {
+          "label": "Weakness with reduced limb withdrawal",
+          "detail": "Systemic illness rather than simple slow warming",
+          "correct": true
+        },
+        {
+          "label": "Overgrown beak",
+          "detail": "A husbandry finding needing attention later",
+          "correct": false
+        },
+        {
+          "label": "Unmonitored hibernation temperature",
+          "detail": "Explains the situation but is not a clinical finding",
+          "correct": false
+        }
+      ],
+      "explanation": "Post-hibernation anorexia is a presentation, not a diagnosis, and the question is always whether the tortoise is merely cold or genuinely ill. Six weeks without urine and a 15% weight loss answers it: this is renal and fluid failure, and the beak can wait. Anorexia beyond a fortnight after correct warming is never normal."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "The tortoise is warmed to its preferred body temperature and you can take blood from the jugular and radiograph.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Plasma uric acid, urea, calcium and phosphorus",
+          "detail": "Renal function and the calcium-phosphorus product",
+          "correct": true
+        },
+        {
+          "label": "Ionised calcium",
+          "detail": "What the tissues actually see",
+          "correct": true
+        },
+        {
+          "label": "Packed cell volume and total protein",
+          "detail": "Hydration and protein status",
+          "correct": true
+        },
+        {
+          "label": "Whole-body radiographs including a craniocaudal view",
+          "detail": "Bladder stones, follicles, egg retention, bone density",
+          "correct": true
+        },
+        {
+          "label": "Urinalysis if any urine can be obtained",
+          "detail": "Concentration, crystals, cells",
+          "correct": true
+        },
+        {
+          "label": "Mycoplasma agassizii PCR as the primary investigation",
+          "detail": "Relevant with nasal discharge; the picture here is renal",
+          "correct": false
+        },
+        {
+          "label": "Faecal culture as the first-line test",
+          "detail": "Not the priority in a dehydrated anuric tortoise",
+          "correct": false
+        }
+      ],
+      "explanation": "Chelonian renal disease is read from uric acid with the calcium and phosphorus alongside it: an inverted calcium-to-phosphorus ratio is the finding that separates renal failure from simple dehydration. Radiographs are cheap and answer two questions at once — retained eggs and bladder calculi both present as post-hibernation anorexia in a female of this age."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Uric acid 1,180 µmol/L (ref 100–500). Urea 42 mmol/L (raised). Calcium 2.1 mmol/L, phosphorus 4.6 mmol/L, giving a Ca:P ratio of 0.46:1 (target above 1.5:1). Ionised calcium low. PCV 42% (raised, dehydration), total protein 68 g/L. Radiographs: no bladder calculi, no retained eggs, moderate loss of bone density with a thinned carapace. Small volume of urine obtained: urate-rich sediment, no bacteria.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Renal failure with hyperuricaemia",
+          "detail": "Uric acid 1,180 µmol/L with a raised urea",
+          "correct": true
+        },
+        {
+          "label": "Inverted calcium-to-phosphorus ratio from phosphate retention",
+          "detail": "Ca:P of 0.46:1",
+          "correct": true
+        },
+        {
+          "label": "Dehydration is compounding the azotaemia",
+          "detail": "A raised PCV with clinical dehydration",
+          "correct": true
+        },
+        {
+          "label": "Retained eggs and bladder calculi are excluded",
+          "detail": "Neither present on radiographs",
+          "correct": true
+        },
+        {
+          "label": "Gout can be ruled out at this stage",
+          "detail": "A uric acid this high risks visceral and articular gout, which has to be looked for",
+          "correct": false
+        },
+        {
+          "label": "Bacterial cystitis explains the anuria",
+          "detail": "No bacteria in the urine sediment",
+          "correct": false
+        }
+      ],
+      "explanation": "The inverted Ca:P ratio is the number that turns \"dehydrated tortoise\" into \"renal failure\", because phosphate is retained when the kidney fails and it stays inverted after rehydration. Excluding eggs and stones on a radiograph is quick and prevents a missed surgical case. With uric acid this high, gout is a live risk rather than a settled question."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Uric acid 1,180 µmol/L, urea 42 mmol/L, Ca:P 0.46:1, low ionised calcium, raised PCV with dehydration, no eggs or calculi, reduced bone density, six weeks of anorexia after an unmonitored hibernation.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Renal failure with hyperuricaemia and secondary calcium-phosphorus imbalance, on dehydration",
+          "detail": "The kidney, its consequences and the fluid deficit",
+          "correct": true
+        },
+        {
+          "label": "Simple post-hibernation dehydration",
+          "detail": "Does not explain a Ca:P of 0.46:1 or a uric acid of 1,180 µmol/L",
+          "correct": false
+        },
+        {
+          "label": "Follicular stasis",
+          "detail": "No follicles or eggs on radiographs",
+          "correct": false
+        },
+        {
+          "label": "Cystic calculus",
+          "detail": "None visible radiographically",
+          "correct": false
+        },
+        {
+          "label": "Nutritional secondary hyperparathyroidism alone",
+          "detail": "The bone changes are real but secondary to renal disease here",
+          "correct": false
+        }
+      ],
+      "explanation": "The plan follows the order of the diagnosis: fluids first — warm baths and intravenous or intraosseous fluids rather than a syringe of food — then phosphate binding, nutritional support and a recheck of uric acid once rehydrated. The prognosis conversation is honest: renal damage in chelonians is often irreversible, and the next hibernation needs to be controlled and preceded by a health check."
+    }
+  ]
+}

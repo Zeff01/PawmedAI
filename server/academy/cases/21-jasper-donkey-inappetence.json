@@ -1,0 +1,172 @@
+{
+  "slug": "jasper-donkey-inappetence",
+  "title": "Jasper — 14yo donkey: two days off his feed after a field move",
+  "species": "asinine",
+  "discipline": "Equine Practice",
+  "difficulty": "advanced",
+  "body_system": "Metabolic & Hepatic",
+  "presentation": "14-year-old donkey gelding, dull and not eating for two days since his companion died and he was moved to a new paddock. Overweight, and the owner thinks he looks depressed rather than ill.",
+  "completion_bonus": 30,
+  "order": 21,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Recognise a donkey emergency",
+      "briefing": "BCS 4/5 with a cresty neck and fat pads. HR 52 bpm, RR 24/min, temperature 37.4°C. Dull, standing apart, ears down. Has eaten nothing for 48 hours and drunk little. Gut sounds reduced in all quadrants, faeces scant and dry. Recent loss of a lifelong companion, moved fields three days ago.",
+      "prompt": "Which features make this urgent in a donkey specifically?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Complete anorexia for 48 hours in an obese donkey",
+          "detail": "The setup for hyperlipaemia",
+          "correct": true
+        },
+        {
+          "label": "Loss of a companion with a field move",
+          "detail": "Stress plus negative energy balance",
+          "correct": true
+        },
+        {
+          "label": "Dullness out of proportion to the physical findings",
+          "detail": "Donkeys hide pain and decompensate late",
+          "correct": true
+        },
+        {
+          "label": "Reduced gut sounds with scant dry faeces",
+          "detail": "Expected in anything not eating",
+          "correct": false
+        },
+        {
+          "label": "Temperature 37.4°C",
+          "detail": "Normal for a donkey",
+          "correct": false
+        }
+      ],
+      "explanation": "A fat donkey that stops eating is a metabolic emergency, not a sulking animal: negative energy balance mobilises fat faster than the liver can process it. Donkeys mask pain and look dull rather than colicky, so \"depressed\" is a presenting sign to take seriously rather than to reassure about. The gut findings are consequences of anorexia and lead nowhere on their own."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the panel",
+      "briefing": "You have one visit and can take blood on the yard.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Serum triglycerides",
+          "detail": "The test that confirms or excludes hyperlipaemia",
+          "correct": true
+        },
+        {
+          "label": "Visual inspection of spun serum for lipaemia",
+          "detail": "Free, immediate, and often diagnostic",
+          "correct": true
+        },
+        {
+          "label": "Liver enzymes — GGT, GLDH and bile acids",
+          "detail": "Hepatic lipidosis follows the triglycerides",
+          "correct": true
+        },
+        {
+          "label": "Glucose and insulin",
+          "detail": "Underlying dysregulation in an obese donkey",
+          "correct": true
+        },
+        {
+          "label": "Haematology with fibrinogen",
+          "detail": "Screens for the primary disease that stopped him eating",
+          "correct": true
+        },
+        {
+          "label": "Faecal egg count and dental examination",
+          "detail": "Worth doing for the underlying cause, but neither answers today’s question",
+          "correct": false
+        },
+        {
+          "label": "Peritoneal fluid analysis as the first-line test",
+          "detail": "This is not a surgical colic presentation",
+          "correct": false
+        }
+      ],
+      "explanation": "Spinning a tube and looking at it is the fastest useful test on the yard — frankly lipaemic serum in an anorexic donkey tells you what you are dealing with before the laboratory opens. Triglycerides quantify it, liver markers stage the consequence, and the haematology is looking for the disease that caused the anorexia in the first place, because treating the lipaemia without finding that only buys time."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Serum grossly lipaemic on spinning. Triglycerides 14.2 mmol/L (ref <0.6). GGT 96 U/L (ref <45), GLDH 42 U/L (raised), bile acids 28 µmol/L (raised). Glucose 8.9 mmol/L, insulin 68 µIU/mL (raised). Haematology: mild neutrophilia, fibrinogen 5.4 g/L (raised). Dental examination: sharp enamel points with a painful buccal ulcer. Faecal egg count 350 epg.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Hyperlipaemia with secondary hepatic compromise",
+          "detail": "Triglycerides 14.2 mmol/L with raised liver markers",
+          "correct": true
+        },
+        {
+          "label": "Insulin dysregulation underlies the susceptibility",
+          "detail": "Obesity with a high insulin",
+          "correct": true
+        },
+        {
+          "label": "A painful dental lesion is a plausible primary cause of the anorexia",
+          "detail": "Buccal ulceration against sharp enamel points",
+          "correct": true
+        },
+        {
+          "label": "The raised fibrinogen means inflammation must be looked for",
+          "detail": "A donkey does not stop eating for no reason",
+          "correct": true
+        },
+        {
+          "label": "Primary liver failure is the underlying disease",
+          "detail": "The enzyme rises follow the fat load rather than precede it",
+          "correct": false
+        },
+        {
+          "label": "The faecal egg count explains the presentation",
+          "detail": "Worth treating, but 350 epg does not stop a donkey eating",
+          "correct": false
+        }
+      ],
+      "explanation": "Hyperlipaemia is a diagnosis with a second half: what stopped him eating? The dental ulcer is the answer here, and rasping it is as much part of the treatment as the enteral feeding and the fluids. The liver markers are consequence rather than cause, which matters because it predicts they will fall once he is eating again. The worm burden is real and treatable, and it is not the reason he is in front of you."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Triglycerides 14.2 mmol/L with lipaemic serum, raised GGT, GLDH and bile acids, insulin dysregulation, a painful buccal ulcer against sharp enamel points, and 48 hours of anorexia after losing a companion.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Hyperlipaemia secondary to anorexia from dental pain and stress, with hepatic lipidosis",
+          "detail": "The whole chain, in the order it happened",
+          "correct": true
+        },
+        {
+          "label": "Primary hepatic failure",
+          "detail": "The hepatic changes are secondary to the lipid load",
+          "correct": false
+        },
+        {
+          "label": "Grass sickness (equine dysautonomia)",
+          "detail": "Would not produce triglycerides of 14.2 mmol/L, and the dental lesion explains more",
+          "correct": false
+        },
+        {
+          "label": "Behavioural anorexia after bereavement",
+          "detail": "The trigger, not the disease that will kill him",
+          "correct": false
+        },
+        {
+          "label": "Strongyle-associated enteropathy",
+          "detail": "A count of 350 epg does not account for this picture",
+          "correct": false
+        }
+      ],
+      "explanation": "Writing the diagnosis as a chain is what produces a plan that works: calories in by any route that succeeds, intravenous fluids, insulin where indicated, and the dental rasp that removes the reason he stopped. Treating only the triglycerides in a donkey whose mouth still hurts is how these cases relapse in a week."
+    }
+  ]
+}

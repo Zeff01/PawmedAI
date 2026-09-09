@@ -1,0 +1,172 @@
+{
+  "slug": "pullets-bloody-droppings",
+  "title": "Rearing flock — 6wk pullets: bloody droppings and huddling",
+  "species": "galliform",
+  "discipline": "Poultry Medicine",
+  "difficulty": "beginner",
+  "body_system": "Gastrointestinal",
+  "presentation": "Two hundred six-week-old free-range pullets moved onto deep litter ten days ago. Blood-streaked, mucoid droppings in the litter, birds huddling, feed intake down a fifth, and six dead over two days.",
+  "completion_bonus": 30,
+  "order": 33,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Assess the flock",
+      "briefing": "Affected birds: pale combs, ruffled feathers, huddling away from feeders. Droppings blood-streaked with mucus and shed mucosa. Feed intake down 20%, water intake down. Six deaths in 48 hours. Litter wet around the drinkers and capped. Coccidiosis vaccine not given; no in-feed coccidiostat in the current ration. House temperature and ventilation adequate.",
+      "prompt": "Which findings point towards coccidiosis rather than a bacterial enteritis?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Blood and shed mucosa in the droppings of six-week-old birds",
+          "detail": "Caecal and intestinal mucosal damage at the classic age",
+          "correct": true
+        },
+        {
+          "label": "Wet, capped litter around the drinkers",
+          "detail": "Where sporulated oocysts accumulate",
+          "correct": true
+        },
+        {
+          "label": "No vaccine and no coccidiostat in the ration",
+          "detail": "Nothing standing between the flock and the parasite",
+          "correct": true
+        },
+        {
+          "label": "Feed and water intake down",
+          "detail": "True of any sick flock",
+          "correct": false
+        },
+        {
+          "label": "Pale combs",
+          "detail": "Follows the blood loss; it does not identify the cause",
+          "correct": false
+        }
+      ],
+      "explanation": "Age, blood with shed mucosa, and wet litter is the coccidiosis triad, and the absent prevention makes it likely rather than merely possible. Necrotic enteritis is the differential that shares the age and the mortality, which is why the plan below looks for both rather than assuming."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the samples",
+      "briefing": "You can post-mortem the dead birds on farm and submit litter and droppings.",
+      "prompt": "Which do you do?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Post-mortem with mucosal scrapings from duodenum, jejunum and caeca",
+          "detail": "Lesion scoring by site names the Eimeria species",
+          "correct": true
+        },
+        {
+          "label": "Faecal or litter oocyst count",
+          "detail": "Quantifies challenge and tracks the response",
+          "correct": true
+        },
+        {
+          "label": "Wet mount of mucosal scrapings for schizonts and oocysts",
+          "detail": "Immediate confirmation, on farm",
+          "correct": true
+        },
+        {
+          "label": "Gross lesion scoring for necrotic enteritis with Clostridium culture",
+          "detail": "The co-infection that changes treatment",
+          "correct": true
+        },
+        {
+          "label": "Litter moisture measurement",
+          "detail": "The husbandry driver, measured rather than guessed",
+          "correct": true
+        },
+        {
+          "label": "Serology for infectious bronchitis",
+          "detail": "A respiratory pathogen, not a cause of bloody droppings",
+          "correct": false
+        },
+        {
+          "label": "Individual haematology on affected pullets",
+          "detail": "Impractical and it will not change flock treatment",
+          "correct": false
+        }
+      ],
+      "explanation": "Coccidiosis is diagnosed by where the lesions are: E. acervulina in the duodenum, E. maxima in mid-gut, E. tenella in the caeca, each with its own appearance. Scoring the sites tells you the species and therefore the management. Looking for necrotic enteritis in the same post-mortem is not optional — the two travel together and only one responds to amprolium."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Post-mortem: caeca distended with blood and cores in four of six birds, petechiae through the caecal wall; duodenum with mild white transverse streaking in two birds. Mucosal scrapings: numerous E. tenella schizonts in the caeca, E. acervulina oocysts in the duodenum. Litter oocyst count 180,000 per gram. Litter moisture 42% (target under 30%). No ballooned, friable small intestine and no Clostridium perfringens overgrowth on culture. Feed analysis: no coccidiostat detected.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Caecal coccidiosis from Eimeria tenella with duodenal E. acervulina",
+          "detail": "Species identified by site and life stage",
+          "correct": true
+        },
+        {
+          "label": "Wet litter is driving the oocyst challenge",
+          "detail": "Moisture 42% with 180,000 oocysts per gram",
+          "correct": true
+        },
+        {
+          "label": "Necrotic enteritis is not currently present",
+          "detail": "No ballooned friable gut and no C. perfringens overgrowth",
+          "correct": true
+        },
+        {
+          "label": "The ration provides no anticoccidial cover",
+          "detail": "None detected on feed analysis",
+          "correct": true
+        },
+        {
+          "label": "Salmonellosis is the likely cause of the deaths",
+          "detail": "Nothing here supports it and the lesions are parasitic",
+          "correct": false
+        },
+        {
+          "label": "Blackhead (histomonosis) is the diagnosis",
+          "detail": "Caecal cores occur, but schizonts identify Eimeria and the liver is unaffected",
+          "correct": false
+        }
+      ],
+      "explanation": "Two species with two lesion patterns in one flock is normal and it matters, because the caecal form is the one causing the mortality. Documenting the absence of necrotic enteritis stops an unnecessary antibiotic, and measuring the litter turns \"the shed looked damp\" into the number that has to change."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "E. tenella schizonts with bloody caecal cores, duodenal E. acervulina, litter oocyst count 180,000/g at 42% moisture, no coccidiostat in feed, no necrotic enteritis.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Clinical coccidiosis, predominantly Eimeria tenella, on an unmedicated flock with wet litter",
+          "detail": "Species, driver and the gap in prevention",
+          "correct": true
+        },
+        {
+          "label": "Necrotic enteritis",
+          "detail": "Excluded on lesions and culture",
+          "correct": false
+        },
+        {
+          "label": "Histomonosis (blackhead)",
+          "detail": "No hepatic lesions and Eimeria stages identified",
+          "correct": false
+        },
+        {
+          "label": "Salmonellosis",
+          "detail": "Not isolated, and the lesions are parasitic",
+          "correct": false
+        },
+        {
+          "label": "Non-specific bacterial enteritis",
+          "detail": "Ignores a lesion score and a litter count that name the parasite",
+          "correct": false
+        }
+      ],
+      "explanation": "The diagnosis dictates a two-part response: amprolium or toltrazuril in the water now, and litter management with drinker repair to cut the challenge — plus a decision for the next batch about vaccination or an in-feed coccidiostat. Treating the birds without drying the litter treats this week only."
+    }
+  ]
+}

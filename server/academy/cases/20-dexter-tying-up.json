@@ -1,0 +1,172 @@
+{
+  "slug": "dexter-tying-up",
+  "title": "Dexter — 6yo Quarter Horse: stiffness and dark urine after exercise",
+  "species": "equine",
+  "discipline": "Equine Practice",
+  "difficulty": "intermediate",
+  "body_system": "Musculoskeletal",
+  "presentation": "6-year-old Quarter Horse gelding, stiff and reluctant to move twenty minutes into a schooling session after four days stabled. Sweating, hindquarters hard to the touch, and the first urine passed is coffee-coloured.",
+  "completion_bonus": 30,
+  "order": 20,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Read the episode",
+      "briefing": "HR 60 bpm, RR 32/min, temperature 38.6°C. Profuse sweating, anxious, short shuffling hind-limb gait. Gluteal and semimembranosus muscles firm and painful on palpation. Passed dark red-brown urine on arrival. Gut sounds present in all quadrants, no signs of colic. Four days box rest after a full grain ration was continued unchanged.",
+      "prompt": "Which findings point to muscle rather than gut or foot?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Firm, painful gluteal muscles",
+          "detail": "The tissue in trouble, on palpation",
+          "correct": true
+        },
+        {
+          "label": "Coffee-coloured urine",
+          "detail": "Myoglobinuria from muscle breakdown",
+          "correct": true
+        },
+        {
+          "label": "Signs beginning shortly into exercise after box rest on full grain",
+          "detail": "The classic setup for tying-up",
+          "correct": true
+        },
+        {
+          "label": "Normal gut sounds in all quadrants",
+          "detail": "Argues against colic, but does not localise to muscle",
+          "correct": false
+        },
+        {
+          "label": "Sweating and a heart rate of 60 bpm",
+          "detail": "Pain and distress from any source",
+          "correct": false
+        }
+      ],
+      "explanation": "The triad is unmistakable once seen: hard painful hindquarter muscles, pigmented urine and onset early in exercise after a period of rest on an unreduced grain ration. Normal gut sounds are worth recording because a horse this distressed will otherwise be treated for colic — but they exclude a differential rather than localising the lesion."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the samples",
+      "briefing": "The horse is walked into a stable and not moved again. You have blood tubes and a urine sample.",
+      "prompt": "Which tests do you run now?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Serum creatine kinase",
+          "detail": "Rises within hours of muscle damage",
+          "correct": true
+        },
+        {
+          "label": "Serum aspartate aminotransferase",
+          "detail": "Slower to rise, slower to fall — dates the episode",
+          "correct": true
+        },
+        {
+          "label": "Urinalysis with a dipstick for blood and sediment examination",
+          "detail": "Separates myoglobin from haematuria",
+          "correct": true
+        },
+        {
+          "label": "Urea, creatinine and electrolytes",
+          "detail": "Myoglobin is nephrotoxic; potassium guides fluids",
+          "correct": true
+        },
+        {
+          "label": "Packed cell volume and total protein",
+          "detail": "Hydration status before fluid therapy",
+          "correct": true
+        },
+        {
+          "label": "Abdominocentesis",
+          "detail": "For a colic you have already argued against",
+          "correct": false
+        },
+        {
+          "label": "Faecal egg count",
+          "detail": "No bearing on an acute myopathy",
+          "correct": false
+        }
+      ],
+      "explanation": "CK and AST together do more than either alone: CK tells you the damage is happening now, and AST tells you whether this has been going on for days. The urine matters twice — a dipstick positive for blood with no red cells on sediment is myoglobin, and the same molecule is what threatens the kidneys, which is why creatinine is on the list before you choose a fluid rate."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "CK 68,000 U/L (ref <350). AST 2,400 U/L (ref <400). Urine: dipstick 4+ blood, sediment shows no red cells, granular casts present. Creatinine 186 µmol/L (ref 60–130), urea 8.9 mmol/L. Potassium 3.1 mmol/L, sodium 138 mmol/L, chloride 96 mmol/L. PCV 46%, total protein 78 g/L. Vitamin E and selenium status not yet known. Horse is bright, still stiff.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Severe rhabdomyolysis",
+          "detail": "A CK of 68,000 U/L with muscle pain",
+          "correct": true
+        },
+        {
+          "label": "Myoglobinuria, not haematuria",
+          "detail": "Dipstick positive for blood with no red cells on sediment",
+          "correct": true
+        },
+        {
+          "label": "Early myoglobin-induced kidney injury",
+          "detail": "Rising creatinine with granular casts",
+          "correct": true
+        },
+        {
+          "label": "Hypokalaemia needs correcting with the fluids",
+          "detail": "Potassium 3.1 mmol/L in a sweating horse",
+          "correct": true
+        },
+        {
+          "label": "Colic is the primary problem",
+          "detail": "Nothing here supports it, and much argues against",
+          "correct": false
+        },
+        {
+          "label": "Selenium deficiency is confirmed",
+          "detail": "Not yet measured — plausible, unproven",
+          "correct": false
+        }
+      ],
+      "explanation": "Every number here changes a decision: the CK sets the severity, the sediment proves the pigment is myoglobin, the creatinine and casts make this a kidney case as well as a muscle case, and the potassium changes what goes in the fluid bag. Aggressive intravenous fluids are the treatment for the kidney, not for the muscle. Selenium is a sensible question to ask next, but claiming it now would be inventing a result."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "CK 68,000 U/L, AST 2,400 U/L, myoglobinuria with granular casts, creatinine 186 µmol/L, onset early in exercise after box rest on full grain in a Quarter Horse.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Exertional rhabdomyolysis with early myoglobinuric kidney injury",
+          "detail": "The muscle damage and its renal consequence",
+          "correct": true
+        },
+        {
+          "label": "Colic",
+          "detail": "Normal gut sounds, no pain on abdominal palpation, and a CK of 68,000",
+          "correct": false
+        },
+        {
+          "label": "Laminitis",
+          "detail": "Wrong stance, wrong pain distribution, and it does not raise CK",
+          "correct": false
+        },
+        {
+          "label": "Acute kidney injury as the primary disease",
+          "detail": "The kidney injury is secondary to the pigment load",
+          "correct": false
+        },
+        {
+          "label": "Atypical myopathy from sycamore seeds",
+          "detail": "Worth considering seasonally, but this horse’s trigger is exercise after rest on grain",
+          "correct": false
+        }
+      ],
+      "explanation": "Naming the kidney injury alongside the myopathy is what sets the treatment priority: fluids first and hard, no NSAID until the creatinine is falling, and no exercise until the CK returns towards normal. The follow-up conversation — a Quarter Horse with recurrent episodes deserves genetic testing for PSSM1 and a forage-based ration — starts from this diagnosis rather than from the next episode."
+    }
+  ]
+}

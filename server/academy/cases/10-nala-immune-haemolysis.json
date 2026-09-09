@@ -1,0 +1,167 @@
+{
+  "slug": "nala-immune-haemolysis",
+  "title": "Nala — 5yo Cocker Spaniel: lethargy, icterus & dark urine",
+  "species": "canine",
+  "discipline": "Clinical Pathology",
+  "difficulty": "intermediate",
+  "body_system": "Haematology & Immunology",
+  "presentation": "5-year-old female neutered Cocker Spaniel, three days of lethargy and inappetence. The owner thought her gums looked yellow this morning, and her urine is the colour of strong tea.",
+  "completion_bonus": 30,
+  "order": 10,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Read the first-line bloods",
+      "briefing": "On presentation: HR 140 bpm, RR 36/min, temperature 39.1°C. Mucous membranes pale and icteric, CRT 2 seconds. New grade II/VI systolic murmur. No external haemorrhage, no access to rodenticide, onions or zinc, no medication. In-house PCV 14% (ref 37–55), total solids 7.4 g/dL (ref 5.4–7.5).",
+      "prompt": "Which findings tell you the red cells are being destroyed rather than lost?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "PCV 14% with total solids 7.4 g/dL",
+          "detail": "Anaemia with no fall in protein",
+          "correct": true
+        },
+        {
+          "label": "Icteric mucous membranes",
+          "detail": "Bilirubin from red cell breakdown",
+          "correct": true
+        },
+        {
+          "label": "Tea-coloured urine",
+          "detail": "Haemoglobinuria and bilirubinuria",
+          "correct": true
+        },
+        {
+          "label": "Grade II/VI systolic murmur",
+          "detail": "A flow murmur — consequence, not cause",
+          "correct": false
+        },
+        {
+          "label": "Temperature 39.1°C",
+          "detail": "Fits inflammation of any origin",
+          "correct": false
+        }
+      ],
+      "explanation": "Haemorrhage takes protein with it. A PCV of 14% alongside normal total solids is the single most useful line on this panel: the cells are going somewhere other than out of a vessel, and the icterus and pigmenturia say where. The murmur is a flow murmur that resolves as the PCV rises — chasing it as primary heart disease is the classic wrong turn — and a mild fever fits immune-mediated inflammation and sepsis equally well."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Confirm haemolysis before treating",
+      "briefing": "You have IV access, and pre-treatment samples are in hand. Immunosuppression is the likely next step, so anything infectious has to be excluded first.",
+      "prompt": "Which tests do you run before the first dose of glucocorticoid?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Blood smear for spherocytes and agglutination",
+          "detail": "Fastest evidence of immune destruction",
+          "correct": true
+        },
+        {
+          "label": "Saline agglutination test",
+          "detail": "Separates true agglutination from rouleaux",
+          "correct": true
+        },
+        {
+          "label": "Reticulocyte count",
+          "detail": "Regenerative or not changes the prognosis",
+          "correct": true
+        },
+        {
+          "label": "Biochemistry with total and direct bilirubin",
+          "detail": "Grades the icterus, screens the liver",
+          "correct": true
+        },
+        {
+          "label": "Vector-borne panel — Babesia, Mycoplasma haemocanis, Ehrlichia",
+          "detail": "Infectious triggers must be excluded before steroids",
+          "correct": true
+        },
+        {
+          "label": "Direct Coombs test as the first-line test",
+          "detail": "Slower and less specific than a smear; it does not decide the next hour",
+          "correct": false
+        },
+        {
+          "label": "Bile acid stimulation test",
+          "detail": "Not while the icterus has an obvious pre-hepatic cause",
+          "correct": false
+        }
+      ],
+      "explanation": "A smear read by someone who knows what a spherocyte looks like is the highest-yield test in the building, and the saline dilution stops rouleaux masquerading as agglutination. Reticulocytes and bilirubin quantify what the smear shows. The infectious panel is not academic: immunosuppressing a babesiosis is a way to lose a patient. Coombs and bile acids are not wrong tests in general — they are the wrong tests to wait on now."
+    },
+    {
+      "kind": "differential",
+      "title": "Narrow the cause of the haemolysis",
+      "briefing": "Smear: marked spherocytosis with autoagglutination that persists after 1:4 saline dilution. Reticulocytes 210 ×10⁹/L (regenerative). Total bilirubin 68 µmol/L (ref <10). Platelets 165 ×10⁹/L. Babesia and M. haemocanis PCR negative, no travel outside the UK. Abdominal ultrasound: mild splenomegaly, no mass, no free fluid. Thoracic radiographs unremarkable.",
+      "prompt": "Which causes remain plausible?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Primary immune-mediated haemolytic anaemia",
+          "detail": "Spherocytes plus true agglutination, no trigger found",
+          "correct": true
+        },
+        {
+          "label": "Secondary IMHA from an occult neoplasm",
+          "detail": "Imaging lowers the odds but does not exclude it",
+          "correct": true
+        },
+        {
+          "label": "Zinc or onion toxicosis",
+          "detail": "No access, and neither gives true agglutination",
+          "correct": false
+        },
+        {
+          "label": "Babesiosis",
+          "detail": "PCR negative with no travel history",
+          "correct": false
+        },
+        {
+          "label": "Haemorrhage into a body cavity",
+          "detail": "Total solids normal, both cavities dry",
+          "correct": false
+        }
+      ],
+      "explanation": "True agglutination surviving saline dilution, with spherocytes and a regenerative response, is immune-mediated destruction. Whether it is primary or secondary is not settled by one clear ultrasound, which is why an occult neoplasm stays on the list and is looked for again later. The toxicoses produce Heinz bodies or eccentrocytes, not spherocytes, and the normal protein rules the bleed out on the first panel."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Saline agglutination positive, spherocytosis marked, infectious panel negative, no mass on imaging, no drug or toxin exposure.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Primary immune-mediated haemolytic anaemia",
+          "detail": "Immune destruction with no identifiable trigger",
+          "correct": true
+        },
+        {
+          "label": "Anaemia of chronic kidney disease",
+          "detail": "Non-regenerative, and no azotaemia here",
+          "correct": false
+        },
+        {
+          "label": "Blood loss anaemia from an undetected bleed",
+          "detail": "Protein would have fallen with the cells",
+          "correct": false
+        },
+        {
+          "label": "Zinc toxicosis",
+          "detail": "Needs a metal foreign body and gives a different smear",
+          "correct": false
+        },
+        {
+          "label": "Primary hepatobiliary disease",
+          "detail": "Would not produce spherocytes or agglutination",
+          "correct": false
+        }
+      ],
+      "explanation": "Primary IMHA is a diagnosis of exclusion built on positive evidence: spherocytes and true agglutination for the mechanism, a negative infectious and toxin search for the trigger. Naming it commits you to immunosuppression plus thromboprophylaxis, and to repeating the hunt for an underlying cause if the response is poor."
+    }
+  ]
+}

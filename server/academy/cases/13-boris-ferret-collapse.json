@@ -1,0 +1,167 @@
+{
+  "slug": "boris-ferret-collapse",
+  "title": "Boris — 4yo ferret: staring episodes and hind-limb weakness",
+  "species": "musteline",
+  "discipline": "Exotic Animal Medicine",
+  "difficulty": "intermediate",
+  "body_system": "Endocrine",
+  "presentation": "4-year-old male neutered ferret with three weeks of episodes: he stares blankly, drools, then drags his hind legs for a few minutes before recovering. Worse first thing in the morning and after play.",
+  "completion_bonus": 30,
+  "order": 13,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Read the pattern of the episodes",
+      "briefing": "Weight 1.1 kg, BCS 4/9, lost 200 g since last year. During an episode in the consulting room: obtunded, ptyalism, pawing at the mouth, hind-limb ataxia, no loss of consciousness and no tonic-clonic activity. Recovers over five minutes. Temperature 37.8°C. Abdominal palpation: no organ enlargement, no splenomegaly. Adrenal region not palpable.",
+      "prompt": "Which features point to a metabolic rather than a primary neurological cause?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Episodes worse after fasting overnight and after exercise",
+          "detail": "Classic timing for hypoglycaemia",
+          "correct": true
+        },
+        {
+          "label": "Ptyalism with pawing at the mouth during episodes",
+          "detail": "Nausea of hypoglycaemia, a well-described ferret sign",
+          "correct": true
+        },
+        {
+          "label": "Full recovery between episodes",
+          "detail": "Episodic dysfunction rather than a fixed lesion",
+          "correct": true
+        },
+        {
+          "label": "Weight loss of 200 g",
+          "detail": "Real, but non-specific in a four-year-old ferret",
+          "correct": false
+        },
+        {
+          "label": "Temperature 37.8°C",
+          "detail": "Normal for a ferret",
+          "correct": false
+        }
+      ],
+      "explanation": "The timing is the diagnosis in waiting: signs that appear after a fast and after exertion, and resolve completely, describe a substrate problem rather than a structural one. Ptyalism and mouth-pawing are what a hypoglycaemic ferret does, and every clinician who has seen one recognises it. The weight loss matters for the differential list but discriminates nothing on its own."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Test the hypothesis",
+      "briefing": "You want the answer today. The ferret last ate four hours ago and is currently between episodes.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Blood glucose during or immediately after an episode",
+          "detail": "The single test that confirms the mechanism",
+          "correct": true
+        },
+        {
+          "label": "Paired serum insulin on the same hypoglycaemic sample",
+          "detail": "Inappropriate insulin against a low glucose",
+          "correct": true
+        },
+        {
+          "label": "Full biochemistry including urea, ALT and albumin",
+          "detail": "Hepatic and renal causes of hypoglycaemia",
+          "correct": true
+        },
+        {
+          "label": "Haematology",
+          "detail": "Screens for the other ferret neoplasias",
+          "correct": true
+        },
+        {
+          "label": "Abdominal ultrasound of the pancreas and adrenals",
+          "detail": "Nodules are often too small to see, but adrenal disease is the co-traveller",
+          "correct": true
+        },
+        {
+          "label": "Adrenocorticotropic hormone stimulation test",
+          "detail": "Ferret adrenal disease is a sex-steroid disease; this is the wrong axis",
+          "correct": false
+        },
+        {
+          "label": "Cerebrospinal fluid analysis",
+          "detail": "Invasive, and not what an episodic, fully reversible picture calls for",
+          "correct": false
+        }
+      ],
+      "explanation": "A glucose taken during signs is worth more than any imaging: the case turns on documenting hypoglycaemia and then showing insulin that has no business being measurable at that glucose. Sampling between episodes is the common error — a normal reading then excludes nothing. Ultrasound is worth doing while knowing that a normal pancreas does not rule an insulinoma out."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Blood glucose during an episode 1.8 mmol/L (32 mg/dL; ref 5.0–11.7). Paired insulin 320 pmol/L — measurable, and inappropriate at that glucose. ALT 68 U/L, albumin 32 g/L, urea 6.4 mmol/L, all within reference. Ultrasound: pancreas unremarkable, left adrenal 6 mm and mildly rounded. Haematology unremarkable.",
+      "prompt": "Which causes remain in play?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Pancreatic beta-cell tumour (insulinoma)",
+          "detail": "Hypoglycaemia with inappropriate insulin",
+          "correct": true
+        },
+        {
+          "label": "Concurrent adrenal disease",
+          "detail": "A rounded left adrenal in a ferret of this age, common alongside",
+          "correct": true
+        },
+        {
+          "label": "Hepatic insufficiency",
+          "detail": "Normal albumin, urea and ALT",
+          "correct": false
+        },
+        {
+          "label": "Sepsis-associated hypoglycaemia",
+          "detail": "No fever, normal white cell count, three weeks of episodes",
+          "correct": false
+        },
+        {
+          "label": "Idiopathic epilepsy",
+          "detail": "Does not explain a glucose of 1.8 mmol/L",
+          "correct": false
+        }
+      ],
+      "explanation": "Measurable insulin against a glucose of 1.8 mmol/L is the diagnosis: a normal pancreas secretes almost nothing at that level. Normal liver markers and a normal white cell count remove the two mimics that would have changed the plan. The adrenal note is not incidental — ferrets collect endocrine neoplasia, and missing the second one means a partial response later."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Glucose 1.8 mmol/L with paired insulin 320 pmol/L, normal hepatic and renal markers, no sepsis, mildly rounded left adrenal.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Insulinoma, with suspected concurrent adrenal disease",
+          "detail": "Inappropriate insulin at a documented low glucose",
+          "correct": true
+        },
+        {
+          "label": "Hypoglycaemia secondary to hepatic dysfunction",
+          "detail": "Contradicted by normal albumin, urea and ALT",
+          "correct": false
+        },
+        {
+          "label": "Idiopathic epilepsy",
+          "detail": "A glucose of 1.8 mmol/L is not idiopathic anything",
+          "correct": false
+        },
+        {
+          "label": "Adrenal disease alone",
+          "detail": "Ferret adrenal disease causes alopecia and pruritus, not hypoglycaemia",
+          "correct": false
+        },
+        {
+          "label": "Lymphoma with paraneoplastic hypoglycaemia",
+          "detail": "Described, but the paired insulin points squarely at beta cells",
+          "correct": false
+        }
+      ],
+      "explanation": "The pairing is what earns the diagnosis — glucose and insulin from the same tube, at the same moment. It commits you to frequent protein-rich meals, prednisolone or diazoxide, and a conversation about surgery, and the flagged adrenal keeps you looking when the alopecia arrives in six months."
+    }
+  ]
+}

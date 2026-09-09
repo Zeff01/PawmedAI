@@ -1,0 +1,172 @@
+{
+  "slug": "spike-beardie-tremors",
+  "title": "Spike — 14mo bearded dragon: tremors and a rubbery jaw",
+  "species": "saurian",
+  "discipline": "Exotic Animal Medicine",
+  "difficulty": "beginner",
+  "body_system": "Musculoskeletal & Metabolic",
+  "presentation": "14-month-old male bearded dragon, twitching in the hind limbs for a week, reluctant to walk, and the owner has noticed his lower jaw feels soft and his back legs look swollen.",
+  "completion_bonus": 30,
+  "order": 43,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Assess the patient and the vivarium",
+      "briefing": "Weight 310 g. Hind-limb fasciculations, unwilling to bear weight, mandible pliable on gentle pressure, symmetrical firm swelling of both femora. Spine palpably irregular. Vivarium: UV tube in place but unchanged for 22 months, basking surface temperature 30°C (target 38–42°C), diet crickets and mealworms gut-loaded but never dusted, no calcium supplement, no direct sunlight.",
+      "prompt": "Which findings point to metabolic bone disease?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Pliable mandible with symmetrical femoral swelling",
+          "detail": "Fibrous osteodystrophy of the long bones and jaw",
+          "correct": true
+        },
+        {
+          "label": "Hind-limb tremors with reluctance to bear weight",
+          "detail": "Hypocalcaemic neuromuscular signs",
+          "correct": true
+        },
+        {
+          "label": "No calcium dusting and a UV tube 22 months old",
+          "detail": "Both halves of the calcium pathway missing",
+          "correct": true
+        },
+        {
+          "label": "Basking temperature 30°C",
+          "detail": "Impairs digestion and appetite; not the direct cause of soft bone",
+          "correct": false
+        },
+        {
+          "label": "Weight 310 g",
+          "detail": "Within a normal range for the species",
+          "correct": false
+        }
+      ],
+      "explanation": "A rubbery jaw with swollen femora and tremors is nutritional secondary hyperparathyroidism, and the vivarium supplies the mechanism twice over: no dietary calcium, and a UV tube that stopped emitting useful UVB about a year ago even though it still lights up. Owners reasonably assume a glowing tube is working, and it is worth saying so explicitly."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "The dragon is stable. You can take a small blood sample and radiograph.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Ionised calcium",
+          "detail": "The fraction that determines the tremors",
+          "correct": true
+        },
+        {
+          "label": "Total calcium and phosphorus with the Ca:P ratio",
+          "detail": "Grades the imbalance",
+          "correct": true
+        },
+        {
+          "label": "Whole-body radiographs",
+          "detail": "Cortical thinning, folding fractures, spinal deformity",
+          "correct": true
+        },
+        {
+          "label": "UV index measurement at the basking site with a UV meter",
+          "detail": "Tests the lamp rather than trusting it",
+          "correct": true
+        },
+        {
+          "label": "Uric acid and total protein",
+          "detail": "Renal disease is the other cause of this biochemistry",
+          "correct": true
+        },
+        {
+          "label": "Vitamin D3 assay as the only test",
+          "detail": "Supportive, but slow, costly and not decisive on its own",
+          "correct": false
+        },
+        {
+          "label": "Faecal parasitology before treating the hypocalcaemia",
+          "detail": "Worth doing eventually; it does not change today",
+          "correct": false
+        }
+      ],
+      "explanation": "The pairing that matters is ionised calcium with phosphorus, and the measurement that changes the household is the UV reading at the basking site: a meter turns advice into evidence. Uric acid is on the list because renal disease produces a similar picture and would change the treatment entirely."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Ionised calcium 0.58 mmol/L (ref 1.2–1.6). Total calcium 1.9 mmol/L, phosphorus 3.4 mmol/L, Ca:P 0.56:1 (target 1.5–2:1). Uric acid 210 µmol/L (normal), total protein 52 g/L. Radiographs: generalised cortical thinning, bilateral folding fractures of the femora, kyphosis of the lumbar spine, no bladder or renal mineralisation. UV index at the basking site 0.1 (target 4–6). No renal enlargement on imaging.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Nutritional secondary hyperparathyroidism with folding fractures",
+          "detail": "Low ionised calcium, inverted Ca:P, thin cortices and folding fractures",
+          "correct": true
+        },
+        {
+          "label": "The UV source is providing effectively no usable UVB",
+          "detail": "A UV index of 0.1 against a target of 4–6",
+          "correct": true
+        },
+        {
+          "label": "Renal secondary hyperparathyroidism is excluded",
+          "detail": "Normal uric acid with no renal mineralisation or enlargement",
+          "correct": true
+        },
+        {
+          "label": "Handling must be minimised because the bones will fracture",
+          "detail": "Folding fractures already present",
+          "correct": true
+        },
+        {
+          "label": "Hypovitaminosis A explains the presentation",
+          "detail": "Causes squamous metaplasia and swollen eyelids, not soft bone",
+          "correct": false
+        },
+        {
+          "label": "The tremors are a primary seizure disorder",
+          "detail": "They are hypocalcaemic and will resolve as calcium is restored",
+          "correct": false
+        }
+      ],
+      "explanation": "Distinguishing nutritional from renal secondary hyperparathyroidism is the intellectual work here, and the normal uric acid does it. The UV index of 0.1 is the most actionable number on the page. Recognising the folding fractures changes how the animal is handled from this minute — these are patients that break in the consulting room."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Ionised calcium 0.58 mmol/L, Ca:P 0.56:1, cortical thinning with bilateral femoral folding fractures and kyphosis, normal uric acid, UV index 0.1 at the basking site, undusted insect diet.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Nutritional secondary hyperparathyroidism (metabolic bone disease) with pathological fractures",
+          "detail": "The deficiency, its cause and its skeletal consequence",
+          "correct": true
+        },
+        {
+          "label": "Renal secondary hyperparathyroidism",
+          "detail": "Excluded by normal uric acid and imaging",
+          "correct": false
+        },
+        {
+          "label": "Hypovitaminosis A",
+          "detail": "Wrong syndrome entirely",
+          "correct": false
+        },
+        {
+          "label": "Traumatic femoral fractures",
+          "detail": "Bilateral, symmetrical, folding fractures in demineralised bone are not traumatic",
+          "correct": false
+        },
+        {
+          "label": "Spinal trauma",
+          "detail": "The kyphosis is part of generalised bone disease",
+          "correct": false
+        }
+      ],
+      "explanation": "The treatment is calcium — parenteral first, then oral — with a correct thermal gradient, a new UVB source measured with a meter rather than assumed, dusted insects and cage rest. Naming the fractures in the diagnosis is what protects the animal from being handled normally while its bones are still soft."
+    }
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "slug": "drake-open-mouth-breathing",
+  "title": "Drake — 2yo Aylesbury: laboured breathing and a change in voice",
+  "species": "anseriform",
+  "discipline": "Avian Medicine",
+  "difficulty": "advanced",
+  "body_system": "Respiratory",
+  "presentation": "Two-year-old Aylesbury drake, three weeks of gradually worsening breathing, now open-mouthed after any exertion, with a hoarse, weak call. Housed in a damp straw-bedded shed over winter.",
+  "completion_bonus": 30,
+  "order": 34,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Examine the bird",
+      "briefing": "Weight 3.1 kg, BCS 2/5, keel prominent. RR 44/min with open-mouth breathing after handling, tail bobbing. Voice hoarse. Auscultation over the trachea: harsh referred noise; over the caudal air sacs: increased sounds on the right. Mucous membranes pink. Housing: damp, mouldy straw, poor ventilation, litter unchanged for six weeks.",
+      "prompt": "Which findings point to lower airway or air sac disease?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Tail bobbing with open-mouth breathing after minimal exertion",
+          "detail": "Increased respiratory effort in a bird",
+          "correct": true
+        },
+        {
+          "label": "Asymmetric increase in caudal air sac sounds",
+          "detail": "Focal, not diffuse, disease",
+          "correct": true
+        },
+        {
+          "label": "Three weeks of progression with weight loss",
+          "detail": "A chronic, consuming process",
+          "correct": true
+        },
+        {
+          "label": "Damp, mouldy straw with poor ventilation",
+          "detail": "The exposure — but it is history, not a clinical sign",
+          "correct": false
+        },
+        {
+          "label": "Pink mucous membranes",
+          "detail": "Reassuring, and it does not localise",
+          "correct": false
+        }
+      ],
+      "explanation": "Birds have no diaphragm, so tail bobbing and open-mouth breathing after trivial exertion mark significant respiratory compromise. The asymmetry is the useful physical finding — it says focal granulomatous disease rather than diffuse infection. A hoarse voice adds a syringeal lesion to the picture, which is precisely where aspergillosis likes to sit."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "The drake tolerates brief handling. Radiography, endoscopy and laboratory submission are all available.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Whole-body radiographs including a lateral view of the air sacs",
+          "detail": "Air sac thickening, focal densities, syringeal mass",
+          "correct": true
+        },
+        {
+          "label": "Endoscopy of the trachea, syrinx and air sacs with biopsy",
+          "detail": "Direct visualisation and a sample of the lesion",
+          "correct": true
+        },
+        {
+          "label": "Cytology and fungal culture of the lesion or a tracheal wash",
+          "detail": "Hyphae seen, and the organism named",
+          "correct": true
+        },
+        {
+          "label": "Haematology with a protein electrophoresis",
+          "detail": "Monocytosis and beta-globulin rise support aspergillosis",
+          "correct": true
+        },
+        {
+          "label": "Aspergillus galactomannan or antibody testing",
+          "detail": "Supportive when imaging and cytology agree",
+          "correct": true
+        },
+        {
+          "label": "Chlamydia psittaci PCR alone as the diagnosis",
+          "detail": "Worth screening, but it will not explain a focal air sac mass",
+          "correct": false
+        },
+        {
+          "label": "Blood lead concentration",
+          "detail": "Sensible in a waterfowl with neurological signs, not with focal air sac disease",
+          "correct": false
+        }
+      ],
+      "explanation": "Aspergillosis is diagnosed by seeing it: endoscopy with biopsy and cytology beats any serological test, and the serology is only worth interpreting alongside the images. Radiographs first tells you where to put the scope. The haematology and electrophoresis are supportive evidence that also grades how chronic this is."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Radiographs: thickened right caudal thoracic air sac wall with a focal soft tissue density; hyperinflation of the left air sacs. Endoscopy: white-to-green plaques on the right caudal air sac and a granuloma narrowing the syrinx. Cytology of the plaque: septate branching hyphae with mixed inflammatory cells. Fungal culture: Aspergillus fumigatus. Haematology: white cell count 28 ×10⁹/L with monocytosis; protein electrophoresis shows a raised beta-globulin fraction. Chlamydia PCR negative.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Chronic granulomatous aspergillosis of the air sacs and syrinx",
+          "detail": "Hyphae on cytology with A. fumigatus cultured from a visible plaque",
+          "correct": true
+        },
+        {
+          "label": "The syringeal granuloma explains the voice change and the effort",
+          "detail": "A mass narrowing the airway at the syrinx",
+          "correct": true
+        },
+        {
+          "label": "Mouldy bedding in poor ventilation is the likely source",
+          "detail": "A heavy environmental spore load",
+          "correct": true
+        },
+        {
+          "label": "Chlamydiosis is excluded",
+          "detail": "PCR negative",
+          "correct": true
+        },
+        {
+          "label": "The monocytosis proves a bacterial infection",
+          "detail": "Monocytosis is expected in avian granulomatous fungal disease",
+          "correct": false
+        },
+        {
+          "label": "This is likely to resolve on antibiotics alone",
+          "detail": "Antibacterials have no effect on Aspergillus",
+          "correct": false
+        }
+      ],
+      "explanation": "Culture alone would leave doubt — Aspergillus grows from plenty of samples it has merely contaminated — but hyphae in an inflammatory exudate taken from a plaque you can see makes it the disease. The syringeal lesion is what ties the hoarse voice to the breathlessness, and it is also what makes the prognosis guarded rather than fair."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Focal air sac plaques with a syringeal granuloma, septate branching hyphae on cytology, Aspergillus fumigatus cultured, monocytosis with raised beta-globulins, mouldy bedding, Chlamydia negative.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Chronic aspergillosis of the caudal air sacs and syrinx from environmental exposure",
+          "detail": "Confirmed fungal granulomas with their source",
+          "correct": true
+        },
+        {
+          "label": "Bacterial air sacculitis",
+          "detail": "Cytology and culture identify a fungus",
+          "correct": false
+        },
+        {
+          "label": "Chlamydiosis",
+          "detail": "PCR negative and the lesions are granulomatous fungal",
+          "correct": false
+        },
+        {
+          "label": "Tracheal foreign body",
+          "detail": "Endoscopy showed a granuloma, not a foreign body",
+          "correct": false
+        },
+        {
+          "label": "Cardiac disease with pulmonary oedema",
+          "detail": "Does not produce air sac plaques or hyphae",
+          "correct": false
+        }
+      ],
+      "explanation": "Naming aspergillosis sets a long, expensive and uncertain treatment course — itraconazole or voriconazole with nebulised therapy, possibly debulking the syringeal granuloma — and it changes the shed before it changes the bird: dry, dust-free bedding and real ventilation, or the next duck presents the same way."
+    }
+  ]
+}

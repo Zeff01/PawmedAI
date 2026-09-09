@@ -1,0 +1,172 @@
+{
+  "slug": "reptile-collection-wasting",
+  "title": "Rescue collection — mixed reptiles: chronic regurgitation and weight loss",
+  "species": "reptilian",
+  "discipline": "Exotic Animal Medicine",
+  "difficulty": "advanced",
+  "body_system": "Gastrointestinal",
+  "presentation": "A rescue centre holding thirty reptiles of mixed species reports six animals — snakes and lizards — regurgitating and losing weight over three months, with two deaths. New arrivals are housed alongside residents.",
+  "completion_bonus": 30,
+  "order": 40,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Assess the collection",
+      "briefing": "Affected animals: mid-body swelling in two snakes, regurgitation two to three days after feeding, progressive weight loss over three months, formed but scant faeces. Two deaths. Husbandry: temperatures and humidity appropriate on data-logger records, but shared feeding tongs and water bowls, no quarantine period, staff move between enclosures without changing gloves.",
+      "prompt": "Which findings point to an infectious problem rather than husbandry?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Several animals across different species affected in one collection",
+          "detail": "A shared agent rather than a shared enclosure fault",
+          "correct": true
+        },
+        {
+          "label": "Regurgitation two to three days after feeding with mid-body swelling",
+          "detail": "Gastric disease in snakes",
+          "correct": true
+        },
+        {
+          "label": "Shared tongs, bowls and no glove changes between enclosures",
+          "detail": "A route for faecal-oral spread",
+          "correct": true
+        },
+        {
+          "label": "Temperature and humidity within range on data loggers",
+          "detail": "Important — it makes husbandry unlikely — but it is a negative",
+          "correct": false
+        },
+        {
+          "label": "Scant formed faeces",
+          "detail": "Expected in anything not retaining food",
+          "correct": false
+        }
+      ],
+      "explanation": "Correct husbandry records are what make this interesting: the usual explanation for a wasting reptile is a cold, dry vivarium, and the loggers exclude it. Multiple species affected with shared equipment points to something transmissible, and post-feeding regurgitation with a palpable mid-body swelling localises it to the stomach."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "You can sample live animals and submit the two carcasses.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Faecal and gastric lavage cytology with acid-fast staining",
+          "detail": "Cryptosporidium oocysts stain acid-fast",
+          "correct": true
+        },
+        {
+          "label": "Cryptosporidium PCR on faeces and gastric washings",
+          "detail": "Species-level confirmation, more sensitive than staining",
+          "correct": true
+        },
+        {
+          "label": "Post-mortem with gastric histopathology",
+          "detail": "Mucosal hyperplasia with organisms at the epithelial surface",
+          "correct": true
+        },
+        {
+          "label": "Faecal flotation and direct smear for other parasites",
+          "detail": "Mixed burdens are the norm in rescue collections",
+          "correct": true
+        },
+        {
+          "label": "Screening of unaffected animals in the collection",
+          "detail": "Defines how far it has spread",
+          "correct": true
+        },
+        {
+          "label": "Inclusion body disease testing as the only investigation",
+          "detail": "Worth doing in boids, but it does not explain lizards regurgitating too",
+          "correct": false
+        },
+        {
+          "label": "Blood cultures on all thirty reptiles",
+          "detail": "Disproportionate, and not how this diagnosis is made",
+          "correct": false
+        }
+      ],
+      "explanation": "Acid-fast staining is cheap and fast, and the PCR is what confirms the species — Cryptosporidium serpentis in snakes and C. varanii in lizards behave differently and the distinction guides how hopeful you can be. Screening apparently healthy animals is not optional in a collection case: the animals with no signs decide whether this can be contained."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Acid-fast stains: numerous 5 µm oocysts in gastric lavage from three snakes and faeces from two lizards. PCR: Cryptosporidium serpentis in the snakes, C. varanii in the lizards. Post-mortem: marked gastric mucosal hyperplasia with organisms along the epithelial surface. Faecal flotation: pinworms in two lizards, no coccidia. Screening: four further animals with no clinical signs are PCR positive. Inclusion body disease testing negative in the two boids.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Cryptosporidiosis in the collection, with two species involved",
+          "detail": "Organisms, PCR speciation and the gastric lesion",
+          "correct": true
+        },
+        {
+          "label": "Subclinical shedders are present and maintaining transmission",
+          "detail": "Four PCR-positive animals with no signs",
+          "correct": true
+        },
+        {
+          "label": "Shared equipment and no quarantine allowed spread",
+          "detail": "A faecal-oral organism in a collection with no barriers",
+          "correct": true
+        },
+        {
+          "label": "Pinworms are incidental to this syndrome",
+          "detail": "They do not cause gastric hyperplasia or regurgitation",
+          "correct": true
+        },
+        {
+          "label": "Inclusion body disease explains the snakes",
+          "detail": "Testing negative in both boids",
+          "correct": false
+        },
+        {
+          "label": "Husbandry temperature deficits are the primary cause",
+          "detail": "Data loggers show appropriate conditions",
+          "correct": false
+        }
+      ],
+      "explanation": "The subclinical positives are the finding that changes the whole plan, because this parasite has no reliably curative treatment: control means identifying shedders, strict barrier husbandry and difficult decisions about long-term carriers. The negative IBD result is worth as much — it stops a second, unrelated investigation running in parallel."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Acid-fast oocysts with C. serpentis and C. varanii on PCR, gastric mucosal hyperplasia at post-mortem, four subclinical PCR-positive animals, appropriate husbandry records, IBD negative.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Collection-wide cryptosporidiosis with subclinical carriers",
+          "detail": "Confirmed organism, its lesion and its reservoir",
+          "correct": true
+        },
+        {
+          "label": "Inclusion body disease",
+          "detail": "Negative on testing",
+          "correct": false
+        },
+        {
+          "label": "Husbandry-related anorexia and regurgitation",
+          "detail": "Excluded by the environmental records",
+          "correct": false
+        },
+        {
+          "label": "Pinworm-associated enteropathy",
+          "detail": "Incidental parasites that do not cause gastric disease",
+          "correct": false
+        },
+        {
+          "label": "Gastric neoplasia",
+          "detail": "Would not affect six animals of several species",
+          "correct": false
+        }
+      ],
+      "explanation": "Naming it as a collection diagnosis is the point: cohorting positives, dedicated equipment per enclosure, disinfection that actually works against oocysts, a real quarantine period for arrivals, and an honest conversation about prognosis and euthanasia for wasting animals. Treating six reptiles individually would leave the centre reinfecting itself indefinitely."
+    }
+  ]
+}

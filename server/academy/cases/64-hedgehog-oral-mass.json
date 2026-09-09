@@ -1,0 +1,172 @@
+{
+  "slug": "hedgehog-oral-mass",
+  "title": "Hoglet — 3yo African pygmy hedgehog: drooling with a mouth mass",
+  "species": "exotic",
+  "discipline": "Exotic Animal Medicine",
+  "difficulty": "intermediate",
+  "body_system": "Oral & Neoplasia",
+  "presentation": "3-year-old female African pygmy hedgehog, drooling for three weeks, dropping food, and the owner has noticed a red mass at the front of her mouth. She has lost 90 g.",
+  "completion_bonus": 30,
+  "order": 64,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Assess the patient",
+      "briefing": "Weight 320 g, down from 410 g. Under anaesthesia: a 9 mm friable, ulcerated red mass arising from the gingiva at the left mandibular incisor-canine region, bleeding on contact. Two adjacent teeth mobile. Halitosis. Mandibular lymph node not clearly enlarged. No wobbling, normal gait, no ataxia.",
+      "prompt": "Which findings shape the differential list?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "A friable ulcerated gingival mass with adjacent tooth mobility",
+          "detail": "Invasive local disease rather than simple gingivitis",
+          "correct": true
+        },
+        {
+          "label": "90 g weight loss with dropping of food",
+          "detail": "Functional impact of oral pain",
+          "correct": true
+        },
+        {
+          "label": "Age three years in this species",
+          "detail": "The age at which hedgehog neoplasia becomes common",
+          "correct": true
+        },
+        {
+          "label": "Halitosis",
+          "detail": "Present with any oral lesion",
+          "correct": false
+        },
+        {
+          "label": "Normal gait with no ataxia",
+          "detail": "Useful — it argues against wobbly hedgehog syndrome — but a negative",
+          "correct": false
+        }
+      ],
+      "explanation": "Oral masses in middle-aged African pygmy hedgehogs are usually neoplastic rather than inflammatory, and tooth mobility beside a friable mass suggests bone invasion. This species is famously tumour-prone from around three years old, which is why the age is a real piece of clinical evidence and not just a demographic detail."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Choose the tests",
+      "briefing": "She is already anaesthetised, which is the moment to gather everything.",
+      "prompt": "Which tests do you run?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Incisional biopsy of the mass for histopathology",
+          "detail": "The only way to name the tumour",
+          "correct": true
+        },
+        {
+          "label": "Skull radiographs or CT of the mandible",
+          "detail": "Bone lysis and surgical margins",
+          "correct": true
+        },
+        {
+          "label": "Fine needle aspirate cytology of the mandibular lymph node",
+          "detail": "Regional metastasis",
+          "correct": true
+        },
+        {
+          "label": "Thoracic radiographs",
+          "detail": "Distant metastasis before committing to surgery",
+          "correct": true
+        },
+        {
+          "label": "Haematology and biochemistry",
+          "detail": "Anaesthetic and treatment fitness in a 320 g patient",
+          "correct": true
+        },
+        {
+          "label": "Bacterial culture of the mass as the definitive test",
+          "detail": "It will grow oral flora and answer nothing",
+          "correct": false
+        },
+        {
+          "label": "Empirical antibiotics and review in three weeks with no biopsy",
+          "detail": "Delays diagnosis of an aggressive tumour",
+          "correct": false
+        }
+      ],
+      "explanation": "Anaesthesia in a 320 g hedgehog is the scarce resource, so everything gets done in one episode: biopsy, imaging of the jaw and chest, node aspirate and bloods. Culturing an oral mass is the classic wasted test — it grows mouth flora whatever the lesion is. Treating empirically and reviewing later is how these tumours become inoperable."
+    },
+    {
+      "kind": "differential",
+      "title": "Interpret the results",
+      "briefing": "Histopathology: squamous cell carcinoma with invasion of the underlying bone, incomplete margins on the incisional sample. CT: osteolysis of the left rostral mandible around the mobile teeth, no mandibular fracture. Lymph node cytology: reactive hyperplasia, no neoplastic cells. Thoracic radiographs: no pulmonary nodules. Haematology: mild anaemia. Biochemistry: albumin 24 g/L (low), urea and creatinine normal, ALT normal.",
+      "prompt": "Which conclusions do these results support?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Oral squamous cell carcinoma with local bone invasion",
+          "detail": "Histology plus osteolysis on CT",
+          "correct": true
+        },
+        {
+          "label": "No detectable regional or pulmonary metastasis at this point",
+          "detail": "Reactive node and clear thoracic radiographs",
+          "correct": true
+        },
+        {
+          "label": "Nutritional support is needed before and after any surgery",
+          "detail": "Albumin 24 g/L after 90 g of weight loss",
+          "correct": true
+        },
+        {
+          "label": "Antibiotics alone will not control this lesion",
+          "detail": "It is neoplastic, not primarily infectious",
+          "correct": true
+        },
+        {
+          "label": "Wobbly hedgehog syndrome is a concurrent diagnosis",
+          "detail": "No neurological signs and nothing here supports it",
+          "correct": false
+        },
+        {
+          "label": "The absence of nodules on radiographs excludes metastasis",
+          "detail": "Radiographs miss small metastases; it is undetected rather than absent",
+          "correct": false
+        }
+      ],
+      "explanation": "Naming the tumour and its bone invasion is what makes the surgical conversation honest: mandibulectomy in a 320 g animal is possible but demanding, and incomplete margins on the biopsy predict how hard clean margins will be. The distinction between \"no metastasis detected\" and \"no metastasis\" is not pedantry — it is what stops an owner being promised a cure."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Squamous cell carcinoma on histopathology with rostral mandibular osteolysis, reactive node, clear thoracic radiographs, albumin 24 g/L, 90 g weight loss.",
+      "prompt": "What is your diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Oral squamous cell carcinoma with mandibular bone invasion, no metastasis detected",
+          "detail": "The tumour, its local extent and the honest staging",
+          "correct": true
+        },
+        {
+          "label": "Chronic ulcerative gingivostomatitis",
+          "detail": "Histology shows carcinoma",
+          "correct": false
+        },
+        {
+          "label": "Dental abscess with osteomyelitis",
+          "detail": "The lysis is neoplastic invasion, confirmed on biopsy",
+          "correct": false
+        },
+        {
+          "label": "Wobbly hedgehog syndrome",
+          "detail": "A neurodegenerative disease with no oral lesion",
+          "correct": false
+        },
+        {
+          "label": "Oral papilloma",
+          "detail": "Benign and non-invasive, contradicted by the histology",
+          "correct": false
+        }
+      ],
+      "explanation": "This diagnosis frames a decision rather than a prescription: partial mandibulectomy with analgesia and nutritional support, or palliation with analgesia and assisted feeding, discussed frankly with an owner whose hedgehog has an aggressive tumour and a low albumin. Staging it carefully is what lets that conversation be specific instead of hopeful."
+    }
+  ]
+}

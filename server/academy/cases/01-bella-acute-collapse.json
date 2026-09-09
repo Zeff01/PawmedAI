@@ -1,0 +1,157 @@
+{
+  "slug": "bella-acute-collapse",
+  "title": "Bella — 7yo Golden Retriever: acute collapse & pale mucous membranes",
+  "species": "canine",
+  "discipline": "Emergency & Critical Care",
+  "difficulty": "intermediate",
+  "body_system": "Cardiovascular / Haematology",
+  "presentation": "7-year-old female neutered Golden Retriever, presented after collapsing in the garden. Owner reports she has been quieter than usual for a fortnight and off her food since yesterday.",
+  "completion_bonus": 30,
+  "order": 1,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Triage the presentation",
+      "briefing": "On arrival: HR 168 bpm, weak femoral pulses, CRT 3 seconds, mucous membranes pale pink to white. Temperature 37.4°C. Respiratory rate 40/min with no crackles. Abdomen is distended and fluid-thrill positive on ballottement. Mentation dull but responsive.",
+      "prompt": "Which findings put this dog in shock right now?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Tachycardia with weak femoral pulses",
+          "detail": "HR 168, poor pulse quality",
+          "correct": true
+        },
+        {
+          "label": "Pale mucous membranes with CRT 3 seconds",
+          "detail": "Poor peripheral perfusion",
+          "correct": true
+        },
+        {
+          "label": "Fluid-distended abdomen",
+          "detail": "Positive fluid thrill",
+          "correct": true
+        },
+        {
+          "label": "Temperature 37.4°C",
+          "detail": "Low-normal for a dog",
+          "correct": false
+        },
+        {
+          "label": "Two weeks of lethargy",
+          "detail": "Relevant history, not a shock parameter",
+          "correct": false
+        }
+      ],
+      "explanation": "Tachycardia, poor pulse quality and prolonged CRT are the cardinal signs of hypovolaemic shock; the fluid-filled abdomen tells you where the volume has gone. The mild hypothermia and the fortnight of lethargy matter to the story but neither is a perfusion parameter — treating them as such is how a student ends up chasing a fever that is not there."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "First-line diagnostics",
+      "briefing": "You have stabilised with oxygen and placed two large-bore peripheral catheters. The dog remains tachycardic after an initial fluid bolus.",
+      "prompt": "Which diagnostics do you run in the first ten minutes?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "AFAST abdominal ultrasound",
+          "detail": "Free fluid, and where it is",
+          "correct": true
+        },
+        {
+          "label": "PCV and total solids",
+          "detail": "Baseline before dilution by fluids",
+          "correct": true
+        },
+        {
+          "label": "Abdominocentesis with PCV of the fluid",
+          "detail": "Confirms haemoabdomen",
+          "correct": true
+        },
+        {
+          "label": "Blood pressure and lactate",
+          "detail": "Quantifies the perfusion deficit",
+          "correct": true
+        },
+        {
+          "label": "Barium contrast series",
+          "detail": "Takes hours and gives you nothing here",
+          "correct": false
+        },
+        {
+          "label": "Thyroid panel (T4/TSH)",
+          "detail": "No bearing on an acute collapse",
+          "correct": false
+        }
+      ],
+      "explanation": "AFAST plus abdominocentesis answers the only question that changes the next hour: is the abdomen full of blood? A fluid PCV approaching the peripheral PCV confirms haemoabdomen. Contrast studies and endocrine panels are not wrong tests in general — they are the wrong tests right now, and a collapsing patient does not have hours to spare."
+    },
+    {
+      "kind": "differential",
+      "title": "Build the differential list",
+      "briefing": "AFAST: substantial free fluid in all four quadrants. Abdominocentesis yields non-clotting blood, fluid PCV 34% against a peripheral PCV of 29%. Ultrasound shows a 7 cm cavitated mass at the splenic head. No history of trauma, no access to rodenticide, platelet count 178 ×10⁹/L.",
+      "prompt": "Which remain plausible causes of this haemoabdomen?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Ruptured splenic mass",
+          "detail": "Cavitated splenic lesion on ultrasound",
+          "correct": true
+        },
+        {
+          "label": "Ruptured hepatic mass",
+          "detail": "Also cavitated, also bleeds — imaging must exclude it",
+          "correct": true
+        },
+        {
+          "label": "Blunt abdominal trauma",
+          "detail": "Owner reports no trauma, and a mass is visible",
+          "correct": false
+        },
+        {
+          "label": "Anticoagulant rodenticide toxicity",
+          "detail": "No access, and the platelet count is normal",
+          "correct": false
+        },
+        {
+          "label": "Septic peritonitis",
+          "detail": "The tap is frank blood, not turbid effusion",
+          "correct": false
+        }
+      ],
+      "explanation": "Non-clotting blood with a fluid PCV at or above the peripheral PCV is haemoabdomen. With a cavitated splenic mass on screen, spontaneous rupture leads — but a hepatic mass presents identically and is excluded by imaging, not by assumption. Rodenticide is the differential worth checking every time and discarding here: coagulopathic bleeders have a prolonged PT long before the platelet count moves."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "Coagulation profile is within reference intervals. Thoracic radiographs show no pulmonary nodules. The splenic mass is confirmed as the bleeding source at exploratory laparotomy.",
+      "prompt": "What is your working diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Spontaneous haemoabdomen from a ruptured splenic mass",
+          "detail": "Most likely haemangiosarcoma pending histopathology",
+          "correct": true
+        },
+        {
+          "label": "Gastric dilatation-volvulus",
+          "detail": "",
+          "correct": false
+        },
+        {
+          "label": "Immune-mediated haemolytic anaemia",
+          "detail": "",
+          "correct": false
+        },
+        {
+          "label": "Hypoadrenocorticism (Addisonian crisis)",
+          "detail": "",
+          "correct": false
+        }
+      ],
+      "explanation": "The two-thirds rule is the one to carry out of this case: roughly two thirds of splenic masses in dogs are malignant, and roughly two thirds of those are haemangiosarcoma — but that is a probability, not a diagnosis. Histopathology names the tumour. GDV gives you a tympanic, not fluid-filled, abdomen; IMHA gives you pallor without free abdominal blood; an Addisonian crisis is bradycardic far more often than tachycardic."
+    }
+  ]
+}

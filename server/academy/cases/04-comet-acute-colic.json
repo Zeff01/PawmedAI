@@ -1,0 +1,157 @@
+{
+  "slug": "comet-acute-colic",
+  "title": "Comet — 9yo Warmblood gelding: acute colic",
+  "species": "equine",
+  "discipline": "Emergency & Critical Care",
+  "difficulty": "advanced",
+  "body_system": "Gastrointestinal",
+  "presentation": "9-year-old Warmblood gelding, pawing and flank-watching for four hours. Recently moved onto box rest for a tendon injury; hay intake unchanged, water intake reportedly reduced.",
+  "completion_bonus": 30,
+  "order": 4,
+  "stages": [
+    {
+      "kind": "history",
+      "title": "Assess the pain and the risk",
+      "briefing": "HR 48 bpm, mucous membranes pink, CRT 2 seconds. Intermittent pawing that settles with walking. Gut sounds reduced in all four quadrants. No faecal output for 12 hours. Rectal temperature 37.8°C. Digital pulses normal.",
+      "prompt": "Which findings raise your concern in a colicking horse?",
+      "select_mode": "multi",
+      "points": 10,
+      "options": [
+        {
+          "label": "Reduced water intake on recent box rest",
+          "detail": "The classic setup for an impaction",
+          "correct": true
+        },
+        {
+          "label": "Absent faecal output for 12 hours",
+          "detail": "Something is not moving through",
+          "correct": true
+        },
+        {
+          "label": "Reduced gut sounds in all quadrants",
+          "detail": "Reduced motility",
+          "correct": true
+        },
+        {
+          "label": "HR 48 bpm",
+          "detail": "Mildly elevated; not the tachycardia of a strangulating lesion",
+          "correct": false
+        },
+        {
+          "label": "Normal digital pulses",
+          "detail": "Reassuring against laminitis, not a colic sign",
+          "correct": false
+        }
+      ],
+      "explanation": "Box rest plus reduced water is the impaction recipe, and the history is doing most of the diagnostic work before you touch the horse. Read the heart rate carefully: 48 bpm with pain that settles on walking is a horse you can work up. A strangulating lesion drives the rate past 60 with pain that no amount of walking or analgesia will touch — that horse needs a surgeon, not another rectal."
+    },
+    {
+      "kind": "diagnostics",
+      "title": "Work the colic up",
+      "briefing": "The horse is in stocks and sedated for examination.",
+      "prompt": "What belongs in a first-pass colic workup?",
+      "select_mode": "multi",
+      "points": 15,
+      "options": [
+        {
+          "label": "Nasogastric intubation",
+          "detail": "Decompresses, and net reflux changes everything",
+          "correct": true
+        },
+        {
+          "label": "Rectal palpation",
+          "detail": "Locates the lesion in the caudal abdomen",
+          "correct": true
+        },
+        {
+          "label": "Serial heart rate and pain scoring",
+          "detail": "Trend beats a single reading",
+          "correct": true
+        },
+        {
+          "label": "Transabdominal ultrasound",
+          "detail": "Distended loops, wall thickness, free fluid",
+          "correct": true
+        },
+        {
+          "label": "Oral glucose tolerance test",
+          "detail": "Not a colic test",
+          "correct": false
+        },
+        {
+          "label": "Standing radiographs of the abdomen",
+          "detail": "Rarely diagnostic in an adult horse this size",
+          "correct": false
+        }
+      ],
+      "explanation": "Pass the tube early and pass it on every colic. More than 2 litres of net reflux redirects you towards a small intestinal or proximal obstruction, and leaving a stomach undecompressed risks a rupture the horse will not survive. Abdominal radiography works in foals and ponies; on a 600 kg Warmblood you will not penetrate enough tissue to learn anything."
+    },
+    {
+      "kind": "differential",
+      "title": "Localise the lesion",
+      "briefing": "Nasogastric intubation yields no net reflux. Rectal palpation: firm, doughy, indentable mass in the ventral left caudal abdomen at the pelvic flexure. No distended small intestine. Peritoneal fluid is clear and straw-coloured with a normal lactate. HR remains 48 bpm after two hours.",
+      "prompt": "Which differentials fit this picture?",
+      "select_mode": "multi",
+      "points": 20,
+      "options": [
+        {
+          "label": "Large colon impaction at the pelvic flexure",
+          "detail": "Palpable indentable mass in the right place",
+          "correct": true
+        },
+        {
+          "label": "Large colon displacement",
+          "detail": "Can coexist and must be excluded on repeat examination",
+          "correct": true
+        },
+        {
+          "label": "Small intestinal strangulating obstruction",
+          "detail": "No reflux, no distended small intestine, HR stable",
+          "correct": false
+        },
+        {
+          "label": "Gastric rupture",
+          "detail": "The horse would be in septic shock",
+          "correct": false
+        },
+        {
+          "label": "Sand enteropathy",
+          "detail": "Possible, but the palpable pelvic flexure mass explains it already",
+          "correct": false
+        }
+      ],
+      "explanation": "The peritoneal tap is the finding that lets you sleep: clear, straw-coloured fluid with a normal lactate says the bowel wall is alive. Serosanguineous fluid with a rising lactate is devitalised intestine and a surgical decision measured in minutes. Keep displacement on the list — it feels similar on the first rectal and declares itself on the second."
+    },
+    {
+      "kind": "diagnosis",
+      "title": "Commit to a diagnosis",
+      "briefing": "After enteral fluids by nasogastric tube and intravenous fluid support, the horse passes faeces at 14 hours and pain resolves. Repeat rectal finds the pelvic flexure soft and reduced in size.",
+      "prompt": "What was the diagnosis?",
+      "select_mode": "single",
+      "points": 25,
+      "options": [
+        {
+          "label": "Large colon impaction at the pelvic flexure",
+          "detail": "Medically resolved",
+          "correct": true
+        },
+        {
+          "label": "Right dorsal displacement of the large colon",
+          "detail": "",
+          "correct": false
+        },
+        {
+          "label": "Strangulating lipoma of the small intestine",
+          "detail": "",
+          "correct": false
+        },
+        {
+          "label": "Equine grass sickness",
+          "detail": "",
+          "correct": false
+        }
+      ],
+      "explanation": "The response to treatment confirmed the diagnosis — resolution with enteral and intravenous fluids is what an impaction does, and a displacement or a strangulating lesion would not have. The management point outlasts the case: this horse became colicky because box rest cut its water intake, so send it home with soaked feed and a plan, or you will see it again next week."
+    }
+  ]
+}
