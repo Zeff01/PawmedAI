@@ -36,14 +36,8 @@ export function WelcomeBanner({
         aria-hidden
         className="pointer-events-none absolute top-0 -left-10 size-64 rounded-full bg-emerald-300/50 blur-3xl"
       />
-
-      {/* Bled off the bottom-left corner, and only from `lg` up: below that
-          the banner is a stacked column with no room beside the greeting, and
-          the artwork ends flat at the chest — cropped by a corner at phone
-          size it reads as a sticker with its bottom sliced off. The phone
-          gets the tile beside the greeting instead. */}
       <img
-        src="/images/mascot-vet-dog.png"
+        src="/images/pawmed-character/mascot-vet-dog.png"
         alt=""
         aria-hidden
         loading="lazy"
@@ -52,16 +46,9 @@ export function WelcomeBanner({
 
       <div className="relative z-10 flex flex-col gap-6">
         <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-          {/* From `lg` the mascot is bled off the card's own left edge, so the
-              greeting reserves the width it takes; below that the mascot is
-              an element in this row and needs none. */}
           <div className="flex min-w-0 items-center lg:pl-56 xl:pl-55">
-            {/* The phone's mascot: bigger, and unframed. The artwork ends
-                flat at the chest, and any tile or corner drawn around it puts
-                a hard edge exactly there — as plain art on the banner there is
-                no boundary for the eye to read that flat edge against. */}
             <img
-              src="/images/mascot-vet-dog.png"
+              src="/images/pawmed-character/mascot-vet-dog.png"
               alt=""
               aria-hidden
               loading="lazy"
