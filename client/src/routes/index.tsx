@@ -4,6 +4,7 @@ import { useState } from 'react'
 import HomeView from '@/features/home/HomeView'
 import { DashboardView } from '@/features/dashboard/DashboardView'
 import { FurParentDashboard } from '@/features/fur-parent/FurParentDashboard'
+import { StudentDashboard } from '@/features/student/StudentDashboard'
 import { Seo } from '@/components/Seo'
 import { AuthModal } from '@/components/AuthModal'
 import { useUserType } from '@/hooks/useUserType'
@@ -26,7 +27,7 @@ function LandingPage() {
   const navigate = useNavigate()
   const { signin } = Route.useSearch()
   const [gateOpen, setGateOpen] = useState(signin === 'required')
-  const { isProfessional, isFurParent } = useUserType()
+  const { isProfessional, isFurParent, isStudent } = useUserType()
 
   // Veterinary Professionals get their workspace here instead of the marketing
   // page. Crawlers and the prerenderer have no session, so `/` still renders
@@ -41,6 +42,23 @@ function LandingPage() {
           noIndex
         />
         <DashboardView />
+      </>
+    )
+  }
+
+  // Veterinary Students get the academy workspace here, for the same reason
+  // the other signed-in profiles do: `/` still renders the landing page for
+  // crawlers and the prerenderer, which have no session.
+  if (isStudent) {
+    return (
+      <>
+        <Seo
+          title="Student dashboard | Pawmed AI"
+          description="Your Pawmed AI student workspace: assigned simulation cases, diagnostic progress, and the week's rounds."
+          canonicalPath="/"
+          noIndex
+        />
+        <StudentDashboard />
       </>
     )
   }

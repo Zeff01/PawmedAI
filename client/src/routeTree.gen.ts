@@ -19,6 +19,7 @@ import { Route as ClassifyBreedIndexRouteImport } from './routes/classify-breed/
 import { Route as CbcAnalyzerIndexRouteImport } from './routes/cbc-analyzer/index'
 import { Route as MedicalLogRecordIdRouteImport } from './routes/medical-log/$recordId'
 import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
+import { Route as AcademySlugRouteImport } from './routes/academy/$slug'
 import { Route as AnimalsSlugIndexRouteImport } from './routes/animals/$slug/index'
 import { Route as AuthGoogleCallbackRouteImport } from './routes/auth/google/callback'
 
@@ -72,6 +73,11 @@ const AuthCallbackRoute = AuthCallbackRouteImport.update({
   path: '/auth/callback',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AcademySlugRoute = AcademySlugRouteImport.update({
+  id: '/academy/$slug',
+  path: '/academy/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AnimalsSlugIndexRoute = AnimalsSlugIndexRouteImport.update({
   id: '/animals/$slug/',
   path: '/animals/$slug/',
@@ -86,6 +92,7 @@ const AuthGoogleCallbackRoute = AuthGoogleCallbackRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/academy/$slug': typeof AcademySlugRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/medical-log/$recordId': typeof MedicalLogRecordIdRoute
   '/cbc-analyzer/': typeof CbcAnalyzerIndexRoute
@@ -100,6 +107,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/academy/$slug': typeof AcademySlugRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/medical-log/$recordId': typeof MedicalLogRecordIdRoute
   '/cbc-analyzer': typeof CbcAnalyzerIndexRoute
@@ -115,6 +123,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/academy/$slug': typeof AcademySlugRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/medical-log/$recordId': typeof MedicalLogRecordIdRoute
   '/cbc-analyzer/': typeof CbcAnalyzerIndexRoute
@@ -131,6 +140,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$'
+    | '/academy/$slug'
     | '/auth/callback'
     | '/medical-log/$recordId'
     | '/cbc-analyzer/'
@@ -145,6 +155,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/$'
+    | '/academy/$slug'
     | '/auth/callback'
     | '/medical-log/$recordId'
     | '/cbc-analyzer'
@@ -159,6 +170,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$'
+    | '/academy/$slug'
     | '/auth/callback'
     | '/medical-log/$recordId'
     | '/cbc-analyzer/'
@@ -174,6 +186,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SplatRoute: typeof SplatRoute
+  AcademySlugRoute: typeof AcademySlugRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
   MedicalLogRecordIdRoute: typeof MedicalLogRecordIdRoute
   CbcAnalyzerIndexRoute: typeof CbcAnalyzerIndexRoute
@@ -258,6 +271,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/academy/$slug': {
+      id: '/academy/$slug'
+      path: '/academy/$slug'
+      fullPath: '/academy/$slug'
+      preLoaderRoute: typeof AcademySlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/animals/$slug/': {
       id: '/animals/$slug/'
       path: '/animals/$slug'
@@ -278,6 +298,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
+  AcademySlugRoute: AcademySlugRoute,
   AuthCallbackRoute: AuthCallbackRoute,
   MedicalLogRecordIdRoute: MedicalLogRecordIdRoute,
   CbcAnalyzerIndexRoute: CbcAnalyzerIndexRoute,
