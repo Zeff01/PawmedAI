@@ -8,6 +8,7 @@ from cbc_analyzer.reference import (
     SPECIES_CHOICES,
     evaluate_panel,
 )
+from core.uploadcare import fetch_uploadcare_file
 
 SAMPLE_QUALITY_FLAGS = ("hemolyzed", "lipemic", "clotted")
 
@@ -132,6 +133,7 @@ class CBCAnalyzeRequestSerializer(PatientContextSerializer):
         choices=SPECIES_CHOICES, required=False, allow_blank=True
     )
     image = serializers.ImageField(required=False, allow_null=True)
+    image_url = serializers.URLField(required=False, allow_blank=True)
     values = JSONCompatibleField(expect=dict, required=False)
     sample_quality = JSONCompatibleField(expect=list, required=False)
     smear_morphology = serializers.CharField(
@@ -158,6 +160,16 @@ class CBCAnalyzeRequestSerializer(PatientContextSerializer):
         return validate_sample_quality(value)
 
     def validate(self, attrs):
+        image_url = (attrs.pop("image_url", "") or "").strip()
+        if image_url and not attrs.get("image"):
+            attrs["image"] = fetch_uploadcare_file(
+                image_url,
+                max_bytes=MAX_IMAGE_MB * 1024 * 1024,
+                allowed_types=ALLOWED_IMAGE_TYPES,
+                field_name="image_url",
+                fallback_name="cbc-report.jpg",
+            )
+
         if not attrs.get("image") and not attrs.get("values"):
             raise serializers.ValidationError(
                 "Upload a CBC report or enter at least one blood value."

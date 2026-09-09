@@ -1,11 +1,16 @@
 from rest_framework import serializers
 
+from core.uploadcare import fetch_uploadcare_file
+
 
 MIN_DESCRIPTION_LENGTH = 10
+MAX_IMAGE_MB = 5
+ALLOWED_IMAGE_TYPES = {"image/jpeg", "image/png", "image/webp"}
 
 
 class BreedClassificationRequestSerializer(serializers.Serializer):
     image = serializers.ImageField(required=False, allow_null=True)
+    image_url = serializers.URLField(required=False, allow_blank=True)
     text = serializers.CharField(required=False, allow_blank=True, max_length=2000)
 
     def validate_image(self, value):
@@ -25,6 +30,16 @@ class BreedClassificationRequestSerializer(serializers.Serializer):
         return value
 
     def validate(self, attrs):
+        image_url = (attrs.pop("image_url", "") or "").strip()
+        if image_url and not attrs.get("image"):
+            attrs["image"] = fetch_uploadcare_file(
+                image_url,
+                max_bytes=MAX_IMAGE_MB * 1024 * 1024,
+                allowed_types=ALLOWED_IMAGE_TYPES,
+                field_name="image_url",
+                fallback_name="upload.jpg",
+            )
+
         image = attrs.get("image")
         text = (attrs.get("text") or "").strip()
 

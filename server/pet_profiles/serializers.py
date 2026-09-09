@@ -10,6 +10,8 @@ classes exist for the other direction: validating what an owner sends in.
 from django.utils import timezone
 from rest_framework import serializers
 
+from core.uploadcare import fetch_uploadcare_file
+
 from pet_profiles.models import (
     Appointment,
     Medication,
@@ -135,9 +137,14 @@ class AppointmentSerializer(serializers.ModelSerializer):
 
 
 class PetDocumentSerializer(serializers.ModelSerializer):
+    file_url = serializers.URLField(
+        write_only=True, required=False, allow_blank=True
+    )
+
     class Meta:
         model = PetDocument
-        fields = ["id", "label", "kind", "file", "note"]
+        fields = ["id", "label", "kind", "file", "note", "file_url"]
+        extra_kwargs = {"file": {"required": False}}
 
     def validate_file(self, value):
         if value.size > MAX_DOCUMENT_BYTES:
@@ -146,6 +153,22 @@ class PetDocumentSerializer(serializers.ModelSerializer):
                 f"That file is larger than {limit} MB."
             )
         return value
+
+    def validate(self, attrs):
+        file_url = (attrs.pop("file_url", "") or "").strip()
+        if file_url and not attrs.get("file"):
+            attrs["file"] = fetch_uploadcare_file(
+                file_url,
+                max_bytes=MAX_DOCUMENT_BYTES,
+                field_name="file_url",
+                fallback_name="document",
+            )
+
+        if not attrs.get("file"):
+            raise serializers.ValidationError(
+                {"file": "Attach a document to upload."}
+            )
+        return attrs
 
     def validate_label(self, value):
         label = value.strip()

@@ -2,7 +2,7 @@ import json
 import logging
 
 from rest_framework import status
-from rest_framework.parsers import FormParser, MultiPartParser
+from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -26,7 +26,7 @@ class BreedClassificationAPIView(APIView):
     into a sign-in prompt.
     """
 
-    parser_classes = [MultiPartParser, FormParser]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
     throttle_classes = [AIRunThrottle]
     permission_classes = [IsAuthenticated]
 

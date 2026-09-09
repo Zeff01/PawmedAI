@@ -3,7 +3,7 @@ import logging
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
-from rest_framework.parsers import FormParser, MultiPartParser
+from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -210,7 +210,7 @@ class PetDocumentAPIView(PetChildCreateAPIView):
     serializer_class = PetDocumentSerializer
     relation = "documents"
     event_kind = CareEventKind.DOCUMENT
-    parser_classes = [MultiPartParser, FormParser]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     def describe(self, instance):
         return (
