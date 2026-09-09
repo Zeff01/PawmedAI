@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'classify_dss',
     'classify_breed',
     'cbc_analyzer',
+    'academy',
     'pet_profiles',
     'notifications',
     'corsheaders',

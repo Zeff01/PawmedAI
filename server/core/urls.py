@@ -25,6 +25,7 @@ urlpatterns = [
     path("api/", include("classify_dss.urls")),
     path("api/", include("classify_breed.urls")),
     path("api/", include("cbc_analyzer.urls")),
+    path("api/academy/", include("academy.urls")),
     path("api/pets/", include("pet_profiles.urls")),
     path("api/push/", include("notifications.urls")),
     path("api/user/", include("users.urls")),
