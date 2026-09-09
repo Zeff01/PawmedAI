@@ -1,13 +1,11 @@
-import * as React from 'react'
 import {
   ArrowUpTrayIcon,
   CheckCircleIcon,
-  DocumentIcon,
-  CameraIcon,
   PhotoIcon,
   XMarkIcon,
 } from '@heroicons/react/24/solid'
-import { CameraModal } from './CameraModal'
+import { UploadCareComponent } from '@/components/UploadCareComponent'
+import type { UploadedFile } from '@/components/UploadCareComponent'
 
 interface UploadProgressProps {
   fileName: string
@@ -100,163 +98,66 @@ export function UploadProgress({
 
 /* ─── Upload Zone ────────────────────────────────────────── */
 interface ImageUploadProps {
-  onFile: (file: File) => void
+  onUpload: (file: UploadedFile) => void
+  /** The attached photo's CDN URL, or null while nothing is attached. */
   previewUrl: string | null
   maxSizeMb?: number
-  onValidationError?: (message: string) => void
-  onRequestOpen?: (open: () => void) => void
   /** Extra classes for the zone itself — used to fill a column. */
   className?: string
 }
 
+/**
+ * Attach the photo a case is read from.
+ *
+ * Browsing, dragging and the camera are the Uploadcare widget's job; this keeps
+ * the preview, because the reader should see the shot the model will be given.
+ * The widget stays on screen once a photo is attached, so replacing one is the
+ * same gesture as attaching the first.
+ */
 export function ImageUpload({
-  onFile,
+  onUpload,
   previewUrl,
   maxSizeMb = 5,
-  onValidationError,
-  onRequestOpen,
   className = '',
 }: ImageUploadProps) {
-  const [dragActive, setDragActive] = React.useState(false)
-  const [cameraOpen, setCameraOpen] = React.useState(false)
-  const fileInputRef = React.useRef<HTMLInputElement | null>(null)
-
-  const validateAndEmit = React.useCallback(
-    (file: File) => {
-      const allowedTypes = ['image/jpeg', 'image/png', 'image/webp']
-      if (!allowedTypes.includes(file.type)) {
-        onValidationError?.('Only JPEG, PNG, or WEBP images are supported.')
-        return
-      }
-      const maxBytes = maxSizeMb * 1024 * 1024
-      if (file.size > maxBytes) {
-        onValidationError?.(
-          `Please upload an image smaller than ${maxSizeMb}MB.`,
-        )
-        return
-      }
-      onFile(file)
-    },
-    [maxSizeMb, onFile, onValidationError],
-  )
-
-  const openFileDialog = React.useCallback(() => {
-    fileInputRef.current?.click()
-  }, [])
-
-  React.useEffect(() => {
-    onRequestOpen?.(openFileDialog)
-  }, [onRequestOpen, openFileDialog])
-
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    setDragActive(false)
-    const file = e.dataTransfer.files?.[0]
-    if (file) validateAndEmit(file)
-  }
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (file) validateAndEmit(file)
-    e.target.value = ''
-  }
-
-  const handleOpenCamera = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    setCameraOpen(true)
-  }
-
-  const handleOpenBrowse = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    fileInputRef.current?.click()
-  }
-
   return (
-    <>
-      {cameraOpen && (
-        <CameraModal
-          onCapture={validateAndEmit}
-          onClose={() => setCameraOpen(false)}
-        />
+    <div
+      className={`relative flex flex-col items-center justify-center gap-3 overflow-hidden rounded-lg border border-dashed transition ${
+        previewUrl
+          ? 'border-transparent bg-transparent'
+          : 'border-slate-300 bg-slate-50/60'
+      } ${className}`}
+    >
+      {previewUrl ? (
+        <div className="relative h-80 w-full overflow-hidden rounded-lg border border-slate-200">
+          <img
+            src={previewUrl}
+            alt="Preview"
+            className="h-full w-full object-cover"
+          />
+        </div>
+      ) : (
+        <div className="flex flex-col items-center gap-2 px-8 pt-10 text-center">
+          <ArrowUpTrayIcon className="h-6 w-6 text-slate-300" />
+          <div>
+            <p className="text-[13.5px] font-bold text-slate-800">
+              Add a photo
+            </p>
+            <p className="mt-0.5 text-[11.5px] text-slate-400">
+              PNG, JPG, or WEBP · Max {maxSizeMb} MB
+            </p>
+          </div>
+        </div>
       )}
 
-      <div
-        className={`relative flex cursor-pointer flex-col items-center justify-center overflow-hidden rounded-lg border border-dashed transition ${
-          previewUrl
-            ? 'border-transparent bg-transparent'
-            : dragActive
-              ? 'border-blue-400 bg-blue-50/60'
-              : 'border-slate-300 bg-slate-50/60 hover:border-blue-300 hover:bg-blue-50/40'
-        } ${className}`}
-        onClick={() => fileInputRef.current?.click()}
-        onDragOver={(e) => {
-          e.preventDefault()
-          setDragActive(true)
-        }}
-        onDragLeave={() => setDragActive(false)}
-        onDrop={handleDrop}
-      >
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/jpeg,image/png,image/webp"
-          className="hidden"
-          onChange={handleInputChange}
+      <div className={previewUrl ? 'pb-1' : 'pb-10'}>
+        <UploadCareComponent
+          imgOnly
+          sourceList="local, camera, url"
+          maxSizeMb={maxSizeMb}
+          onUploadOne={onUpload}
         />
-
-        {previewUrl ? (
-          <div className="group relative h-80 w-full overflow-hidden rounded-lg border border-slate-200">
-            <img
-              src={previewUrl}
-              alt="Preview"
-              className="h-full w-full object-cover transition-opacity duration-200 group-hover:opacity-70"
-            />
-            <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-              <div className="flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-[12px] font-bold text-blue-700">
-                <ArrowUpTrayIcon className="h-4 w-4" />
-                Click to upload a new photo
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="flex h-full min-h-52 flex-col items-center justify-center gap-3 px-8 py-10 text-center">
-            <ArrowUpTrayIcon
-              className={`h-6 w-6 transition-transform duration-200 ${
-                dragActive ? 'scale-110 text-blue-500' : 'text-slate-300'
-              }`}
-            />
-
-            <div>
-              <p className="text-[13.5px] font-bold text-slate-800">
-                {dragActive ? 'Release to upload' : 'Drop an image here'}
-              </p>
-              <p className="mt-0.5 text-[11.5px] text-slate-400">
-                PNG, JPG, or WEBP · Max {maxSizeMb} MB
-              </p>
-            </div>
-
-            <div className="mt-1 flex flex-col items-center gap-2 sm:flex-row">
-              <button
-                type="button"
-                onClick={handleOpenBrowse}
-                className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-blue-200 bg-white px-3.5 text-[12px] font-bold text-blue-600 transition hover:border-blue-300 hover:bg-blue-50"
-              >
-                <DocumentIcon className="h-3.5 w-3.5" />
-                Browse files
-              </button>
-
-              <button
-                type="button"
-                onClick={handleOpenCamera}
-                className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3.5 text-[12px] font-bold text-slate-600 transition hover:border-slate-300 hover:bg-slate-50"
-              >
-                <CameraIcon className="h-3.5 w-3.5" />
-                Use camera
-              </button>
-            </div>
-          </div>
-        )}
       </div>
-    </>
+    </div>
   )
 }

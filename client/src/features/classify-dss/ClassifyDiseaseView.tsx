@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { useClassifyDisease } from '@/features/classify-dss/hooks/useClassifyDisease'
 import { ImageUpload, UploadProgress } from './components/ImageUpload'
+import type { UploadedFile } from '@/components/UploadCareComponent'
 import { ResultsSection } from './components/ResultsSection'
 import {
   ArrowPathIcon,
-  ArrowUpTrayIcon,
   CheckCircleIcon,
   ExclamationCircleIcon,
   ExclamationTriangleIcon,
@@ -90,18 +90,9 @@ function InputStep({
 }
 
 export function ClassifyDiseaseView() {
-  const [imageFile, setImageFile] = React.useState<File | null>(null)
-  const [previewUrl, setPreviewUrl] = React.useState<string | null>(null)
+  const [imageFile, setImageFile] = React.useState<UploadedFile | null>(null)
   const [localError, setLocalError] = React.useState<string | null>(null)
   const [textInput, setTextInput] = React.useState('')
-  const [uploadProgress, setUploadProgress] = React.useState(0)
-  const [uploadStatus, setUploadStatus] = React.useState<
-    'idle' | 'uploading' | 'done' | 'error'
-  >('idle')
-  const timerRef = React.useRef<ReturnType<typeof setInterval> | null>(null)
-  const [openFileDialog, setOpenFileDialog] = React.useState<
-    (() => void) | null
-  >(null)
   const lastResultRef = React.useRef<unknown>(null)
 
   const userType = useUserTypeStore((state) => state.userType)
@@ -144,16 +135,6 @@ export function ClassifyDiseaseView() {
   }, [isSessionLoading, isAuthenticated, setLockSelection, setUserType])
 
   React.useEffect(() => {
-    if (!imageFile) {
-      setPreviewUrl(null)
-      return
-    }
-    const url = URL.createObjectURL(imageFile)
-    setPreviewUrl(url)
-    return () => URL.revokeObjectURL(url)
-  }, [imageFile])
-
-  React.useEffect(() => {
     if (!classifyMutation.data) return
     if (lastResultRef.current === classifyMutation.data) return
     lastResultRef.current = classifyMutation.data
@@ -164,36 +145,16 @@ export function ClassifyDiseaseView() {
     })
   }, [classifyMutation.data])
 
-  const handleFile = React.useCallback((file: File) => {
-    if (!file.type.startsWith('image/')) {
-      setLocalError('Please upload a valid image file (PNG, JPG, or WEBP).')
-      return
-    }
+  // Uploadcare validates the type, shows its own progress, and calls back only
+  // once the photo is on the CDN — so there is no upload state left to fake.
+  const handleUpload = React.useCallback((file: UploadedFile) => {
     setLocalError(null)
     setImageFile(file)
     classifyMutation.reset()
-    setUploadProgress(0)
-    setUploadStatus('uploading')
-    let current = 0
-    if (timerRef.current) clearInterval(timerRef.current)
-    timerRef.current = setInterval(() => {
-      current += Math.random() * (current < 60 ? 12 : current < 85 ? 4 : 8)
-      if (current >= 100) {
-        setUploadProgress(100)
-        setUploadStatus('done')
-        clearInterval(timerRef.current!)
-      } else {
-        setUploadProgress(Math.round(current))
-      }
-    }, 180)
   }, [])
 
   const handleRemove = () => {
-    if (timerRef.current) clearInterval(timerRef.current)
     setImageFile(null)
-    setPreviewUrl(null)
-    setUploadProgress(0)
-    setUploadStatus('idle')
     setLocalError(null)
     classifyMutation.reset()
   }
@@ -215,16 +176,12 @@ export function ClassifyDiseaseView() {
       setLocalError('Please upload an image or add notes to classify.')
       return
     }
-    if (imageFile && uploadStatus !== 'done') {
-      setLocalError('Please wait for the image to finish uploading.')
-      return
-    }
     setLocalError(null)
     // A classification spends from an account's allowance, so a visitor gets
     // the sign-in dialog here rather than a refusal from the API.
     runWhenSignedIn(() =>
       classifyMutation.mutate({
-        imageFile,
+        imageUrl: imageFile?.url ?? null,
         textInput: trimmedText,
       }),
     )
@@ -236,9 +193,7 @@ export function ClassifyDiseaseView() {
   const needsAuth = !isSessionLoading && !isAuthenticated
   const trimmedText = textInput.trim()
   const hasAnyInput = Boolean(imageFile) || trimmedText.length > 0
-  const canSubmit =
-    !classifyMutation.isPending &&
-    ((imageFile && uploadStatus === 'done') || trimmedText.length > 0)
+  const canSubmit = !classifyMutation.isPending && hasAnyInput
 
   return (
     <section className="relative z-10 min-h-screen pb-24">
@@ -349,36 +304,21 @@ export function ClassifyDiseaseView() {
                       }
                     >
                       <ImageUpload
-                        onFile={handleFile}
-                        previewUrl={previewUrl}
+                        onUpload={handleUpload}
+                        previewUrl={imageFile?.url ?? null}
                         maxSizeMb={5}
                         className={isProfessional ? 'min-h-0 flex-1' : ''}
-                        onValidationError={(message) => setLocalError(message)}
-                        onRequestOpen={(open) => setOpenFileDialog(() => open)}
                       />
 
-                      {imageFile && uploadStatus !== 'idle' && (
+                      {imageFile && (
                         <UploadProgress
                           fileName={imageFile.name}
                           fileSize={formatBytes(imageFile.size)}
-                          progress={uploadProgress}
-                          status={uploadStatus}
+                          progress={100}
+                          status="done"
                           onRemove={handleRemove}
                         />
                       )}
-
-                      {imageFile ? (
-                        <button
-                          type="button"
-                          onClick={() => openFileDialog?.()}
-                          className="inline-flex items-center gap-1.5 text-[12px] font-bold text-blue-600 transition hover:text-blue-700"
-                        >
-                          <ArrowUpTrayIcon className="h-3.5 w-3.5" />
-                          {isProfessional
-                            ? 'Replace image'
-                            : 'Replace this photo'}
-                        </button>
-                      ) : null}
                     </div>
                   </InputStep>
 
@@ -558,8 +498,6 @@ export function ClassifyDiseaseView() {
                           <CheckCircleIcon className="h-3.5 w-3.5" />
                           Ready to classify
                         </span>
-                      ) : imageFile && uploadStatus !== 'done' ? (
-                        'Waiting for the photo to finish uploading…'
                       ) : (
                         'Add a photo or clinical notes to continue.'
                       )}
@@ -659,7 +597,7 @@ export function ClassifyDiseaseView() {
           ) : classifyMutation.data ? (
             <ResultsSection
               result={classifyMutation.data}
-              previewUrl={previewUrl}
+              previewUrl={imageFile?.url ?? null}
             />
           ) : (
             <div className="w-full rounded-lg border border-dashed border-slate-200 bg-slate-50/60 px-6 py-12 text-center">

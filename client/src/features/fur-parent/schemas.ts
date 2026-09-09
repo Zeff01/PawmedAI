@@ -54,8 +54,14 @@ export const documentSchema = z.object({
   label: z.string().trim().min(1, 'Give the document a label.').max(200),
   kind: z.enum(['lab', 'insurance', 'certificate', 'other']),
   note: z.string().trim().max(250).optional(),
+  // Uploadcare has already taken the bytes by the time this validates, so
+  // what the form holds is the CDN URL rather than a File.
   file: z
-    .instanceof(File, { message: 'Choose a file to upload.' })
+    .object({
+      url: z.string().url(),
+      name: z.string(),
+      size: z.number(),
+    })
     .refine((file) => file.size <= MAX_DOCUMENT_BYTES, {
       message: 'That file is larger than 25 MB.',
     }),

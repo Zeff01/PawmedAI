@@ -65,15 +65,17 @@ export async function uploadDocument({
   petId: string
   label: string
   kind: DocumentKind
-  file: File
+  file: { url: string }
   note?: string
 }): Promise<void> {
-  const body = new FormData()
-  body.set('label', label.trim())
-  body.set('kind', kind)
-  body.set('file', file)
-  body.set('note', note.trim())
-  return petsClient.post<void>(`/${petId}/documents/`, body)
+  // The bytes are already on Uploadcare's CDN; the API fetches them from the
+  // URL rather than taking a file part.
+  return petsClient.post<void>(`/${petId}/documents/`, {
+    label: label.trim(),
+    kind,
+    file_url: file.url,
+    note: note.trim(),
+  })
 }
 
 export async function addVaccination({

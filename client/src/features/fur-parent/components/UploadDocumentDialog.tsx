@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { UploadCareComponent } from '@/components/UploadCareComponent'
 import {
   Select,
   SelectContent,
@@ -81,24 +82,23 @@ export function UploadDocumentDialog({
               <FormItem>
                 <FormLabel className={labelStyles}>File</FormLabel>
                 <FormControl>
-                  <Input
-                    type="file"
-                    accept=".pdf,image/*"
-                    className={`${controlStyles} file:mr-3 file:rounded-lg file:bg-fp-brand-50 file:px-3 file:text-xs file:font-semibold file:text-fp-brand-700`}
-                    onChange={(event) => {
-                      const chosen = event.target.files?.[0]
-                      field.onChange(chosen)
-                      if (chosen && !form.getValues('label').trim()) {
+                  <UploadCareComponent
+                    accept="application/pdf,image/*"
+                    sourceList="local, camera, url"
+                    maxSizeMb={25}
+                    onUploadOne={(uploaded) => {
+                      field.onChange(uploaded)
+                      // Save the reader naming a file they just named on disk:
+                      // the filename is a good first draft of the label.
+                      if (!form.getValues('label').trim()) {
                         form.setValue(
                           'label',
-                          chosen.name.replace(/\.[^.]+$/, ''),
+                          uploaded.name.replace(/\.[^.]+$/, ''),
                           { shouldValidate: true },
                         )
                       }
                     }}
-                    onBlur={field.onBlur}
-                    ref={field.ref}
-                    name={field.name}
+                    onClear={() => field.onChange(undefined)}
                   />
                 </FormControl>
                 <FormDescription className="text-[11px] text-slate-500">

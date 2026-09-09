@@ -14,7 +14,7 @@ function firstValidationMessage(payload: unknown): string | null {
 }
 
 export type BreedClassifyPayload = {
-  imageFile?: File | null
+  imageUrl?: string | null
   /** Owner's written description of the pet. Either this or an image is required. */
   textInput?: string
 }
@@ -22,9 +22,9 @@ export type BreedClassifyPayload = {
 export async function classifyBreed(
   payload: BreedClassifyPayload,
 ): Promise<BreedClassificationResult> {
-  const { imageFile, textInput } = payload
+  const { imageUrl, textInput } = payload
   const trimmedText = textInput?.trim() ?? ''
-  if (!imageFile && !trimmedText) {
+  if (!imageUrl && !trimmedText) {
     throw new Error(
       'Upload a photo or describe your pet to identify the breed.',
     )
@@ -33,12 +33,11 @@ export async function classifyBreed(
   const baseUrl =
     import.meta.env.VITE_API_BASE_URL?.toString() ?? DEFAULT_BASE_URL
 
-  const formData = new FormData()
-  if (imageFile) {
-    formData.append('image', imageFile)
-  }
-  if (trimmedText) {
-    formData.append('text', trimmedText)
+  // The photo is already on Uploadcare's CDN; the API fetches it from the URL
+  // rather than taking a file part.
+  const body = {
+    ...(imageUrl ? { image_url: imageUrl } : {}),
+    ...(trimmedText ? { text: trimmedText } : {}),
   }
 
   const { data } = await supabase.auth.getSession()
@@ -52,12 +51,15 @@ export async function classifyBreed(
     err.code = 'UNAUTHENTICATED'
     throw err
   }
-  const headers: HeadersInit = { Authorization: `Bearer ${accessToken}` }
+  const headers: HeadersInit = {
+    Authorization: `Bearer ${accessToken}`,
+    'Content-Type': 'application/json',
+  }
 
   const response = await fetch(`${baseUrl}/api/breed-classify/`, {
     method: 'POST',
     headers,
-    body: formData,
+    body: JSON.stringify(body),
   })
 
   if (!response.ok) {

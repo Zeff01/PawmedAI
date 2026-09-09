@@ -22,7 +22,7 @@ import { useUserType } from '@/hooks/useUserType'
 import PawMedLoader from '@/features/classify-dss/components/ResultSkeletonLoader'
 import { AnimalBreedSidebar } from './components/AnimalBreedSidebar'
 import { BreedUploadZone } from './components/BreedUploadZone'
-import type { UploadStatus } from './components/BreedUploadZone'
+import type { UploadedFile } from '@/components/UploadCareComponent'
 import {
   BreedDescriptionInput,
   MIN_DESCRIPTION_LENGTH,
@@ -124,13 +124,9 @@ function EmptyBreedResult() {
 
 export function ClassifyBreedView() {
   const [mode, setMode] = React.useState<InputMode>('photo')
-  const [imageFile, setImageFile] = React.useState<File | null>(null)
-  const [previewUrl, setPreviewUrl] = React.useState<string | null>(null)
+  const [imageFile, setImageFile] = React.useState<UploadedFile | null>(null)
   const [textInput, setTextInput] = React.useState('')
   const [localError, setLocalError] = React.useState<string | null>(null)
-  const [uploadProgress, setUploadProgress] = React.useState(0)
-  const [uploadStatus, setUploadStatus] = React.useState<UploadStatus>('idle')
-  const timerRef = React.useRef<ReturnType<typeof setInterval> | null>(null)
   const resultsRef = React.useRef<HTMLDivElement | null>(null)
 
   const {
@@ -143,23 +139,6 @@ export function ClassifyBreedView() {
   } = useAuthGate()
   const { isProfessional } = useUserType()
   const classifyMutation = useClassifyBreed()
-
-  React.useEffect(() => {
-    if (!imageFile) {
-      setPreviewUrl(null)
-      return
-    }
-    const url = URL.createObjectURL(imageFile)
-    setPreviewUrl(url)
-    return () => URL.revokeObjectURL(url)
-  }, [imageFile])
-
-  React.useEffect(
-    () => () => {
-      if (timerRef.current) clearInterval(timerRef.current)
-    },
-    [],
-  )
 
   // Bring the result area into view as soon as work starts, so the user is not
   // left staring at the form wondering whether anything happened.
@@ -174,35 +153,19 @@ export function ClassifyBreedView() {
     })
   }, [classifyMutation.isPending])
 
-  const handleFile = React.useCallback(
-    (file: File) => {
+  // Uploadcare owns the progress bar and only calls back once the photo has
+  // landed on the CDN, so there is no upload state left to fake here.
+  const handleUpload = React.useCallback(
+    (file: UploadedFile) => {
       setLocalError(null)
       setImageFile(file)
       classifyMutation.reset()
-      setUploadProgress(0)
-      setUploadStatus('uploading')
-      let current = 0
-      if (timerRef.current) clearInterval(timerRef.current)
-      timerRef.current = setInterval(() => {
-        current += Math.random() * (current < 60 ? 18 : 10)
-        if (current >= 100) {
-          setUploadProgress(100)
-          setUploadStatus('done')
-          clearInterval(timerRef.current!)
-        } else {
-          setUploadProgress(Math.round(current))
-        }
-      }, 120)
     },
     [classifyMutation],
   )
 
   const handleRemoveImage = () => {
-    if (timerRef.current) clearInterval(timerRef.current)
     setImageFile(null)
-    setPreviewUrl(null)
-    setUploadProgress(0)
-    setUploadStatus('idle')
     setLocalError(null)
   }
 
@@ -223,14 +186,10 @@ export function ClassifyBreedView() {
 
   const runClassification = React.useCallback(() => {
     setLocalError(null)
-    // The progress bar is cosmetic — the file itself goes out with the request,
-    // so a submit mid-animation just finishes the animation instead of waiting.
-    if (imageFile) {
-      if (timerRef.current) clearInterval(timerRef.current)
-      setUploadProgress(100)
-      setUploadStatus('done')
-    }
-    classifyMutation.mutate({ imageFile, textInput: trimmedText })
+    classifyMutation.mutate({
+      imageUrl: imageFile?.url ?? null,
+      textInput: trimmedText,
+    })
   }, [classifyMutation, imageFile, trimmedText])
 
   const handleSubmit = () => {
@@ -419,12 +378,8 @@ export function ClassifyBreedView() {
                     >
                       <BreedUploadZone
                         file={imageFile}
-                        previewUrl={previewUrl}
-                        status={uploadStatus}
-                        progress={uploadProgress}
-                        onFile={handleFile}
+                        onUpload={handleUpload}
                         onRemove={handleRemoveImage}
-                        onValidationError={setLocalError}
                       />
                       {!imageFile && (
                         <p className="mt-3 text-center text-[12px] text-slate-500">
@@ -610,7 +565,10 @@ export function ClassifyBreedView() {
               {classifyMutation.isPending ? (
                 <PawMedLoader />
               ) : result ? (
-                <BreedResults result={result} previewUrl={previewUrl} />
+                <BreedResults
+                  result={result}
+                  previewUrl={imageFile?.url ?? null}
+                />
               ) : (
                 <EmptyBreedResult />
               )}

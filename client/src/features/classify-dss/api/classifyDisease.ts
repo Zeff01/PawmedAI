@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabase'
 const DEFAULT_BASE_URL = 'http://localhost:8000'
 
 export type DiseaseClassifyPayload = {
-  imageFile?: File | null
+  imageUrl?: string | null
   textInput?: string
   mode: UserType
 }
@@ -13,21 +13,20 @@ export type DiseaseClassifyPayload = {
 export async function classifyDisease(
   payloadData: DiseaseClassifyPayload,
 ): Promise<DiseaseClassificationResult> {
-  const { imageFile, textInput, mode } = payloadData
+  const { imageUrl, textInput, mode } = payloadData
   const trimmedText = textInput?.trim() ?? ''
-  if (!imageFile && !trimmedText) {
+  if (!imageUrl && !trimmedText) {
     throw new Error('Please upload an image or add notes to classify.')
   }
   const baseUrl =
     import.meta.env.VITE_API_BASE_URL?.toString() ?? DEFAULT_BASE_URL
-  const formData = new FormData()
-  if (imageFile) {
-    formData.append('image', imageFile)
+  // The photo is already on Uploadcare's CDN; the API fetches it from the URL
+  // rather than taking a file part.
+  const body = {
+    ...(imageUrl ? { image_url: imageUrl } : {}),
+    ...(trimmedText ? { text: trimmedText } : {}),
+    mode,
   }
-  if (trimmedText) {
-    formData.append('text', trimmedText)
-  }
-  formData.append('mode', mode)
 
   const { data } = await supabase.auth.getSession()
   const accessToken = data.session?.access_token
@@ -40,12 +39,15 @@ export async function classifyDisease(
     err.code = 'UNAUTHENTICATED'
     throw err
   }
-  const headers: HeadersInit = { Authorization: `Bearer ${accessToken}` }
+  const headers: HeadersInit = {
+    Authorization: `Bearer ${accessToken}`,
+    'Content-Type': 'application/json',
+  }
 
   const response = await fetch(`${baseUrl}/api/disease-classify/`, {
     method: 'POST',
     headers,
-    body: formData,
+    body: JSON.stringify(body),
   })
 
   if (!response.ok) {

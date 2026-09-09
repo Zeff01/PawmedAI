@@ -8,7 +8,8 @@ import type {
 } from '../types'
 
 export type AnalyzeCbcPayload = {
-  reportImage?: File | null
+  /** Uploadcare CDN URL — the API fetches the bytes from it. */
+  reportImageUrl?: string | null
   values: Record<string, number>
   species?: Species | ''
   speciesLabel?: string
@@ -26,7 +27,7 @@ export async function analyzeCbc(
   payload: AnalyzeCbcPayload,
 ): Promise<CbcAnalysis> {
   const {
-    reportImage,
+    reportImageUrl,
     values,
     species = '',
     speciesLabel = '',
@@ -41,32 +42,14 @@ export async function analyzeCbc(
   } = payload
 
   const hasValues = Object.keys(values).length > 0
-  if (!reportImage && !hasValues) {
+  if (!reportImageUrl && !hasValues) {
     throw new Error('Upload a CBC report or enter at least one blood value.')
   }
 
-  if (reportImage) {
-    const form = new FormData()
-    form.append('image', reportImage)
-    form.append('values', JSON.stringify(values))
-    if (species) {
-      form.append('species', species)
-      form.append('species_label', speciesLabel)
-    }
-    form.append('pet_name', petName)
-    form.append('owner_name', ownerName)
-    form.append('breed', breed)
-    if (ageYears !== null) {
-      form.append('age_years', String(ageYears))
-    }
-    form.append('sex', sex)
-    form.append('neuter_status', neuterStatus)
-    form.append('sample_quality', JSON.stringify(sampleQuality))
-    form.append('smear_morphology', smearMorphology)
-    return cbcClient.post<CbcAnalysis>('/analyze/', form)
-  }
-
+  // The report is already on the CDN, so the image and values-only requests are
+  // the same JSON body — the multipart branch this used to need is gone.
   return cbcClient.post<CbcAnalysis>('/analyze/', {
+    ...(reportImageUrl ? { image_url: reportImageUrl } : {}),
     values,
     ...(species ? { species, species_label: speciesLabel } : {}),
     pet_name: petName,

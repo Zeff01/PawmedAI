@@ -20,7 +20,7 @@ import { Form } from '@/components/ui/form'
 import { FadeIn } from '@/components/motion/FadeIn'
 import PawMedLoader from '@/features/classify-dss/components/ResultSkeletonLoader'
 import { CbcReportUpload } from './components/CbcReportUpload'
-import type { ReportUploadStatus } from './components/CbcReportUpload'
+import type { UploadedFile } from '@/components/UploadCareComponent'
 import { CbcResultPanel } from './components/CbcResultPanel'
 import { CbcValuesForm } from './components/CbcValuesForm'
 import type { ValuesFormState } from './components/CbcValuesForm'
@@ -104,18 +104,13 @@ export function CbcAnalyzerView() {
   >([])
   const [smearMorphology, setSmearMorphology] = React.useState('')
 
-  const [reportFile, setReportFile] = React.useState<File | null>(null)
-  const [previewUrl, setPreviewUrl] = React.useState<string | null>(null)
-  const [uploadStatus, setUploadStatus] =
-    React.useState<ReportUploadStatus>('idle')
-  const [uploadProgress, setUploadProgress] = React.useState(0)
+  const [reportFile, setReportFile] = React.useState<UploadedFile | null>(null)
 
   const [panelError, setPanelError] = React.useState<string | null>(null)
   const [analysis, setAnalysis] = React.useState<CbcAnalysis | null>(null)
   const [saveOpen, setSaveOpen] = React.useState(false)
   const [savedLog, setSavedLog] = React.useState<MedicalLogDetail | null>(null)
 
-  const timerRef = React.useRef<ReturnType<typeof setInterval> | null>(null)
   const columnRef = React.useRef<HTMLDivElement | null>(null)
 
   const { me } = useIsVeterinaryProfessional()
@@ -126,23 +121,6 @@ export function CbcAnalyzerView() {
     const full = `${me.first_name} ${me.last_name}`.trim()
     return full ? `Dr. ${full}` : ''
   }, [me])
-
-  React.useEffect(() => {
-    if (!reportFile) {
-      setPreviewUrl(null)
-      return
-    }
-    const url = URL.createObjectURL(reportFile)
-    setPreviewUrl(url)
-    return () => URL.revokeObjectURL(url)
-  }, [reportFile])
-
-  React.useEffect(
-    () => () => {
-      if (timerRef.current) clearInterval(timerRef.current)
-    },
-    [],
-  )
 
   const numericValues = React.useMemo(() => toNumericValues(values), [values])
   const enteredCount = Object.keys(numericValues).length
@@ -196,31 +174,15 @@ export function CbcAnalyzerView() {
     goToStep(Math.min(step + 1, STEP_RUN))
   }
 
-  const handleFile = React.useCallback((file: File) => {
+  // Uploadcare reports its own progress and hands this back only once the
+  // upload has landed, so there is nothing left to simulate.
+  const handleUpload = React.useCallback((file: UploadedFile) => {
     setPanelError(null)
     setReportFile(file)
-    setUploadProgress(0)
-    setUploadStatus('reading')
-    let current = 0
-    if (timerRef.current) clearInterval(timerRef.current)
-    timerRef.current = setInterval(() => {
-      current += Math.random() * (current < 60 ? 20 : 11)
-      if (current >= 100) {
-        setUploadProgress(100)
-        setUploadStatus('ready')
-        clearInterval(timerRef.current!)
-      } else {
-        setUploadProgress(Math.round(current))
-      }
-    }, 110)
   }, [])
 
   const handleRemoveFile = () => {
-    if (timerRef.current) clearInterval(timerRef.current)
     setReportFile(null)
-    setPreviewUrl(null)
-    setUploadProgress(0)
-    setUploadStatus('idle')
     setPanelError(null)
   }
 
@@ -258,16 +220,10 @@ export function CbcAnalyzerView() {
     setSavedLog(null)
     scrollToTop()
 
-    if (reportFile) {
-      if (timerRef.current) clearInterval(timerRef.current)
-      setUploadProgress(100)
-      setUploadStatus('ready')
-    }
-
     const signature = inputSignature
     analyzeMutation.mutate(
       {
-        reportImage: reportFile,
+        reportImageUrl: reportFile?.url ?? null,
         values: numericValues,
         species: speciesOverride ?? validPatient.species,
         speciesLabel: validPatient.speciesLabel,
@@ -625,12 +581,8 @@ export function CbcAnalyzerView() {
                     >
                       <CbcReportUpload
                         file={reportFile}
-                        previewUrl={previewUrl}
-                        status={uploadStatus}
-                        progress={uploadProgress}
-                        onFile={handleFile}
+                        onUpload={handleUpload}
                         onRemove={handleRemoveFile}
-                        onValidationError={setPanelError}
                       />
                       {enteredCount > 0 ? (
                         <p className="mt-2.5 rounded-lg bg-blue-50 px-3 py-2 text-[11px] leading-relaxed text-blue-800">
