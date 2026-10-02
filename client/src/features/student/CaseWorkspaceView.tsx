@@ -5,7 +5,7 @@ import { ArrowLeft, Loader2, RotateCcw, Trophy } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { StageCard } from './components/StageCard'
-import { DIFFICULTY_TONE, speciesMeta } from './caseMeta'
+import { DIFFICULTY_LABEL, speciesMeta } from './caseMeta'
 import { useAnswerStage, useCase, useResetCase } from './hooks/useAcademy'
 import type { AnswerResult } from './api/academy'
 
@@ -76,13 +76,10 @@ export function CaseWorkspaceView({ slug }: { slug: string }) {
         <p className="text-[15px] font-bold text-slate-900">
           This case could not be opened
         </p>
-        <p className="mt-1 text-[13px] text-slate-500">
+        <p className="mt-1 text-[13px] text-slate-600">
           {caseQuery.error?.message ?? 'Please try again.'}
         </p>
-        <Button
-          asChild
-          className="mt-5 rounded-full bg-blue-600 px-5 text-white"
-        >
+        <Button asChild className="mt-5 rounded-lg bg-blue-600 px-5 text-white">
           <Link to="/">Back to the dashboard</Link>
         </Button>
       </div>
@@ -97,48 +94,53 @@ export function CaseWorkspaceView({ slug }: { slug: string }) {
       <div className="mx-auto max-w-4xl space-y-5">
         <Link
           to="/"
-          className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-slate-500 transition-colors hover:text-blue-600"
+          className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-slate-600 transition-colors hover:text-blue-600"
         >
           <ArrowLeft className="size-4" />
           All cases
         </Link>
 
         {/* ── Case header ─────────────────────────────────────────────── */}
-        <header className="rounded-2xl border border-slate-200 bg-white p-5 md:p-6">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-blue-50 px-2.5 py-1 text-[11.5px] font-semibold text-blue-700">
-              {species.adjective} · {detail.discipline}
-            </span>
-            <span
-              className={cn(
-                'rounded-full px-2.5 py-1 text-[10.5px] font-bold tracking-wide uppercase',
-                DIFFICULTY_TONE[detail.difficulty],
-              )}
-            >
-              {detail.difficulty}
-            </span>
-            <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[10.5px] font-bold text-slate-600">
-              {detail.total_points} points on offer
-            </span>
+        <header className="overflow-hidden rounded-xl border border-slate-300 bg-white shadow-sm">
+          <div className="p-5 md:p-6">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="mr-auto text-[11.5px] font-semibold text-slate-700">
+                {species.adjective} · {detail.discipline}
+              </span>
+              <span className="rounded-lg border border-slate-200 bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-700">
+                {DIFFICULTY_LABEL[detail.difficulty]}
+              </span>
+              <span className="rounded-lg bg-slate-100 px-2.5 py-1 text-[10.5px] font-bold text-slate-600">
+                {detail.total_points} points on offer
+              </span>
+            </div>
+
+            <h1 className="mt-4 max-w-3xl text-[20px] leading-snug font-bold tracking-tight text-slate-900 md:text-[22px]">
+              {detail.title}
+            </h1>
+            <p className="mt-2 text-[12px] text-slate-600">
+              <span className="font-semibold">Body system:</span>{' '}
+              {detail.body_system}
+            </p>
+            <div className="mt-4 border-t border-slate-200 pt-4">
+              <h2 className="text-[12px] font-semibold text-slate-900">
+                Case overview
+              </h2>
+              <p className="mt-1.5 max-w-3xl text-[13.5px] leading-relaxed text-slate-700">
+                {detail.presentation}
+              </p>
+            </div>
           </div>
-
-          <h1 className="mt-3 text-[20px] leading-snug font-extrabold tracking-tight text-slate-900 md:text-[24px]">
-            {detail.title}
-          </h1>
-          <p className="mt-2 text-[13.5px] leading-relaxed text-slate-600">
-            {detail.presentation}
-          </p>
-
-          <div className="mt-5 rounded-xl bg-slate-50 p-4">
+          <div className="border-t border-slate-200 bg-slate-100 px-5 py-4 md:px-6">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
-              <span className="text-[11.5px] font-medium text-slate-500">
+              <span className="text-[11.5px] font-medium text-slate-600">
                 {progress.completed
                   ? 'Case complete'
                   : progress.current_stage_title
                     ? `Up next: ${progress.current_stage_title}`
                     : 'Not started'}
               </span>
-              <span className="text-[12.5px] font-bold text-blue-600 tabular-nums">
+              <span className="text-[12.5px] font-bold text-blue-700 tabular-nums">
                 {progress.cleared_stages} of {progress.total_stages} stages ·{' '}
                 {progress.points_earned} pts
               </span>
@@ -149,11 +151,11 @@ export function CaseWorkspaceView({ slug }: { slug: string }) {
               aria-valuenow={progress.percent}
               aria-valuemin={0}
               aria-valuemax={100}
-              className="mt-2 h-2 w-full overflow-hidden rounded-full bg-slate-200"
+              className="mt-2 h-2 w-full overflow-hidden rounded-lg bg-slate-300"
             >
               <div
                 className={cn(
-                  'h-full rounded-full transition-[width] duration-500',
+                  'h-full rounded-lg transition-[width] duration-500',
                   progress.completed ? 'bg-emerald-500' : 'bg-blue-600',
                 )}
                 style={{ width: `${progress.percent}%` }}
@@ -164,9 +166,9 @@ export function CaseWorkspaceView({ slug }: { slug: string }) {
 
         {/* ── Completion banner ───────────────────────────────────────── */}
         {progress.completed ? (
-          <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-5">
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-5">
             <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-emerald-600">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white text-emerald-600">
                 <Trophy className="size-5" />
               </span>
               <div>
@@ -189,7 +191,7 @@ export function CaseWorkspaceView({ slug }: { slug: string }) {
                 resetMutation.mutate()
               }}
               disabled={resetMutation.isPending}
-              className="rounded-full border-emerald-300 bg-white px-4 text-[12.5px] font-bold text-emerald-800 hover:bg-emerald-100"
+              className="rounded-lg border-emerald-300 bg-white px-4 text-[12.5px] font-bold text-emerald-800 hover:bg-emerald-100"
             >
               {resetMutation.isPending ? (
                 <Loader2 className="size-4 animate-spin" />

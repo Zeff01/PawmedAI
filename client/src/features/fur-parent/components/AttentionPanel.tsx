@@ -13,6 +13,7 @@ import { ICON_TONES, TEXT_TONES } from './care-tones'
 import { Pill } from './primitives'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { URGENCY } from '../care-priorities'
 import type { CarePriority, PetCareSummary } from '../care-priorities'
 
 const PRIORITY_ICONS: Record<
@@ -31,6 +32,15 @@ const TONE_LABELS: Record<CarePriority['tone'], string> = {
   neutral: 'Booked',
   primary: 'Done',
 }
+
+/** Upcoming dates read as reassurance here, so they share the settled green. */
+const panelTone = (tone: CarePriority['tone'] | undefined) =>
+  tone === 'tertiary' || tone === undefined ? 'primary' : tone
+
+/** Pets with something outstanding first, most urgent first; the rest keep their order. */
+const byUrgency = (a: PetCareSummary, b: PetCareSummary) =>
+  (a.top ? URGENCY[a.top.tone] : Infinity) -
+  (b.top ? URGENCY[b.top.tone] : Infinity)
 
 const PANEL =
   'rounded-b-xl border border-t-0 border-fp-border bg-fp-subtle p-4 shadow-fp-subtle'
@@ -114,7 +124,7 @@ export function AttentionPanel({
       </header>
 
       <ul className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-3">
-        {summaries.map((summary) => (
+        {[...summaries].sort(byUrgency).map((summary) => (
           <li key={summary.petId}>
             <SummaryRow
               summary={summary}
@@ -156,7 +166,7 @@ function SummaryRow({
       <span
         className={cn(
           'flex size-8 shrink-0 items-center justify-center rounded-lg',
-          ICON_TONES[top?.tone ?? 'primary'],
+          ICON_TONES[panelTone(top?.tone)],
         )}
       >
         <Icon className="size-4" />
@@ -180,7 +190,7 @@ function SummaryRow({
       <span
         className={cn(
           'hidden shrink-0 items-center gap-1 text-[11px] font-semibold sm:flex',
-          TEXT_TONES[top?.tone ?? 'primary'],
+          TEXT_TONES[panelTone(top?.tone)],
         )}
       >
         {top ? TONE_LABELS[top.tone] : 'All clear'}

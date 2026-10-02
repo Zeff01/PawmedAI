@@ -75,31 +75,47 @@ export function CbcReportUpload({
 
   /* ── Empty state ──────────────────────────────────────────────────────── */
   return (
-    <div className="flex flex-col items-center gap-3.5 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/60 px-5 py-8 text-center">
-      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 text-white">
-        <DocumentTextIcon className="h-5 w-5" />
-      </div>
+    <UploadCareComponent
+      headless
+      imgOnly
+      sourceList="local, camera, url"
+      maxSizeMb={MAX_REPORT_MB}
+      onUploadOne={onUpload}
+      zoneClassName={({ dragActive }) =>
+        `group flex cursor-pointer flex-col items-center justify-center gap-3.5 rounded-xl border-2 border-dashed px-5 py-8 text-center transition-colors duration-200 ${
+          dragActive
+            ? 'border-blue-500 bg-blue-50'
+            : 'border-slate-200 bg-slate-50/60 hover:border-blue-300 hover:bg-blue-50/40'
+        }`
+      }
+    >
+      {({ dragActive, uploader }) => (
+        <>
+          <div
+            className={`flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 text-white transition-transform duration-200 ${
+              dragActive ? 'scale-110' : 'group-hover:-translate-y-0.5'
+            }`}
+          >
+            <DocumentTextIcon className="h-5 w-5" />
+          </div>
 
-      <div>
-        <p className="text-[14px] font-extrabold text-slate-800">
-          Upload CBC report
-        </p>
-        <p className="mt-0.5 text-[12px] text-slate-500">
-          PNG, JPG, or WEBP · up to {MAX_REPORT_MB} MB
-        </p>
-      </div>
+          <div>
+            <p className="text-[14px] font-extrabold text-slate-800">
+              {dragActive ? 'Drop to attach' : 'Upload CBC report'}
+            </p>
+            <p className="mt-0.5 text-[12px] text-slate-500">
+              PNG, JPG, or WEBP · up to {MAX_REPORT_MB} MB
+            </p>
+          </div>
 
-      <UploadCareComponent
-        imgOnly
-        sourceList="local, camera, url"
-        maxSizeMb={MAX_REPORT_MB}
-        onUploadOne={onUpload}
-      />
+          {uploader}
 
-      <p className="max-w-xs text-[11px] leading-relaxed text-slate-400">
-        We read the printed values off the report. Check them against the paper
-        before you rely on the brief.
-      </p>
-    </div>
+          <p className="max-w-xs text-[11px] leading-relaxed text-slate-400">
+            We read the printed values off the report. Check them against the
+            paper before you rely on the brief.
+          </p>
+        </>
+      )}
+    </UploadCareComponent>
   )
 }

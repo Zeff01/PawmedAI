@@ -46,7 +46,7 @@ export function SpeciesFilter({
           role="combobox"
           aria-expanded={open}
           aria-label="Filter cases by species"
-          className="h-9 w-full justify-between rounded-full border-slate-200 bg-white px-3.5 text-[12px] font-semibold text-slate-600 shadow-none hover:bg-white hover:text-slate-900 sm:w-44"
+          className="h-9 w-full justify-between rounded-lg border-slate-200 bg-white px-3.5 text-[12px] font-semibold text-slate-600 shadow-none hover:bg-white hover:text-slate-900 sm:w-44"
         >
           {value === 'all' ? 'Any species' : speciesMeta(value).adjective}
           <ChevronDown className="size-4 text-slate-400" />

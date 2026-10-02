@@ -3,11 +3,8 @@ import type { BreedClassificationResult, BreedSize } from '../types'
 import {
   ExclamationCircleIcon,
   MapPinIcon,
-  HeartIcon,
   LightBulbIcon,
   PresentationChartLineIcon,
-  SwatchIcon,
-  FaceSmileIcon,
 } from '@heroicons/react/24/solid'
 import { BreedReferenceCompare } from './BreedReferenceCompare'
 
@@ -276,7 +273,6 @@ export function BreedResults({
           <Field
             label="Temperament"
             hint="How this breed usually behaves and reacts."
-            icon={<FaceSmileIcon className="h-3.5 w-3.5" />}
           >
             <TagList items={result.temperament} color="blue" />
           </Field>
@@ -286,7 +282,6 @@ export function BreedResults({
           <Field
             label="Common traits"
             hint="Features that tend to show up in this breed."
-            icon={<SwatchIcon className="h-3.5 w-3.5" />}
           >
             <TagList items={result.common_traits} color="slate" />
           </Field>
@@ -295,7 +290,6 @@ export function BreedResults({
         {result.care_tips.length > 0 && (
           <Field
             label="Care tips"
-            icon={<HeartIcon className="h-3.5 w-3.5 text-rose-400" />}
           >
             <NumberedList items={result.care_tips} />
           </Field>

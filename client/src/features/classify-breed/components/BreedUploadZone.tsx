@@ -1,4 +1,5 @@
 import {
+  ArrowUpTrayIcon,
   CheckCircleIcon,
   PhotoIcon,
   TrashIcon,
@@ -72,37 +73,53 @@ export function BreedUploadZone({
 
   /* ── Empty state ──────────────────────────────────────────────────────── */
   return (
-    <div className="flex flex-col items-center gap-3.5 rounded-lg border-2 border-dashed border-slate-200 bg-slate-50/60 px-5 py-8 text-center">
-      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 text-white">
-        <PhotoIcon className="h-5 w-5" />
-      </div>
-
-      <div>
-        <p className="text-[14px] font-extrabold text-slate-800">
-          Upload a photo
-        </p>
-        <p className="mt-0.5 text-[12px] text-slate-500">
-          PNG, JPG, or WEBP · up to {MAX_SIZE_MB} MB
-        </p>
-      </div>
-
-      <UploadCareComponent
-        imgOnly
-        sourceList="local, camera, url"
-        maxSizeMb={MAX_SIZE_MB}
-        onUploadOne={onUpload}
-      />
-
-      <ul className="flex flex-wrap items-center justify-center gap-2">
-        {SHOT_TIPS.map((tip) => (
-          <li
-            key={tip}
-            className="rounded-full bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-500"
+    <UploadCareComponent
+      headless
+      imgOnly
+      sourceList="local, camera, url"
+      maxSizeMb={MAX_SIZE_MB}
+      onUploadOne={onUpload}
+      zoneClassName={({ dragActive }) =>
+        `group relative flex cursor-pointer flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed px-5 py-8 text-center transition-colors duration-200 sm:py-10 ${
+          dragActive
+            ? 'border-blue-500 bg-blue-50'
+            : 'border-slate-200 bg-slate-50/60 hover:border-blue-300 hover:bg-blue-50/40'
+        }`
+      }
+    >
+      {({ dragActive, uploader }) => (
+        <>
+          <div
+            className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-sm transition-transform duration-200 ${
+              dragActive ? 'scale-110' : 'group-hover:-translate-y-0.5'
+            }`}
           >
-            {tip}
-          </li>
-        ))}
-      </ul>
-    </div>
+            <ArrowUpTrayIcon className="h-6 w-6" />
+          </div>
+
+          <div>
+            <p className="text-[15.5px] font-extrabold text-slate-800">
+              {dragActive ? 'Drop to attach' : 'Drag a photo here'}
+            </p>
+            <p className="mt-1 text-[12.5px] text-slate-500">
+              JPG, PNG, or WEBP · up to {MAX_SIZE_MB} MB
+            </p>
+          </div>
+
+          {uploader}
+
+          <ul className="flex flex-wrap justify-center gap-1.5">
+            {SHOT_TIPS.map((tip) => (
+              <li
+                key={tip}
+                className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[10.5px] font-semibold text-slate-500"
+              >
+                {tip}
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+    </UploadCareComponent>
   )
 }

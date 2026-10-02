@@ -8,7 +8,7 @@ export type CarePriority = {
   detail: string
 }
 
-const URGENCY: Record<CareTone, number> = {
+export const URGENCY: Record<CareTone, number> = {
   secondary: 0,
   tertiary: 1,
   neutral: 2,

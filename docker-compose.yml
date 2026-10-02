@@ -48,6 +48,7 @@ services:
       - ./client/.env.development
     environment:
       - CI=true
+      - VITE_USE_POLLING=1
     ports:
       - "3000:3000"
     volumes:

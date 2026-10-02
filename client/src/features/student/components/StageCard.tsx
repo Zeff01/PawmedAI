@@ -83,16 +83,16 @@ export function StageCard({
 
   if (stage.locked) {
     return (
-      <section className="rounded-2xl border border-dashed border-slate-200 bg-white/60 p-5">
+      <section className="rounded-xl border border-dashed border-slate-300 bg-slate-100 p-5">
         <div className="flex items-center gap-3">
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-400">
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-600">
             <Lock className="size-4" />
           </span>
           <div className="min-w-0">
-            <p className="text-[13px] font-semibold text-slate-500">
+            <p className="text-[13px] font-semibold text-slate-600">
               {index}. {stage.title}
             </p>
-            <p className="text-[11.5px] text-slate-400">
+            <p className="text-[11.5px] text-slate-600">
               Clear the stage above to release these findings.
             </p>
           </div>
@@ -104,15 +104,15 @@ export function StageCard({
   return (
     <section
       className={cn(
-        'rounded-2xl border bg-white p-5 md:p-6',
-        isCurrent ? 'border-blue-300 shadow-sm' : 'border-slate-200',
+        'overflow-hidden rounded-xl border bg-white p-5 md:p-6',
+        isCurrent ? 'border-blue-400 shadow-sm' : 'border-slate-300',
       )}
     >
-      <header className="flex flex-wrap items-center justify-between gap-2">
+      <header className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4">
         <div className="flex items-center gap-2.5">
           <span
             className={cn(
-              'flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold',
+              'flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[11px] font-bold',
               student.is_correct
                 ? 'bg-emerald-100 text-emerald-700'
                 : student.revealed
@@ -123,15 +123,15 @@ export function StageCard({
             {student.cleared ? <Check className="size-3.5" /> : index}
           </span>
           <div>
-            <p className="text-[15px] leading-tight font-bold text-slate-900">
+            <p className="text-[16px] leading-snug font-bold text-slate-900">
               {stage.title}
             </p>
-            <p className="text-[11px] font-medium text-slate-400">
+            <p className="text-[11px] font-medium text-slate-600">
               {KIND_LABEL[stage.kind]} · stage {index} of {total}
             </p>
           </div>
         </div>
-        <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-bold text-slate-600">
+        <span className="rounded-lg bg-slate-100 px-2.5 py-1 text-[11px] font-bold text-slate-600">
           {student.cleared || student.points_earned > 0
             ? `${student.points_earned} / ${stage.points} pts`
             : `${stage.points} pts`}
@@ -139,8 +139,8 @@ export function StageCard({
       </header>
 
       {stage.briefing ? (
-        <div className="mt-4 rounded-xl border border-slate-100 bg-slate-50 p-4">
-          <p className="mb-1.5 text-[10.5px] font-bold tracking-[0.1em] text-slate-400 uppercase">
+        <div className="mt-4 rounded-lg border border-slate-200 border-l-4 border-l-blue-600 bg-slate-50 p-4">
+          <p className="mb-2 text-[12px] font-semibold text-slate-900">
             Clinical findings
           </p>
           <p className="text-[13px] leading-relaxed whitespace-pre-line text-slate-700">
@@ -149,14 +149,19 @@ export function StageCard({
         </div>
       ) : null}
 
-      <p className="mt-4 text-[13.5px] font-semibold text-slate-900">
-        {stage.prompt}
-      </p>
-      <p className="mt-0.5 text-[11.5px] text-slate-400">
-        {multi
-          ? 'Select every option that applies — each right one earns marks, each wrong one cancels a right one out.'
-          : 'Select one option.'}
-      </p>
+      <div className="mt-5">
+        <p className="mb-1 text-[11px] font-semibold text-blue-700">
+          Your assessment
+        </p>
+        <h3 className="text-[14px] font-semibold text-slate-900">
+          {stage.prompt}
+        </h3>
+        <p className="mt-0.5 text-[11.5px] text-slate-600">
+          {multi
+            ? 'Select every option that applies — each right one earns marks, each wrong one cancels a right one out.'
+            : 'Select one option.'}
+        </p>
+      </div>
 
       <ul className="mt-3 space-y-2">
         {stage.options.map((option) => {
@@ -172,16 +177,16 @@ export function StageCard({
                 disabled={graded || isSubmitting}
                 aria-pressed={picked}
                 className={cn(
-                  'flex w-full items-start gap-3 rounded-xl border px-3.5 py-3 text-left transition-colors',
+                  'flex w-full items-start gap-3 rounded-lg border px-3.5 py-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2',
                   graded
                     ? isRight
                       ? 'border-emerald-200 bg-emerald-50'
                       : picked
                         ? 'border-rose-200 bg-rose-50'
-                        : 'border-slate-200 bg-white opacity-60'
+                        : 'border-slate-200 bg-slate-50'
                     : picked
-                      ? 'border-blue-400 bg-blue-50'
-                      : 'border-slate-200 bg-white hover:border-blue-200 hover:bg-blue-50/40',
+                      ? 'border-blue-600 bg-blue-50 ring-1 ring-blue-600'
+                      : 'border-slate-300 bg-white hover:border-blue-400 hover:bg-blue-50/40',
                 )}
               >
                 <span
@@ -212,7 +217,7 @@ export function StageCard({
                   {/* The rationale is a hint, so it only appears once the
                       stage is settled and can no longer give the answer away. */}
                   {graded && option.detail ? (
-                    <span className="mt-0.5 block text-[11.5px] leading-relaxed text-slate-500">
+                    <span className="mt-0.5 block text-[11.5px] leading-relaxed text-slate-600">
                       {option.detail}
                     </span>
                   ) : null}
@@ -227,7 +232,7 @@ export function StageCard({
       {student.cleared ? (
         <div
           className={cn(
-            'mt-4 rounded-xl border p-4',
+            'mt-4 rounded-lg border p-4',
             student.is_correct
               ? 'border-emerald-200 bg-emerald-50'
               : 'border-amber-200 bg-amber-50',
@@ -276,7 +281,7 @@ export function StageCard({
           {student.answered ? (
             <p
               className={cn(
-                'mt-4 flex items-start gap-1.5 rounded-xl border px-3.5 py-2.5 text-[12.5px]',
+                'mt-4 flex items-start gap-1.5 rounded-lg border px-3.5 py-2.5 text-[12.5px]',
                 partlyRight
                   ? 'border-amber-200 bg-amber-50 text-amber-800'
                   : 'border-rose-200 bg-rose-50 text-rose-800',
@@ -300,14 +305,14 @@ export function StageCard({
           {error ? (
             <p
               role="alert"
-              className="mt-4 rounded-xl border border-rose-200 bg-rose-50 px-3.5 py-2.5 text-[12.5px] text-rose-700"
+              className="mt-4 rounded-lg border border-rose-200 bg-rose-50 px-3.5 py-2.5 text-[12.5px] text-rose-700"
             >
               {error}
             </p>
           ) : null}
 
-          <div className="mt-4 flex items-center justify-between gap-3">
-            <p className="text-[11.5px] text-slate-400">
+          <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-4">
+            <p className="text-[11.5px] text-slate-600">
               {selected.length > 0
                 ? `${selected.length} selected`
                 : 'Nothing selected yet'}
@@ -316,7 +321,7 @@ export function StageCard({
               type="button"
               onClick={() => onSubmit(selected)}
               disabled={selected.length === 0 || isSubmitting}
-              className="rounded-full bg-blue-600 px-5 py-2.5 text-[13px] font-bold text-white hover:bg-blue-700 disabled:opacity-50"
+              className="rounded-lg bg-blue-600 px-5 py-2.5 text-[13px] font-bold text-white hover:bg-blue-700 disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>

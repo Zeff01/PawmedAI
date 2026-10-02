@@ -14,6 +14,8 @@
   --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
 }
 
+/* :where([uc-simple-btn]):not(#\#) button {} */
+
 .mapboxgl-ctrl-logo,
 .mapboxgl-ctrl-bottom-right {
   opacity: 0;

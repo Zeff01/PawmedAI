@@ -3,6 +3,7 @@ import { FileUploaderRegular } from '@uploadcare/react-uploader'
 import type {
   OutputCollectionState,
   OutputFileEntry,
+  UploadCtxProvider,
 } from '@uploadcare/react-uploader'
 import '@uploadcare/react-uploader/core.css'
 
@@ -57,17 +58,48 @@ export type UploadCareComponentProps = {
   accept?: string
   className?: string
   classNameUploader?: string
+  /**
+   * Hide Uploadcare's own button, leaving the zone's controls to drive it.
+   * Note this only hides the button — never hide the widget's container, as
+   * its dialog is rendered inside it and would be hidden along with it.
+   */
+  headless?: boolean
+  /**
+   * Zone content. When given, it is wrapped with the widget in one surface:
+   * clicking anywhere on that surface browses for a file, and files can be
+   * dropped onto it. Pass a function to render against the drag state and the
+   * actions, so the zone can offer its own buttons.
+   */
+  children?: React.ReactNode | ((state: ZoneState) => React.ReactNode)
+  /**
+   * Classes for that surrounding surface. A function receives the drag state,
+   * so the zone can light up while a file is over it.
+   */
+  zoneClassName?: string | ((state: { dragActive: boolean }) => string)
 }
 
-/**
- * The app's file and photo uploader.
- *
- * Every upload surface goes through here rather than a bare `<input
- * type="file">`, so camera capture, drag-and-drop, progress and CDN hosting are
- * the same everywhere. Files land on Uploadcare's CDN and the caller receives
- * the URL — the API takes that URL and fetches the bytes itself, so nothing
- * here posts a file part.
- */
+/** What a zone gets to render against. */
+export type ZoneState = {
+  /** A file is being dragged over the zone. */
+  dragActive: boolean
+  /**
+   * Skip Uploadcare's dialog and go straight to the operating system's file
+   * picker. Rarely what you want — `open` keeps the widget's own UI, with its
+   * source list, upload list and progress.
+   */
+  browse: () => void
+  /** Open the camera. */
+  openCamera: () => void
+  /** Open Uploadcare's picker, listing every source in `sourceList`. */
+  open: () => void
+  /**
+   * The widget itself, for the zone to place where it belongs in the layout
+   * rather than after everything else. Render it exactly once; a zone that
+   * leaves it out shows no control and relies on the zone-wide click alone.
+   */
+  uploader: React.ReactNode
+}
+
 export function UploadCareComponent({
   onUpload,
   onUploadOne,
@@ -79,7 +111,43 @@ export function UploadCareComponent({
   accept,
   className,
   classNameUploader,
+  headless = false,
+  children,
+  zoneClassName,
 }: UploadCareComponentProps) {
+  const apiRef = React.useRef<UploadCtxProvider>(null)
+  const widgetRef = React.useRef<HTMLDivElement>(null)
+  const [dragActive, setDragActive] = React.useState(false)
+
+  const api = React.useCallback(() => apiRef.current?.getAPI(), [])
+
+  const browse = React.useCallback(() => {
+    api()?.openSystemDialog()
+  }, [api])
+
+  const openCamera = React.useCallback(() => {
+    const uploader = api()
+    if (!uploader) return
+    uploader.setCurrentActivity('camera')
+    uploader.setModalState(true)
+  }, [api])
+
+  const open = React.useCallback(() => {
+    api()?.initFlow()
+  }, [api])
+
+  const addFiles = React.useCallback(
+    (files: FileList) => {
+      const uploader = api()
+      if (!uploader) return
+      const dropped = Array.from(files)
+      for (const file of multiple ? dropped : dropped.slice(0, 1)) {
+        uploader.addFileFromObject(file)
+      }
+    },
+    [api, multiple],
+  )
+
   const handleSuccess = React.useCallback(
     (state: OutputCollectionState<'success'>) => {
       const files = state.successEntries.map(toUploadedFile)
@@ -90,8 +158,6 @@ export function UploadCareComponent({
     [onUpload, onUploadOne],
   )
 
-  // `change` fires on removals too, which is the only signal that the caller's
-  // held URL is now stale.
   const handleChange = React.useCallback(
     (state: OutputCollectionState) => {
       if (state.totalCount === 0) onClear?.()
@@ -99,9 +165,11 @@ export function UploadCareComponent({
     [onClear],
   )
 
-  return (
-    <div className={className}>
+  const widget = (
+    <div ref={widgetRef} className={className}>
       <FileUploaderRegular
+        apiRef={apiRef}
+        headless={headless}
         pubkey={PUBKEY}
         sourceList={sourceList}
         cameraModes="photo"
@@ -113,6 +181,52 @@ export function UploadCareComponent({
         onCommonUploadSuccess={handleSuccess}
         onChange={handleChange}
       />
+    </div>
+  )
+
+  if (!children) return widget
+
+  const zone: ZoneState = {
+    dragActive,
+    browse,
+    openCamera,
+    open,
+    uploader: widget,
+  }
+
+  return (
+    <div
+      className={cn(
+        'cursor-pointer',
+        typeof zoneClassName === 'function'
+          ? zoneClassName({ dragActive })
+          : zoneClassName,
+      )}
+      onClick={(event) => {
+        const target = event.target as HTMLElement
+        if (target.closest('button')) return
+        if (widgetRef.current?.contains(target)) return
+        open()
+      }}
+      onDragOver={(event) => {
+        event.preventDefault()
+        setDragActive(true)
+      }}
+      onDragLeave={() => setDragActive(false)}
+      onDrop={(event) => {
+        event.preventDefault()
+        setDragActive(false)
+        if (event.dataTransfer.files.length) addFiles(event.dataTransfer.files)
+      }}
+    >
+      {typeof children === 'function' ? (
+        children(zone)
+      ) : (
+        <>
+          {children}
+          {widget}
+        </>
+      )}
     </div>
   )
 }

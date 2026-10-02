@@ -412,35 +412,6 @@ export function ClassifyBreedView() {
                     </div>
                   </div>
 
-                  {/* Sign-in requirement surfaced before the user commits */}
-                  {needsAuth && !errorMessage && (
-                    <div className="mt-3 flex flex-wrap items-center gap-3 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3">
-                      <div className="min-w-0 flex-1">
-                        <p className="text-[12.5px] font-bold text-amber-900">
-                          Identifying a breed needs an account
-                        </p>
-                        <p className="mt-0.5 text-[11.5px] leading-relaxed text-amber-800">
-                          Every identification comes out of your allowance — 5
-                          analyses every 5 hours, shared across every AI
-                          feature. Sign in and your photo or description is
-                          still here.
-                        </p>
-                      </div>
-                      <AuthModal
-                        onAuthenticated={handleAuthenticated}
-                        trigger={
-                          <Button
-                            type="button"
-                            size="sm"
-                            className="h-8 rounded-lg bg-amber-600 px-3 text-[11.5px] font-bold text-white hover:bg-amber-700"
-                          >
-                            Sign in
-                          </Button>
-                        }
-                      />
-                    </div>
-                  )}
-
                   {/* Errors */}
                   {errorMessage && (
                     <div
@@ -513,7 +484,23 @@ export function ClassifyBreedView() {
                     </div>
 
                     <p className="text-[11.5px] leading-relaxed text-slate-400">
-                      {isReady ? (
+                      {needsAuth ? (
+                        <>
+                          <AuthModal
+                            onAuthenticated={handleAuthenticated}
+                            trigger={
+                              <button
+                                type="button"
+                                className="font-bold text-blue-600 underline-offset-2 hover:underline"
+                              >
+                                Sign in
+                              </button>
+                            }
+                          />{' '}
+                          to identify · 5 analyses every 5 hours, your input
+                          stays here.
+                        </>
+                      ) : isReady ? (
                         <span className="inline-flex items-center gap-1.5 font-semibold text-emerald-600">
                           <CheckCircleIcon className="h-3.5 w-3.5" />
                           Ready to identify

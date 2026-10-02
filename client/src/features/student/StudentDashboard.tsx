@@ -30,7 +30,7 @@ import type { CaseDifficulty, CaseSpecies } from './api/academy'
 import type { SpeciesGroup } from './caseMeta'
 
 /** Cases revealed at a time — the first render, and each "Show more". */
-const PAGE_SIZE = 5
+const PAGE_SIZE = 2
 
 export function StudentDashboard() {
   const [group, setGroup] = React.useState<SpeciesGroup | 'all'>('all')
@@ -140,7 +140,7 @@ export function StudentDashboard() {
                 >
                   <SelectTrigger
                     aria-label="Filter cases by difficulty"
-                    className="h-9 w-full shrink-0 rounded-full border-slate-200 bg-white text-[12px] font-semibold text-slate-600 shadow-none sm:w-40"
+                    className="h-9 w-full shrink-0 rounded-lg border-slate-200 bg-white text-[12px] font-semibold text-slate-600 shadow-none sm:w-40"
                   >
                     <SelectValue>
                       {difficulty === 'all'
@@ -183,7 +183,7 @@ export function StudentDashboard() {
                 <div
                   role="tablist"
                   aria-label="Filter cases by species group"
-                  className="inline-flex items-center gap-1 overflow-x-auto rounded-full bg-slate-100 p-1"
+                  className="inline-flex items-center gap-1 overflow-x-auto rounded-lg bg-slate-100 p-1"
                 >
                   {groups.map((option) => {
                     const active = group === option.id
@@ -199,7 +199,7 @@ export function StudentDashboard() {
                           setSpecies('all')
                         }}
                         className={cn(
-                          'shrink-0 rounded-full px-3.5 py-1.5 text-[12px] font-semibold transition-colors',
+                          'shrink-0 rounded-lg px-3.5 py-1.5 text-[12px] font-semibold transition-colors',
                           active
                             ? 'bg-white text-blue-600 shadow-sm'
                             : 'text-slate-500 hover:text-slate-900',
@@ -216,13 +216,13 @@ export function StudentDashboard() {
               </div> */}
 
             {isLoading ? (
-              <div className="flex items-center justify-center rounded-2xl border border-slate-200 bg-white py-16">
+              <div className="flex items-center justify-center rounded-xl border border-slate-200 bg-white py-16">
                 <Loader2 className="size-5 animate-spin text-blue-600" />
               </div>
             ) : isError ? (
               <div
                 role="alert"
-                className="rounded-2xl border border-rose-200 bg-rose-50 px-6 py-8 text-center"
+                className="rounded-xl border border-rose-200 bg-rose-50 px-6 py-8 text-center"
               >
                 <p className="text-[13.5px] font-semibold text-rose-800">
                   The case library could not be loaded
@@ -242,7 +242,7 @@ export function StudentDashboard() {
                     <Button
                       variant="outline"
                       onClick={() => setShown((count) => count + PAGE_SIZE)}
-                      className="h-10 rounded-full border-slate-200 px-6 text-[13px] font-bold text-slate-700"
+                      className="h-10 rounded-lg border-slate-200 px-6 text-[13px] font-bold text-slate-700"
                     >
                       Show {Math.min(PAGE_SIZE, remaining)} more
                       <ChevronDown className="size-4 text-slate-400" />
@@ -251,7 +251,7 @@ export function StudentDashboard() {
                 ) : null}
               </div>
             ) : (
-              <div className="rounded-2xl border border-dashed border-slate-200 bg-white px-6 py-12 text-center">
+              <div className="rounded-xl border border-dashed border-slate-200 bg-white px-6 py-12 text-center">
                 <p className="text-[13.5px] font-semibold text-slate-800">
                   No cases match these filters
                 </p>

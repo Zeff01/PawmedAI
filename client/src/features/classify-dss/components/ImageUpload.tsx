@@ -99,21 +99,11 @@ export function UploadProgress({
 /* ─── Upload Zone ────────────────────────────────────────── */
 interface ImageUploadProps {
   onUpload: (file: UploadedFile) => void
-  /** The attached photo's CDN URL, or null while nothing is attached. */
   previewUrl: string | null
   maxSizeMb?: number
-  /** Extra classes for the zone itself — used to fill a column. */
   className?: string
 }
 
-/**
- * Attach the photo a case is read from.
- *
- * Browsing, dragging and the camera are the Uploadcare widget's job; this keeps
- * the preview, because the reader should see the shot the model will be given.
- * The widget stays on screen once a photo is attached, so replacing one is the
- * same gesture as attaching the first.
- */
 export function ImageUpload({
   onUpload,
   previewUrl,
@@ -121,43 +111,59 @@ export function ImageUpload({
   className = '',
 }: ImageUploadProps) {
   return (
-    <div
-      className={`relative flex flex-col items-center justify-center gap-3 overflow-hidden rounded-lg border border-dashed transition ${
-        previewUrl
-          ? 'border-transparent bg-transparent'
-          : 'border-slate-300 bg-slate-50/60'
-      } ${className}`}
+    <UploadCareComponent
+      headless
+      imgOnly
+      sourceList="local, camera, url"
+      maxSizeMb={maxSizeMb}
+      onUploadOne={onUpload}
+      zoneClassName={({ dragActive }) =>
+        `relative flex cursor-pointer flex-col items-center justify-center gap-3 overflow-hidden rounded-lg border border-dashed p-6 transition ${
+          previewUrl
+            ? 'border-transparent bg-transparent'
+            : dragActive
+              ? 'border-blue-400 bg-blue-50/60'
+              : 'border-slate-300 bg-slate-50/60 hover:border-blue-300 hover:bg-blue-50/40'
+        } ${className}`
+      }
     >
-      {previewUrl ? (
-        <div className="relative h-80 w-full overflow-hidden rounded-lg border border-slate-200">
-          <img
-            src={previewUrl}
-            alt="Preview"
-            className="h-full w-full object-cover"
-          />
-        </div>
-      ) : (
-        <div className="flex flex-col items-center gap-2 px-8 pt-10 text-center">
-          <ArrowUpTrayIcon className="h-6 w-6 text-slate-300" />
-          <div>
-            <p className="text-[13.5px] font-bold text-slate-800">
-              Add a photo
-            </p>
-            <p className="mt-0.5 text-[11.5px] text-slate-400">
-              PNG, JPG, or WEBP · Max {maxSizeMb} MB
-            </p>
+      {({ dragActive, uploader }) =>
+        previewUrl ? (
+          <div className="group relative h-80 w-full overflow-hidden rounded-lg border border-slate-200">
+            <img
+              src={previewUrl}
+              alt="Preview"
+              className="h-full w-full object-cover transition-opacity duration-200 group-hover:opacity-70"
+            />
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+              <div className="flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-[12px] font-bold text-blue-700">
+                <ArrowUpTrayIcon className="h-4 w-4" />
+                Click to upload a new photo
+              </div>
+            </div>
+            <div className="absolute right-2 bottom-2">{uploader}</div>
           </div>
-        </div>
-      )}
+        ) : (
+          <div className="flex min-h-40 flex-col items-center justify-center gap-3 text-center">
+            <ArrowUpTrayIcon
+              className={`h-6 w-6 transition-transform duration-200 ${
+                dragActive ? 'scale-110 text-blue-500' : 'text-slate-300'
+              }`}
+            />
 
-      <div className={previewUrl ? 'pb-1' : 'pb-10'}>
-        <UploadCareComponent
-          imgOnly
-          sourceList="local, camera, url"
-          maxSizeMb={maxSizeMb}
-          onUploadOne={onUpload}
-        />
-      </div>
-    </div>
+            <div>
+              <p className="text-[13.5px] font-bold text-slate-800">
+                {dragActive ? 'Release to upload' : 'Drop an image here'}
+              </p>
+              <p className="mt-0.5 text-[11.5px] text-slate-400">
+                PNG, JPG, or WEBP · Max {maxSizeMb} MB
+              </p>
+            </div>
+
+            {uploader}
+          </div>
+        )
+      }
+    </UploadCareComponent>
   )
 }
