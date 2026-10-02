@@ -105,7 +105,7 @@ export function StageCard({
     <section
       className={cn(
         'overflow-hidden rounded-xl border bg-white p-5 md:p-6',
-        isCurrent ? 'border-blue-400 shadow-sm' : 'border-slate-300',
+        isCurrent ? '' : 'border-slate-300',
       )}
     >
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4">
@@ -139,7 +139,7 @@ export function StageCard({
       </header>
 
       {stage.briefing ? (
-        <div className="mt-4 rounded-lg border border-slate-200 border-l-4 border-l-blue-600 bg-slate-50 p-4">
+        <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-4">
           <p className="mb-2 text-[12px] font-semibold text-slate-900">
             Clinical findings
           </p>

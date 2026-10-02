@@ -16,6 +16,9 @@ import type { AnswerResult } from './api/academy'
  * stages stay on screen with their model answers, later ones stay locked. All
  * of that is the server's judgement, not this component's — it only renders it.
  */
+/** The thinking pose — the student is about to reason through the case. */
+const CASE_MASCOT = '/images/pawmed-character/student-mascot-thinking.webp'
+
 export function CaseWorkspaceView({ slug }: { slug: string }) {
   const caseQuery = useCase(slug)
   const answerMutation = useAnswerStage(slug)
@@ -101,7 +104,7 @@ export function CaseWorkspaceView({ slug }: { slug: string }) {
         </Link>
 
         {/* ── Case header ─────────────────────────────────────────────── */}
-        <header className="overflow-hidden rounded-xl border border-slate-300 bg-white shadow-sm">
+        <header className="overflow-hidden rounded-xl border bg-white">
           <div className="p-5 md:p-6">
             <div className="flex flex-wrap items-center gap-2">
               <span className="mr-auto text-[11.5px] font-semibold text-slate-700">
@@ -115,20 +118,33 @@ export function CaseWorkspaceView({ slug }: { slug: string }) {
               </span>
             </div>
 
-            <h1 className="mt-4 max-w-3xl text-[20px] leading-snug font-bold tracking-tight text-slate-900 md:text-[22px]">
-              {detail.title}
-            </h1>
-            <p className="mt-2 text-[12px] text-slate-600">
-              <span className="font-semibold">Body system:</span>{' '}
-              {detail.body_system}
-            </p>
-            <div className="mt-4 border-t border-slate-200 pt-4">
-              <h2 className="text-[12px] font-semibold text-slate-900">
-                Case overview
-              </h2>
-              <p className="mt-1.5 max-w-3xl text-[13.5px] leading-relaxed text-slate-700">
-                {detail.presentation}
-              </p>
+            <div className="mt-4 flex items-end gap-6">
+              <div className="min-w-0 flex-1">
+                <h1 className="text-[20px] leading-snug font-bold tracking-tight text-slate-900 md:text-[22px]">
+                  {detail.title}
+                </h1>
+                <p className="mt-2 text-[12px] text-slate-600">
+                  <span className="font-semibold">Body system:</span>{' '}
+                  {detail.body_system}
+                </p>
+                <div className="mt-4 border-t border-slate-200 pt-4">
+                  <h2 className="text-[12px] font-semibold text-slate-900">
+                    Case overview
+                  </h2>
+                  <p className="mt-1.5 text-[13.5px] leading-relaxed text-slate-700">
+                    {detail.presentation}
+                  </p>
+                </div>
+              </div>
+
+              {/* Waist-cropped, so its bottom edge sits flush on the progress strip */}
+              <img
+                src={CASE_MASCOT}
+                alt=""
+                aria-hidden
+                decoding="async"
+                className="pointer-events-none -mb-5 hidden h-40 w-auto shrink-0 select-none md:-mb-6 md:block"
+              />
             </div>
           </div>
           <div className="border-t border-slate-200 bg-slate-100 px-5 py-4 md:px-6">
