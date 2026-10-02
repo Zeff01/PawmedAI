@@ -7,6 +7,7 @@ import type {
   MapboxSearchFeature,
 } from './types/vet'
 import { Card } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import {
   Phone,
   Navigation,
@@ -15,6 +16,11 @@ import {
   Loader2,
   Lock,
   Search,
+  Car,
+  Footprints,
+  X,
+  ChevronDown,
+  ExternalLink,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { AuthModal } from '@/components/AuthModal'
@@ -226,6 +232,237 @@ function LocationSearch({
   )
 }
 
+// ── Directions ─────────────────────────────────────────────────
+type TravelMode = 'driving' | 'walking'
+
+/** `driving-traffic` uses live traffic, which matters more than speed limits in a city. */
+const DIRECTIONS_PROFILE: Record<TravelMode, string> = {
+  driving: 'driving-traffic',
+  walking: 'walking',
+}
+
+type RouteStep = { instruction: string; distance: number }
+
+type Route = {
+  vet: VetClinic
+  mode: TravelMode
+  duration: number // seconds
+  distance: number // metres
+  steps: RouteStep[]
+  coordinates: [number, number][]
+}
+
+const ROUTE_SOURCE = 'vet-route'
+
+async function fetchRoute(
+  from: [number, number], // [lat, lng], as userCoords stores it
+  to: [number, number], // [lng, lat], as Mapbox returns clinics
+  mode: TravelMode,
+  signal: AbortSignal,
+): Promise<Omit<Route, 'vet' | 'mode'>> {
+  const url = new URL(
+    `https://api.mapbox.com/directions/v5/mapbox/${DIRECTIONS_PROFILE[mode]}/${from[1]},${from[0]};${to[0]},${to[1]}`,
+  )
+  url.searchParams.set('geometries', 'geojson')
+  url.searchParams.set('overview', 'full')
+  url.searchParams.set('steps', 'true')
+  url.searchParams.set('language', 'en')
+  url.searchParams.set('access_token', mapboxgl.accessToken as string)
+
+  const res = await fetch(url.toString(), { signal })
+  if (!res.ok) throw new Error(`Mapbox directions error: ${res.status}`)
+
+  const data = await res.json()
+  const route = data.routes?.[0]
+  if (!route) throw new Error('No route found to this clinic.')
+
+  return {
+    duration: route.duration,
+    distance: route.distance,
+    coordinates: route.geometry.coordinates,
+    steps: (route.legs?.[0]?.steps ?? []).map(
+      (step: { maneuver: { instruction: string }; distance: number }) => ({
+        instruction: step.maneuver.instruction,
+        distance: step.distance,
+      }),
+    ),
+  }
+}
+
+function formatDuration(seconds: number): string {
+  const minutes = Math.max(1, Math.round(seconds / 60))
+  if (minutes < 60) return `${minutes} min`
+  const hours = Math.floor(minutes / 60)
+  const rest = minutes % 60
+  return rest ? `${hours} h ${rest} min` : `${hours} h`
+}
+
+function formatDistance(metres: number): string {
+  return metres < 1000
+    ? `${Math.round(metres / 10) * 10} m`
+    : `${(metres / 1000).toFixed(1)} km`
+}
+
+function googleMapsUrl(
+  vet: VetClinic,
+  origin: [number, number] | null,
+  mode: TravelMode,
+): string {
+  const url = new URL('https://www.google.com/maps/dir/')
+  url.searchParams.set('api', '1')
+  if (origin) url.searchParams.set('origin', `${origin[0]},${origin[1]}`)
+  url.searchParams.set('destination', `${vet.name} ${vet.address}`)
+  url.searchParams.set('travelmode', mode)
+  return url.toString()
+}
+
+function RoutePanel({
+  vet,
+  route,
+  mode,
+  loading,
+  error,
+  origin,
+  onModeChange,
+  onClose,
+}: {
+  vet: VetClinic
+  route: Route | null
+  mode: TravelMode
+  loading: boolean
+  error: string | null
+  origin: [number, number] | null
+  onModeChange: (mode: TravelMode) => void
+  onClose: () => void
+}) {
+  const [stepsOpen, setStepsOpen] = useState(false)
+
+  return (
+    // Stops 4.5rem short of the bottom so the re-center button stays clear.
+    <div className="absolute top-3 left-3 z-10 flex max-h-[calc(100%-4.5rem)] w-[min(20rem,calc(100%-4.5rem))] flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg">
+      <div className="flex items-start gap-2 px-3.5 pt-3">
+        <div className="min-w-0 flex-1">
+          <p className="text-[10.5px] font-semibold tracking-wider text-slate-400 uppercase">
+            Directions to
+          </p>
+          <p className="truncate text-sm font-semibold text-slate-800">
+            {vet.name}
+          </p>
+          <p className="truncate text-[11px] text-slate-500">{vet.address}</p>
+        </div>
+        <Button
+          variant="ghost"
+          size="icon-xs"
+          onClick={onClose}
+          aria-label="Clear the route"
+          className="text-slate-400 hover:text-slate-700"
+        >
+          <X />
+        </Button>
+      </div>
+
+      <div
+        className="mt-2.5 flex gap-1 px-3.5"
+        role="group"
+        aria-label="Travel mode"
+      >
+        {(
+          [
+            ['driving', Car, 'Drive'],
+            ['walking', Footprints, 'Walk'],
+          ] as const
+        ).map(([value, Icon, label]) => (
+          <Button
+            key={value}
+            size="xs"
+            variant={mode === value ? 'default' : 'outline'}
+            aria-pressed={mode === value}
+            onClick={() => onModeChange(value)}
+            className={cn(
+              'flex-1',
+              mode === value && 'bg-blue-600 text-white hover:bg-blue-700',
+            )}
+          >
+            <Icon />
+            {label}
+          </Button>
+        ))}
+      </div>
+
+      <div className="px-3.5 py-3">
+        {loading ? (
+          <p className="flex items-center gap-2 text-xs text-slate-500">
+            <Loader2 className="size-3.5 animate-spin text-blue-600" />
+            Finding the best route…
+          </p>
+        ) : error ? (
+          <p className="text-xs text-red-600">{error}</p>
+        ) : route ? (
+          <p className="flex items-baseline gap-2">
+            <span className="text-lg font-bold text-slate-900 tabular-nums">
+              {formatDuration(route.duration)}
+            </span>
+            <span className="text-xs text-slate-500 tabular-nums">
+              {formatDistance(route.distance)}
+            </span>
+          </p>
+        ) : null}
+      </div>
+
+      {route && !loading && route.steps.length > 0 && (
+        <div className="flex min-h-0 flex-col border-t border-slate-100">
+          <button
+            type="button"
+            onClick={() => setStepsOpen((open) => !open)}
+            aria-expanded={stepsOpen}
+            className="flex w-full items-center justify-between px-3.5 py-2 text-xs font-semibold text-slate-600 transition-colors hover:bg-slate-50"
+          >
+            {stepsOpen ? 'Hide steps' : `Show ${route.steps.length} steps`}
+            <ChevronDown
+              className={cn(
+                'size-3.5 transition-transform',
+                stepsOpen && 'rotate-180',
+              )}
+            />
+          </button>
+          {stepsOpen && (
+            <ol className="min-h-0 overflow-y-auto px-3.5 pb-2 [scrollbar-width:thin]">
+              {route.steps.map((step, index) => (
+                <li
+                  key={index}
+                  className="flex gap-2.5 border-t border-slate-50 py-1.5 text-xs first:border-t-0"
+                >
+                  <span className="w-4 shrink-0 text-right font-semibold text-slate-400 tabular-nums">
+                    {index + 1}
+                  </span>
+                  <span className="min-w-0 flex-1 text-slate-700">
+                    {step.instruction}
+                  </span>
+                  {step.distance > 0 && (
+                    <span className="shrink-0 text-slate-400 tabular-nums">
+                      {formatDistance(step.distance)}
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ol>
+          )}
+        </div>
+      )}
+
+      <a
+        href={googleMapsUrl(vet, origin, mode)}
+        target="_blank"
+        rel="noreferrer"
+        className="flex items-center justify-center gap-1.5 border-t border-slate-100 bg-slate-50 px-3.5 py-2 text-[11px] font-semibold text-slate-500 transition-colors hover:text-blue-600"
+      >
+        Navigate in Google Maps
+        <ExternalLink className="size-3" />
+      </a>
+    </div>
+  )
+}
+
 // ── Geolocation failure empty state ────────────────────────────
 type GeoFailure = { code: number; message: string }
 
@@ -357,7 +594,6 @@ export default function NearbyVetsGeoMap() {
   const userMarker = useRef<mapboxgl.Marker | null>(null)
   const vetMarkers = useRef<mapboxgl.Marker[]>([])
   const resizeObserver = useRef<ResizeObserver | null>(null)
-  const cardRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const [vets, setVets] = useState<VetClinic[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [geoFailure, setGeoFailure] = useState<GeoFailure | null>(null)
@@ -369,6 +605,13 @@ export default function NearbyVetsGeoMap() {
   const [mapReady, setMapReady] = useState(false)
   const [manualLocation, setManualLocation] = useState(false)
   const readyTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const mapSection = useRef<HTMLDivElement>(null)
+  const [routeVet, setRouteVet] = useState<VetClinic | null>(null)
+  const [route, setRoute] = useState<Route | null>(null)
+  const [travelMode, setTravelMode] = useState<TravelMode>('driving')
+  const [routeLoading, setRouteLoading] = useState(false)
+  const [routeError, setRouteError] = useState<string | null>(null)
+  const routeRequest = useRef<AbortController | null>(null)
 
   const { session } = useSupabaseSession()
   // Locked until a session proves otherwise, not the other way round — the
@@ -554,6 +797,7 @@ export default function NearbyVetsGeoMap() {
   }, [])
 
   async function searchNearbyVets(lat: number, lng: number): Promise<void> {
+    clearRoute()
     setLoading(true)
     setError(null)
     try {
@@ -635,52 +879,125 @@ export default function NearbyVetsGeoMap() {
 
       const marker = new mapboxgl.Marker(el)
         .setLngLat(vet.coords)
-        .setPopup(
-          new mapboxgl.Popup({
-            offset: 20,
-            maxWidth: '260px',
-            closeButton: false,
-          }).setHTML(
-            `<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:4px 2px;min-width:200px">
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-                <div style="display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--map-accent);color:#fff;font-size:11px;font-weight:700;flex-shrink:0">
-                  ${index + 1}
-                </div>
-                <span style="font-size:13px;font-weight:700;color:#0f172a;line-height:1.3">${vet.name}</span>
-              </div>
-              <div style="height:1px;background:#f1f5f9;margin-bottom:8px"></div>
-              <div style="display:flex;align-items:flex-start;gap:6px;margin-bottom:6px">
-                <svg style="flex-shrink:0;margin-top:1px" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span style="font-size:11px;color:#64748b;line-height:1.4">${vet.address}</span>
-              </div>
-              <div style="display:inline-flex;align-items:center;gap:4px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:999px;padding:2px 8px">
-                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--map-accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-                <span style="font-size:11px;font-weight:600;color:var(--map-accent)">${vet.distance.toFixed(1)} km away</span>
-              </div>
-            </div>`,
-          ),
-        )
         .addTo(map.current!)
 
       vetMarkers.current.push(marker)
 
+      // The pin's click outlives this render, so it goes through the ref to
+      // pick up the current location and travel mode.
       el.addEventListener('click', () => {
-        setSelected(vet.id)
-        setTimeout(() => {
-          cardRefs.current[vet.id]?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'nearest',
-          })
-        }, 100)
+        void showDirectionsRef.current(vet, { scrollToMap: false })
       })
     })
   }
 
-  function flyToVet(vet: VetClinic): void {
-    if (!map.current) return
-    setSelected(vet.id)
-    map.current.flyTo({ center: vet.coords, zoom: 16, duration: 800 })
+  function drawRoute(coordinates: [number, number][]): void {
+    const m = map.current
+    if (!m) return
+    const data: GeoJSON.Feature<GeoJSON.LineString> = {
+      type: 'Feature',
+      properties: {},
+      geometry: { type: 'LineString', coordinates },
+    }
+    const source = m.getSource<mapboxgl.GeoJSONSource>(ROUTE_SOURCE)
+    if (source) {
+      source.setData(data)
+    } else {
+      // Mapbox paint can't read CSS variables, so resolve the theme's accent once.
+      const accent =
+        getComputedStyle(mapContainer.current ?? document.documentElement)
+          .getPropertyValue('--map-accent')
+          .trim() || '#2d5cf3'
+      m.addSource(ROUTE_SOURCE, { type: 'geojson', data })
+      m.addLayer({
+        id: `${ROUTE_SOURCE}-casing`,
+        type: 'line',
+        source: ROUTE_SOURCE,
+        layout: { 'line-join': 'round', 'line-cap': 'round' },
+        paint: { 'line-color': '#ffffff', 'line-width': 9 },
+      })
+      m.addLayer({
+        id: `${ROUTE_SOURCE}-line`,
+        type: 'line',
+        source: ROUTE_SOURCE,
+        layout: { 'line-join': 'round', 'line-cap': 'round' },
+        paint: { 'line-color': accent, 'line-width': 5 },
+      })
+    }
+
+    const bounds = coordinates.reduce(
+      (b, c) => b.extend(c),
+      new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]),
+    )
+    // Extra room on the left keeps the route clear of the directions panel.
+    const wide = (mapContainer.current?.clientWidth ?? 0) >= 640
+    m.fitBounds(bounds, {
+      padding: { top: 48, bottom: 48, right: 56, left: wide ? 360 : 48 },
+      duration: 900,
+      maxZoom: 16,
+    })
   }
+
+  function clearRoute(): void {
+    routeRequest.current?.abort()
+    routeRequest.current = null
+    setRouteVet(null)
+    setRoute(null)
+    setRouteError(null)
+    setRouteLoading(false)
+    const source = map.current?.getSource<mapboxgl.GeoJSONSource>(ROUTE_SOURCE)
+    source?.setData({ type: 'FeatureCollection', features: [] })
+  }
+
+  async function showDirections(
+    vet: VetClinic,
+    {
+      mode = travelMode,
+      scrollToMap = true,
+    }: { mode?: TravelMode; scrollToMap?: boolean } = {},
+  ): Promise<void> {
+    if (!userCoords) return
+    if (scrollToMap) {
+      mapSection.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
+    }
+    // Clicking the clinic already on screen shouldn't spend another request.
+    if (routeVet?.id === vet.id && route?.mode === mode && !routeError) return
+    routeRequest.current?.abort()
+    const controller = new AbortController()
+    routeRequest.current = controller
+
+    setSelected(vet.id)
+    setRouteVet(vet)
+    setTravelMode(mode)
+    setRouteLoading(true)
+    setRouteError(null)
+
+    try {
+      const result = await fetchRoute(
+        userCoords,
+        vet.coords,
+        mode,
+        controller.signal,
+      )
+      if (controller.signal.aborted) return
+      setRoute({ ...result, vet, mode })
+      drawRoute(result.coordinates)
+    } catch (e: unknown) {
+      if (controller.signal.aborted) return
+      setRoute(null)
+      setRouteError(
+        e instanceof Error ? e.message : 'Could not load directions.',
+      )
+    } finally {
+      if (!controller.signal.aborted) setRouteLoading(false)
+    }
+  }
+
+  const showDirectionsRef = useRef(showDirections)
+  showDirectionsRef.current = showDirections
 
   function getDistanceKm(
     lat1: number,
@@ -754,7 +1071,7 @@ export default function NearbyVetsGeoMap() {
       )}
 
       {!geoFailure && (
-        <div className="relative h-96">
+        <div ref={mapSection} className="relative h-96">
           <div
             className={cn(
               'h-96 shrink-0 overflow-hidden rounded-2xl transition-opacity duration-500',
@@ -765,6 +1082,20 @@ export default function NearbyVetsGeoMap() {
           </div>
 
           {!mapReady && <MapSkeleton />}
+
+          {mapReady && routeVet && (
+            <RoutePanel
+              key={routeVet.id}
+              vet={routeVet}
+              route={route}
+              mode={travelMode}
+              loading={routeLoading}
+              error={routeError}
+              origin={userCoords}
+              onModeChange={(mode) => void showDirections(routeVet, { mode })}
+              onClose={clearRoute}
+            />
+          )}
 
           {/* My Location button overlaid on map (bottom-left) */}
           {mapReady && (
@@ -844,10 +1175,7 @@ export default function NearbyVetsGeoMap() {
             {visibleVets.map((vet, index) => (
               <Card
                 key={vet.id}
-                ref={(el) => {
-                  cardRefs.current[vet.id] = el
-                }}
-                onClick={() => flyToVet(vet)}
+                onClick={() => void showDirections(vet)}
                 className={cn(
                   'cursor-pointer p-4 transition-all shadow-none border border-blue-100 rounded-xl hover:border-blue-300 hover:shadow-sm',
                   selected === vet.id &&
@@ -899,16 +1227,24 @@ export default function NearbyVetsGeoMap() {
                         No phone listed
                       </span>
                     )}
-                    <a
-                      href={`https://www.google.com/maps/dir/?api=1${userCoords ? `&origin=${userCoords[0]},${userCoords[1]}` : ''}&destination=${encodeURIComponent(vet.name + ' ' + vet.address)}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-slate-200 px-3 py-2 text-xs font-medium text-blue-600 hover:bg-blue-50 hover:border-blue-200 transition-colors"
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        void showDirections(vet)
+                      }}
+                      disabled={!userCoords}
+                      aria-pressed={routeVet?.id === vet.id}
+                      className={cn(
+                        'inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50',
+                        routeVet?.id === vet.id
+                          ? 'border-blue-600 bg-blue-600 text-white hover:bg-blue-700'
+                          : 'border-slate-200 text-blue-600 hover:border-blue-200 hover:bg-blue-50',
+                      )}
                     >
                       <Navigation className="size-3.5" />
-                      Directions
-                    </a>
+                      {routeVet?.id === vet.id ? 'Route shown' : 'Directions'}
+                    </button>
                   </div>
                 </div>
               </Card>
