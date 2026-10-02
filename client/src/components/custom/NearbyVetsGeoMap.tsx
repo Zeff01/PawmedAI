@@ -338,8 +338,10 @@ function RoutePanel({
   const [stepsOpen, setStepsOpen] = useState(false)
 
   return (
-    // Stops 4.5rem short of the bottom so the re-center button stays clear.
-    <div className="absolute top-3 left-3 z-10 flex max-h-[calc(100%-4.5rem)] w-[min(20rem,calc(100%-4.5rem))] flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg">
+    // Phones: a card under the map, so the route stays visible.
+    // Wider: floats over the map, stopping 4.5rem short of the bottom (24rem
+    // map) so the re-center button stays clear.
+    <div className="mt-3 flex w-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm sm:absolute sm:top-3 sm:left-3 sm:z-10 sm:mt-0 sm:max-h-[19.5rem] sm:w-[min(20rem,calc(100%-4.5rem))] sm:shadow-lg">
       <div className="flex items-start gap-2 px-3.5 pt-3">
         <div className="min-w-0 flex-1">
           <p className="text-[10.5px] font-semibold tracking-wider text-slate-400 uppercase">
@@ -355,14 +357,14 @@ function RoutePanel({
           size="icon-xs"
           onClick={onClose}
           aria-label="Clear the route"
-          className="text-slate-400 hover:text-slate-700"
+          className="size-9 text-slate-400 hover:text-slate-700 sm:size-6 [&_svg]:size-4 sm:[&_svg]:size-3"
         >
           <X />
         </Button>
       </div>
 
       <div
-        className="mt-2.5 flex gap-1 px-3.5"
+        className="mt-3 flex gap-2 px-3.5 sm:mt-2.5 sm:gap-1"
         role="group"
         aria-label="Travel mode"
       >
@@ -378,8 +380,9 @@ function RoutePanel({
             variant={mode === value ? 'default' : 'outline'}
             aria-pressed={mode === value}
             onClick={() => onModeChange(value)}
+            // Thumb-sized on phones, compact where the panel floats over the map.
             className={cn(
-              'flex-1',
+              'h-10 flex-1 text-sm sm:h-6 sm:text-xs [&_svg]:size-4 sm:[&_svg]:size-3',
               mode === value && 'bg-blue-600 text-white hover:bg-blue-700',
             )}
           >
@@ -415,7 +418,7 @@ function RoutePanel({
             type="button"
             onClick={() => setStepsOpen((open) => !open)}
             aria-expanded={stepsOpen}
-            className="flex w-full items-center justify-between px-3.5 py-2 text-xs font-semibold text-slate-600 transition-colors hover:bg-slate-50"
+            className="flex w-full items-center justify-between px-3.5 py-3 text-sm font-semibold text-slate-600 sm:py-2 sm:text-xs transition-colors hover:bg-slate-50"
           >
             {stepsOpen ? 'Hide steps' : `Show ${route.steps.length} steps`}
             <ChevronDown
@@ -426,7 +429,7 @@ function RoutePanel({
             />
           </button>
           {stepsOpen && (
-            <ol className="min-h-0 overflow-y-auto px-3.5 pb-2 [scrollbar-width:thin]">
+            <ol className="max-h-56 min-h-0 overflow-y-auto px-3.5 sm:max-h-none pb-2 [scrollbar-width:thin]">
               {route.steps.map((step, index) => (
                 <li
                   key={index}
@@ -454,7 +457,7 @@ function RoutePanel({
         href={googleMapsUrl(vet, origin, mode)}
         target="_blank"
         rel="noreferrer"
-        className="flex items-center justify-center gap-1.5 border-t border-slate-100 bg-slate-50 px-3.5 py-2 text-[11px] font-semibold text-slate-500 transition-colors hover:text-blue-600"
+        className="flex items-center justify-center gap-1.5 border-t border-slate-100 bg-slate-50 px-3.5 py-3 text-xs font-semibold text-slate-500 sm:py-2 sm:text-[11px] transition-colors hover:text-blue-600"
       >
         Navigate in Google Maps
         <ExternalLink className="size-3" />
@@ -929,10 +932,12 @@ export default function NearbyVetsGeoMap() {
       (b, c) => b.extend(c),
       new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]),
     )
-    // Extra room on the left keeps the route clear of the directions panel.
+    // On wider screens the panel floats over the left of the map, so leave it room.
     const wide = (mapContainer.current?.clientWidth ?? 0) >= 640
     m.fitBounds(bounds, {
-      padding: { top: 48, bottom: 48, right: 56, left: wide ? 360 : 48 },
+      padding: wide
+        ? { top: 48, bottom: 48, right: 56, left: 360 }
+        : { top: 32, bottom: 32, right: 48, left: 32 },
       duration: 900,
       maxZoom: 16,
     })
@@ -1071,17 +1076,35 @@ export default function NearbyVetsGeoMap() {
       )}
 
       {!geoFailure && (
-        <div ref={mapSection} className="relative h-96">
-          <div
-            className={cn(
-              'h-96 shrink-0 overflow-hidden rounded-2xl transition-opacity duration-500',
-              mapReady ? 'opacity-100' : 'opacity-0',
-            )}
-          >
-            <div ref={mapContainer} className="h-full w-full" />
-          </div>
+        <div ref={mapSection} className="relative">
+          <div className="relative h-80 sm:h-96">
+            <div
+              className={cn(
+                'h-full shrink-0 overflow-hidden rounded-2xl transition-opacity duration-500',
+                mapReady ? 'opacity-100' : 'opacity-0',
+              )}
+            >
+              <div ref={mapContainer} className="h-full w-full" />
+            </div>
 
-          {!mapReady && <MapSkeleton />}
+            {!mapReady && <MapSkeleton />}
+
+            {/* My Location button overlaid on map (bottom-left) */}
+            {mapReady && (
+              <button
+                onClick={handleRelocate}
+                disabled={relocating}
+                title="Re-center on my location"
+                className="absolute bottom-4 left-4 z-10 flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white shadow-md hover:bg-blue-50 transition-colors disabled:opacity-50"
+              >
+                {relocating ? (
+                  <Loader2 className="size-4 animate-spin text-blue-600" />
+                ) : (
+                  <LocateFixed className="size-4 text-blue-600" />
+                )}
+              </button>
+            )}
+          </div>
 
           {mapReady && routeVet && (
             <RoutePanel
@@ -1095,22 +1118,6 @@ export default function NearbyVetsGeoMap() {
               onModeChange={(mode) => void showDirections(routeVet, { mode })}
               onClose={clearRoute}
             />
-          )}
-
-          {/* My Location button overlaid on map (bottom-left) */}
-          {mapReady && (
-            <button
-              onClick={handleRelocate}
-              disabled={relocating}
-              title="Re-center on my location"
-              className="absolute bottom-4 left-4 z-10 flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white shadow-md hover:bg-blue-50 transition-colors disabled:opacity-50"
-            >
-              {relocating ? (
-                <Loader2 className="size-4 animate-spin text-blue-600" />
-              ) : (
-                <LocateFixed className="size-4 text-blue-600" />
-              )}
-            </button>
           )}
         </div>
       )}
@@ -1216,13 +1223,13 @@ export default function NearbyVetsGeoMap() {
                       <a
                         href={`tel:${vet.phone}`}
                         onClick={(e) => e.stopPropagation()}
-                        className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-slate-200 px-3 py-2 text-xs font-medium text-emerald-600 hover:bg-emerald-50 hover:border-emerald-200 transition-colors"
+                        className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-slate-200 px-3 py-2.5 text-sm font-medium text-emerald-600 sm:py-2 sm:text-xs hover:bg-emerald-50 hover:border-emerald-200 transition-colors"
                       >
                         <Phone className="size-3.5" />
                         Call
                       </a>
                     ) : (
-                      <span className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-dashed border-slate-200 px-3 py-2 text-xs text-slate-300 cursor-not-allowed select-none">
+                      <span className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-dashed border-slate-200 px-3 py-2.5 text-sm text-slate-300 sm:py-2 sm:text-xs cursor-not-allowed select-none">
                         <Phone className="size-3.5" />
                         No phone listed
                       </span>
@@ -1236,7 +1243,7 @@ export default function NearbyVetsGeoMap() {
                       disabled={!userCoords}
                       aria-pressed={routeVet?.id === vet.id}
                       className={cn(
-                        'inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50',
+                        'inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border px-3 py-2.5 text-sm font-medium transition-colors sm:py-2 sm:text-xs disabled:cursor-not-allowed disabled:opacity-50',
                         routeVet?.id === vet.id
                           ? 'border-blue-600 bg-blue-600 text-white hover:bg-blue-700'
                           : 'border-slate-200 text-blue-600 hover:border-blue-200 hover:bg-blue-50',
