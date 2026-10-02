@@ -1123,32 +1123,33 @@ export default function NearbyVetsGeoMap() {
       )}
 
       <div className="space-y-4 bg-white">
-        {/* Section header */}
-        <div className="flex items-end justify-between">
-          <div>
+        {/* Section header — the count rides the title row so the subtitle
+            keeps the full width on phones */}
+        <div>
+          <div className="flex items-center justify-between gap-3">
             <h2 className="font-bold text-xl text-blue-500">
               {manualLocation ? 'Clinics In This Area' : 'Clinics Near You'}
             </h2>
-            <p className="text-muted-foreground text-sm">
-              {manualLocation
-                ? 'Sorted by distance from the location you searched.'
-                : 'Sorted by distance from your current location.'}
-            </p>
+            {!loading && !geoFailure && !error && vets.length > 0 && (
+              <span
+                className={cn(
+                  'shrink-0 rounded-full border px-3 py-1 text-xs font-semibold whitespace-nowrap',
+                  hiddenCount > 0
+                    ? 'border-slate-200 bg-slate-50 text-slate-600'
+                    : 'border-blue-100 bg-blue-50 text-blue-600',
+                )}
+              >
+                {hiddenCount > 0
+                  ? `${visibleVets.length} of ${vets.length} shown`
+                  : `${vets.length} found`}
+              </span>
+            )}
           </div>
-          {!loading && !geoFailure && !error && vets.length > 0 && (
-            <span
-              className={cn(
-                'rounded-full border px-3 py-1 text-xs font-semibold',
-                hiddenCount > 0
-                  ? 'border-slate-200 bg-slate-50 text-slate-600'
-                  : 'border-blue-100 bg-blue-50 text-blue-600',
-              )}
-            >
-              {hiddenCount > 0
-                ? `${visibleVets.length} of ${vets.length} shown`
-                : `${vets.length} found`}
-            </span>
-          )}
+          <p className="text-muted-foreground text-sm">
+            {manualLocation
+              ? 'Sorted by distance from the location you searched.'
+              : 'Sorted by distance from your current location.'}
+          </p>
         </div>
 
         {geoFailure && (
