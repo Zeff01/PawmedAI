@@ -13,6 +13,10 @@ _llm = ChatGoogleGenerativeAI(
     model=GEMINI_MODEL, temperature=0.2, api_key=GAPI_KEY, thinking_budget=4000
 )
 
+# Saved with every breed record, so feedback can be compared across prompt
+# changes. Bump it whenever the prompt or BREED_SCHEMA changes.
+PROMPT_VERSION = "2026-10-03"
+
 BREED_SCHEMA = """
 {
   "animal_type": string,

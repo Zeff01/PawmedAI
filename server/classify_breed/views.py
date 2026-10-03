@@ -11,7 +11,9 @@ from classify_breed.serializers import (
     BreedClassificationRequestSerializer,
     BreedClassificationResponseSerializer,
 )
-from classify_breed.services.breed_classifier import BreedClassifier
+from classify_breed.services.breed_classifier import PROMPT_VERSION, BreedClassifier
+from classify_dss.models import ClassificationRecord
+from classify_dss.records import record_classification
 from core.throttles import AIRunThrottle
 
 logger = logging.getLogger(__name__)
@@ -71,4 +73,24 @@ class BreedClassificationAPIView(APIView):
                 status=status.HTTP_502_BAD_GATEWAY,
             )
 
-        return Response(response_serializer.data, status=status.HTTP_200_OK)
+        data = dict(response_serializer.data)
+        not_identified = data.get("not_identified", False)
+        profile = getattr(request.user, "profile", None)
+        record = record_classification(
+            kind=ClassificationRecord.Kind.BREED,
+            mode=getattr(profile, "user_type", "") or "",
+            outcome=(
+                ClassificationRecord.Outcome.NOT_IDENTIFIED
+                if not_identified
+                else ClassificationRecord.Outcome.DIAGNOSTIC
+            ),
+            prompt_version=PROMPT_VERSION,
+            had_image=bool(uploaded_image),
+            had_notes=bool(description.strip()),
+            diagnosis="" if not_identified else data.get("breed_name", ""),
+            animal_type=data.get("animal_type", ""),
+            confidence=data.get("confidence"),
+        )
+        # Lets the client ask whether the breed was right.
+        data["feedback_id"] = str(record.id) if record else None
+        return Response(data, status=status.HTTP_200_OK)

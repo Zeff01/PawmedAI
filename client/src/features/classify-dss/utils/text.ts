@@ -1,12 +1,15 @@
 export function cleanText(value: string) {
-  return value.replace(/\*\*(.*?)\*\*/g, '$1').replace(/\s+/g, ' ').trim()
+  return value
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim()
 }
 
 export function splitIntoItems(value: string) {
   const cleaned = cleanText(value)
   const withIntroRemoved = cleaned.replace(
     /^.*?treatment typically involves:\s*/i,
-    ''
+    '',
   )
   const dashSplit = withIntroRemoved.split(/\s-\s+/).filter(Boolean)
   if (dashSplit.length > 1) {

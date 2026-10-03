@@ -15,22 +15,22 @@ class PushSubscriptionSerializer(serializers.ModelSerializer):
         p256dh = keys.get("p256dh")
         auth = keys.get("auth")
 
+        defaults = {
+            "p256dh": p256dh or "",
+            "auth": auth or "",
+            "user_agent": validated_data.get("user_agent", ""),
+        }
+        # Claim the device for whoever is signed in; a signed-out re-subscribe
+        # leaves an existing owner in place rather than orphaning the device.
+        user = validated_data.get("user")
+        if user is not None:
+            defaults["user"] = user
         instance, _ = PushSubscription.objects.update_or_create(
             endpoint=validated_data["endpoint"],
-            defaults={
-                "p256dh": p256dh or "",
-                "auth": auth or "",
-                "user_agent": validated_data.get("user_agent", ""),
-            },
+            defaults=defaults,
         )
         return instance
 
 
 class UnsubscribeSerializer(serializers.Serializer):
     endpoint = serializers.URLField()
-
-
-class SendTestNotificationSerializer(serializers.Serializer):
-    title = serializers.CharField(max_length=120)
-    body = serializers.CharField(max_length=240)
-    url = serializers.CharField(max_length=512, required=False, allow_blank=True)

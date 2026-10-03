@@ -117,9 +117,7 @@ export function UserTypeDialog({
       }
     } catch (error) {
       const message =
-        error instanceof Error
-          ? error.message
-          : 'Unable to save profile type.'
+        error instanceof Error ? error.message : 'Unable to save profile type.'
       setErrorMessage(message)
       return
     }
@@ -234,9 +232,7 @@ export function UserTypeDialog({
                       </span>
                     ) : null}
                   </div>
-                  <p className="text-xs text-slate-600">
-                    {option.description}
-                  </p>
+                  <p className="text-xs text-slate-600">{option.description}</p>
                 </button>
               )
             })}

@@ -21,6 +21,7 @@ import { Route as MedicalLogRecordIdRouteImport } from './routes/medical-log/$re
 import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
 import { Route as AcademySlugRouteImport } from './routes/academy/$slug'
 import { Route as AnimalsSlugIndexRouteImport } from './routes/animals/$slug/index'
+import { Route as ClassifyFeedbackIdRouteImport } from './routes/classify/feedback/$id'
 import { Route as AuthGoogleCallbackRouteImport } from './routes/auth/google/callback'
 
 const SplatRoute = SplatRouteImport.update({
@@ -83,6 +84,11 @@ const AnimalsSlugIndexRoute = AnimalsSlugIndexRouteImport.update({
   path: '/animals/$slug/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ClassifyFeedbackIdRoute = ClassifyFeedbackIdRouteImport.update({
+  id: '/classify/feedback/$id',
+  path: '/classify/feedback/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthGoogleCallbackRoute = AuthGoogleCallbackRouteImport.update({
   id: '/auth/google/callback',
   path: '/auth/google/callback',
@@ -102,6 +108,7 @@ export interface FileRoutesByFullPath {
   '/medical-log/': typeof MedicalLogIndexRoute
   '/nearby-vets/': typeof NearbyVetsIndexRoute
   '/auth/google/callback': typeof AuthGoogleCallbackRoute
+  '/classify/feedback/$id': typeof ClassifyFeedbackIdRoute
   '/animals/$slug/': typeof AnimalsSlugIndexRoute
 }
 export interface FileRoutesByTo {
@@ -117,6 +124,7 @@ export interface FileRoutesByTo {
   '/medical-log': typeof MedicalLogIndexRoute
   '/nearby-vets': typeof NearbyVetsIndexRoute
   '/auth/google/callback': typeof AuthGoogleCallbackRoute
+  '/classify/feedback/$id': typeof ClassifyFeedbackIdRoute
   '/animals/$slug': typeof AnimalsSlugIndexRoute
 }
 export interface FileRoutesById {
@@ -133,6 +141,7 @@ export interface FileRoutesById {
   '/medical-log/': typeof MedicalLogIndexRoute
   '/nearby-vets/': typeof NearbyVetsIndexRoute
   '/auth/google/callback': typeof AuthGoogleCallbackRoute
+  '/classify/feedback/$id': typeof ClassifyFeedbackIdRoute
   '/animals/$slug/': typeof AnimalsSlugIndexRoute
 }
 export interface FileRouteTypes {
@@ -150,6 +159,7 @@ export interface FileRouteTypes {
     | '/medical-log/'
     | '/nearby-vets/'
     | '/auth/google/callback'
+    | '/classify/feedback/$id'
     | '/animals/$slug/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -165,6 +175,7 @@ export interface FileRouteTypes {
     | '/medical-log'
     | '/nearby-vets'
     | '/auth/google/callback'
+    | '/classify/feedback/$id'
     | '/animals/$slug'
   id:
     | '__root__'
@@ -180,6 +191,7 @@ export interface FileRouteTypes {
     | '/medical-log/'
     | '/nearby-vets/'
     | '/auth/google/callback'
+    | '/classify/feedback/$id'
     | '/animals/$slug/'
   fileRoutesById: FileRoutesById
 }
@@ -196,6 +208,7 @@ export interface RootRouteChildren {
   MedicalLogIndexRoute: typeof MedicalLogIndexRoute
   NearbyVetsIndexRoute: typeof NearbyVetsIndexRoute
   AuthGoogleCallbackRoute: typeof AuthGoogleCallbackRoute
+  ClassifyFeedbackIdRoute: typeof ClassifyFeedbackIdRoute
   AnimalsSlugIndexRoute: typeof AnimalsSlugIndexRoute
 }
 
@@ -285,6 +298,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AnimalsSlugIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/classify/feedback/$id': {
+      id: '/classify/feedback/$id'
+      path: '/classify/feedback/$id'
+      fullPath: '/classify/feedback/$id'
+      preLoaderRoute: typeof ClassifyFeedbackIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth/google/callback': {
       id: '/auth/google/callback'
       path: '/auth/google/callback'
@@ -308,6 +328,7 @@ const rootRouteChildren: RootRouteChildren = {
   MedicalLogIndexRoute: MedicalLogIndexRoute,
   NearbyVetsIndexRoute: NearbyVetsIndexRoute,
   AuthGoogleCallbackRoute: AuthGoogleCallbackRoute,
+  ClassifyFeedbackIdRoute: ClassifyFeedbackIdRoute,
   AnimalsSlugIndexRoute: AnimalsSlugIndexRoute,
 }
 export const routeTree = rootRouteImport

@@ -1,18 +1,25 @@
 import json
 import logging
 
+from datetime import timedelta
+
+from django.utils import timezone
+
 from rest_framework import status
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from classify_dss.models import ClassificationRecord, FeedbackReminder
+from classify_dss.records import record_classification
 from classify_dss.serializers import (
+    ClassificationFeedbackSerializer,
     DiseaseClassificationRequestSerializer,
     DiseaseClassificationResponseSerializer,
     FurParentClassificationResponseSerializer,
 )
-from classify_dss.services.disease_classifier import DiseaseClassifier
+from classify_dss.services.disease_classifier import PROMPT_VERSION, DiseaseClassifier
 from core.quotas import read_quota
 from core.throttles import AIRunThrottle
 
@@ -127,8 +134,19 @@ def _build_healthy_response(mode: str, animal_type: str = "", reason: str = ""):
     }
 
 
-def _serialize_and_respond(result: dict, mode: str):
-    """Validate result dict with the appropriate serializer and return a DRF Response."""
+def _serialize_and_respond(
+    result: dict,
+    mode: str,
+    *,
+    outcome: str = ClassificationRecord.Outcome.DIAGNOSTIC,
+    had_image: bool = False,
+    had_notes: bool = False,
+):
+    """Validate result dict with the appropriate serializer and return a DRF Response.
+
+    A valid answer is recorded and comes back with a `feedback_id` the client
+    uses to say whether the answer was right.
+    """
     if mode == "fur_parent":
         response_serializer = FurParentClassificationResponseSerializer(data=result)
     else:
@@ -143,7 +161,20 @@ def _serialize_and_respond(result: dict, mode: str):
             },
             status=status.HTTP_502_BAD_GATEWAY,
         )
-    return Response(response_serializer.data, status=status.HTTP_200_OK)
+    record = record_classification(
+        kind=ClassificationRecord.Kind.DISEASE,
+        mode=mode,
+        outcome=outcome,
+        prompt_version=PROMPT_VERSION,
+        had_image=had_image,
+        had_notes=had_notes,
+        diagnosis=result.get("disease_name") or result.get("possible_condition_name"),
+        animal_type=result.get("animal_type"),
+        confidence=result.get("confidence"),
+    )
+    data = dict(response_serializer.data)
+    data["feedback_id"] = str(record.id) if record else None
+    return Response(data, status=status.HTTP_200_OK)
 
 
 class ClassificationQuotaAPIView(APIView):
@@ -206,6 +237,7 @@ class DiseaseClassificationAPIView(APIView):
         uploaded_image = request_serializer.validated_data.get("image")
         notes = request_serializer.validated_data.get("text", "")
         mode = request_serializer.validated_data.get("mode", "professional")
+        inputs = {"had_image": bool(uploaded_image), "had_notes": bool(notes.strip())}
 
         try:
             classifier = DiseaseClassifier()
@@ -226,11 +258,21 @@ class DiseaseClassificationAPIView(APIView):
 
                 if triage_status == "not_animal":
                     result = _build_not_animal_response(mode, animal_type, reason)
-                    return _serialize_and_respond(result, mode)
+                    return _serialize_and_respond(
+                        result,
+                        mode,
+                        outcome=ClassificationRecord.Outcome.NOT_ANIMAL,
+                        **inputs,
+                    )
 
                 if triage_status == "healthy":
                     result = _build_healthy_response(mode, animal_type, reason)
-                    return _serialize_and_respond(result, mode)
+                    return _serialize_and_respond(
+                        result,
+                        mode,
+                        outcome=ClassificationRecord.Outcome.HEALTHY,
+                        **inputs,
+                    )
 
                 # triage_status == "diagnostic" — fall through to classification
             else:
@@ -318,4 +360,117 @@ class DiseaseClassificationAPIView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
-        return _serialize_and_respond(result, mode)
+        return _serialize_and_respond(result, mode, **inputs)
+
+
+# Long enough for a vet appointment, short enough that the visit is still fresh.
+REMINDER_DELAY = timedelta(days=3)
+
+
+def _reminder_payload(reminder: FeedbackReminder) -> dict:
+    record = reminder.record
+    return {
+        "id": str(record.id),
+        "kind": record.kind,
+        "diagnosis": record.diagnosis,
+        "animal_type": record.animal_type,
+        "classified_at": record.created_at,
+        "remind_at": reminder.remind_at,
+    }
+
+
+class ClassificationFeedbackAPIView(APIView):
+    """The user's verdict on one classification.
+
+    Addressed by the record's unguessable id, which only the person who ran the
+    classification was given. Records carry no account link, so that id is the
+    whole of the access check — and sending feedback again simply replaces it.
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, record_id):
+        record = ClassificationRecord.objects.filter(pk=record_id).first()
+        if record is None:
+            return Response(
+                {"detail": "Classification not found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        serializer = ClassificationFeedbackSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        data = serializer.validated_data
+        record.verdict = data["verdict"]
+        record.actual_diagnosis = data.get("actual_diagnosis", "")
+        record.confirmed_by = data.get("confirmed_by", "")
+        record.shared = data.get("share", False)
+        # Withdrawing consent on a resubmission clears what was shared before.
+        record.shared_image_url = data.get("image_url", "") if record.shared else ""
+        record.shared_notes = data.get("notes", "") if record.shared else ""
+        record.feedback_at = timezone.now()
+        record.save()
+
+        # An answer settles the reminder; "not sure yet" keeps one only if asked.
+        wants_reminder = data["verdict"] == ClassificationRecord.Verdict.UNSURE and data.get(
+            "remind_me", False
+        )
+        if wants_reminder:
+            FeedbackReminder.objects.update_or_create(
+                record=record,
+                defaults={
+                    "user": request.user,
+                    "remind_at": timezone.now() + REMINDER_DELAY,
+                    "notified_at": None,
+                },
+            )
+        else:
+            FeedbackReminder.objects.filter(record=record).delete()
+
+        return Response(
+            {"saved": True, "reminder": wants_reminder}, status=status.HTTP_200_OK
+        )
+
+
+class FeedbackReminderListAPIView(APIView):
+    """The caller's reminders that have come due — what the dashboard shows."""
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        reminders = FeedbackReminder.objects.filter(
+            user=request.user, remind_at__lte=timezone.now()
+        ).select_related("record")
+        return Response([_reminder_payload(reminder) for reminder in reminders])
+
+
+class FeedbackReminderDetailAPIView(APIView):
+    """One reminded-about result, for the page the reminder opens.
+
+    Only its owner can read it: the reminder is what ties the result to them.
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def _get(self, request, record_id):
+        return (
+            FeedbackReminder.objects.filter(record_id=record_id, user=request.user)
+            .select_related("record")
+            .first()
+        )
+
+    def get(self, request, record_id):
+        reminder = self._get(request, record_id)
+        if reminder is None:
+            return Response(
+                {"detail": "This reminder has already been answered or dismissed."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        return Response(_reminder_payload(reminder))
+
+    def delete(self, request, record_id):
+        reminder = self._get(request, record_id)
+        if reminder is not None:
+            reminder.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

@@ -6,6 +6,7 @@ import { AddMedicationDialog } from './components/AddMedicationDialog'
 import { AddPetDialog } from './components/AddPetDialog'
 import { AddVaccinationDialog } from './components/AddVaccinationDialog'
 import { AttentionPanel } from './components/AttentionPanel'
+import { FeedbackReminderCard } from '@/features/classify-dss/components/FeedbackReminderCard'
 import { CareTimeline } from './components/CareTimeline'
 import { DashboardError } from './components/DashboardError'
 import { DashboardSkeleton } from './components/DashboardSkeleton'
@@ -115,6 +116,10 @@ export function FurParentDashboard() {
               onSelectPet={setActivePetId}
             />
           )}
+
+          <div className="mt-4 empty:hidden">
+            <FeedbackReminderCard />
+          </div>
         </FadeIn>
 
         {!activePet || !wellness ? (

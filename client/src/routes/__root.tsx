@@ -14,6 +14,7 @@ import { Toaster } from '@/components/ui/sonner'
 import { SiteStructuredData } from '@/components/SiteStructuredData'
 import { BugReportWidget } from '@/features/bug-report/components/BugReportWidget'
 import { useUserType } from '@/hooks/useUserType'
+import { usePushAccountLink } from '@/pwa/usePushAccountLink'
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -21,6 +22,7 @@ export const Route = createRootRoute({
 
 function RootComponent() {
   const { isProfessional, isFurParent, isStudent } = useUserType()
+  usePushAccountLink()
 
   return (
     <>

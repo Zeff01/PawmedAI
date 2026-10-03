@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from core.uploadcare import fetch_uploadcare_file
+from classify_dss.models import ClassificationRecord
+from core.uploadcare import fetch_uploadcare_file, is_uploadcare_url
 
 
 MAX_IMAGE_MB = 5
@@ -153,3 +154,25 @@ class FurParentClassificationResponseSerializer(serializers.Serializer):
         )
     )
     reassurance_note = serializers.CharField()
+
+class ClassificationFeedbackSerializer(serializers.Serializer):
+    verdict = serializers.ChoiceField(choices=ClassificationRecord.Verdict.choices)
+    actual_diagnosis = serializers.CharField(
+        required=False, allow_blank=True, max_length=240
+    )
+    confirmed_by = serializers.ChoiceField(
+        choices=ClassificationRecord.ConfirmedBy.choices,
+        required=False,
+        allow_blank=True,
+    )
+    share = serializers.BooleanField(required=False, default=False)
+    image_url = serializers.URLField(required=False, allow_blank=True, max_length=500)
+    notes = serializers.CharField(required=False, allow_blank=True, max_length=2000)
+    # Only meaningful with an "unsure" verdict: remind me once I know.
+    remind_me = serializers.BooleanField(required=False, default=False)
+
+    def validate_image_url(self, value):
+        # Only the photo the user uploaded through the app, never an arbitrary link.
+        if value and not is_uploadcare_url(value):
+            raise serializers.ValidationError("Expected an Uploadcare CDN URL.")
+        return value

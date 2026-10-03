@@ -1,3 +1,5 @@
+import { supabase } from '@/lib/supabase'
+
 const DEFAULT_BASE_URL = 'http://localhost:8000'
 function getApiBaseUrl() {
   return import.meta.env.VITE_API_BASE_URL?.toString() ?? DEFAULT_BASE_URL
@@ -9,9 +11,7 @@ export function isPushSupported() {
 
 function urlBase64ToUint8Array(base64String: string) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
-  const base64 = (base64String + padding)
-    .replace(/-/g, '+')
-    .replace(/_/g, '/')
+  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/')
 
   const rawData = window.atob(base64)
   const outputArray = new Uint8Array(rawData.length)
@@ -66,21 +66,45 @@ export async function subscribeToPush() {
     applicationServerKey: urlBase64ToUint8Array(publicKey),
   })
 
+  await saveSubscription(subscription)
+  return subscription
+}
+
+/**
+ * Store the subscription on the server. Signed in, the token goes along so the
+ * device is linked to the account — that is what lets a reminder reach this
+ * user's devices rather than everyone's.
+ */
+async function saveSubscription(subscription: PushSubscription) {
+  const { data } = await supabase.auth.getSession()
+  const accessToken = data.session?.access_token
   const response = await fetch(`${getApiBaseUrl()}/api/push/subscribe/`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+    },
     body: JSON.stringify({
       endpoint: subscription.endpoint,
       keys: subscription.toJSON().keys,
-      userAgent: navigator.userAgent,
+      user_agent: navigator.userAgent,
     }),
   })
 
   if (!response.ok) {
     throw new Error('Failed to save subscription.')
   }
+}
 
-  return subscription
+/**
+ * Link a device that allowed notifications before signing in. Quiet by
+ * design: it never asks for permission, and does nothing without it.
+ */
+export async function linkPushSubscriptionToAccount() {
+  if (!isPushSupported() || Notification.permission !== 'granted') return
+  const registration = await navigator.serviceWorker.ready
+  const subscription = await registration.pushManager.getSubscription()
+  if (subscription) await saveSubscription(subscription)
 }
 
 export async function unsubscribeFromPush() {
@@ -100,20 +124,4 @@ export async function unsubscribeFromPush() {
 export async function getCurrentSubscription() {
   const registration = await navigator.serviceWorker.ready
   return registration.pushManager.getSubscription()
-}
-
-export async function sendTestNotification() {
-  const response = await fetch(`${getApiBaseUrl()}/api/push/send-test/`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      title: 'Pawmed AI update',
-      body: 'Notifications are working on this device.',
-      url: '/',
-    }),
-  })
-
-  if (!response.ok) {
-    throw new Error('Failed to send test notification.')
-  }
 }

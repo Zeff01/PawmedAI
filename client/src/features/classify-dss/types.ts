@@ -40,9 +40,13 @@ export type FurParentClassificationResult = {
   reassurance_note: string
 }
 
-export type DiseaseClassificationResult =
+export type DiseaseClassificationResult = (
   | ClinicalClassificationResult
   | FurParentClassificationResult
+) & {
+  /** Addresses this answer when sending feedback; null if it wasn't recorded. */
+  feedback_id?: string | null
+}
 
 export function isFurParentResult(
   result: DiseaseClassificationResult,

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { useClassifyBreed } from './hooks/useClassifyBreed'
 import { BreedResults } from './components/BreedResults'
+import { ClassificationFeedback } from '@/features/classify-dss/components/ClassificationFeedback'
 import {
   ArrowPathIcon,
   BoltIcon,
@@ -137,7 +138,7 @@ export function ClassifyBreedView() {
     handleAuthenticated,
     runWhenSignedIn,
   } = useAuthGate()
-  const { isProfessional } = useUserType()
+  const { isProfessional, userType } = useUserType()
   const classifyMutation = useClassifyBreed()
 
   // Bring the result area into view as soon as work starts, so the user is not
@@ -552,10 +553,25 @@ export function ClassifyBreedView() {
               {classifyMutation.isPending ? (
                 <PawMedLoader />
               ) : result ? (
-                <BreedResults
-                  result={result}
-                  previewUrl={imageFile?.url ?? null}
-                />
+                <div className="space-y-4">
+                  <BreedResults
+                    result={result}
+                    previewUrl={imageFile?.url ?? null}
+                  />
+                  {result.feedback_id && !result.not_identified && (
+                    <ClassificationFeedback
+                      // A fresh form for every new result.
+                      key={result.feedback_id}
+                      feedbackId={result.feedback_id}
+                      kind="breed"
+                      userType={userType ?? 'fur_parent'}
+                      // What was actually sent, not whatever is in the form now.
+                      imageUrl={classifyMutation.variables.imageUrl ?? null}
+                      notes={classifyMutation.variables.textInput ?? ''}
+                      suggestions={[]}
+                    />
+                  )}
+                </div>
               ) : (
                 <EmptyBreedResult />
               )}

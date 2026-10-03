@@ -15,6 +15,10 @@ _llm = ChatGoogleGenerativeAI(
 
 VALID_MODES = {"student", "professional", "fur_parent"}
 
+# Saved with every classification record, so feedback can be compared across
+# prompt changes. Bump it whenever `build_prompt` changes what the model sees.
+PROMPT_VERSION = "2026-10-03"
+
 
 class DiseaseClassifier:
     def __init__(self, model_name=None):

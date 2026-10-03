@@ -12,4 +12,6 @@ export type BreedClassificationResult = {
   care_tips: string[]
   fun_fact: string
   not_identified: boolean
+  /** Addresses this answer when sending feedback; null if it wasn't recorded. */
+  feedback_id?: string | null
 }

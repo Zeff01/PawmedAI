@@ -3,6 +3,8 @@ import { useClassifyDisease } from '@/features/classify-dss/hooks/useClassifyDis
 import { ImageUpload, UploadProgress } from './components/ImageUpload'
 import type { UploadedFile } from '@/components/UploadCareComponent'
 import { ResultsSection } from './components/ResultsSection'
+import { ClassificationFeedback } from './components/ClassificationFeedback'
+import type { DiseaseClassificationResult } from './types'
 import {
   ArrowPathIcon,
   CheckCircleIcon,
@@ -595,10 +597,24 @@ export function ClassifyDiseaseView() {
           {classifyMutation.isPending ? (
             <ResultSkeletonLoader />
           ) : classifyMutation.data ? (
-            <ResultsSection
-              result={classifyMutation.data}
-              previewUrl={imageFile?.url ?? null}
-            />
+            <div className="space-y-4">
+              <ResultsSection
+                result={classifyMutation.data}
+                previewUrl={imageFile?.url ?? null}
+              />
+              {classifyMutation.data.feedback_id && (
+                <ClassificationFeedback
+                  // A fresh form for every new result.
+                  key={classifyMutation.data.feedback_id}
+                  feedbackId={classifyMutation.data.feedback_id}
+                  userType={userType ?? 'student'}
+                  // What was actually sent, not whatever is in the form now.
+                  imageUrl={classifyMutation.variables.imageUrl ?? null}
+                  notes={classifyMutation.variables.textInput ?? ''}
+                  suggestions={differentialNames(classifyMutation.data)}
+                />
+              )}
+            </div>
           ) : (
             <div className="w-full rounded-lg border border-dashed border-slate-200 bg-slate-50/60 px-6 py-12 text-center">
               <p className="text-[14px] font-bold text-slate-800">
@@ -617,4 +633,12 @@ export function ClassifyDiseaseView() {
       </div>
     </section>
   )
+}
+
+/** The other conditions the AI weighed, as plain names. */
+function differentialNames(result: DiseaseClassificationResult): Array<string> {
+  if (!('differential_diagnoses' in result)) return []
+  return (result.differential_diagnoses ?? [])
+    .map((entry) => (typeof entry === 'string' ? entry : entry.name))
+    .filter(Boolean)
 }
