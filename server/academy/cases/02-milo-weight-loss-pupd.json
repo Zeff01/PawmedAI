@@ -23,11 +23,6 @@
           "correct": true
         },
         {
-          "label": "Polyuria and polydipsia",
-          "detail": "An osmotic or renal driver",
-          "correct": true
-        },
-        {
           "label": "Plantigrade hindlimb stance",
           "detail": "Diabetic neuropathy in the cat",
           "correct": true
@@ -54,11 +49,6 @@
       "points": 15,
       "options": [
         {
-          "label": "Blood glucose with urine glucose and ketones",
-          "detail": "Persistent glucosuria separates diabetes from stress hyperglycaemia",
-          "correct": true
-        },
-        {
           "label": "Serum fructosamine",
           "detail": "Two to three weeks of glycaemia, unaffected by the car journey",
           "correct": true
@@ -66,11 +56,6 @@
         {
           "label": "Total T4",
           "detail": "Cheap, and hyperthyroidism must be excluded",
-          "correct": true
-        },
-        {
-          "label": "Urine specific gravity with culture",
-          "detail": "Dilute urine, and diabetics get silent UTIs",
           "correct": true
         },
         {
@@ -112,11 +97,6 @@
         {
           "label": "Hyperthyroidism",
           "detail": "T4 is mid-reference and there is no goitre",
-          "correct": false
-        },
-        {
-          "label": "Chronic kidney disease",
-          "detail": "Renal values normal, and USG is not fixed at isosthenuria",
           "correct": false
         }
       ],

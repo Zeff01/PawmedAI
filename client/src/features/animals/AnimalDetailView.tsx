@@ -204,7 +204,7 @@ function HeroStats({ stats }: { stats: Record<string, string> }) {
           }`}
         >
           <div className="flex items-center gap-1.5 text-slate-400">
-            <Icon className="h-3.5 w-3.5" />
+            {/* <Icon className="h-3.5 w-3.5" /> */}
             <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
               {key}
             </p>

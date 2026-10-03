@@ -27,7 +27,7 @@ const contactInfo = {
 const socialMediaLinks = [
   {
     platform: 'Facebook',
-    url: 'https://www.facebook.com/Codebilitydev',
+    url: 'https://www.facebook.com/Jan.dacallos',
     icon: Facebook,
   },
   {
@@ -37,7 +37,7 @@ const socialMediaLinks = [
   },
   {
     platform: 'LinkedIn',
-    url: 'https://www.linkedin.com/company/codebilitytech/posts/',
+    url: 'https://www.linkedin.com/in/jan-phillip-dacallos-2a486b1a9/',
     icon: Linkedin,
   },
   { platform: 'Github', url: 'https://github.com/jpdevdotcom', icon: Github },

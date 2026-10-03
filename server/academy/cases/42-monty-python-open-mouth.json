@@ -36,11 +36,6 @@
           "label": "Cool vivarium at 22–26°C",
           "detail": "The immunosuppressive cause — history, not a sign",
           "correct": false
-        },
-        {
-          "label": "Anorexia for a month",
-          "detail": "Common to almost every reptile presentation",
-          "correct": false
         }
       ],
       "explanation": "Snakes have no diaphragm and no effective cough, so mucus pools and the animal lifts its head to drain it: that posture with glottal mucus is lower respiratory disease. The stomatitis matters because in snakes the mouth and the airway are one continuous problem. The temperature deficit is the reason the infection took hold, and it belongs in the plan."
@@ -69,23 +64,8 @@
           "correct": true
         },
         {
-          "label": "Haematology with a differential",
-          "detail": "Inflammatory response and its severity",
-          "correct": true
-        },
-        {
-          "label": "Oral swab cytology and culture from the stomatitis",
-          "detail": "The same organisms, and the local lesion",
-          "correct": true
-        },
-        {
           "label": "Inclusion body disease testing as the only investigation",
           "detail": "Considered in boids with neurological signs; this is a pneumonia",
-          "correct": false
-        },
-        {
-          "label": "Faecal parasitology as the priority test",
-          "detail": "Snake lungworm exists, but the wash answers this case",
           "correct": false
         }
       ],
@@ -105,11 +85,6 @@
           "correct": true
         },
         {
-          "label": "The isolate is resistant to the usual first-choice antibiotics",
-          "detail": "Resistant to amoxicillin-clavulanate and enrofloxacin",
-          "correct": true
-        },
-        {
           "label": "Chronic under-heating allowed the infection to establish",
           "detail": "Three months at a maximum of 26°C",
           "correct": true
@@ -122,11 +97,6 @@
         {
           "label": "Inclusion body disease is the likely underlying cause",
           "detail": "Untested here and unsupported — no neurological signs",
-          "correct": false
-        },
-        {
-          "label": "Lungworm is the primary cause",
-          "detail": "Cytology shows bacteria and neutrophils, not parasites",
           "correct": false
         }
       ],
@@ -153,11 +123,6 @@
         {
           "label": "Pentastomid or lungworm infection",
           "detail": "Cytology identifies bacteria, not parasites",
-          "correct": false
-        },
-        {
-          "label": "Mycotic pneumonia",
-          "detail": "No fungal elements on cytology and a bacterium was cultured",
           "correct": false
         },
         {

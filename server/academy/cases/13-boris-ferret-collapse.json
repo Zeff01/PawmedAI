@@ -36,11 +36,6 @@
           "label": "Weight loss of 200 g",
           "detail": "Real, but non-specific in a four-year-old ferret",
           "correct": false
-        },
-        {
-          "label": "Temperature 37.8°C",
-          "detail": "Normal for a ferret",
-          "correct": false
         }
       ],
       "explanation": "The timing is the diagnosis in waiting: signs that appear after a fast and after exertion, and resolve completely, describe a substrate problem rather than a structural one. Ptyalism and mouth-pawing are what a hypoglycaemic ferret does, and every clinician who has seen one recognises it. The weight loss matters for the differential list but discriminates nothing on its own."
@@ -64,21 +59,6 @@
           "correct": true
         },
         {
-          "label": "Full biochemistry including urea, ALT and albumin",
-          "detail": "Hepatic and renal causes of hypoglycaemia",
-          "correct": true
-        },
-        {
-          "label": "Haematology",
-          "detail": "Screens for the other ferret neoplasias",
-          "correct": true
-        },
-        {
-          "label": "Abdominal ultrasound of the pancreas and adrenals",
-          "detail": "Nodules are often too small to see, but adrenal disease is the co-traveller",
-          "correct": true
-        },
-        {
           "label": "Adrenocorticotropic hormone stimulation test",
           "detail": "Ferret adrenal disease is a sex-steroid disease; this is the wrong axis",
           "correct": false
@@ -89,7 +69,7 @@
           "correct": false
         }
       ],
-      "explanation": "A glucose taken during signs is worth more than any imaging: the case turns on documenting hypoglycaemia and then showing insulin that has no business being measurable at that glucose. Sampling between episodes is the common error — a normal reading then excludes nothing. Ultrasound is worth doing while knowing that a normal pancreas does not rule an insulinoma out."
+      "explanation": "A glucose taken during signs is worth more than any imaging: the case turns on documenting hypoglycaemia and then showing insulin that has no business being measurable at that glucose. Sampling between episodes is the common error — a normal reading then excludes nothing."
     },
     {
       "kind": "differential",
@@ -118,11 +98,6 @@
           "label": "Sepsis-associated hypoglycaemia",
           "detail": "No fever, normal white cell count, three weeks of episodes",
           "correct": false
-        },
-        {
-          "label": "Idiopathic epilepsy",
-          "detail": "Does not explain a glucose of 1.8 mmol/L",
-          "correct": false
         }
       ],
       "explanation": "Measurable insulin against a glucose of 1.8 mmol/L is the diagnosis: a normal pancreas secretes almost nothing at that level. Normal liver markers and a normal white cell count remove the two mimics that would have changed the plan. The adrenal note is not incidental — ferrets collect endocrine neoplasia, and missing the second one means a partial response later."
@@ -143,11 +118,6 @@
         {
           "label": "Hypoglycaemia secondary to hepatic dysfunction",
           "detail": "Contradicted by normal albumin, urea and ALT",
-          "correct": false
-        },
-        {
-          "label": "Idiopathic epilepsy",
-          "detail": "A glucose of 1.8 mmol/L is not idiopathic anything",
           "correct": false
         },
         {

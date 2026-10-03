@@ -36,11 +36,6 @@
           "label": "Temperature and humidity within range on data loggers",
           "detail": "Important — it makes husbandry unlikely — but it is a negative",
           "correct": false
-        },
-        {
-          "label": "Scant formed faeces",
-          "detail": "Expected in anything not retaining food",
-          "correct": false
         }
       ],
       "explanation": "Correct husbandry records are what make this interesting: the usual explanation for a wasting reptile is a cold, dry vivarium, and the loggers exclude it. Multiple species affected with shared equipment points to something transmissible, and post-feeding regurgitation with a palpable mid-body swelling localises it to the stomach."
@@ -64,16 +59,6 @@
           "correct": true
         },
         {
-          "label": "Post-mortem with gastric histopathology",
-          "detail": "Mucosal hyperplasia with organisms at the epithelial surface",
-          "correct": true
-        },
-        {
-          "label": "Faecal flotation and direct smear for other parasites",
-          "detail": "Mixed burdens are the norm in rescue collections",
-          "correct": true
-        },
-        {
           "label": "Screening of unaffected animals in the collection",
           "detail": "Defines how far it has spread",
           "correct": true
@@ -81,11 +66,6 @@
         {
           "label": "Inclusion body disease testing as the only investigation",
           "detail": "Worth doing in boids, but it does not explain lizards regurgitating too",
-          "correct": false
-        },
-        {
-          "label": "Blood cultures on all thirty reptiles",
-          "detail": "Disproportionate, and not how this diagnosis is made",
           "correct": false
         }
       ],
@@ -107,16 +87,6 @@
         {
           "label": "Subclinical shedders are present and maintaining transmission",
           "detail": "Four PCR-positive animals with no signs",
-          "correct": true
-        },
-        {
-          "label": "Shared equipment and no quarantine allowed spread",
-          "detail": "A faecal-oral organism in a collection with no barriers",
-          "correct": true
-        },
-        {
-          "label": "Pinworms are incidental to this syndrome",
-          "detail": "They do not cause gastric hyperplasia or regurgitation",
           "correct": true
         },
         {
@@ -158,11 +128,6 @@
         {
           "label": "Pinworm-associated enteropathy",
           "detail": "Incidental parasites that do not cause gastric disease",
-          "correct": false
-        },
-        {
-          "label": "Gastric neoplasia",
-          "detail": "Would not affect six animals of several species",
           "correct": false
         }
       ],

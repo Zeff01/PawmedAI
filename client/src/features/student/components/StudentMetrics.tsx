@@ -32,7 +32,7 @@ function MetricCard({
           <Icon className="size-5" />
         </span>
       </div>
-      <div className="mt-3 flex items-end justify-between gap-2">
+      <div className="flex items-end justify-between gap-2">
         <div className="min-w-0">{children}</div>
         {aside}
       </div>

@@ -23,11 +23,6 @@
           "correct": true
         },
         {
-          "label": "Head tilt with no facial nerve deficit",
-          "detail": "Argues against middle-ear disease tracking to the facial nerve",
-          "correct": true
-        },
-        {
           "label": "Normal menace and no proprioceptive deficits",
           "detail": "No evidence of a central lesion yet",
           "correct": true
@@ -69,21 +64,6 @@
           "correct": true
         },
         {
-          "label": "Urinalysis",
-          "detail": "Renal involvement, and it is cheap",
-          "correct": true
-        },
-        {
-          "label": "Otoscopy under sedation with a myringotomy if the bulla looks involved",
-          "detail": "Cytology and culture of what is actually in there",
-          "correct": true
-        },
-        {
-          "label": "Faecal parasitology",
-          "detail": "Coccidia do not cause a head tilt",
-          "correct": false
-        },
-        {
           "label": "MRI as the first-line test",
           "detail": "Best imaging, but it does not change today and the bullae come first",
           "correct": false
@@ -118,11 +98,6 @@
           "label": "Bacterial otitis interna is still likely",
           "detail": "Contradicted by the imaging and the normal white cell count",
           "correct": false
-        },
-        {
-          "label": "A cerebrovascular accident is now the leading diagnosis",
-          "detail": "Possible in theory, but nothing here supports it over a confirmed infection",
-          "correct": false
         }
       ],
       "explanation": "IgM is what turns a serological curiosity into a diagnosis: most pet rabbits carry IgG, so a positive IgG alone would have left you where you started. Air-filled bullae on CT take otitis media off the list, which is exactly what the imaging was for. The azotaemia with dilute urine is the second organ the parasite has reached, and it changes the drug doses you choose."
@@ -148,11 +123,6 @@
         {
           "label": "Past E. cuniculi exposure with an unrelated head tilt",
           "detail": "IgM positivity says the infection is active",
-          "correct": false
-        },
-        {
-          "label": "Cerebral toxoplasmosis",
-          "detail": "Rare in rabbits and unsupported by any result here",
           "correct": false
         },
         {

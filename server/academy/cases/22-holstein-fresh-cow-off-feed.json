@@ -23,11 +23,6 @@
           "correct": true
         },
         {
-          "label": "Loss of half a body condition score in 12 days",
-          "detail": "Rapid mobilisation of body fat",
-          "correct": true
-        },
-        {
           "label": "Reduced dry matter intake with a falling yield 12 days fresh",
           "detail": "The classic window for negative energy balance",
           "correct": true
@@ -69,27 +64,12 @@
           "correct": true
         },
         {
-          "label": "Liver enzymes — GGT and AST — with albumin",
-          "detail": "Hepatic lipidosis grades the severity",
-          "correct": true
-        },
-        {
-          "label": "Non-esterified fatty acids",
-          "detail": "Quantifies the fat being mobilised",
-          "correct": true
-        },
-        {
           "label": "Bulk milk PCR for BVD",
           "detail": "A herd question, not an answer for this cow today",
           "correct": false
-        },
-        {
-          "label": "Abdominocentesis",
-          "detail": "Not indicated with no evidence of peritonitis",
-          "correct": false
         }
       ],
-      "explanation": "Blood BHB is the test that matters and it takes thirty seconds on a meter; the urine strip is a screen you use when you have no meter, because it lags and over-reads. Adding calcium and NEFA turns a single answer into a transition-period picture, and the liver panel tells you whether this cow is heading for fatty liver — which changes the prognosis, not just the treatment."
+      "explanation": "Blood BHB is the test that matters and it takes thirty seconds on a meter; the urine strip is a screen you use when you have no meter, because it lags and over-reads. Adding calcium turns a single answer into a transition-period picture, while a bulk milk BVD test answers a herd question rather than this cow’s."
     },
     {
       "kind": "differential",
@@ -102,16 +82,6 @@
         {
           "label": "Clinical ketosis with hypoglycaemia",
           "detail": "BHB 3.4 mmol/L with glucose 2.1 mmol/L",
-          "correct": true
-        },
-        {
-          "label": "Concurrent subclinical hypocalcaemia",
-          "detail": "Calcium 1.9 mmol/L in a fresh cow",
-          "correct": true
-        },
-        {
-          "label": "Early hepatic lipidosis",
-          "detail": "Mildly raised liver enzymes with a low albumin",
           "correct": true
         },
         {
@@ -153,11 +123,6 @@
         {
           "label": "Left displaced abomasum",
           "detail": "No ping and no supporting finding",
-          "correct": false
-        },
-        {
-          "label": "Metritis",
-          "detail": "Non-odorous discharge, no fever",
           "correct": false
         },
         {

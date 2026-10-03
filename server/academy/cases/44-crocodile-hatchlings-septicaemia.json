@@ -28,11 +28,6 @@
           "correct": true
         },
         {
-          "label": "Abnormal buoyancy with listing",
-          "detail": "Coelomic or pulmonary involvement",
-          "correct": true
-        },
-        {
           "label": "Water temperature 26°C",
           "detail": "Immunosuppressive, and the reason rather than the sign",
           "correct": false
@@ -64,28 +59,13 @@
           "correct": true
         },
         {
-          "label": "Joint fluid cytology from affected hatchlings",
-          "detail": "Septic versus non-septic arthritis",
-          "correct": true
-        },
-        {
           "label": "Full water quality analysis — ammonia, nitrite, nitrate, temperature, organic load",
           "detail": "The driver, measured properly",
           "correct": true
         },
         {
-          "label": "Histopathology of liver, lung, kidney and joints",
-          "detail": "Distribution of lesions and chronicity",
-          "correct": true
-        },
-        {
           "label": "Serology for West Nile virus as the primary test",
           "detail": "A real crocodilian pathogen, but not what a filter failure and polyarthritis point to first",
-          "correct": false
-        },
-        {
-          "label": "Skin scrapes for ectoparasites",
-          "detail": "Will not explain deaths with swollen joints",
           "correct": false
         }
       ],
@@ -110,11 +90,6 @@
           "correct": true
         },
         {
-          "label": "Treatment must follow sensitivity results",
-          "detail": "Resistant to amoxicillin",
-          "correct": true
-        },
-        {
           "label": "Salmonella carriage is a zoonotic risk for staff",
           "detail": "Isolated from intestines — a handling and hygiene issue",
           "correct": true
@@ -122,11 +97,6 @@
         {
           "label": "West Nile virus has been excluded",
           "detail": "It was not tested; it is unlikely, not excluded",
-          "correct": false
-        },
-        {
-          "label": "Trauma from increased stocking density is the primary cause",
-          "detail": "Density is a stressor; the lesions are infectious",
           "correct": false
         }
       ],
@@ -153,11 +123,6 @@
         {
           "label": "West Nile virus infection",
           "detail": "Not tested and not supported by these lesions",
-          "correct": false
-        },
-        {
-          "label": "Nutritional myopathy",
-          "detail": "Would not produce fibrinous arthritis or positive blood cultures",
           "correct": false
         },
         {

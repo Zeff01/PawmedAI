@@ -36,11 +36,6 @@
           "label": "Ground feeding on shared enrichment",
           "detail": "A plausible route — husbandry, not a clinical sign",
           "correct": false
-        },
-        {
-          "label": "Poor coat condition",
-          "detail": "Follows chronic disease of any kind",
-          "correct": false
         }
       ],
       "explanation": "Oedema alongside chronic diarrhoea is the finding that turns this from a nuisance into a protein-losing enteropathy, and the group pattern makes it a colony problem. Social stress after a reshuffle is a genuine precipitant in macaques rather than a soft explanation — it changes what you recommend about group management as well as what you prescribe."
@@ -59,16 +54,6 @@
           "correct": true
         },
         {
-          "label": "Faecal parasitology including Cryptosporidium and Giardia",
-          "detail": "Protozoa are common and treatable",
-          "correct": true
-        },
-        {
-          "label": "Serum albumin and total protein",
-          "detail": "Confirms and grades the protein loss",
-          "correct": true
-        },
-        {
           "label": "Colonoscopy with mucosal biopsies for histopathology",
           "detail": "Distinguishes chronic idiopathic colitis from infection",
           "correct": true
@@ -82,11 +67,6 @@
           "label": "Tuberculin skin testing as the only investigation",
           "detail": "Essential colony surveillance, but it does not explain a protein-losing colitis",
           "correct": false
-        },
-        {
-          "label": "Barium follow-through as the first-line test",
-          "detail": "Little added value when biopsies are available",
-          "correct": false
         }
       ],
       "explanation": "Chronic macaque diarrhoea needs both an infectious search and biopsies, because chronic idiopathic colitis is a diagnosis of exclusion and histology is how you exclude. Screening the group is what turns an individual case into colony management. Tuberculosis surveillance matters enormously in primate collections and is a parallel programme rather than this diagnosis."
@@ -99,11 +79,6 @@
       "select_mode": "multi",
       "points": 20,
       "options": [
-        {
-          "label": "Chronic colitis with protein loss",
-          "detail": "Histology plus an albumin of 21 g/L",
-          "correct": true
-        },
         {
           "label": "Campylobacter jejuni is circulating in the group, including in carriers",
           "detail": "Isolated from five animals, two without signs",
@@ -122,11 +97,6 @@
         {
           "label": "Trichuris is the primary cause",
           "detail": "A light burden does not produce crypt loss and hypoalbuminaemia",
-          "correct": false
-        },
-        {
-          "label": "Cryptosporidiosis explains the group picture",
-          "detail": "Not detected on parasitology",
           "correct": false
         }
       ],
@@ -153,11 +123,6 @@
         {
           "label": "Trichuriasis",
           "detail": "A light burden with the wrong lesion",
-          "correct": false
-        },
-        {
-          "label": "Intestinal tuberculosis",
-          "detail": "Excluded on testing and histology",
           "correct": false
         },
         {

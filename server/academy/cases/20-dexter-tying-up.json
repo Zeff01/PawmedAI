@@ -36,11 +36,6 @@
           "label": "Normal gut sounds in all quadrants",
           "detail": "Argues against colic, but does not localise to muscle",
           "correct": false
-        },
-        {
-          "label": "Sweating and a heart rate of 60 bpm",
-          "detail": "Pain and distress from any source",
-          "correct": false
         }
       ],
       "explanation": "The triad is unmistakable once seen: hard painful hindquarter muscles, pigmented urine and onset early in exercise after a period of rest on an unreduced grain ration. Normal gut sounds are worth recording because a horse this distressed will otherwise be treated for colic — but they exclude a differential rather than localising the lesion."
@@ -69,27 +64,12 @@
           "correct": true
         },
         {
-          "label": "Urea, creatinine and electrolytes",
-          "detail": "Myoglobin is nephrotoxic; potassium guides fluids",
-          "correct": true
-        },
-        {
-          "label": "Packed cell volume and total protein",
-          "detail": "Hydration status before fluid therapy",
-          "correct": true
-        },
-        {
           "label": "Abdominocentesis",
           "detail": "For a colic you have already argued against",
           "correct": false
-        },
-        {
-          "label": "Faecal egg count",
-          "detail": "No bearing on an acute myopathy",
-          "correct": false
         }
       ],
-      "explanation": "CK and AST together do more than either alone: CK tells you the damage is happening now, and AST tells you whether this has been going on for days. The urine matters twice — a dipstick positive for blood with no red cells on sediment is myoglobin, and the same molecule is what threatens the kidneys, which is why creatinine is on the list before you choose a fluid rate."
+      "explanation": "CK and AST together do more than either alone: CK tells you the damage is happening now, and AST tells you whether this has been going on for days. The urine matters twice — a dipstick positive for blood with no red cells on sediment is myoglobin, and the same molecule is what threatens the kidneys."
     },
     {
       "kind": "differential",
@@ -115,22 +95,12 @@
           "correct": true
         },
         {
-          "label": "Hypokalaemia needs correcting with the fluids",
-          "detail": "Potassium 3.1 mmol/L in a sweating horse",
-          "correct": true
-        },
-        {
-          "label": "Colic is the primary problem",
-          "detail": "Nothing here supports it, and much argues against",
-          "correct": false
-        },
-        {
           "label": "Selenium deficiency is confirmed",
           "detail": "Not yet measured — plausible, unproven",
           "correct": false
         }
       ],
-      "explanation": "Every number here changes a decision: the CK sets the severity, the sediment proves the pigment is myoglobin, the creatinine and casts make this a kidney case as well as a muscle case, and the potassium changes what goes in the fluid bag. Aggressive intravenous fluids are the treatment for the kidney, not for the muscle. Selenium is a sensible question to ask next, but claiming it now would be inventing a result."
+      "explanation": "Every number here changes a decision: the CK sets the severity, the sediment proves the pigment is myoglobin, and the creatinine and casts make this a kidney case as well as a muscle case. Aggressive intravenous fluids are the treatment for the kidney, not for the muscle. Selenium is a sensible question to ask next, but claiming it now would be inventing a result."
     },
     {
       "kind": "diagnosis",
@@ -148,11 +118,6 @@
         {
           "label": "Colic",
           "detail": "Normal gut sounds, no pain on abdominal palpation, and a CK of 68,000",
-          "correct": false
-        },
-        {
-          "label": "Laminitis",
-          "detail": "Wrong stance, wrong pain distribution, and it does not raise CK",
           "correct": false
         },
         {

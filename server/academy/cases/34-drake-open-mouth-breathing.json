@@ -36,11 +36,6 @@
           "label": "Damp, mouldy straw with poor ventilation",
           "detail": "The exposure — but it is history, not a clinical sign",
           "correct": false
-        },
-        {
-          "label": "Pink mucous membranes",
-          "detail": "Reassuring, and it does not localise",
-          "correct": false
         }
       ],
       "explanation": "Birds have no diaphragm, so tail bobbing and open-mouth breathing after trivial exertion mark significant respiratory compromise. The asymmetry is the useful physical finding — it says focal granulomatous disease rather than diffuse infection. A hoarse voice adds a syringeal lesion to the picture, which is precisely where aspergillosis likes to sit."
@@ -64,21 +59,6 @@
           "correct": true
         },
         {
-          "label": "Cytology and fungal culture of the lesion or a tracheal wash",
-          "detail": "Hyphae seen, and the organism named",
-          "correct": true
-        },
-        {
-          "label": "Haematology with a protein electrophoresis",
-          "detail": "Monocytosis and beta-globulin rise support aspergillosis",
-          "correct": true
-        },
-        {
-          "label": "Aspergillus galactomannan or antibody testing",
-          "detail": "Supportive when imaging and cytology agree",
-          "correct": true
-        },
-        {
           "label": "Chlamydia psittaci PCR alone as the diagnosis",
           "detail": "Worth screening, but it will not explain a focal air sac mass",
           "correct": false
@@ -89,7 +69,7 @@
           "correct": false
         }
       ],
-      "explanation": "Aspergillosis is diagnosed by seeing it: endoscopy with biopsy and cytology beats any serological test, and the serology is only worth interpreting alongside the images. Radiographs first tells you where to put the scope. The haematology and electrophoresis are supportive evidence that also grades how chronic this is."
+      "explanation": "Aspergillosis is diagnosed by seeing it: endoscopy with biopsy beats any serological test, and radiographs first tells you where to put the scope. A Chlamydia PCR is worth running as a screen, but on its own it cannot explain a focal air sac mass, and a blood lead answers a neurological question this duck is not asking."
     },
     {
       "kind": "differential",
@@ -107,16 +87,6 @@
         {
           "label": "The syringeal granuloma explains the voice change and the effort",
           "detail": "A mass narrowing the airway at the syrinx",
-          "correct": true
-        },
-        {
-          "label": "Mouldy bedding in poor ventilation is the likely source",
-          "detail": "A heavy environmental spore load",
-          "correct": true
-        },
-        {
-          "label": "Chlamydiosis is excluded",
-          "detail": "PCR negative",
           "correct": true
         },
         {
@@ -158,11 +128,6 @@
         {
           "label": "Tracheal foreign body",
           "detail": "Endoscopy showed a granuloma, not a foreign body",
-          "correct": false
-        },
-        {
-          "label": "Cardiac disease with pulmonary oedema",
-          "detail": "Does not produce air sac plaques or hyphae",
           "correct": false
         }
       ],

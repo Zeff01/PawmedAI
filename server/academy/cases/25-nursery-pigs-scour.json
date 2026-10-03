@@ -28,11 +28,6 @@
           "correct": true
         },
         {
-          "label": "Dehydration with cyanotic ear tips in the worst pigs",
-          "detail": "Endotoxaemia and hypovolaemia",
-          "correct": true
-        },
-        {
           "label": "House temperature 24°C",
           "detail": "On the low side for weaners but not itself diagnostic",
           "correct": false
@@ -69,27 +64,12 @@
           "correct": true
         },
         {
-          "label": "Antibiotic sensitivity testing on the isolate",
-          "detail": "Resistance is common and it decides the treatment",
-          "correct": true
-        },
-        {
-          "label": "Water sample for flow rate, hygiene and mineral content",
-          "detail": "A batch-level intake problem is part of the diagnosis",
-          "correct": true
-        },
-        {
           "label": "Serology for PRRS as the primary test",
           "detail": "A useful herd screen, but it will not explain a five-day scour outbreak",
           "correct": false
-        },
-        {
-          "label": "Skin scrape for mange",
-          "detail": "No pruritus, and it does not cause scour",
-          "correct": false
         }
       ],
-      "explanation": "Weaner scour is a differential list, not a diagnosis, and one good submission settles it: culture with serotyping and sensitivity for the treatment decision, PCR to catch the viral and spirochaetal agents, and post-mortem for lesion distribution. Sampling untreated pigs is what makes the culture worth doing."
+      "explanation": "Weaner scour is a differential list, not a diagnosis, and one good submission settles it: culture with serotyping to name the pathogen, PCR to catch the viral and spirochaetal agents, and post-mortem for lesion distribution. Sampling untreated pigs is what makes the culture worth doing."
     },
     {
       "kind": "differential",
@@ -102,11 +82,6 @@
         {
           "label": "Enterotoxigenic E. coli (F4) post-weaning diarrhoea",
           "detail": "F4 fimbriae with enterotoxin genes and adherent bacteria on intact villi",
-          "correct": true
-        },
-        {
-          "label": "Treatment must follow the sensitivity, not the farm’s usual antibiotic",
-          "detail": "Resistant to amoxicillin and tetracycline",
           "correct": true
         },
         {
@@ -143,11 +118,6 @@
         {
           "label": "Rotavirus enteritis",
           "detail": "PCR negative and the villi are intact",
-          "correct": false
-        },
-        {
-          "label": "Salmonellosis",
-          "detail": "Not isolated, and the lesions do not fit",
           "correct": false
         },
         {

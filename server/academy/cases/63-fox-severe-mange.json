@@ -36,11 +36,6 @@
           "label": "Daylight activity with a poor flight response",
           "detail": "Marks debility, not a specific disease",
           "correct": false
-        },
-        {
-          "label": "Temperature 39.4°C",
-          "detail": "Consistent with secondary infection, non-specific",
-          "correct": false
         }
       ],
       "explanation": "Distribution is the diagnosis in mange: tail base, hocks and ears, with crusting and lichenification, is sarcoptic mange in a fox, and the pruritus separates it from the demodicosis and dermatophytosis that also cause alopecia. Daylight activity in a fox tells you it is debilitated and unafraid, which matters for handling and for prognosis rather than for diagnosis."
@@ -69,27 +64,12 @@
           "correct": true
         },
         {
-          "label": "Haematology and biochemistry with total protein",
-          "detail": "Anaemia, protein loss and organ function before treatment",
-          "correct": true
-        },
-        {
-          "label": "Faecal parasitology",
-          "detail": "Concurrent endoparasites are near-universal in casualties",
-          "correct": true
-        },
-        {
-          "label": "Allergen-specific IgE serology",
-          "detail": "No role in a wildlife casualty with this distribution",
-          "correct": false
-        },
-        {
           "label": "Skin biopsy as the first-line test",
           "detail": "Scrapes are quicker, cheaper and usually diagnostic",
           "correct": false
         }
       ],
-      "explanation": "Deep scrapes from several sites are what find Sarcoptes, and taking them from more than one place matters because mite numbers are patchy even in severe disease. Cytology decides whether an antibiotic is needed, and the dermatophyte test is run partly for the people handling the animal. Bloods matter before treating an emaciated casualty."
+      "explanation": "Deep scrapes from several sites are what find Sarcoptes, and taking them from more than one place matters because mite numbers are patchy even in severe disease. Cytology decides whether an antibiotic is needed, and the dermatophyte test is run partly for the people handling the animal."
     },
     {
       "kind": "differential",
@@ -105,11 +85,6 @@
           "correct": true
         },
         {
-          "label": "Secondary bacterial and Malassezia infection",
-          "detail": "Cocci, neutrophils and yeast on cytology",
-          "correct": true
-        },
-        {
           "label": "Protein loss and emaciation are life-limiting",
           "detail": "Albumin 18 g/L at 4.1 kg",
           "correct": true
@@ -122,11 +97,6 @@
         {
           "label": "Dermatophytosis is contributing",
           "detail": "PCR negative",
-          "correct": false
-        },
-        {
-          "label": "Renal disease explains the low albumin",
-          "detail": "Urea and creatinine are normal",
           "correct": false
         }
       ],
@@ -158,11 +128,6 @@
         {
           "label": "Nutritional alopecia from starvation",
           "detail": "Starvation does not produce crusted pruritic lesions full of mites",
-          "correct": false
-        },
-        {
-          "label": "Allergic dermatitis",
-          "detail": "Not a meaningful diagnosis in a wild fox with confirmed mites",
           "correct": false
         }
       ],

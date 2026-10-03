@@ -44,11 +44,12 @@ Each stage:
 | `select_mode` | no | Default `single`; use `multi` for several correct answers |
 | `points` | yes | What the stage is worth. The library uses 10 / 15 / 20 / 25 |
 | `explanation` | yes | The teaching point, shown once answered |
-| `options` | yes | At least two |
+| `options` | yes | Exactly four |
 
 Each option: `label` (≤240 chars), optional `detail` (≤300 chars, the one-line
 note under the label), and `correct` (default `false`). At least one option must
-be correct; a `single` stage may have only one.
+be correct; a `single` stage may have only one. On a `multi` stage, keep at
+least one wrong answer among the four, or ticking every box clears it.
 
 ## Species
 

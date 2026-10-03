@@ -28,11 +28,6 @@
           "correct": true
         },
         {
-          "label": "Profuse watery diarrhoea in an eight-week-old",
-          "detail": "The age and volume that kill hamsters",
-          "correct": true
-        },
-        {
           "label": "Recent transport and rehoming",
           "detail": "The stressor behind the disease, not the emergency",
           "correct": false
@@ -54,16 +49,6 @@
       "points": 15,
       "options": [
         {
-          "label": "Faecal wet mount and direct smear",
-          "detail": "Protozoa, motile spirochaetes, cell debris",
-          "correct": true
-        },
-        {
-          "label": "Faecal Gram stain",
-          "detail": "Shifts in flora, spore-forming organisms",
-          "correct": true
-        },
-        {
           "label": "Faecal culture including Lawsonia and Salmonella work-up",
           "detail": "Names the agent and flags a zoonosis",
           "correct": true
@@ -71,11 +56,6 @@
         {
           "label": "Blood glucose from a single drop",
           "detail": "Hypoglycaemia in a small anorexic patient",
-          "correct": true
-        },
-        {
-          "label": "Faecal PCR panel for Lawsonia intracellularis",
-          "detail": "The organism behind proliferative ileitis",
           "correct": true
         },
         {
@@ -102,11 +82,6 @@
         {
           "label": "Proliferative ileitis — Lawsonia intracellularis",
           "detail": "PCR positive with the classic ileal lesion in a littermate",
-          "correct": true
-        },
-        {
-          "label": "Stress of transport and rehoming precipitated it",
-          "detail": "The recognised trigger in weanling hamsters",
           "correct": true
         },
         {
@@ -148,11 +123,6 @@
         {
           "label": "Primary E. coli enteritis",
           "detail": "Overgrowth on an already damaged ileum, not the primary cause",
-          "correct": false
-        },
-        {
-          "label": "Antibiotic-associated dysbiosis",
-          "detail": "This hamster has had no antibiotics",
           "correct": false
         },
         {

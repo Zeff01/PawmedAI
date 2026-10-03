@@ -36,11 +36,6 @@
           "label": "Basking temperature 30°C",
           "detail": "Impairs digestion and appetite; not the direct cause of soft bone",
           "correct": false
-        },
-        {
-          "label": "Weight 310 g",
-          "detail": "Within a normal range for the species",
-          "correct": false
         }
       ],
       "explanation": "A rubbery jaw with swollen femora and tremors is nutritional secondary hyperparathyroidism, and the vivarium supplies the mechanism twice over: no dietary calcium, and a UV tube that stopped emitting useful UVB about a year ago even though it still lights up. Owners reasonably assume a glowing tube is working, and it is worth saying so explicitly."
@@ -59,16 +54,6 @@
           "correct": true
         },
         {
-          "label": "Total calcium and phosphorus with the Ca:P ratio",
-          "detail": "Grades the imbalance",
-          "correct": true
-        },
-        {
-          "label": "Whole-body radiographs",
-          "detail": "Cortical thinning, folding fractures, spinal deformity",
-          "correct": true
-        },
-        {
           "label": "UV index measurement at the basking site with a UV meter",
           "detail": "Tests the lamp rather than trusting it",
           "correct": true
@@ -82,14 +67,9 @@
           "label": "Vitamin D3 assay as the only test",
           "detail": "Supportive, but slow, costly and not decisive on its own",
           "correct": false
-        },
-        {
-          "label": "Faecal parasitology before treating the hypocalcaemia",
-          "detail": "Worth doing eventually; it does not change today",
-          "correct": false
         }
       ],
-      "explanation": "The pairing that matters is ionised calcium with phosphorus, and the measurement that changes the household is the UV reading at the basking site: a meter turns advice into evidence. Uric acid is on the list because renal disease produces a similar picture and would change the treatment entirely."
+      "explanation": "Ionised calcium is the number that explains the tremors, and the measurement that changes the household is the UV reading at the basking site: a meter turns advice into evidence. Uric acid is on the list because renal disease produces a similar picture and would change the treatment entirely."
     },
     {
       "kind": "differential",
@@ -105,11 +85,6 @@
           "correct": true
         },
         {
-          "label": "The UV source is providing effectively no usable UVB",
-          "detail": "A UV index of 0.1 against a target of 4–6",
-          "correct": true
-        },
-        {
           "label": "Renal secondary hyperparathyroidism is excluded",
           "detail": "Normal uric acid with no renal mineralisation or enlargement",
           "correct": true
@@ -120,17 +95,12 @@
           "correct": true
         },
         {
-          "label": "Hypovitaminosis A explains the presentation",
-          "detail": "Causes squamous metaplasia and swollen eyelids, not soft bone",
-          "correct": false
-        },
-        {
           "label": "The tremors are a primary seizure disorder",
           "detail": "They are hypocalcaemic and will resolve as calcium is restored",
           "correct": false
         }
       ],
-      "explanation": "Distinguishing nutritional from renal secondary hyperparathyroidism is the intellectual work here, and the normal uric acid does it. The UV index of 0.1 is the most actionable number on the page. Recognising the folding fractures changes how the animal is handled from this minute — these are patients that break in the consulting room."
+      "explanation": "Distinguishing nutritional from renal secondary hyperparathyroidism is the intellectual work here, and the normal uric acid does it. The tremors are hypocalcaemic rather than a seizure disorder, and will settle as calcium is restored. Recognising the folding fractures changes how the animal is handled from this minute — these are patients that break in the consulting room."
     },
     {
       "kind": "diagnosis",
@@ -158,11 +128,6 @@
         {
           "label": "Traumatic femoral fractures",
           "detail": "Bilateral, symmetrical, folding fractures in demineralised bone are not traumatic",
-          "correct": false
-        },
-        {
-          "label": "Spinal trauma",
-          "detail": "The kyphosis is part of generalised bone disease",
           "correct": false
         }
       ],

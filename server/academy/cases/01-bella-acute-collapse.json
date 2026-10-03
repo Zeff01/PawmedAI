@@ -28,11 +28,6 @@
           "correct": true
         },
         {
-          "label": "Fluid-distended abdomen",
-          "detail": "Positive fluid thrill",
-          "correct": true
-        },
-        {
           "label": "Temperature 37.4°C",
           "detail": "Low-normal for a dog",
           "correct": false
@@ -43,7 +38,7 @@
           "correct": false
         }
       ],
-      "explanation": "Tachycardia, poor pulse quality and prolonged CRT are the cardinal signs of hypovolaemic shock; the fluid-filled abdomen tells you where the volume has gone. The mild hypothermia and the fortnight of lethargy matter to the story but neither is a perfusion parameter — treating them as such is how a student ends up chasing a fever that is not there."
+      "explanation": "Tachycardia, poor pulse quality and prolonged CRT are the cardinal signs of hypovolaemic shock. The mild hypothermia and the fortnight of lethargy matter to the story but neither is a perfusion parameter — treating them as such is how a student ends up chasing a fever that is not there."
     },
     {
       "kind": "diagnostics",
@@ -59,18 +54,8 @@
           "correct": true
         },
         {
-          "label": "PCV and total solids",
-          "detail": "Baseline before dilution by fluids",
-          "correct": true
-        },
-        {
           "label": "Abdominocentesis with PCV of the fluid",
           "detail": "Confirms haemoabdomen",
-          "correct": true
-        },
-        {
-          "label": "Blood pressure and lactate",
-          "detail": "Quantifies the perfusion deficit",
           "correct": true
         },
         {
@@ -84,7 +69,7 @@
           "correct": false
         }
       ],
-      "explanation": "AFAST plus abdominocentesis answers the only question that changes the next hour: is the abdomen full of blood? A fluid PCV approaching the peripheral PCV confirms haemoabdomen. Contrast studies and endocrine panels are not wrong tests in general — they are the wrong tests right now, and a collapsing patient does not have hours to spare."
+      "explanation": "AFAST plus abdominocentesis answers the only question that changes the next hour: is the abdomen full of blood? A fluid PCV approaching that of peripheral blood confirms haemoabdomen. Contrast studies and endocrine panels are not wrong tests in general — they are the wrong tests right now, and a collapsing patient does not have hours to spare."
     },
     {
       "kind": "differential",
@@ -112,11 +97,6 @@
         {
           "label": "Anticoagulant rodenticide toxicity",
           "detail": "No access, and the platelet count is normal",
-          "correct": false
-        },
-        {
-          "label": "Septic peritonitis",
-          "detail": "The tap is frank blood, not turbid effusion",
           "correct": false
         }
       ],

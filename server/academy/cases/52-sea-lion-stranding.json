@@ -36,11 +36,6 @@
           "label": "Mild conjunctivitis",
           "detail": "Common in stranded animals and non-specific",
           "correct": false
-        },
-        {
-          "label": "Temperature 38.9°C",
-          "detail": "Within the expected range for the species",
-          "correct": false
         }
       ],
       "explanation": "Two diagnoses dominate stranded Californian sea lions and this history contains both: leptospirosis, which gives renal pain and azotaemia, and domoic acid toxicosis, which gives seizures. The cluster along the coast fits either — an outbreak of one, or an algal bloom producing the other — so the work-up has to separate them rather than choose."
@@ -54,23 +49,8 @@
       "points": 15,
       "options": [
         {
-          "label": "Urea, creatinine and electrolytes",
-          "detail": "Grades the azotaemia and guides fluids",
-          "correct": true
-        },
-        {
           "label": "Leptospira microscopic agglutination test with urine PCR",
           "detail": "Serology plus shedding status",
-          "correct": true
-        },
-        {
-          "label": "Urinalysis with sediment examination",
-          "detail": "Casts, protein, concentrating ability",
-          "correct": true
-        },
-        {
-          "label": "Haematology",
-          "detail": "Inflammatory response and anaemia",
           "correct": true
         },
         {
@@ -100,11 +80,6 @@
       "points": 20,
       "options": [
         {
-          "label": "Acute kidney injury with severe azotaemia",
-          "detail": "Urea 58 mmol/L, creatinine 780 µmol/L, casts and isosthenuria",
-          "correct": true
-        },
-        {
           "label": "Leptospirosis, serovar Pomona, with active shedding",
           "detail": "A MAT titre of 1:6,400 with a positive urine PCR",
           "correct": true
@@ -122,11 +97,6 @@
         {
           "label": "Domoic acid toxicosis is confirmed",
           "detail": "Not detected on assay",
-          "correct": false
-        },
-        {
-          "label": "Chronic kidney disease is the diagnosis",
-          "detail": "The picture is acute, with an inflammatory response and a high titre",
           "correct": false
         }
       ],
@@ -158,11 +128,6 @@
         {
           "label": "Morbillivirus infection",
           "detail": "Untested and unsupported by these findings",
-          "correct": false
-        },
-        {
-          "label": "Starvation-related metabolic collapse",
-          "detail": "Does not produce a MAT titre of 1:6,400 or granular casts",
           "correct": false
         }
       ],

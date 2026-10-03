@@ -40,7 +40,7 @@ Field reference (see `models.py` for how each one is used):
         select_mode   optional, default "single", or "multi"
         points        required, what the stage is worth
         explanation   required, the teaching point shown after answering
-        options       required, at least two:
+        options       required, exactly four:
             label     required, ≤240 chars
             detail    optional, ≤300 chars
             correct   optional, default false
@@ -85,6 +85,10 @@ STAGE_KEYS = {
     "options",
 }
 OPTION_KEYS = {"label", "detail", "correct"}
+
+# Every stage offers the same number of choices, so no question is easier or
+# harder just because of how many answers it lists.
+OPTIONS_PER_STAGE = 4
 
 
 class CaseLibraryError(Exception):
@@ -183,9 +187,10 @@ def _clean_stage(document: Any, where: str) -> dict[str, Any]:
     )
 
     raw_options = document.get("options")
-    if not isinstance(raw_options, list) or len(raw_options) < 2:
+    if not isinstance(raw_options, list) or len(raw_options) != OPTIONS_PER_STAGE:
         raise CaseLibraryError(
-            f"{where}: 'options' must be a list of at least two answers."
+            f"{where}: 'options' must be a list of exactly {OPTIONS_PER_STAGE} "
+            "answers."
         )
     options = [
         _clean_option(option, f"{where} option {position}")

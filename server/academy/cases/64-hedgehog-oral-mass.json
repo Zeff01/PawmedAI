@@ -23,11 +23,6 @@
           "correct": true
         },
         {
-          "label": "90 g weight loss with dropping of food",
-          "detail": "Functional impact of oral pain",
-          "correct": true
-        },
-        {
           "label": "Age three years in this species",
           "detail": "The age at which hedgehog neoplasia becomes common",
           "correct": true
@@ -64,21 +59,6 @@
           "correct": true
         },
         {
-          "label": "Fine needle aspirate cytology of the mandibular lymph node",
-          "detail": "Regional metastasis",
-          "correct": true
-        },
-        {
-          "label": "Thoracic radiographs",
-          "detail": "Distant metastasis before committing to surgery",
-          "correct": true
-        },
-        {
-          "label": "Haematology and biochemistry",
-          "detail": "Anaesthetic and treatment fitness in a 320 g patient",
-          "correct": true
-        },
-        {
           "label": "Bacterial culture of the mass as the definitive test",
           "detail": "It will grow oral flora and answer nothing",
           "correct": false
@@ -89,7 +69,7 @@
           "correct": false
         }
       ],
-      "explanation": "Anaesthesia in a 320 g hedgehog is the scarce resource, so everything gets done in one episode: biopsy, imaging of the jaw and chest, node aspirate and bloods. Culturing an oral mass is the classic wasted test — it grows mouth flora whatever the lesion is. Treating empirically and reviewing later is how these tumours become inoperable."
+      "explanation": "Anaesthesia in a 320 g hedgehog is the scarce resource, so the essentials get done in one episode: biopsy and imaging of the jaw. Culturing an oral mass is the classic wasted test — it grows mouth flora whatever the lesion is. Treating empirically and reviewing later is how these tumours become inoperable."
     },
     {
       "kind": "differential",
@@ -107,16 +87,6 @@
         {
           "label": "No detectable regional or pulmonary metastasis at this point",
           "detail": "Reactive node and clear thoracic radiographs",
-          "correct": true
-        },
-        {
-          "label": "Nutritional support is needed before and after any surgery",
-          "detail": "Albumin 24 g/L after 90 g of weight loss",
-          "correct": true
-        },
-        {
-          "label": "Antibiotics alone will not control this lesion",
-          "detail": "It is neoplastic, not primarily infectious",
           "correct": true
         },
         {
@@ -153,11 +123,6 @@
         {
           "label": "Dental abscess with osteomyelitis",
           "detail": "The lysis is neoplastic invasion, confirmed on biopsy",
-          "correct": false
-        },
-        {
-          "label": "Wobbly hedgehog syndrome",
-          "detail": "A neurodegenerative disease with no oral lesion",
           "correct": false
         },
         {

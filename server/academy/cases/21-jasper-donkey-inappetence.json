@@ -36,11 +36,6 @@
           "label": "Reduced gut sounds with scant dry faeces",
           "detail": "Expected in anything not eating",
           "correct": false
-        },
-        {
-          "label": "Temperature 37.4°C",
-          "detail": "Normal for a donkey",
-          "correct": false
         }
       ],
       "explanation": "A fat donkey that stops eating is a metabolic emergency, not a sulking animal: negative energy balance mobilises fat faster than the liver can process it. Donkeys mask pain and look dull rather than colicky, so \"depressed\" is a presenting sign to take seriously rather than to reassure about. The gut findings are consequences of anorexia and lead nowhere on their own."
@@ -64,16 +59,6 @@
           "correct": true
         },
         {
-          "label": "Liver enzymes — GGT, GLDH and bile acids",
-          "detail": "Hepatic lipidosis follows the triglycerides",
-          "correct": true
-        },
-        {
-          "label": "Glucose and insulin",
-          "detail": "Underlying dysregulation in an obese donkey",
-          "correct": true
-        },
-        {
           "label": "Haematology with fibrinogen",
           "detail": "Screens for the primary disease that stopped him eating",
           "correct": true
@@ -82,14 +67,9 @@
           "label": "Faecal egg count and dental examination",
           "detail": "Worth doing for the underlying cause, but neither answers today’s question",
           "correct": false
-        },
-        {
-          "label": "Peritoneal fluid analysis as the first-line test",
-          "detail": "This is not a surgical colic presentation",
-          "correct": false
         }
       ],
-      "explanation": "Spinning a tube and looking at it is the fastest useful test on the yard — frankly lipaemic serum in an anorexic donkey tells you what you are dealing with before the laboratory opens. Triglycerides quantify it, liver markers stage the consequence, and the haematology is looking for the disease that caused the anorexia in the first place, because treating the lipaemia without finding that only buys time."
+      "explanation": "Spinning a tube and looking at it is the fastest useful test on the yard — frankly lipaemic serum in an anorexic donkey tells you what you are dealing with before the laboratory opens. Triglycerides quantify it, and the haematology is looking for the disease that caused the anorexia in the first place, because treating the lipaemia without finding that only buys time."
     },
     {
       "kind": "differential",
@@ -105,18 +85,8 @@
           "correct": true
         },
         {
-          "label": "Insulin dysregulation underlies the susceptibility",
-          "detail": "Obesity with a high insulin",
-          "correct": true
-        },
-        {
           "label": "A painful dental lesion is a plausible primary cause of the anorexia",
           "detail": "Buccal ulceration against sharp enamel points",
-          "correct": true
-        },
-        {
-          "label": "The raised fibrinogen means inflammation must be looked for",
-          "detail": "A donkey does not stop eating for no reason",
           "correct": true
         },
         {
@@ -158,11 +128,6 @@
         {
           "label": "Behavioural anorexia after bereavement",
           "detail": "The trigger, not the disease that will kill him",
-          "correct": false
-        },
-        {
-          "label": "Strongyle-associated enteropathy",
-          "detail": "A count of 350 epg does not account for this picture",
           "correct": false
         }
       ],

@@ -5,6 +5,8 @@ import { ArrowLeft, Loader2, RotateCcw, Trophy } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { StageCard } from './components/StageCard'
+import { CaseResultDialog } from './components/CaseResultDialog'
+import type { CaseResult } from './components/CaseResultDialog'
 import { DIFFICULTY_LABEL, speciesMeta } from './caseMeta'
 import { useAnswerStage, useCase, useResetCase } from './hooks/useAcademy'
 import type { AnswerResult } from './api/academy'
@@ -39,6 +41,9 @@ export function CaseWorkspaceView({ slug }: { slug: string }) {
     message: string
   } | null>(null)
   const [activeStageId, setActiveStageId] = React.useState<number | null>(null)
+  // Set only by the answer that finishes the case, so reopening a case that
+  // was finished earlier doesn't replay the result.
+  const [caseResult, setCaseResult] = React.useState<CaseResult | null>(null)
 
   const detail = caseQuery.data
 
@@ -91,6 +96,18 @@ export function CaseWorkspaceView({ slug }: { slug: string }) {
 
   const species = speciesMeta(detail.species)
   const { progress } = detail
+
+  function runAgain() {
+    setLastResult(null)
+    setStageError(null)
+    setActiveStageId(null)
+    resetMutation.mutate(undefined, {
+      onSuccess: () => {
+        setCaseResult(null)
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      },
+    })
+  }
 
   return (
     <section className="min-h-full bg-slate-50 px-5 pt-6 pb-16 lg:px-10">
@@ -200,12 +217,7 @@ export function CaseWorkspaceView({ slug }: { slug: string }) {
             <Button
               type="button"
               variant="outline"
-              onClick={() => {
-                setLastResult(null)
-                setStageError(null)
-                setActiveStageId(null)
-                resetMutation.mutate()
-              }}
+              onClick={runAgain}
               disabled={resetMutation.isPending}
               className="rounded-lg border-emerald-300 bg-white px-4 text-[12.5px] font-bold text-emerald-800 hover:bg-emerald-100"
             >
@@ -245,8 +257,15 @@ export function CaseWorkspaceView({ slug }: { slug: string }) {
                   answerMutation.mutate(
                     { stageId: stage.id, selectedOptionIds },
                     {
-                      onSuccess: (result) =>
-                        setLastResult({ stageId: stage.id, result }),
+                      onSuccess: (result) => {
+                        setLastResult({ stageId: stage.id, result })
+                        if (result.progress.completed && !progress.completed) {
+                          setCaseResult({
+                            points: result.case_points,
+                            total: detail.total_points,
+                          })
+                        }
+                      },
                       onError: (mutationError) =>
                         setStageError({
                           stageId: stage.id,
@@ -267,6 +286,14 @@ export function CaseWorkspaceView({ slug }: { slug: string }) {
           </p>
         ) : null}
       </div>
+
+      <CaseResultDialog
+        result={caseResult}
+        caseTitle={detail.title}
+        onClose={() => setCaseResult(null)}
+        onRetry={runAgain}
+        retrying={resetMutation.isPending}
+      />
     </section>
   )
 }

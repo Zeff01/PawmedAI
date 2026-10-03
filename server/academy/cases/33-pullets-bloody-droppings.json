@@ -36,11 +36,6 @@
           "label": "Feed and water intake down",
           "detail": "True of any sick flock",
           "correct": false
-        },
-        {
-          "label": "Pale combs",
-          "detail": "Follows the blood loss; it does not identify the cause",
-          "correct": false
         }
       ],
       "explanation": "Age, blood with shed mucosa, and wet litter is the coccidiosis triad, and the absent prevention makes it likely rather than merely possible. Necrotic enteritis is the differential that shares the age and the mortality, which is why the plan below looks for both rather than assuming."
@@ -59,23 +54,8 @@
           "correct": true
         },
         {
-          "label": "Faecal or litter oocyst count",
-          "detail": "Quantifies challenge and tracks the response",
-          "correct": true
-        },
-        {
-          "label": "Wet mount of mucosal scrapings for schizonts and oocysts",
-          "detail": "Immediate confirmation, on farm",
-          "correct": true
-        },
-        {
           "label": "Gross lesion scoring for necrotic enteritis with Clostridium culture",
           "detail": "The co-infection that changes treatment",
-          "correct": true
-        },
-        {
-          "label": "Litter moisture measurement",
-          "detail": "The husbandry driver, measured rather than guessed",
           "correct": true
         },
         {
@@ -115,16 +95,6 @@
           "correct": true
         },
         {
-          "label": "The ration provides no anticoccidial cover",
-          "detail": "None detected on feed analysis",
-          "correct": true
-        },
-        {
-          "label": "Salmonellosis is the likely cause of the deaths",
-          "detail": "Nothing here supports it and the lesions are parasitic",
-          "correct": false
-        },
-        {
           "label": "Blackhead (histomonosis) is the diagnosis",
           "detail": "Caecal cores occur, but schizonts identify Eimeria and the liver is unaffected",
           "correct": false
@@ -153,11 +123,6 @@
         {
           "label": "Histomonosis (blackhead)",
           "detail": "No hepatic lesions and Eimeria stages identified",
-          "correct": false
-        },
-        {
-          "label": "Salmonellosis",
-          "detail": "Not isolated, and the lesions are parasitic",
           "correct": false
         },
         {

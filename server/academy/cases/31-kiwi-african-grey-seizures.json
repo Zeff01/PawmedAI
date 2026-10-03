@@ -33,11 +33,6 @@
           "correct": true
         },
         {
-          "label": "Normal droppings",
-          "detail": "Reassuring about the gut, silent on the brain",
-          "correct": false
-        },
-        {
           "label": "No metal ornaments in the cage",
           "detail": "Worth asking, but owners miss the source",
           "correct": false
@@ -59,23 +54,8 @@
           "correct": true
         },
         {
-          "label": "Total calcium with albumin and phosphorus",
-          "detail": "Interprets the total against protein binding",
-          "correct": true
-        },
-        {
-          "label": "Whole-body radiographs",
-          "detail": "Metal density in the gizzard, and bone quality",
-          "correct": true
-        },
-        {
           "label": "Blood lead and zinc concentrations",
           "detail": "The differential that must be excluded",
-          "correct": true
-        },
-        {
-          "label": "Haematology and biochemistry with uric acid",
-          "detail": "Renal and hepatic screening in a collapsed bird",
           "correct": true
         },
         {
@@ -89,7 +69,7 @@
           "correct": false
         }
       ],
-      "explanation": "Ionised calcium is the test the diagnosis rests on: an African grey can seizure with a total calcium that reads borderline, and only the ionised fraction reflects what the neurones see. Radiographs and heavy metal concentrations are run in the same visit because lead and zinc produce the same neurological picture and demand entirely different treatment."
+      "explanation": "Ionised calcium is the test the diagnosis rests on: an African grey can seizure with a total calcium that reads borderline, and only the ionised fraction reflects what the neurones see. Blood lead and zinc are run in the same visit because heavy metals produce the same neurological picture and demand entirely different treatment. A Chlamydia screen is sensible in a sick parrot but does not explain seizures with this history, and CSF collection is neither practicable nor justifiable in a 400 g bird."
     },
     {
       "kind": "differential",
@@ -117,11 +97,6 @@
         {
           "label": "Hypoalbuminaemia alone accounts for the low total calcium",
           "detail": "It lowers the total, but the ionised fraction is genuinely low too",
-          "correct": false
-        },
-        {
-          "label": "Renal disease is driving the calcium loss",
-          "detail": "Uric acid is normal",
           "correct": false
         }
       ],
@@ -153,11 +128,6 @@
         {
           "label": "Hepatic encephalopathy",
           "detail": "Liver markers and uric acid are normal",
-          "correct": false
-        },
-        {
-          "label": "Zinc toxicosis",
-          "detail": "Zinc within reference and no metal density",
           "correct": false
         }
       ],

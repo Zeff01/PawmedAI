@@ -36,14 +36,9 @@
           "label": "Weight loss of 60 g",
           "detail": "A consequence of four days of pain",
           "correct": false
-        },
-        {
-          "label": "Reduced hay intake",
-          "detail": "True of any painful guinea pig",
-          "correct": false
         }
       ],
-      "explanation": "Guinea pigs bleed from the urinary tract and from the uterus, and the history separates them: blood that appears with a painful urination is urinary. A firm caudal abdominal structure in this species means a calculus until imaged otherwise. Anorexia and weight loss follow the pain and tell you how urgent this is, not where it is."
+      "explanation": "Guinea pigs bleed from the urinary tract and from the uterus, and the history separates them: blood that appears with a painful urination is urinary. A firm caudal abdominal structure in this species means a calculus until imaged otherwise. Weight loss follows the pain and tells you how urgent this is, not where it is."
     },
     {
       "kind": "diagnostics",
@@ -69,27 +64,12 @@
           "correct": true
         },
         {
-          "label": "Biochemistry with calcium, phosphorus, urea and creatinine",
-          "detail": "Renal function and calcium balance",
-          "correct": true
-        },
-        {
-          "label": "Abdominal ultrasound",
-          "detail": "Bladder wall, ureters and the reproductive tract",
-          "correct": true
-        },
-        {
-          "label": "Faecal parasitology",
-          "detail": "No bearing on haematuria",
-          "correct": false
-        },
-        {
           "label": "Dietary vitamin C assay",
           "detail": "Scurvy is diagnosed on history and clinical signs, not a serum assay",
           "correct": false
         }
       ],
-      "explanation": "Sediment plus a radiograph answers most guinea pig haematuria: the stones are calcium carbonate and show up well, and the sediment tells you what is forming them. Culture matters because ascending infection and calculi travel together, and calcium with renal values shapes both the diet advice and the anaesthetic risk. A vitamin C assay is the tempting wrong turn — scurvy is a clinical diagnosis in this species."
+      "explanation": "Sediment plus a radiograph answers most guinea pig haematuria: the stones are calcium carbonate and show up well, and the sediment tells you what is forming them. Culture matters because ascending infection and calculi travel together. A vitamin C assay is the tempting wrong turn — scurvy is a clinical diagnosis in this species."
     },
     {
       "kind": "differential",
@@ -107,11 +87,6 @@
         {
           "label": "The diet is driving stone formation",
           "detail": "Alfalfa ad libitum in an adult is a calcium load",
-          "correct": true
-        },
-        {
-          "label": "Kidney function is currently preserved",
-          "detail": "Urea and creatinine within reference",
           "correct": true
         },
         {
@@ -143,11 +118,6 @@
         {
           "label": "Bacterial cystitis",
           "detail": "Culture negative with no bacteria on sediment",
-          "correct": false
-        },
-        {
-          "label": "Pyelonephritis",
-          "detail": "No renal opacities, no azotaemia, no fever",
           "correct": false
         },
         {

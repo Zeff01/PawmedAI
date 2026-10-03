@@ -36,14 +36,9 @@
           "label": "Teeth grinding and depression",
           "detail": "Pain, from any cause",
           "correct": false
-        },
-        {
-          "label": "Temperature 38.2°C",
-          "detail": "Normal, and it does not distinguish the two",
-          "correct": false
         }
       ],
-      "explanation": "A turgid bladder and a stretched stance in a wether is a surgical clock starting: the pressure damages kidney and bladder wall within hours. Early castration leaves a narrow urethra and a grain ration inverts the calcium-to-phosphorus ratio, so the risk factors are in the history before you touch the goat. Pain and a normal temperature tell you nothing about the cause."
+      "explanation": "A turgid bladder and a stretched stance in a wether is a surgical clock starting: the pressure damages kidney and bladder wall within hours. Early castration leaves a narrow urethra and a grain ration inverts the calcium-to-phosphorus ratio, so the risk factors are in the history before you touch the goat. Teeth grinding and depression tell you the goat is in pain, and nothing about the cause."
     },
     {
       "kind": "diagnostics",
@@ -64,32 +59,17 @@
           "correct": true
         },
         {
-          "label": "Blood gas or total carbon dioxide for acid-base status",
-          "detail": "Metabolic acidosis needs correcting first",
-          "correct": true
-        },
-        {
           "label": "Abdominal and perineal ultrasound",
           "detail": "Bladder integrity, free fluid, hydronephrosis",
-          "correct": true
-        },
-        {
-          "label": "Radiography of the urethra and bladder",
-          "detail": "Locates and counts the calculi",
           "correct": true
         },
         {
           "label": "Urine culture as the first priority",
           "detail": "Useful later; it does not change the next hour",
           "correct": false
-        },
-        {
-          "label": "Faecal egg count",
-          "detail": "Irrelevant to an obstructed urethra",
-          "correct": false
         }
       ],
-      "explanation": "The tests before anaesthesia are the ones that keep the goat alive through it: potassium, azotaemia and acid-base status decide whether you induce now or spend two hours correcting first. Imaging then tells you what operation you are doing. Culture is a reasonable afterthought and the wrong first move."
+      "explanation": "The tests before anaesthesia are the ones that keep the goat alive through it: potassium and azotaemia decide whether you induce now or spend two hours correcting first. Ultrasound then tells you what operation you are doing. Culture is a reasonable afterthought and the wrong first move."
     },
     {
       "kind": "differential",
@@ -110,11 +90,6 @@
           "correct": true
         },
         {
-          "label": "Struvite calculi consistent with the grain-based diet",
-          "detail": "Alkaline urine with struvite crystals",
-          "correct": true
-        },
-        {
           "label": "The bladder has not ruptured",
           "detail": "No free abdominal fluid on ultrasound",
           "correct": true
@@ -123,14 +98,9 @@
           "label": "Primary kidney disease is the cause of the azotaemia",
           "detail": "The azotaemia is post-renal, from obstruction",
           "correct": false
-        },
-        {
-          "label": "Pyelonephritis is the leading diagnosis",
-          "detail": "No fever, and the obstruction explains everything",
-          "correct": false
         }
       ],
-      "explanation": "The hierarchy of these results is the lesson: the potassium is what kills in the next hour, the azotaemia is what determines the prognosis, and the calculi are what you operate on. Confirming an intact bladder changes the surgery you plan. Reading the azotaemia as kidney disease rather than obstruction would send you down a medical route while the bladder is still under pressure."
+      "explanation": "The hierarchy of these results is the lesson: the potassium is what kills in the next hour, and the azotaemia is what determines the prognosis. Confirming an intact bladder changes the surgery you plan. Reading the azotaemia as kidney disease rather than obstruction would send you down a medical route while the bladder is still under pressure."
     },
     {
       "kind": "diagnosis",
@@ -158,11 +128,6 @@
         {
           "label": "Pyelonephritis",
           "detail": "No fever, and obstruction accounts for the findings",
-          "correct": false
-        },
-        {
-          "label": "Balanoposthitis with dysuria",
-          "detail": "A swollen prepuce is a consequence here, not the disease",
           "correct": false
         }
       ],

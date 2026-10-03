@@ -36,11 +36,6 @@
           "label": "Absence of bottle jaw",
           "detail": "Useful — it argues against heavy Haemonchus — but it is a negative",
           "correct": false
-        },
-        {
-          "label": "Healed shearing wound",
-          "detail": "No longer a source of blood loss",
-          "correct": false
         }
       ],
       "explanation": "Anaemia with fever and no evidence of blood loss puts destruction ahead of haemorrhage, and in a recently purchased, transported camelid the organism at the top of that list is Mycoplasma haemolamae, which lives latently and flares under stress. The absent bottle jaw is worth noting because Haemonchus is the other great camelid anaemia and is treated entirely differently."
@@ -53,11 +48,6 @@
       "select_mode": "multi",
       "points": 15,
       "options": [
-        {
-          "label": "Packed cell volume and total protein",
-          "detail": "Grades the anaemia and separates protein loss",
-          "correct": true
-        },
         {
           "label": "Blood smear examined for organisms on the red cell surface",
           "detail": "M. haemolamae is seen, if you look before treatment",
@@ -74,18 +64,8 @@
           "correct": true
         },
         {
-          "label": "Reticulocyte or new methylene blue stain for regeneration",
-          "detail": "Regenerative or not shapes the prognosis",
-          "correct": true
-        },
-        {
           "label": "Coombs test as the first-line test",
           "detail": "Poorly validated in camelids and it would not change today",
-          "correct": false
-        },
-        {
-          "label": "Bone marrow aspirate before simpler tests",
-          "detail": "Invasive, and unnecessary if the PCR is positive",
           "correct": false
         }
       ],
@@ -107,11 +87,6 @@
         {
           "label": "The herd carries the organism subclinically",
           "detail": "Two well herd mates PCR positive",
-          "correct": true
-        },
-        {
-          "label": "Parasitism is not the main cause of this anaemia",
-          "detail": "A count of 200 epg with normal protein",
           "correct": true
         },
         {
@@ -148,11 +123,6 @@
         {
           "label": "Immune-mediated haemolytic anaemia",
           "detail": "Possible in camelids, but the PCR names an infectious cause",
-          "correct": false
-        },
-        {
-          "label": "Copper deficiency",
-          "detail": "Would not give a fever or a positive PCR",
           "correct": false
         },
         {

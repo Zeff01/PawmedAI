@@ -19,7 +19,8 @@
       "options": [
         { "label": "A correct finding", "detail": "Why it counts", "correct": true },
         { "label": "Another correct finding", "detail": "Why it counts", "correct": true },
-        { "label": "A plausible distractor", "detail": "What rules it out", "correct": false }
+        { "label": "A plausible distractor", "detail": "What rules it out", "correct": false },
+        { "label": "Relevant, but not the point", "detail": "Why it does not count here", "correct": false }
       ],
       "explanation": "The teaching point, shown once the stage is answered. Name the finding that rules each distractor out."
     },
@@ -32,7 +33,9 @@
       "points": 15,
       "options": [
         { "label": "A test that changes the next hour", "detail": "What it answers", "correct": true },
-        { "label": "A test that takes hours", "detail": "Not wrong in general, wrong now", "correct": false }
+        { "label": "Another test that changes the next hour", "detail": "What it answers", "correct": true },
+        { "label": "A test that takes hours", "detail": "Not wrong in general, wrong now", "correct": false },
+        { "label": "A test that answers nothing yet", "detail": "Why it can wait", "correct": false }
       ],
       "explanation": "Why this workup, in this order."
     },
@@ -45,7 +48,9 @@
       "points": 20,
       "options": [
         { "label": "Still on the list", "detail": "What keeps it there", "correct": true },
-        { "label": "Excluded", "detail": "The finding that excludes it", "correct": false }
+        { "label": "Also still on the list", "detail": "What keeps it there", "correct": true },
+        { "label": "Excluded", "detail": "The finding that excludes it", "correct": false },
+        { "label": "Also excluded", "detail": "The finding that excludes it", "correct": false }
       ],
       "explanation": "What the findings rule in and rule out."
     },
@@ -58,7 +63,9 @@
       "points": 25,
       "options": [
         { "label": "The diagnosis", "detail": "The finding that confirms it", "correct": true },
-        { "label": "The near miss", "detail": "Why it is not this", "correct": false }
+        { "label": "The near miss", "detail": "Why it is not this", "correct": false },
+        { "label": "Another near miss", "detail": "Why it is not this", "correct": false },
+        { "label": "A third near miss", "detail": "Why it is not this", "correct": false }
       ],
       "explanation": "Why this diagnosis, and what it means for the patient."
     }

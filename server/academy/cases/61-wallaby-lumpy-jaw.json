@@ -36,11 +36,6 @@
           "label": "Enlarged mandibular lymph node",
           "detail": "Expected drainage response to local infection",
           "correct": false
-        },
-        {
-          "label": "Ground feeding on damp trampled grass",
-          "detail": "The husbandry driver, not a clinical finding",
-          "correct": false
         }
       ],
       "explanation": "Macropods develop necrobacillosis — \"lumpy jaw\" — when oral mucosa is abraded and Fusobacterium gets into bone, and the physical findings here are that disease. A second affected animal is the sign that this is an enclosure problem rather than one wallaby’s bad luck. The lymph node is a normal response, so it adds little to the localisation."
@@ -61,21 +56,6 @@
         {
           "label": "Deep anaerobic and aerobic culture with sensitivity from the tract",
           "detail": "Fusobacterium is anaerobic and easily missed on routine culture",
-          "correct": true
-        },
-        {
-          "label": "Cytology of the discharge",
-          "detail": "Confirms suppuration and the organism type",
-          "correct": true
-        },
-        {
-          "label": "Full oral examination with dental probing under anaesthesia",
-          "detail": "Finds the entry point and any loose teeth",
-          "correct": true
-        },
-        {
-          "label": "Haematology with total protein",
-          "detail": "Systemic inflammatory burden and nutritional state",
           "correct": true
         },
         {
@@ -105,18 +85,8 @@
           "correct": true
         },
         {
-          "label": "Grass seed impaction and gingival ulceration provided the entry point",
-          "detail": "Ulcerated gingiva with impacted material at the affected teeth",
-          "correct": true
-        },
-        {
           "label": "Surgical debridement will be needed alongside antibiotics",
           "detail": "A sequestrum will not resolve on antibiotics alone",
-          "correct": true
-        },
-        {
-          "label": "Ground feeding on contaminated soil is an enclosure-level risk",
-          "detail": "A second animal affected, with the same feeding practice",
           "correct": true
         },
         {
@@ -158,11 +128,6 @@
         {
           "label": "Oral squamous cell carcinoma",
           "detail": "Cytology and culture show suppuration and bacteria, not neoplasia",
-          "correct": false
-        },
-        {
-          "label": "Traumatic mandibular fracture",
-          "detail": "No fracture on CT; the lysis is infective",
           "correct": false
         }
       ],

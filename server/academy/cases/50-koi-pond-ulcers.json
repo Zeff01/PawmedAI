@@ -36,11 +36,6 @@
           "label": "Rising water temperature from 14°C",
           "detail": "Relevant to disease dynamics, but not a clinical finding",
           "correct": false
-        },
-        {
-          "label": "Frayed caudal fin in one fish",
-          "detail": "Non-specific damage",
-          "correct": false
         }
       ],
       "explanation": "The distinction that matters is between what affects every fish and what affects four: whole-pond flashing points at water quality or an ectoparasite, while focal ulcers are where bacteria have got into damaged skin. A filter clean followed by an undechlorinated top-up is a classic double insult — the biology gets killed twice."
@@ -69,23 +64,8 @@
           "correct": true
         },
         {
-          "label": "Bacterial culture and sensitivity from the leading edge of an ulcer",
-          "detail": "Names the invader and picks the drug",
-          "correct": true
-        },
-        {
-          "label": "Post-mortem of the dead fish including kidney and spleen",
-          "detail": "Systemic spread, and a second sampling opportunity",
-          "correct": true
-        },
-        {
           "label": "Koi herpesvirus PCR as the only investigation",
           "detail": "A notifiable consideration at rising temperatures, but it will not explain flashing and ulcers alone",
-          "correct": false
-        },
-        {
-          "label": "Faecal parasitology as a priority",
-          "detail": "Not how skin and gill disease is diagnosed",
           "correct": false
         }
       ],
@@ -115,18 +95,8 @@
           "correct": true
         },
         {
-          "label": "Oxytetracycline would be the wrong antibiotic",
-          "detail": "The isolate is resistant to it",
-          "correct": true
-        },
-        {
           "label": "Koi herpesvirus is the primary problem",
           "detail": "PCR negative",
-          "correct": false
-        },
-        {
-          "label": "Low dissolved oxygen is driving the outbreak",
-          "detail": "Oxygen at 8 mg/L is adequate",
           "correct": false
         }
       ],
@@ -158,11 +128,6 @@
         {
           "label": "Chlorine gill burn as the sole diagnosis",
           "detail": "A contributing insult, but it does not explain the parasites or the ulcers",
-          "correct": false
-        },
-        {
-          "label": "Spring viraemia of carp",
-          "detail": "Not supported by any result here",
           "correct": false
         }
       ],

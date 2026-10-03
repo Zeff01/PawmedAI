@@ -36,11 +36,6 @@
           "label": "Indoor rearing under heat lamps",
           "detail": "Relevant to rickets, but these birds have no bone deformity",
           "correct": false
-        },
-        {
-          "label": "Normal growth to week four",
-          "detail": "Background, not a discriminating sign",
-          "correct": false
         }
       ],
       "explanation": "Ratite leg problems divide into skeletal and muscular, and the examination separates them: no swollen joints and no rotated tibiotarsus takes rickets and tibiotarsal rotation off the top of the list, leaving muscle. Chicks that die in good flesh have not starved. The missing premix is the exposure, and its three-week timeline matches the onset."
@@ -64,21 +59,6 @@
           "correct": true
         },
         {
-          "label": "Plasma vitamin E (alpha-tocopherol)",
-          "detail": "The other half of the same deficiency",
-          "correct": true
-        },
-        {
-          "label": "Post-mortem with histopathology of skeletal and cardiac muscle",
-          "detail": "Pale muscle and hyaline degeneration confirm it",
-          "correct": true
-        },
-        {
-          "label": "Feed analysis of the home-mixed ration",
-          "detail": "Proves the ration is deficient, not just suspected",
-          "correct": true
-        },
-        {
           "label": "Calcium, phosphorus and vitamin D3 as the only mineral testing",
           "detail": "Right panel for rickets, wrong for a myopathy with no bone lesions",
           "correct": false
@@ -89,7 +69,7 @@
           "correct": false
         }
       ],
-      "explanation": "Sampling unaffected chicks alongside affected ones is what makes the CK result interpretable in a species with wide reference ranges. Selenium and vitamin E are measured together because they fail together, and the feed analysis is what turns a clinical suspicion into a finding the farm cannot argue with. Histopathology of heart as well as leg muscle matters because the cardiac form is what kills."
+      "explanation": "Sampling unaffected chicks alongside affected ones is what makes the CK result interpretable in a species with wide reference ranges, and selenium status is measured because it is the classic ratite deficiency. Calcium, phosphorus and vitamin D3 on their own are the rickets panel — the right question for a bone problem, the wrong one for a myopathy with no bone lesions."
     },
     {
       "kind": "differential",
@@ -113,11 +93,6 @@
           "label": "The ration itself is the source",
           "detail": "Feed selenium at a fifth of target and vitamin E far below",
           "correct": true
-        },
-        {
-          "label": "Rickets is contributing",
-          "detail": "Calcium and phosphorus adequate with a normal Ca:P and no bone lesions",
-          "correct": false
         },
         {
           "label": "The high CK is an artefact of handling and restraint",
@@ -153,11 +128,6 @@
         {
           "label": "Capture myopathy",
           "detail": "Would not affect twelve housed chicks progressively over three weeks",
-          "correct": false
-        },
-        {
-          "label": "Bacterial myositis",
-          "detail": "Histology shows degeneration and mineralisation, not suppuration",
           "correct": false
         }
       ],

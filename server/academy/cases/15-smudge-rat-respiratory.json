@@ -23,11 +23,6 @@
           "correct": true
         },
         {
-          "label": "Six weeks of progressive upper-airway noise",
-          "detail": "A chronic course, not an acute event",
-          "correct": true
-        },
-        {
           "label": "A cage mate with the same signs",
           "detail": "Points to something transmissible in the colony",
           "correct": true
@@ -43,7 +38,7 @@
           "correct": false
         }
       ],
-      "explanation": "Porphyrin staining is the sign most often misread as blood, and it reliably marks a rat that is unwell rather than injured. Two rats in one cage with the same six-week course puts an infectious agent at the top of the list, while the irritants stay on it as aggravating factors. Recognising which findings travel between animals is how a single-patient consultation becomes a colony plan."
+      "explanation": "Porphyrin staining is the sign most often misread as blood, and it reliably marks a rat that is unwell rather than injured. Two rats in one cage with the same signs puts an infectious agent at the top of the list, while the irritants stay on it as aggravating factors. Recognising which findings travel between animals is how a single-patient consultation becomes a colony plan."
     },
     {
       "kind": "diagnostics",
@@ -61,21 +56,6 @@
         {
           "label": "Bacterial culture and sensitivity from the same site",
           "detail": "Secondary invaders decide the antibiotic",
-          "correct": true
-        },
-        {
-          "label": "Thoracic radiographs under light sedation",
-          "detail": "Grades the lower-airway damage",
-          "correct": true
-        },
-        {
-          "label": "Cytology of the airway sample",
-          "detail": "Neutrophils, bacteria, ciliated cell damage",
-          "correct": true
-        },
-        {
-          "label": "Full haematology and biochemistry",
-          "detail": "Chronic disease and organ screening before treatment",
           "correct": true
         },
         {
@@ -102,11 +82,6 @@
         {
           "label": "Chronic mycoplasmal respiratory disease with secondary bacterial infection",
           "detail": "PCR positive plus a cultured invader and neutrophils",
-          "correct": true
-        },
-        {
-          "label": "The cage mates are already exposed and should be managed as a group",
-          "detail": "M. pulmonis spreads readily and is usually colony-wide",
           "correct": true
         },
         {
@@ -153,11 +128,6 @@
         {
           "label": "Pulmonary neoplasia",
           "detail": "Wrong age, wrong radiographic pattern, and it would not spread",
-          "correct": false
-        },
-        {
-          "label": "Aspiration pneumonia",
-          "detail": "No history of a dysphagic or regurgitating rat",
           "correct": false
         }
       ],

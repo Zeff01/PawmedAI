@@ -23,11 +23,6 @@
           "correct": true
         },
         {
-          "label": "Change in respiratory sound with a rattle on exhalation",
-          "detail": "Airway or pulmonary involvement",
-          "correct": true
-        },
-        {
           "label": "A 50% drop in voluntary intake over 48 hours",
           "detail": "Measured decline in a monitored animal",
           "correct": true
@@ -64,28 +59,13 @@
           "correct": true
         },
         {
-          "label": "Blowhole cytology and culture with sensitivity",
-          "detail": "Respiratory pathogens, named",
-          "correct": true
-        },
-        {
           "label": "Blood culture",
           "detail": "Erysipelothrix septicaemia must be caught early",
           "correct": true
         },
         {
-          "label": "Gastric fluid cytology, pH and culture",
-          "detail": "Foreign material, ulceration, secondary infection",
-          "correct": true
-        },
-        {
           "label": "Fish batch analysis for histamine and thiamine",
           "detail": "Worth doing for the collection, but it will not diagnose today’s illness",
-          "correct": false
-        },
-        {
-          "label": "Whole-body computed tomography as the first step",
-          "detail": "Not practicable for a routine work-up in this species",
           "correct": false
         }
       ],
@@ -102,16 +82,6 @@
         {
           "label": "Erysipelothrix rhusiopathiae infection with septicaemia",
           "detail": "The organism from blood as well as the airway",
-          "correct": true
-        },
-        {
-          "label": "A strong systemic inflammatory response",
-          "detail": "Raised serum amyloid A, fibrinogen and a left shift",
-          "correct": true
-        },
-        {
-          "label": "Penicillin is the appropriate treatment",
-          "detail": "Sensitive on culture, and the drug of choice for this organism",
           "correct": true
         },
         {
@@ -158,11 +128,6 @@
         {
           "label": "Fish-borne histamine toxicity",
           "detail": "Would not culture Erysipelothrix from blood",
-          "correct": false
-        },
-        {
-          "label": "Idiopathic inappetence",
-          "detail": "Ignores a positive blood culture",
           "correct": false
         }
       ],

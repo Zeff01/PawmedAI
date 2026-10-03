@@ -36,11 +36,6 @@
           "label": "Temperatures up to 39.4°C",
           "detail": "Within the range excitement produces in deer",
           "correct": false
-        },
-        {
-          "label": "Rough coats",
-          "detail": "A consequence of ill-thrift, not a pointer",
-          "correct": false
         }
       ],
       "explanation": "Weaners on ground that has carried weaners every autumn for six years is the epidemiology of parasitic gastroenteritis, and the cough adds lungworm to the same picture. Growth rate is the finding that gives the farm a number to act on. Deer run hot when handled, so temperature at yarding is one of the least useful measurements you will take."
@@ -59,18 +54,8 @@
           "correct": true
         },
         {
-          "label": "Faecal larval culture and Baermann for lungworm",
-          "detail": "Speciation, and Dictyocaulus larvae",
-          "correct": true
-        },
-        {
           "label": "Post-mortem with total worm counts and abomasal pH",
           "detail": "The reference standard for deer parasitism",
-          "correct": true
-        },
-        {
-          "label": "Serum pepsinogen with albumin and total protein",
-          "detail": "Abomasal damage and protein loss",
           "correct": true
         },
         {
@@ -82,14 +67,9 @@
           "label": "Johne’s disease PCR on faeces as the primary test",
           "detail": "Worth screening later; it does not explain a six-week group problem",
           "correct": false
-        },
-        {
-          "label": "Bulk milk antibody testing",
-          "detail": "These are weaned calves",
-          "correct": false
         }
       ],
-      "explanation": "Deer parasitism is under-read on egg counts alone, because immature and inhibited stages produce no eggs, so the post-mortem worm count and abomasal pH are what confirm the burden. Pepsinogen and protein grade the abomasal damage, and the trace element panel is not padding in this species — copper and cobalt deficiency commonly compound the picture and change what you prescribe."
+      "explanation": "Deer parasitism is under-read on egg counts alone, because immature and inhibited stages produce no eggs, so the post-mortem worm count and abomasal pH are what confirm the burden. The trace element panel is not padding in this species — copper and cobalt deficiency commonly compound the picture and change what you prescribe."
     },
     {
       "kind": "differential",
@@ -105,11 +85,6 @@
           "correct": true
         },
         {
-          "label": "Concurrent lungworm infection",
-          "detail": "Dictyocaulus on Baermann and at post-mortem",
-          "correct": true
-        },
-        {
           "label": "Protein-losing enteropathy from the abomasal lesions",
           "detail": "Albumin 21 g/L with low total protein",
           "correct": true
@@ -122,11 +97,6 @@
         {
           "label": "Egg counts alone reflected the true burden",
           "detail": "A mean of 620 epg against 42,000 worms",
-          "correct": false
-        },
-        {
-          "label": "Johne’s disease is the primary cause",
-          "detail": "No lesions and it does not explain the worm count",
           "correct": false
         }
       ],
@@ -153,11 +123,6 @@
         {
           "label": "Primary copper deficiency",
           "detail": "Real, but secondary to a 42,000-worm burden",
-          "correct": false
-        },
-        {
-          "label": "Yersiniosis",
-          "detail": "An acute weaner scour, not a six-week ill-thrift with this worm count",
           "correct": false
         },
         {

@@ -36,14 +36,9 @@
           "label": "Occasional vomiting",
           "detail": "Common in both, discriminates nothing",
           "correct": false
-        },
-        {
-          "label": "Unkempt coat",
-          "detail": "Non-specific in any chronic illness",
-          "correct": false
         }
       ],
-      "explanation": "Weight loss on a good appetite narrows the field hard: the calories are going in, so they are being burned or lost. A palpable goitre with tachycardia and hypertension is hyperthyroidism until proven otherwise. Vomiting and a poor coat are true but useless here — they belong to every chronic feline illness on the differential list."
+      "explanation": "Weight loss on a good appetite narrows the field hard: the calories are going in, so they are being burned or lost. A palpable goitre with tachycardia and hypertension is hyperthyroidism until proven otherwise. Vomiting is true but useless here — it belongs to every chronic feline illness on the differential list."
     },
     {
       "kind": "diagnostics",
@@ -69,27 +64,12 @@
           "correct": true
         },
         {
-          "label": "Haematology",
-          "detail": "Baseline before methimazole",
-          "correct": true
-        },
-        {
-          "label": "Blood pressure and fundic examination",
-          "detail": "Hypertensive target-organ damage",
-          "correct": true
-        },
-        {
           "label": "Faecal parasitology as the first-line test",
           "detail": "Reasonable in a young cat with diarrhoea, not here",
           "correct": false
-        },
-        {
-          "label": "Insulin concentration",
-          "detail": "No role in the work-up of feline weight loss",
-          "correct": false
         }
       ],
-      "explanation": "A total T4 answers the question in most cats, but the panel around it matters as much: thyrotoxicosis raises GFR and hides chronic kidney disease that will surface the moment you treat it, so urea, creatinine and urine specific gravity have to be recorded before treatment, not after. Faecal work and insulin belong to other presentations."
+      "explanation": "A total T4 answers the question in most cats, but the panel around it matters as much: thyrotoxicosis raises GFR and hides chronic kidney disease that will surface the moment you treat it, so urea, creatinine and urine specific gravity have to be recorded before treatment, not after. Faecal work belongs to other presentations."
     },
     {
       "kind": "differential",
@@ -107,11 +87,6 @@
         {
           "label": "Kidney function needs rechecking after treatment",
           "detail": "A USG of 1.024 with a high GFR is not reassuring",
-          "correct": true
-        },
-        {
-          "label": "Diabetes mellitus is excluded",
-          "detail": "Normoglycaemia with no glucosuria",
           "correct": true
         },
         {
@@ -143,11 +118,6 @@
         {
           "label": "Hyperthyroidism alone, kidneys normal",
           "detail": "Overstates what a single USG of 1.024 proves",
-          "correct": false
-        },
-        {
-          "label": "Diabetes mellitus",
-          "detail": "Excluded by normoglycaemia and no glucosuria",
           "correct": false
         },
         {

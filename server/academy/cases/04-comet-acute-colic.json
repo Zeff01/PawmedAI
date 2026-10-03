@@ -28,11 +28,6 @@
           "correct": true
         },
         {
-          "label": "Reduced gut sounds in all quadrants",
-          "detail": "Reduced motility",
-          "correct": true
-        },
-        {
           "label": "HR 48 bpm",
           "detail": "Mildly elevated; not the tachycardia of a strangulating lesion",
           "correct": false
@@ -61,16 +56,6 @@
         {
           "label": "Rectal palpation",
           "detail": "Locates the lesion in the caudal abdomen",
-          "correct": true
-        },
-        {
-          "label": "Serial heart rate and pain scoring",
-          "detail": "Trend beats a single reading",
-          "correct": true
-        },
-        {
-          "label": "Transabdominal ultrasound",
-          "detail": "Distended loops, wall thickness, free fluid",
           "correct": true
         },
         {
@@ -107,11 +92,6 @@
         {
           "label": "Small intestinal strangulating obstruction",
           "detail": "No reflux, no distended small intestine, HR stable",
-          "correct": false
-        },
-        {
-          "label": "Gastric rupture",
-          "detail": "The horse would be in septic shock",
           "correct": false
         },
         {

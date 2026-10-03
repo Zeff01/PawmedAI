@@ -36,11 +36,6 @@
           "label": "Fluffed posture on a low perch",
           "detail": "Non-specific sign of illness in any bird",
           "correct": false
-        },
-        {
-          "label": "Soiled vent",
-          "detail": "Follows the loose droppings",
-          "correct": false
         }
       ],
       "explanation": "Passerine keepers call this \"going light\" and it is a syndrome, not a diagnosis: weight loss on a good appetite with undigested food points at the proventriculus and gizzard. What turns it into an aviary problem is the mortality pattern and the unquarantined introductions — the plan will be about the collection as much as this bird."
@@ -64,21 +59,6 @@
           "correct": true
         },
         {
-          "label": "Faecal parasitology for coccidia and Atoxoplasma",
-          "detail": "The other going-light agents in passerines",
-          "correct": true
-        },
-        {
-          "label": "Faecal culture for Gram-negative overgrowth",
-          "detail": "Secondary invaders and a treatment target",
-          "correct": true
-        },
-        {
-          "label": "Crop swab microscopy for Trichomonas and Candida",
-          "detail": "Cheap, immediate differentials",
-          "correct": true
-        },
-        {
           "label": "Serum biochemistry panel on this bird",
           "detail": "The blood volume is not justifiable in a 16 g patient",
           "correct": false
@@ -89,7 +69,7 @@
           "correct": false
         }
       ],
-      "explanation": "In a 16 g bird the sample plan is the clinical skill: microscopy on droppings and crop, and a proper post-mortem on the bird that has already died, rather than bleeding the patient you are trying to save. Macrorhabdus needs looking for specifically — it is missed on a wet mount and shows up on a Gram stain as large rods at the isthmus."
+      "explanation": "In a 16 g bird the sample plan is the clinical skill: microscopy on droppings and crop, and a proper post-mortem on the bird that has already died, rather than bleeding or radiographing the patient you are trying to save. Macrorhabdus needs looking for specifically — it is missed on a wet mount and shows up on a Gram stain as large rods at the isthmus."
     },
     {
       "kind": "differential",
@@ -102,16 +82,6 @@
         {
           "label": "Macrorhabdiosis (megabacteriosis) of the proventriculus",
           "detail": "Organism on smear and in the isthmus on histology",
-          "correct": true
-        },
-        {
-          "label": "The aviary is affected, not just this bird",
-          "detail": "The same lesion in a second bird that died",
-          "correct": true
-        },
-        {
-          "label": "Gram-negative overgrowth is secondary",
-          "detail": "Predictable on a damaged, hypochlorhydric gut",
           "correct": true
         },
         {
@@ -158,11 +128,6 @@
         {
           "label": "Avian gastric yeast carriage without disease",
           "detail": "Contradicted by the mucosal hyperplasia and the deaths",
-          "correct": false
-        },
-        {
-          "label": "Seed-based malnutrition",
-          "detail": "Does not explain the proventricular lesion or the mortality",
           "correct": false
         }
       ],

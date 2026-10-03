@@ -23,11 +23,6 @@
           "correct": true
         },
         {
-          "label": "Male neutered cat straining unproductively",
-          "detail": "The classic signalment",
-          "correct": true
-        },
-        {
           "label": "Bradycardia at 120 bpm in a stressed cat",
           "detail": "Suggests hyperkalaemia",
           "correct": true
@@ -64,11 +59,6 @@
           "correct": true
         },
         {
-          "label": "Analgesia",
-          "detail": "The obstruction is agonising",
-          "correct": true
-        },
-        {
           "label": "Urethral catheterisation to relieve the obstruction",
           "detail": "The definitive treatment",
           "correct": true
@@ -76,11 +66,6 @@
         {
           "label": "Send urine for culture before doing anything else",
           "detail": "Useful later; not now",
-          "correct": false
-        },
-        {
-          "label": "Oral potassium binder",
-          "detail": "No role in an acute obstruction",
           "correct": false
         }
       ],
@@ -102,11 +87,6 @@
         {
           "label": "Underlying feline idiopathic cystitis",
           "detail": "Sterile, no stones, no mass — the usual driver",
-          "correct": true
-        },
-        {
-          "label": "Life-threatening hyperkalaemia, now corrected",
-          "detail": "K 7.8 with absent P waves",
           "correct": true
         },
         {

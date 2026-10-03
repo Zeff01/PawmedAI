@@ -36,11 +36,6 @@
           "label": "Warm, wet August on set-stocked permanent pasture",
           "detail": "The conditions for a Haemonchus challenge, not a finding in the ewe",
           "correct": false
-        },
-        {
-          "label": "Dull fleece with no wool rise",
-          "detail": "Non-specific ill-thrift",
-          "correct": false
         }
       ],
       "explanation": "Anaemia with bottle jaw and normal faeces is the signature of Haemonchus contortus, and it is the absence of scour that separates it from the other parasitic gastroenteritis syndromes. FAMACHA turns \"she looks pale\" into a number you can act on and repeat. The grazing history is what explains the outbreak and drives the plan, but it is epidemiology rather than clinical evidence."
@@ -69,27 +64,12 @@
           "correct": true
         },
         {
-          "label": "Larval culture or PCR speciation of the eggs",
-          "detail": "Confirms Haemonchus rather than another strongyle",
-          "correct": true
-        },
-        {
-          "label": "FAMACHA scoring of the whole group",
-          "detail": "Finds the others before they collapse",
-          "correct": true
-        },
-        {
           "label": "Liver fluke coproantigen or serology alone as the answer",
           "detail": "Worth checking on wet ground, but fluke does not usually give this picture in August",
           "correct": false
-        },
-        {
-          "label": "Blood culture",
-          "detail": "Nothing here suggests septicaemia",
-          "correct": false
         }
       ],
-      "explanation": "Two levels of question are being answered at once: what is wrong with this ewe, and why is it happening in this flock. The PCV grades her risk, the counts and speciation name the parasite, and the reduction test asks whether the wormer used eight weeks ago still works — which is the answer that changes next season rather than next week."
+      "explanation": "Two levels of question are being answered at once: what is wrong with this ewe, and why is it happening in this flock. The PCV grades her risk, the counts measure the burden, and the reduction test asks whether the wormer used eight weeks ago still works — which is the answer that changes next season rather than next week."
     },
     {
       "kind": "differential",
@@ -110,11 +90,6 @@
           "correct": true
         },
         {
-          "label": "The whole group is carrying a high burden",
-          "detail": "Pooled count 1,900 epg",
-          "correct": true
-        },
-        {
           "label": "Liver fluke is excluded as the main cause",
           "detail": "Coproantigen negative",
           "correct": true
@@ -122,11 +97,6 @@
         {
           "label": "Nutritional anaemia from copper or cobalt deficiency",
           "detail": "Would not produce a count of 3,800 epg or bottle jaw",
-          "correct": false
-        },
-        {
-          "label": "Coccidiosis is the flock problem",
-          "detail": "Wrong age group, and the faeces are formed",
           "correct": false
         }
       ],
@@ -153,11 +123,6 @@
         {
           "label": "Copper deficiency",
           "detail": "Does not cause bottle jaw or a high egg count",
-          "correct": false
-        },
-        {
-          "label": "Coccidiosis",
-          "detail": "A disease of lambs, with scour",
           "correct": false
         },
         {

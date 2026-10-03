@@ -33,11 +33,6 @@
           "correct": true
         },
         {
-          "label": "Tooth grinding and a hunched posture",
-          "detail": "Rabbit pain behaviour",
-          "correct": true
-        },
-        {
           "label": "Molar spurs",
           "detail": "Very likely the cause, but not the emergency",
           "correct": false
@@ -64,19 +59,9 @@
           "correct": true
         },
         {
-          "label": "Fluid therapy",
-          "detail": "Rehydrates impacted stomach contents",
-          "correct": true
-        },
-        {
           "label": "Whole-body radiographs",
           "detail": "Gas patterns; excludes true obstruction",
           "correct": true
-        },
-        {
-          "label": "Immediate exploratory laparotomy",
-          "detail": "Not before stabilisation and imaging",
-          "correct": false
         },
         {
           "label": "Oral prokinetics before imaging",
@@ -84,7 +69,7 @@
           "correct": false
         }
       ],
-      "explanation": "The order here is the whole lesson: warm, then analgese, then rehydrate, then image. Prokinetics before imaging is the genuinely dangerous choice — if the gut is truly obstructed, driving motility against the obstruction can rupture it. Stasis and obstruction present almost identically in a rabbit, and radiography is what separates them."
+      "explanation": "The order here is the whole lesson: warm, then analgese, then image. Prokinetics before imaging is the genuinely dangerous choice — if the gut is truly obstructed, driving motility against the obstruction can rupture it. Stasis and obstruction present almost identically in a rabbit, and radiography is what separates them."
     },
     {
       "kind": "differential",
@@ -107,11 +92,6 @@
         {
           "label": "Complete small intestinal obstruction",
           "detail": "Gas is distributed, not focally trapped; distal pellets present",
-          "correct": false
-        },
-        {
-          "label": "Mucoid enteropathy",
-          "detail": "No gelatinous mucus passed",
           "correct": false
         },
         {

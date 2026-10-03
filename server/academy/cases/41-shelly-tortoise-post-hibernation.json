@@ -28,11 +28,6 @@
           "correct": true
         },
         {
-          "label": "Weakness with reduced limb withdrawal",
-          "detail": "Systemic illness rather than simple slow warming",
-          "correct": true
-        },
-        {
           "label": "Overgrown beak",
           "detail": "A husbandry finding needing attention later",
           "correct": false
@@ -59,23 +54,8 @@
           "correct": true
         },
         {
-          "label": "Ionised calcium",
-          "detail": "What the tissues actually see",
-          "correct": true
-        },
-        {
-          "label": "Packed cell volume and total protein",
-          "detail": "Hydration and protein status",
-          "correct": true
-        },
-        {
           "label": "Whole-body radiographs including a craniocaudal view",
           "detail": "Bladder stones, follicles, egg retention, bone density",
-          "correct": true
-        },
-        {
-          "label": "Urinalysis if any urine can be obtained",
-          "detail": "Concentration, crystals, cells",
           "correct": true
         },
         {
@@ -110,11 +90,6 @@
           "correct": true
         },
         {
-          "label": "Dehydration is compounding the azotaemia",
-          "detail": "A raised PCV with clinical dehydration",
-          "correct": true
-        },
-        {
           "label": "Retained eggs and bladder calculi are excluded",
           "detail": "Neither present on radiographs",
           "correct": true
@@ -122,11 +97,6 @@
         {
           "label": "Gout can be ruled out at this stage",
           "detail": "A uric acid this high risks visceral and articular gout, which has to be looked for",
-          "correct": false
-        },
-        {
-          "label": "Bacterial cystitis explains the anuria",
-          "detail": "No bacteria in the urine sediment",
           "correct": false
         }
       ],
@@ -153,11 +123,6 @@
         {
           "label": "Follicular stasis",
           "detail": "No follicles or eggs on radiographs",
-          "correct": false
-        },
-        {
-          "label": "Cystic calculus",
-          "detail": "None visible radiographically",
           "correct": false
         },
         {

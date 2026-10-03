@@ -36,11 +36,6 @@
           "label": "Shared sponge and water containers",
           "detail": "The route between enclosures — husbandry, not a clinical sign",
           "correct": false
-        },
-        {
-          "label": "Room temperature 24°C",
-          "detail": "Within a tolerable range for the species",
-          "correct": false
         }
       ],
       "explanation": "Amphibian skin is a respiratory and osmoregulatory organ, so a disease that damages it kills by electrolyte failure — which is exactly what the lost righting reflex represents. Sloughing with ventral erythema across several animals ten days after unquarantined arrivals is chytridiomycosis until excluded, and the shared cleaning equipment explains how it moved."
@@ -59,23 +54,8 @@
           "correct": true
         },
         {
-          "label": "Wet mount of shed skin for zoosporangia",
-          "detail": "Immediate, if you know what to look for",
-          "correct": true
-        },
-        {
-          "label": "Post-mortem with histopathology of skin",
-          "detail": "Intracellular zoosporangia within hyperkeratotic epidermis",
-          "correct": true
-        },
-        {
           "label": "Ranavirus PCR on tissues",
           "detail": "The other cause of mass amphibian mortality",
-          "correct": true
-        },
-        {
-          "label": "Bacterial culture from skin and coelom",
-          "detail": "Secondary sepsis, common and treatable",
           "correct": true
         },
         {
@@ -105,18 +85,8 @@
           "correct": true
         },
         {
-          "label": "The new arrivals introduced it and are subclinical carriers",
-          "detail": "Two positive frogs with no signs",
-          "correct": true
-        },
-        {
           "label": "Electrolyte loss across damaged skin is the mechanism of death",
           "detail": "Low sodium and potassium with loss of righting reflex",
-          "correct": true
-        },
-        {
-          "label": "Secondary bacterial infection is present",
-          "detail": "Aeromonas cultured from damaged skin",
           "correct": true
         },
         {
@@ -158,11 +128,6 @@
         {
           "label": "Primary bacterial dermatosepticaemia",
           "detail": "Secondary to the fungal skin damage",
-          "correct": false
-        },
-        {
-          "label": "Husbandry-related dysecdysis",
-          "detail": "Does not explain positive qPCR, zoosporangia or three deaths",
           "correct": false
         }
       ],

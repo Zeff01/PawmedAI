@@ -36,11 +36,6 @@
           "label": "Marked emaciation",
           "detail": "Tells you how long, not what caused it",
           "correct": false
-        },
-        {
-          "label": "Empty crop",
-          "detail": "Expected in any bird that has not hunted",
-          "correct": false
         }
       ],
       "explanation": "A grounded bird of prey with no injuries and symmetrical neurological signs has been poisoned or starved, and green urates point at haemolysis with hepatic involvement. The location is the clue that makes lead top of the list: raptors ingest shotgun pellets and bullet fragments in the carcasses they scavenge. Emaciation is the consequence of days of not hunting."
@@ -64,21 +59,6 @@
           "correct": true
         },
         {
-          "label": "Packed cell volume with a blood smear",
-          "detail": "Anaemia and basophilic stippling of red cells",
-          "correct": true
-        },
-        {
-          "label": "Biochemistry with uric acid, AST and bile acids",
-          "detail": "Renal and hepatic effect of the toxin and of starvation",
-          "correct": true
-        },
-        {
-          "label": "Faecal parasitology and a crop wash",
-          "detail": "Concurrent trichomoniasis and parasitism are common in casualties",
-          "correct": true
-        },
-        {
           "label": "Organophosphate cholinesterase assay as the first-line test",
           "detail": "A reasonable differential for a poisoned raptor, but the green urates and setting point at lead",
           "correct": false
@@ -89,7 +69,7 @@
           "correct": false
         }
       ],
-      "explanation": "Radiographs and a blood lead run together because either alone misleads: lead can have passed through the gizzard and left no metal to see, while a metal density in a grit-eating bird is not proof of toxicosis. The smear adds supportive evidence for free, and the parasitology reflects the reality that wildlife casualties usually have more than one problem."
+      "explanation": "Radiographs and a blood lead run together because either alone misleads: lead can have passed through the gizzard and left no metal to see, while a metal density in a grit-eating bird is not proof of toxicosis. Organophosphate poisoning is a fair differential for a grounded raptor, but green urates in this setting point at lead first."
     },
     {
       "kind": "differential",
@@ -105,18 +85,8 @@
           "correct": true
         },
         {
-          "label": "Retained metallic fragments are an ongoing source",
-          "detail": "Two densities still in the ventriculus",
-          "correct": true
-        },
-        {
           "label": "Dehydration and starvation are compounding the azotaemia",
           "detail": "Raised uric acid in an emaciated bird with an empty crop",
-          "correct": true
-        },
-        {
-          "label": "A light Capillaria burden needs treating, but it is not the reason it was grounded",
-          "detail": "Incidental in the context of a lead of 2.9 ppm",
           "correct": true
         },
         {
@@ -148,11 +118,6 @@
         {
           "label": "Trauma from a collision",
           "detail": "No fractures, no wounds, and symmetrical deficits",
-          "correct": false
-        },
-        {
-          "label": "Trichomoniasis",
-          "detail": "Crop wash negative",
           "correct": false
         },
         {

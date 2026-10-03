@@ -28,11 +28,6 @@
           "correct": true
         },
         {
-          "label": "Tea-coloured urine",
-          "detail": "Haemoglobinuria and bilirubinuria",
-          "correct": true
-        },
-        {
           "label": "Grade II/VI systolic murmur",
           "detail": "A flow murmur — consequence, not cause",
           "correct": false
@@ -43,7 +38,7 @@
           "correct": false
         }
       ],
-      "explanation": "Haemorrhage takes protein with it. A PCV of 14% alongside normal total solids is the single most useful line on this panel: the cells are going somewhere other than out of a vessel, and the icterus and pigmenturia say where. The murmur is a flow murmur that resolves as the PCV rises — chasing it as primary heart disease is the classic wrong turn — and a mild fever fits immune-mediated inflammation and sepsis equally well."
+      "explanation": "Haemorrhage takes protein with it. A PCV of 14% alongside normal total solids is the single most useful line on this panel: the cells are going somewhere other than out of a vessel, and the icterus says where. The murmur is a flow murmur that resolves as the PCV rises — chasing it as primary heart disease is the classic wrong turn — and a mild fever fits immune-mediated inflammation and sepsis equally well."
     },
     {
       "kind": "diagnostics",
@@ -64,16 +59,6 @@
           "correct": true
         },
         {
-          "label": "Reticulocyte count",
-          "detail": "Regenerative or not changes the prognosis",
-          "correct": true
-        },
-        {
-          "label": "Biochemistry with total and direct bilirubin",
-          "detail": "Grades the icterus, screens the liver",
-          "correct": true
-        },
-        {
           "label": "Vector-borne panel — Babesia, Mycoplasma haemocanis, Ehrlichia",
           "detail": "Infectious triggers must be excluded before steroids",
           "correct": true
@@ -82,14 +67,9 @@
           "label": "Direct Coombs test as the first-line test",
           "detail": "Slower and less specific than a smear; it does not decide the next hour",
           "correct": false
-        },
-        {
-          "label": "Bile acid stimulation test",
-          "detail": "Not while the icterus has an obvious pre-hepatic cause",
-          "correct": false
         }
       ],
-      "explanation": "A smear read by someone who knows what a spherocyte looks like is the highest-yield test in the building, and the saline dilution stops rouleaux masquerading as agglutination. Reticulocytes and bilirubin quantify what the smear shows. The infectious panel is not academic: immunosuppressing a babesiosis is a way to lose a patient. Coombs and bile acids are not wrong tests in general — they are the wrong tests to wait on now."
+      "explanation": "A smear read by someone who knows what a spherocyte looks like is the highest-yield test in the building, and the saline dilution stops rouleaux masquerading as agglutination. The infectious panel is not academic: immunosuppressing a babesiosis is a way to lose a patient. Coombs is not a wrong test in general — it is the wrong test to wait on now."
     },
     {
       "kind": "differential",
@@ -115,11 +95,6 @@
           "correct": false
         },
         {
-          "label": "Babesiosis",
-          "detail": "PCR negative with no travel history",
-          "correct": false
-        },
-        {
           "label": "Haemorrhage into a body cavity",
           "detail": "Total solids normal, both cavities dry",
           "correct": false
@@ -139,11 +114,6 @@
           "label": "Primary immune-mediated haemolytic anaemia",
           "detail": "Immune destruction with no identifiable trigger",
           "correct": true
-        },
-        {
-          "label": "Anaemia of chronic kidney disease",
-          "detail": "Non-regenerative, and no azotaemia here",
-          "correct": false
         },
         {
           "label": "Blood loss anaemia from an undetected bleed",

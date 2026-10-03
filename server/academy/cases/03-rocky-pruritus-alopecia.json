@@ -23,11 +23,6 @@
           "correct": true
         },
         {
-          "label": "Seasonal worsening",
-          "detail": "Points to environmental allergens",
-          "correct": true
-        },
-        {
           "label": "Distribution: paws, face, ears",
           "detail": "The atopic pattern",
           "correct": true
@@ -43,7 +38,7 @@
           "correct": false
         }
       ],
-      "explanation": "Atopic dermatitis announces itself through where it itches, not how hard: face, paws, ventrum and ears, starting in a young adult dog, often seasonal at first. Recurrent otitis in a young dog with no other cause is atopy until proven otherwise. The unaffected owners are a genuine clue but a negative one — they argue against scabies rather than for atopy."
+      "explanation": "Atopic dermatitis announces itself through where it itches, not how hard: face, paws, ventrum and ears, starting in a young adult dog. Recurrent otitis in a young dog with no other cause is atopy until proven otherwise. The unaffected owners are a genuine clue but a negative one — they argue against scabies rather than for atopy."
     },
     {
       "kind": "diagnostics",
@@ -56,11 +51,6 @@
         {
           "label": "Deep skin scrapes",
           "detail": "Demodex and Sarcoptes",
-          "correct": true
-        },
-        {
-          "label": "Tape-strip cytology of skin and ear",
-          "detail": "Malassezia and cocci",
           "correct": true
         },
         {
@@ -77,14 +67,9 @@
           "label": "Serum allergy testing to reach the diagnosis",
           "detail": "Selects immunotherapy allergens; it does not diagnose",
           "correct": false
-        },
-        {
-          "label": "Thyroid panel",
-          "detail": "Endocrine alopecia is not usually pruritic",
-          "correct": false
         }
       ],
-      "explanation": "Atopic dermatitis is a diagnosis of exclusion, and this is the order it is excluded in: parasites, infection, fleas, food — then, and only then, atopy. The trap is serum allergy testing. It does not diagnose atopic dermatitis: healthy dogs test positive to plenty of allergens. Its job is choosing what goes into an immunotherapy vaccine once the clinical diagnosis is already made."
+      "explanation": "Atopic dermatitis is a diagnosis of exclusion, and this is the order it is excluded in: mites, fleas, food — then, and only then, atopy. The trap is serum allergy testing. It does not diagnose atopic dermatitis: healthy dogs test positive to plenty of allergens. Its job is choosing what goes into an immunotherapy vaccine once the clinical diagnosis is already made."
     },
     {
       "kind": "differential",
@@ -112,11 +97,6 @@
         {
           "label": "Cutaneous adverse food reaction",
           "detail": "A strict diet trial failed to help",
-          "correct": false
-        },
-        {
-          "label": "Sarcoptic mange",
-          "detail": "Negative scrapes, no in-contact itch, no response pattern",
           "correct": false
         }
       ],

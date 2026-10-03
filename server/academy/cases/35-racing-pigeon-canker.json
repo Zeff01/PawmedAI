@@ -36,11 +36,6 @@
           "label": "Communal water trough refilled every other day",
           "detail": "The transmission route — history, not a clinical sign",
           "correct": false
-        },
-        {
-          "label": "Fluffed posture and weight loss",
-          "detail": "Non-specific illness in any pigeon",
-          "correct": false
         }
       ],
       "explanation": "Caseous plaques in the throat with ropy saliva is canker, and the nestling deaths are the same disease arriving by crop milk from apparently healthy adults. That last point is what makes it a loft problem: the adults look well and are the reservoir. The shared water is the other route and it is the easiest thing on the list to fix."
@@ -64,21 +59,6 @@
           "correct": true
         },
         {
-          "label": "Crop swab cytology stained for yeasts and bacteria",
-          "detail": "Candida and Gram-negative co-infection",
-          "correct": true
-        },
-        {
-          "label": "Faecal examination for coccidia and worms",
-          "detail": "The usual concurrent burdens in a loft",
-          "correct": true
-        },
-        {
-          "label": "Post-mortem of the dead squabs including liver",
-          "detail": "Systemic spread shows in the liver",
-          "correct": true
-        },
-        {
           "label": "Paramyxovirus serology as the primary test",
           "detail": "A vaccination question for the loft, not the cause of throat plaques",
           "correct": false
@@ -89,7 +69,7 @@
           "correct": false
         }
       ],
-      "explanation": "This diagnosis is made in ninety seconds with warm saline and a microscope, and it fails if the slide cools or if you wait — the trophozoites stop moving and become invisible. Swabbing healthy adults is what turns the diagnosis into a control plan, and looking for concurrent coccidia and worms reflects how these lofts actually present."
+      "explanation": "This diagnosis is made in ninety seconds with warm saline and a microscope, and it fails if the slide cools or if you wait — the trophozoites stop moving and become invisible. Swabbing healthy adults is what turns the diagnosis into a control plan; paramyxovirus serology and blood culture answer other questions and will not explain throat plaques."
     },
     {
       "kind": "differential",
@@ -99,11 +79,6 @@
       "select_mode": "multi",
       "points": 20,
       "options": [
-        {
-          "label": "Trichomonas gallinae infection in the loft",
-          "detail": "Motile trophozoites in sick birds",
-          "correct": true
-        },
         {
           "label": "Healthy adults are carriers and the source for the squabs",
           "detail": "Positive wet mounts in birds with no signs",
@@ -122,11 +97,6 @@
         {
           "label": "Coccidiosis is the primary problem",
           "detail": "A light oocyst load does not explain caseous throat plaques",
-          "correct": false
-        },
-        {
-          "label": "Candidiasis is the primary problem",
-          "detail": "No significant yeast on cytology",
           "correct": false
         }
       ],
@@ -148,11 +118,6 @@
         {
           "label": "Candidiasis of the crop",
           "detail": "No significant yeast on cytology",
-          "correct": false
-        },
-        {
-          "label": "Coccidiosis",
-          "detail": "A light load, and the wrong lesions",
           "correct": false
         },
         {

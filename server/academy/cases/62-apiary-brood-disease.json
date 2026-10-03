@@ -36,11 +36,6 @@
           "label": "Shared frames and hive tool between colonies",
           "detail": "The transmission route — management, not a clinical sign",
           "correct": false
-        },
-        {
-          "label": "Queen present and laying",
-          "detail": "Rules out a queen failure, but does not identify the disease",
-          "correct": false
         }
       ],
       "explanation": "Larvae dying after capping, with sunken perforated cappings and a foul smell, is American foulbrood; larvae dying before capping in twisted positions would be European foulbrood. Getting this distinction right matters more here than in almost any other case in the library, because one of them is notifiable and ends with the colony destroyed."
@@ -59,11 +54,6 @@
           "correct": true
         },
         {
-          "label": "Lateral flow device for Paenibacillus larvae",
-          "detail": "Rapid presumptive confirmation on site",
-          "correct": true
-        },
-        {
           "label": "Submit brood comb to the national reference laboratory for culture and confirmation",
           "detail": "Statutory confirmation, and it distinguishes the foulbroods",
           "correct": true
@@ -74,18 +64,8 @@
           "correct": true
         },
         {
-          "label": "Microscopy of larval smears for spores",
-          "detail": "Spore morphology supports the diagnosis",
-          "correct": true
-        },
-        {
           "label": "Varroa mite count as the primary investigation",
           "detail": "Essential routine monitoring, but it does not explain foul-smelling capped brood",
-          "correct": false
-        },
-        {
-          "label": "Nosema spore count as the diagnostic test",
-          "detail": "An adult bee disease, not a brood disease",
           "correct": false
         }
       ],
@@ -115,22 +95,12 @@
           "correct": true
         },
         {
-          "label": "Shared equipment plausibly spread spores between hives",
-          "detail": "Frames and tools moved without disinfection, plus a colony combination",
-          "correct": true
-        },
-        {
           "label": "Varroa infestation is the primary problem",
           "detail": "Counts are low and it does not cause ropy capped brood",
           "correct": false
-        },
-        {
-          "label": "Nosema explains the population decline",
-          "detail": "Not detected, and it is a disease of adults",
-          "correct": false
         }
       ],
-      "explanation": "Ropiness plus a cultured organism is the confirmation, and the distinction from European foulbrood is what determines the legal response. Finding hive 9 early is the most valuable outcome of the visit — it is the difference between losing two colonies and losing the apiary. Excluding varroa and nosema stops a beekeeper treating the wrong disease while spores spread."
+      "explanation": "Ropiness plus a cultured organism is the confirmation, and the distinction from European foulbrood is what determines the legal response. Finding hive 9 early is the most valuable outcome of the visit — it is the difference between losing two colonies and losing the apiary. Excluding varroa stops a beekeeper treating the wrong disease while spores spread."
     },
     {
       "kind": "diagnosis",
@@ -158,11 +128,6 @@
         {
           "label": "Varroosis with secondary viral disease",
           "detail": "Low mite counts and the wrong brood lesions",
-          "correct": false
-        },
-        {
-          "label": "Chalkbrood",
-          "detail": "A fungal disease producing hard mummies, not ropy remains",
           "correct": false
         }
       ],
